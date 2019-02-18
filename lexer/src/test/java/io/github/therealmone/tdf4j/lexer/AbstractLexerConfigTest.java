@@ -3,6 +3,7 @@ package io.github.therealmone.tdf4j.lexer;
 import org.junit.Test;
 
 import java.util.List;
+import java.util.regex.PatternSyntaxException;
 
 import static org.junit.Assert.*;
 
@@ -31,7 +32,7 @@ public class AbstractLexerConfigTest {
 
     @Test(expected = RuntimeException.class)
     public void not_complete_bindings() {
-        final AbstractLexerConfig config = new AbstractLexerConfig() {
+        new AbstractLexerConfig() {
             @Override
             public void config() {
                 tokenize("token").with("pattern");
@@ -43,12 +44,42 @@ public class AbstractLexerConfigTest {
 
     @Test(expected = RuntimeException.class)
     public void duplicate_names() {
-        final AbstractLexerConfig config = new AbstractLexerConfig() {
+        new AbstractLexerConfig() {
             @Override
             public void config() {
                 tokenize("token").with("pattern");
                 tokenize("token2").with("pattern2");
                 tokenize("token2").with("pattern3");
+            }
+        };
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void null_name() {
+        new AbstractLexerConfig() {
+            @Override
+            public void config() {
+                tokenize(null).with("pattern");
+            }
+        };
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void blank_name() {
+        new AbstractLexerConfig() {
+            @Override
+            public void config() {
+                tokenize("    ").with("pattern");
+            }
+        };
+    }
+
+    @Test(expected = PatternSyntaxException.class)
+    public void not_compilable_pattern() {
+        new AbstractLexerConfig() {
+            @Override
+            public void config() {
+                tokenize("token").with("[a]{invalid}");
             }
         };
     }
