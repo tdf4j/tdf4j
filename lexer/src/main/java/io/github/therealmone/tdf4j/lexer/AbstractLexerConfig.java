@@ -17,13 +17,20 @@ public abstract class AbstractLexerConfig {
     public class Tokenizer {
         private String name;
         private Pattern pattern;
+        private int priority;
 
         Tokenizer(final String name) {
             this.name = name;
         }
 
-        public void with(final String pattern) {
+        public Tokenizer pattern(final String pattern) {
             this.pattern = Pattern.compile(pattern);
+            return this;
+        }
+
+        public Tokenizer priority(final int priority) {
+            this.priority = priority;
+            return this;
         }
 
         public String getName() {
@@ -32,6 +39,10 @@ public abstract class AbstractLexerConfig {
 
         public Pattern getPattern() {
             return pattern;
+        }
+
+        public int getPriority() {
+            return priority;
         }
     }
 

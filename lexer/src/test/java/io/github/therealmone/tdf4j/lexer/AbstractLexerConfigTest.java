@@ -14,9 +14,9 @@ public class AbstractLexerConfigTest {
         final AbstractLexerConfig config = new AbstractLexerConfig() {
             @Override
             public void config() {
-                tokenize("ONE").with("^one$");
-                tokenize("TWO").with("^two$");
-                tokenize("THREE").with("^three$");
+                tokenize("ONE").pattern("^one$");
+                tokenize("TWO").pattern("^two$");
+                tokenize("THREE").pattern("^three$");
             }
         };
 
@@ -35,8 +35,8 @@ public class AbstractLexerConfigTest {
         new AbstractLexerConfig() {
             @Override
             public void config() {
-                tokenize("token").with("pattern");
-                tokenize("token2").with("pattern2");
+                tokenize("token").pattern("pattern");
+                tokenize("token2").pattern("pattern2");
                 tokenize("token3");
             }
         };
@@ -47,9 +47,9 @@ public class AbstractLexerConfigTest {
         new AbstractLexerConfig() {
             @Override
             public void config() {
-                tokenize("token").with("pattern");
-                tokenize("token2").with("pattern2");
-                tokenize("token2").with("pattern3");
+                tokenize("token").pattern("pattern");
+                tokenize("token2").pattern("pattern2");
+                tokenize("token2").pattern("pattern3");
             }
         };
     }
@@ -59,7 +59,7 @@ public class AbstractLexerConfigTest {
         new AbstractLexerConfig() {
             @Override
             public void config() {
-                tokenize(null).with("pattern");
+                tokenize(null).pattern("pattern");
             }
         };
     }
@@ -69,7 +69,7 @@ public class AbstractLexerConfigTest {
         new AbstractLexerConfig() {
             @Override
             public void config() {
-                tokenize("    ").with("pattern");
+                tokenize("    ").pattern("pattern");
             }
         };
     }
@@ -79,8 +79,22 @@ public class AbstractLexerConfigTest {
         new AbstractLexerConfig() {
             @Override
             public void config() {
-                tokenize("token").with("[a]{invalid}");
+                tokenize("token").pattern("[a]{invalid}");
             }
         };
+    }
+
+    @Test
+    public void priority() {
+        final AbstractLexerConfig config = new AbstractLexerConfig() {
+            @Override
+            public void config() {
+                tokenize("token").pattern("pattern").priority(100);
+            }
+        };
+        assertEquals(1, config.getTokenizers().size());
+        assertEquals("token", config.getTokenizers().get(0).getName());
+        assertEquals("pattern", config.getTokenizers().get(0).getPattern().pattern());
+        assertEquals(100, config.getTokenizers().get(0).getPriority());
     }
 }
