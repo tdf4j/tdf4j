@@ -1,8 +1,13 @@
 package io.github.therealmone.tdf4j.lexer;
 
+import io.github.therealmone.tdf4j.commons.bean.ImmutableTerminal;
+import io.github.therealmone.tdf4j.commons.bean.Terminal;
+
+import javax.annotation.Nullable;
 import java.util.*;
 import java.util.regex.Pattern;
 
+@SuppressWarnings("ALL")
 public abstract class AbstractLexerConfig {
     private Map<String, Tokenizer> tokenizers;
 
@@ -46,7 +51,7 @@ public abstract class AbstractLexerConfig {
         }
     }
 
-    public Tokenizer tokenize(final String name) {
+    public Tokenizer tokenize(@Nullable final String name) {
         if(tokenizers.containsKey(name)) {
             throw new RuntimeException("Key " + name + " already bind");
         }
@@ -67,7 +72,16 @@ public abstract class AbstractLexerConfig {
         }
     }
 
-    public List<Tokenizer> getTokenizers() {
-        return new ArrayList<>(tokenizers.values());
+    public List<Terminal> getTerminals() {
+        return Collections.unmodifiableList(new ArrayList<Terminal>() {{
+            for(final Tokenizer tokenizer : tokenizers.values()) {
+                add(ImmutableTerminal.builder()
+                        .tag(tokenizer.getName())
+                        .pattern(tokenizer.pattern)
+                        .priority(tokenizer.priority)
+                        .build()
+                );
+            }
+        }});
     }
 }

@@ -1,10 +1,10 @@
-package io.github.therealmone.tdf4j.commons;
+package io.github.therealmone.tdf4j.commons.bean;
 
 import org.immutables.value.Value;
 
 @Value.Immutable
 public interface Token {
-    String name();
+    String tag();
 
     String value();
 }

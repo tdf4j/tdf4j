@@ -1,5 +1,6 @@
 package io.github.therealmone.tdf4j.lexer;
 
+import io.github.therealmone.tdf4j.commons.bean.Terminal;
 import org.junit.Test;
 
 import java.util.List;
@@ -20,14 +21,14 @@ public class AbstractLexerConfigTest {
             }
         };
 
-        final List<AbstractLexerConfig.Tokenizer> tokenizers = config.getTokenizers();
-        assertEquals(3, tokenizers.size());
-        assertEquals("ONE", tokenizers.get(0).getName());
-        assertEquals("^one$", tokenizers.get(0).getPattern().pattern());
-        assertEquals("TWO", tokenizers.get(1).getName());
-        assertEquals("^two$", tokenizers.get(1).getPattern().pattern());
-        assertEquals("THREE", tokenizers.get(2).getName());
-        assertEquals("^three$", tokenizers.get(2).getPattern().pattern());
+        final List<Terminal> terminals = config.getTerminals();
+        assertEquals(3, terminals.size());
+        assertEquals("ONE", terminals.get(0).tag());
+        assertEquals("^one$", terminals.get(0).pattern().pattern());
+        assertEquals("TWO", terminals.get(1).tag());
+        assertEquals("^two$", terminals.get(1).pattern().pattern());
+        assertEquals("THREE", terminals.get(2).tag());
+        assertEquals("^three$", terminals.get(2).pattern().pattern());
     }
 
     @Test(expected = RuntimeException.class)
@@ -92,9 +93,9 @@ public class AbstractLexerConfigTest {
                 tokenize("token").pattern("pattern").priority(100);
             }
         };
-        assertEquals(1, config.getTokenizers().size());
-        assertEquals("token", config.getTokenizers().get(0).getName());
-        assertEquals("pattern", config.getTokenizers().get(0).getPattern().pattern());
-        assertEquals(100, config.getTokenizers().get(0).getPriority());
+        assertEquals(1, config.getTerminals().size());
+        assertEquals("token", config.getTerminals().get(0).tag());
+        assertEquals("pattern", config.getTerminals().get(0).pattern().pattern());
+        assertEquals(100, config.getTerminals().get(0).priority());
     }
 }
