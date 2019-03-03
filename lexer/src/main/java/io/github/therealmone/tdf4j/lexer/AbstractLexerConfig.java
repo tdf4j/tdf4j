@@ -20,12 +20,12 @@ public abstract class AbstractLexerConfig {
     public abstract void config();
 
     public class Tokenizer {
-        private String name;
+        private String tag;
         private Pattern pattern;
         private int priority;
 
-        Tokenizer(final String name) {
-            this.name = name;
+        Tokenizer(final String tag) {
+            this.tag = tag;
         }
 
         public Tokenizer pattern(final String pattern) {
@@ -38,8 +38,8 @@ public abstract class AbstractLexerConfig {
             return this;
         }
 
-        public String getName() {
-            return name;
+        public String getTag() {
+            return tag;
         }
 
         public Pattern getPattern() {
@@ -67,7 +67,7 @@ public abstract class AbstractLexerConfig {
     private void validate() {
         for(final Tokenizer tokenizer : tokenizers.values()) {
             if(tokenizer.pattern == null) {
-                throw new RuntimeException("Pattern was not specified for token " + tokenizer.name);
+                throw new RuntimeException("Pattern was not specified for token " + tokenizer.tag);
             }
         }
     }
@@ -76,7 +76,7 @@ public abstract class AbstractLexerConfig {
         return Collections.unmodifiableList(new ArrayList<Terminal>() {{
             for(final Tokenizer tokenizer : tokenizers.values()) {
                 add(ImmutableTerminal.builder()
-                        .tag(tokenizer.getName())
+                        .tag(tokenizer.getTag())
                         .pattern(tokenizer.pattern)
                         .priority(tokenizer.priority)
                         .build()
