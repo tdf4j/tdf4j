@@ -6,8 +6,6 @@ import io.github.therealmone.tdf4j.lexer.utils.Config;
 import org.junit.Test;
 
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import static org.junit.Assert.*;
 
@@ -387,6 +385,22 @@ public class LexerTest {
             assertEquals(1, tokens.size());
             assertEquals("STRING", tokens.get(0).tag());
             assertEquals("\"string\"", tokens.get(0).value());
+        }
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void unexpected_symbol() {
+        final Lexer lexer = new LexerImpl(new AbstractLexerConfig() {
+            @Override
+            public void config() {
+            }
+        });
+
+        try {
+            lexer.analyze("unexpected");
+        } catch (RuntimeException e) {
+            assertEquals("Unexpected symbol: u", e.getMessage());
+            throw e;
         }
     }
 }

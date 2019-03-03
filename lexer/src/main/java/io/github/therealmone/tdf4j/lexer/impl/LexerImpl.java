@@ -42,7 +42,7 @@ public class LexerImpl implements Lexer {
                     in.replace(0, buffer.length(), "");
                     buffer.replace(0, buffer.length(), "");
                 } else {
-                    throw new RuntimeException("Unexpected symbol: " + buffer.charAt(buffer.length() - 1));
+                    throw new RuntimeException("Unexpected symbol: " + in.charAt(buffer.length()));
                 }
             }
         }
