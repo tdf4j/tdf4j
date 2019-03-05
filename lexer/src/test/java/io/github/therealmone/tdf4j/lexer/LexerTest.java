@@ -1,6 +1,7 @@
 package io.github.therealmone.tdf4j.lexer;
 
 import io.github.therealmone.tdf4j.commons.bean.Token;
+import io.github.therealmone.tdf4j.lexer.config.AbstractLexerModule;
 import io.github.therealmone.tdf4j.lexer.impl.LexerImpl;
 import io.github.therealmone.tdf4j.lexer.utils.Config;
 import org.junit.Test;
@@ -390,9 +391,9 @@ public class LexerTest {
 
     @Test(expected = RuntimeException.class)
     public void unexpected_symbol() {
-        final Lexer lexer = new LexerImpl(new AbstractLexerConfig() {
+        final Lexer lexer = new LexerImpl(new AbstractLexerModule() {
             @Override
-            public void config() {
+            public void configure() {
             }
         });
 

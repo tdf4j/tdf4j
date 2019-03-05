@@ -1,6 +1,7 @@
 package io.github.therealmone.tdf4j.lexer;
 
 import io.github.therealmone.tdf4j.commons.bean.Terminal;
+import io.github.therealmone.tdf4j.lexer.config.AbstractLexerModule;
 import org.junit.Test;
 
 import java.util.List;
@@ -12,9 +13,9 @@ public class AbstractLexerConfigTest {
 
     @Test
     public void normal_configuration() {
-        final AbstractLexerConfig config = new AbstractLexerConfig() {
+        final AbstractLexerModule config = new AbstractLexerModule() {
             @Override
-            public void config() {
+            public void configure() {
                 tokenize("ONE").pattern("^one$");
                 tokenize("TWO").pattern("^two$");
                 tokenize("THREE").pattern("^three$");
@@ -33,9 +34,9 @@ public class AbstractLexerConfigTest {
 
     @Test(expected = RuntimeException.class)
     public void not_complete_bindings() {
-        new AbstractLexerConfig() {
+        new AbstractLexerModule() {
             @Override
-            public void config() {
+            public void configure() {
                 tokenize("token").pattern("pattern");
                 tokenize("token2").pattern("pattern2");
                 tokenize("token3");
@@ -45,9 +46,9 @@ public class AbstractLexerConfigTest {
 
     @Test(expected = RuntimeException.class)
     public void duplicate_names() {
-        new AbstractLexerConfig() {
+        new AbstractLexerModule() {
             @Override
-            public void config() {
+            public void configure() {
                 tokenize("token").pattern("pattern");
                 tokenize("token2").pattern("pattern2");
                 tokenize("token2").pattern("pattern3");
@@ -57,9 +58,9 @@ public class AbstractLexerConfigTest {
 
     @Test(expected = RuntimeException.class)
     public void null_name() {
-        new AbstractLexerConfig() {
+        new AbstractLexerModule() {
             @Override
-            public void config() {
+            public void configure() {
                 tokenize(null).pattern("pattern");
             }
         };
@@ -67,9 +68,9 @@ public class AbstractLexerConfigTest {
 
     @Test(expected = RuntimeException.class)
     public void blank_name() {
-        new AbstractLexerConfig() {
+        new AbstractLexerModule() {
             @Override
-            public void config() {
+            public void configure() {
                 tokenize("    ").pattern("pattern");
             }
         };
@@ -77,9 +78,9 @@ public class AbstractLexerConfigTest {
 
     @Test(expected = PatternSyntaxException.class)
     public void not_compilable_pattern() {
-        new AbstractLexerConfig() {
+        new AbstractLexerModule() {
             @Override
-            public void config() {
+            public void configure() {
                 tokenize("token").pattern("[a]{invalid}");
             }
         };
@@ -87,9 +88,9 @@ public class AbstractLexerConfigTest {
 
     @Test
     public void priority() {
-        final AbstractLexerConfig config = new AbstractLexerConfig() {
+        final AbstractLexerModule config = new AbstractLexerModule() {
             @Override
-            public void config() {
+            public void configure() {
                 tokenize("token").pattern("pattern").priority(100);
             }
         };

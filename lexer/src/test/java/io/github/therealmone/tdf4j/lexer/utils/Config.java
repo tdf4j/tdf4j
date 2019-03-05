@@ -1,10 +1,10 @@
 package io.github.therealmone.tdf4j.lexer.utils;
 
-import io.github.therealmone.tdf4j.lexer.AbstractLexerConfig;
+import io.github.therealmone.tdf4j.lexer.config.AbstractLexerModule;
 
-public class Config extends AbstractLexerConfig {
+public class Config extends AbstractLexerModule {
     @Override
-    public void config() {
+    public void configure() {
         tokenize("VAR").pattern("^[a-z]+$");
         tokenize("STRING").pattern("^\"(.*?)\"$");
         tokenize("NEW").pattern("^new$").priority(1);

@@ -1,9 +1,8 @@
 package io.github.therealmone.tdf4j.lexer.impl;
 
-import io.github.therealmone.tdf4j.commons.bean.ImmutableToken;
 import io.github.therealmone.tdf4j.commons.bean.Terminal;
 import io.github.therealmone.tdf4j.commons.bean.Token;
-import io.github.therealmone.tdf4j.lexer.AbstractLexerConfig;
+import io.github.therealmone.tdf4j.lexer.config.AbstractLexerModule;
 import io.github.therealmone.tdf4j.lexer.Lexer;
 
 import javax.annotation.Nonnull;
@@ -15,7 +14,7 @@ import java.util.stream.Collectors;
 public class LexerImpl implements Lexer {
     private final List<Terminal> terminals;
 
-    public LexerImpl(final AbstractLexerConfig config) {
+    public LexerImpl(final AbstractLexerModule config) {
         this.terminals = config.getTerminals();
     }
 
@@ -34,7 +33,7 @@ public class LexerImpl implements Lexer {
                 }
                 final Terminal terminal = tryToSpecifyTerminal(buffer);
                 if(terminal != null) {
-                    tokens.add(ImmutableToken.builder()
+                    tokens.add(new Token.Builder()
                             .tag(terminal.tag())
                             .value(buffer.toString())
                             .build()

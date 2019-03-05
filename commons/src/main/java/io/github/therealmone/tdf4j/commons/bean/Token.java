@@ -7,4 +7,8 @@ public interface Token {
     String tag();
 
     String value();
+
+    class Builder extends ImmutableToken.Builder {
+
+    }
 }
