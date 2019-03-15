@@ -32,7 +32,9 @@ Lexer accepts ```AbstractLexerModule``` as configuration class. To configure lex
     class Configuration extends AbstractLexerModule {
         @Override
         public void configure() {
-            tokenize("tag").pattern("pattern").priority(100);
+            tokenize("tag").pattern("pattern").priority(1);
+            tokenize("tag").pattern("pattern");
+            tokenize("tag").pattern("pattern").priority(10000);
         }
     }
 ```
