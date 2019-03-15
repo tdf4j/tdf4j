@@ -78,7 +78,7 @@ Lexer factory can build lexer for each type of configuration:
 ```
 - Json:
 ```java
-    Lexer lexer = new LexerFactory().fromXml(new File("terminals.json"));
-    Lexer lexer = new LexerFactory().fromXml(new FileInputStream(new File("terminals.json")));
-    Lexer lexer = new LexerFactory().fromXml("{\"terminals:\"[]}");
+    Lexer lexer = new LexerFactory().fromJson(new File("terminals.json"));
+    Lexer lexer = new LexerFactory().fromJson(new FileInputStream(new File("terminals.json")));
+    Lexer lexer = new LexerFactory().fromJson("{\"terminals:\"[]}");
 ```
