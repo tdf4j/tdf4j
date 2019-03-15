@@ -49,13 +49,13 @@ public class LexerFactoryTest {
     @Test
     public void from_xml_input_stream() throws Exception {
         final Lexer lexer = factory.fromXml(Thread.currentThread().getContextClassLoader().getResourceAsStream("terminals.xml"));
-        assertTokens(lexer.analyze("pattern1 pattern2 pattern3"));
+        assertTokens(lexer.analyze("pattern1pattern2 pattern3"));
     }
 
     @Test
     public void from_xml_file() throws Exception {
         final Lexer lexer = factory.fromXml(new File("src/test/resources/terminals.xml"));
-        assertTokens(lexer.analyze("pattern1 pattern2 pattern3"));
+        assertTokens(lexer.analyze("pattern1 pattern2pattern3"));
     }
 
     @Test
@@ -68,7 +68,7 @@ public class LexerFactoryTest {
                 tokenize("tag3").pattern("pattern3").priority(10000);
             }
         });
-        assertTokens(lexer.analyze("pattern1 pattern2 pattern3"));
+        assertTokens(lexer.analyze("pattern1pattern2pattern3"));
     }
 
     private void assertTokens(final List<Token> tokens) {
