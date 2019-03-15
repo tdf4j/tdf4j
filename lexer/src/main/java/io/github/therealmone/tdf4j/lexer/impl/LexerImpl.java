@@ -79,7 +79,7 @@ public class LexerImpl implements Lexer {
     private Terminal tryToSpecifyTerminal(final StringBuilder buffer) {
         final List<Terminal> terminals = this.terminals.stream()
                 .filter(terminal -> terminal.pattern().matcher(buffer).matches())
-                .sorted(Comparator.comparingInt(Terminal::priority))
+                .sorted(Comparator.comparingLong(Terminal::priority))
                 .collect(Collectors.toList());
         return terminals.size() > 0
                 ? terminals.get(terminals.size() - 1)

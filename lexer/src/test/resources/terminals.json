@@ -1,0 +1,7 @@
+{
+  "terminals": [
+    {"tag": "tag1", "pattern": "pattern1", "priority": 1},
+    {"tag": "tag2", "pattern": "pattern2"},
+    {"tag": "tag3", "pattern": "pattern3", "priority": 10000}
+  ]
+}

@@ -11,7 +11,7 @@ public interface Terminal {
     Pattern pattern();
 
     @Value.Default
-    default int priority() {
+    default long priority() {
         return 0;
     }
 

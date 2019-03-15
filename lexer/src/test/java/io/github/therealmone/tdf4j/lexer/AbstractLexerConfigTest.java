@@ -20,7 +20,7 @@ public class AbstractLexerConfigTest {
                 tokenize("TWO").pattern("^two$");
                 tokenize("THREE").pattern("^three$");
             }
-        };
+        }.build();
 
         final List<Terminal> terminals = config.getTerminals();
         assertEquals(3, terminals.size());
@@ -41,7 +41,7 @@ public class AbstractLexerConfigTest {
                 tokenize("token2").pattern("pattern2");
                 tokenize("token3");
             }
-        };
+        }.build();
     }
 
     @Test(expected = RuntimeException.class)
@@ -53,7 +53,7 @@ public class AbstractLexerConfigTest {
                 tokenize("token2").pattern("pattern2");
                 tokenize("token2").pattern("pattern3");
             }
-        };
+        }.build();
     }
 
     @Test(expected = RuntimeException.class)
@@ -63,7 +63,7 @@ public class AbstractLexerConfigTest {
             public void configure() {
                 tokenize(null).pattern("pattern");
             }
-        };
+        }.build();
     }
 
     @Test(expected = RuntimeException.class)
@@ -73,7 +73,7 @@ public class AbstractLexerConfigTest {
             public void configure() {
                 tokenize("    ").pattern("pattern");
             }
-        };
+        }.build();
     }
 
     @Test(expected = PatternSyntaxException.class)
@@ -83,7 +83,7 @@ public class AbstractLexerConfigTest {
             public void configure() {
                 tokenize("token").pattern("[a]{invalid}");
             }
-        };
+        }.build();
     }
 
     @Test
@@ -93,7 +93,7 @@ public class AbstractLexerConfigTest {
             public void configure() {
                 tokenize("token").pattern("pattern").priority(100);
             }
-        };
+        }.build();
         assertEquals(1, config.getTerminals().size());
         assertEquals("token", config.getTerminals().get(0).tag());
         assertEquals("pattern", config.getTerminals().get(0).pattern().pattern());

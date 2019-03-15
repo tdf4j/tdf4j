@@ -7,15 +7,19 @@ import java.util.*;
 @SuppressWarnings("ALL")
 public abstract class AbstractLexerModule extends BindingMapper implements Module {
     private final List<Terminal> terminals;
+    private boolean built = false;
 
     public AbstractLexerModule() {
         terminals = new ArrayList<>();
-        configure();
-        build();
     }
 
-    private final void build() {
-        this.terminals.addAll(terminalBindStrategy.build());
+    public AbstractLexerModule build() {
+        if(!built) {
+            this.configure();
+            this.terminals.addAll(terminalBindStrategy.build());
+            built = true;
+        }
+        return this;
     }
 
     public List<Terminal> getTerminals() {

@@ -14,7 +14,7 @@ public class LexerTest {
     @Test
     //these are old tests from http://github.com/therealmone/SPOTranslator
     public void analyze() {
-        Lexer lexer = new LexerImpl(new Config());
+        Lexer lexer = new LexerImpl(new Config().build());
 
         {
             final List<Token> tokens = lexer.analyze("value");
