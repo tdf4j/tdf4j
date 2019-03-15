@@ -1,4 +1,4 @@
-#Lexical analyzer
+# Lexical analyzer
 In computer science, lexical analysis, lexing or tokenization is the process of converting a sequence of characters 
 (such as in a computer program or web page) into a sequence of tokens (strings with an assigned and thus identified meaning).
  A program that performs lexical analysis may be termed a lexer, tokenizer, or scanner, 
@@ -7,8 +7,8 @@ In computer science, lexical analysis, lexing or tokenization is the process of 
  
  [Wiki](https://en.wikipedia.org/wiki/Lexical_analysis)
  
-#Usage
-###Configuration
+# Usage
+### Configuration
 To use lexical analyzer you must specify which tokens it will parse. 
 Lexer uses regular expressions for parsing. So you must describe
 as known `terminals` to use lexer.
@@ -26,7 +26,7 @@ terminals. To avoid this specify priorities for terminals: `tag: var, pattern ^[
 Now input `"for"` will match terminal with tag `FOR`)
  
 There is three ways for configuration:
-#####1. In code
+##### 1. In code
 Lexer accepts ```AbstractLexerModule``` as configuration class. To configure lexer by code you must extend this class:
 ```java
     class Configuration extends AbstractLexerModule {
@@ -38,7 +38,7 @@ Lexer accepts ```AbstractLexerModule``` as configuration class. To configure lex
 ```
 Priority is not necessary element. By default it is 0.
 
-#####2. XML
+##### 2. XML
 Xml file must contains `<terminals>` as root element and `<terminal tag="tag" pattern="pattern" priority="100"/>` as child.
 Example:
 ```xml
@@ -50,7 +50,7 @@ Example:
 ```
 Priority is not necessary element. By default it is 0.
 
-#####3. JSON
+##### 3. JSON
 ```json
     {
       "terminals": [
@@ -62,7 +62,7 @@ Priority is not necessary element. By default it is 0.
 ```
 Priority is not necessary element. By default it is 0.
 
-###Lexer factory
+### Lexer factory
 Lexer factory can build lexer for each type of configuration:
 - In Code: 
 ```java
