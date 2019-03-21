@@ -1,5 +1,6 @@
 package io.github.therealmone.tdf4j.lexer.impl;
 
+import io.github.therealmone.tdf4j.commons.Stream;
 import io.github.therealmone.tdf4j.commons.bean.Terminal;
 import io.github.therealmone.tdf4j.commons.bean.Token;
 import io.github.therealmone.tdf4j.lexer.config.AbstractLexerModule;
@@ -22,7 +23,19 @@ public class LexerImpl implements Lexer {
     @Nonnull
     public List<Token> analyze(final String input) {
         final List<Token> tokens = new ArrayList<>();
+        final Stream<Token> stream = stream(input);
+        stream.forEach(tokens::add);
+        return tokens;
+    }
+
+    @Override
+    public Stream<Token> stream(final String input) {
         final StringBuilder in = new StringBuilder(input);
+        return new Stream.Builder<Token>().generator(() -> nextToken(in)).build();
+    }
+
+    @Nullable
+    private Token nextToken(final StringBuilder in) {
         final StringBuilder buffer = new StringBuilder();
         while(in.length() != 0) {
             trim(in);
@@ -33,19 +46,20 @@ public class LexerImpl implements Lexer {
                 }
                 final Terminal terminal = tryToSpecifyTerminal(buffer);
                 if(terminal != null) {
-                    tokens.add(new Token.Builder()
+                    final Token token = new Token.Builder()
                             .tag(terminal.tag())
                             .value(buffer.toString())
-                            .build()
-                    );
+                            .build();
                     in.replace(0, buffer.length(), "");
                     buffer.replace(0, buffer.length(), "");
+                    return token;
                 } else {
                     throw new RuntimeException("Unexpected symbol: " + in.charAt(buffer.length()));
                 }
             }
         }
-        return tokens;
+
+        return null;
     }
 
     private void trim(final StringBuilder builder) {

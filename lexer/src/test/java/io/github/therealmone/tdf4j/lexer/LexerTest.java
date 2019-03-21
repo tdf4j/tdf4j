@@ -400,7 +400,7 @@ public class LexerTest {
         try {
             lexer.analyze("unexpected");
         } catch (RuntimeException e) {
-            assertEquals("Unexpected symbol: u", e.getMessage());
+            assertEquals("java.lang.RuntimeException: Unexpected symbol: u", e.getMessage());
             throw e;
         }
     }
