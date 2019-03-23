@@ -9,13 +9,13 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>lexer</artifactId>
+    <artifactId>parser</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>lexer</name>
-    <description>Lexical analyzer generator</description>
-    <url>https://github.com/therealmonE/tdf4j/tree/master/lexer</url>
+    <name>tdf4j parser</name>
+    <description>Syntax analyzer generator</description>
+    <url>https://github.com/therealmonE/tdfj4/tree/master/parser</url>
 
     <dependencies>
         <dependency>

@@ -28,6 +28,7 @@ public class LexerImpl implements Lexer {
         return tokens;
     }
 
+    @Nonnull
     @Override
     public Stream<Token> stream(final String input) {
         final StringBuilder in = new StringBuilder(input);

@@ -10,5 +10,6 @@ public interface Lexer {
     @Nonnull
     List<Token> analyze(final String input);
 
+    @Nonnull
     Stream<Token> stream(final String input);
 }

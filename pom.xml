@@ -54,6 +54,7 @@
     <modules>
         <module>lexer</module>
         <module>commons</module>
+        <module>parser</module>
     </modules>
 
     <dependencies>
