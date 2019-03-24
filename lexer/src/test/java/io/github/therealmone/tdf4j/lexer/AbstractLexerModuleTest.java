@@ -1,6 +1,6 @@
 package io.github.therealmone.tdf4j.lexer;
 
-import io.github.therealmone.tdf4j.commons.bean.Terminal;
+import io.github.therealmone.tdf4j.commons.Terminal;
 import io.github.therealmone.tdf4j.lexer.config.AbstractLexerModule;
 import org.junit.Test;
 

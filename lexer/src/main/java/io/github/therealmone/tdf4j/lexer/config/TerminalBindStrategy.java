@@ -1,6 +1,6 @@
 package io.github.therealmone.tdf4j.lexer.config.strategies;
 
-import io.github.therealmone.tdf4j.commons.bean.Terminal;
+import io.github.therealmone.tdf4j.commons.Terminal;
 
 import javax.annotation.Nullable;
 import java.util.*;
