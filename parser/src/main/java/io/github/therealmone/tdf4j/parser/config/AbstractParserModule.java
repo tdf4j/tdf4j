@@ -14,12 +14,13 @@ public abstract class AbstractParserModule extends BindingMapper implements Modu
         this.productions = new ArrayList<>();
     }
 
-    public void build() {
+    public AbstractParserModule build() {
         if(!built) {
             this.configure();
             this.productions.addAll(productionBindStrategy.build());
             built = true;
         }
+        return this;
     }
 
     public List<Production> getProductions() {

@@ -1,7 +1,6 @@
 package io.github.therealmone.tdf4j.parser.config;
 
 import io.github.therealmone.tdf4j.commons.BindStrategy;
-import io.github.therealmone.tdf4j.parser.model.ImmutableProduction;
 import io.github.therealmone.tdf4j.parser.model.Production;
 
 import java.util.ArrayList;
@@ -14,10 +13,13 @@ public class ProductionBindStrategy implements BindStrategy<String, Production.B
 
     @Override
     public Production.Builder bind(final String key) {
+        if(key == null || key.trim().equals("")) {
+            throw new RuntimeException("Key can't be blank or null");
+        }
         if(prods.containsKey(key)) {
             throw new RuntimeException("Key " + key + "already bind");
         }
-        prods.put(key, new ImmutableProduction.Builder().identifier(key));
+        prods.put(key, new Production.Builder().identifier(key));
         return prods.get(key);
     }
 
