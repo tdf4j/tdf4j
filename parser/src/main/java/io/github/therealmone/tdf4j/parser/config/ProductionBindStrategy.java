@@ -1,4 +1,30 @@
 package io.github.therealmone.tdf4j.parser.config;
 
-public class ProductionBindingStrategy {
+import io.github.therealmone.tdf4j.commons.BindStrategy;
+import io.github.therealmone.tdf4j.parser.model.ImmutableProduction;
+import io.github.therealmone.tdf4j.parser.model.Production;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class ProductionBindStrategy implements BindStrategy<String, Production.Builder, List<Production>> {
+    private final Map<String, Production.Builder> prods = new HashMap<>();
+
+    @Override
+    public Production.Builder bind(final String key) {
+        if(prods.containsKey(key)) {
+            throw new RuntimeException("Key " + key + "already bind");
+        }
+        prods.put(key, new ImmutableProduction.Builder().identifier(key));
+        return prods.get(key);
+    }
+
+    @Override
+    public List<Production> build() {
+        return new ArrayList<Production>() {{
+            prods.forEach((key, prod) -> add(prod.build()));
+        }};
+    }
 }

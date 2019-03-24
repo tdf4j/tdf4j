@@ -9,7 +9,7 @@ import java.util.regex.PatternSyntaxException;
 
 import static org.junit.Assert.*;
 
-public class AbstractLexerConfigTest {
+public class AbstractLexerModuleTest {
 
     @Test
     public void normal_configuration() {

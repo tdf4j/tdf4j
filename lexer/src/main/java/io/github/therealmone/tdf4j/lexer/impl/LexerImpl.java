@@ -1,8 +1,8 @@
 package io.github.therealmone.tdf4j.lexer.impl;
 
 import io.github.therealmone.tdf4j.commons.Stream;
-import io.github.therealmone.tdf4j.commons.bean.Terminal;
-import io.github.therealmone.tdf4j.commons.bean.Token;
+import io.github.therealmone.tdf4j.commons.Terminal;
+import io.github.therealmone.tdf4j.commons.Token;
 import io.github.therealmone.tdf4j.lexer.config.AbstractLexerModule;
 import io.github.therealmone.tdf4j.lexer.Lexer;
 

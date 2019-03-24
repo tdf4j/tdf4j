@@ -1,4 +1,4 @@
-package io.github.therealmone.tdf4j.commons.bean;
+package io.github.therealmone.tdf4j.commons;
 
 import org.immutables.value.Value;
 

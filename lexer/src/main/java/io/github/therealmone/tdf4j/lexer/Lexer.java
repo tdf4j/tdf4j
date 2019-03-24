@@ -1,7 +1,7 @@
 package io.github.therealmone.tdf4j.lexer;
 
 import io.github.therealmone.tdf4j.commons.Stream;
-import io.github.therealmone.tdf4j.commons.bean.Token;
+import io.github.therealmone.tdf4j.commons.Token;
 
 import javax.annotation.Nonnull;
 import java.util.List;

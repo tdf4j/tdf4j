@@ -1,8 +1,7 @@
 package io.github.therealmone.tdf4j.lexer.config;
 
-import io.github.therealmone.tdf4j.commons.bean.Terminal;
-import io.github.therealmone.tdf4j.lexer.config.strategies.BindStrategy;
-import io.github.therealmone.tdf4j.lexer.config.strategies.TerminalBindStrategy;
+import io.github.therealmone.tdf4j.commons.Terminal;
+import io.github.therealmone.tdf4j.commons.BindStrategy;
 
 import java.util.List;
 

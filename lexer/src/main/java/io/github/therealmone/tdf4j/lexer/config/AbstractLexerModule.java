@@ -1,7 +1,7 @@
 package io.github.therealmone.tdf4j.lexer.config;
 
 import io.github.therealmone.tdf4j.commons.Module;
-import io.github.therealmone.tdf4j.commons.bean.Terminal;
+import io.github.therealmone.tdf4j.commons.Terminal;
 import java.util.*;
 
 @SuppressWarnings("ALL")
