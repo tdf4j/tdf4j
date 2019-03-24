@@ -13,7 +13,7 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>tdf4j parser</name>
+    <name>parser</name>
     <description>Syntax analyzer generator</description>
     <url>https://github.com/therealmonE/tdfj4/tree/master/parser</url>
 
@@ -23,6 +23,14 @@
             <artifactId>commons</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.google.auto.service/auto-service -->
+        <dependency>
+            <groupId>com.google.auto.service</groupId>
+            <artifactId>auto-service</artifactId>
+            <version>1.0-rc4</version>
+        </dependency>
+
     </dependencies>
 
 </project>
