@@ -55,6 +55,8 @@
         <module>lexer</module>
         <module>commons</module>
         <module>parser</module>
+        <module>parser-api</module>
+        <module>annotation-processor</module>
     </modules>
 
     <dependencies>

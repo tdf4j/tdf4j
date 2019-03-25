@@ -1,4 +1,4 @@
-package io.github.therealmone.tdf4j.parser.processor;
+package io.github.therealmone.tdf4j.parser.api;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

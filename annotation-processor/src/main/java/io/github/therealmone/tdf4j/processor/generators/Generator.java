@@ -1,4 +1,4 @@
-package io.github.therealmone.tdf4j.parser.processor.generators;
+package io.github.therealmone.tdf4j.processor.generators;
 
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.lang.model.element.Element;

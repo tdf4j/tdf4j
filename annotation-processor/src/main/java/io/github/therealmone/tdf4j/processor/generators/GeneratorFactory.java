@@ -1,4 +1,4 @@
-package io.github.therealmone.tdf4j.parser.processor.generators;
+package io.github.therealmone.tdf4j.processor.generators;
 
 import javax.annotation.Nullable;
 import javax.lang.model.element.TypeElement;

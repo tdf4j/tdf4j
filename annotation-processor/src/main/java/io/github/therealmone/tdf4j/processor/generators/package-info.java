@@ -1,4 +1,4 @@
 @ParametersAreNonnullByDefault
-package io.github.therealmone.tdf4j.parser.processor;
+package io.github.therealmone.tdf4j.processor.generators;
 
 import javax.annotation.ParametersAreNonnullByDefault;

@@ -1,8 +1,8 @@
-package io.github.therealmone.tdf4j.parser.processor;
+package io.github.therealmone.tdf4j.processor;
 
 import com.google.auto.service.AutoService;
-import io.github.therealmone.tdf4j.parser.processor.generators.Generator;
-import io.github.therealmone.tdf4j.parser.processor.generators.GeneratorFactory;
+import io.github.therealmone.tdf4j.processor.generators.Generator;
+import io.github.therealmone.tdf4j.processor.generators.GeneratorFactory;
 
 import javax.annotation.processing.*;
 import javax.lang.model.SourceVersion;
@@ -10,7 +10,7 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
 import java.util.Set;
 
-@SupportedAnnotationTypes({"io.github.therealmone.tdf4j.parser.processor.Parser"})
+@SupportedAnnotationTypes({"io.github.therealmone.tdf4j.parser.api.Parser"})
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
 @AutoService(javax.annotation.processing.Processor.class)
 public class Processor extends AbstractProcessor {
