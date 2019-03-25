@@ -32,14 +32,14 @@
             <goals>
               <goal>process</goal>
             </goals>
-            <phase>generate-sources</phase>
+            <phase>process-classes</phase>
           </execution>
           <execution>
             <id>process-test</id>
             <goals>
               <goal>process-test</goal>
             </goals>
-            <phase>generate-test-sources</phase>
+            <phase>process-test-classes</phase>
           </execution>
         </executions>
         <configuration>
