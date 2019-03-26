@@ -5,19 +5,32 @@ import org.immutables.value.Value;
 import java.util.List;
 
 @Value.Immutable
-public interface Production {
+public abstract class Production {
 
-    String identifier();
+    public abstract String identifier();
 
-    List<String> elements();
+    public abstract List<Element> elements();
 
-    class Builder extends ImmutableProduction.Builder {
-        public Builder then(final String element) {
+    public static class Builder extends ImmutableProduction.Builder {
+        public Builder then(final Element element) {
             return super.addElements(element);
         }
 
-        public Builder then(final String ... elements) {
+        public Builder then(final Element ... elements) {
             return super.addElements(elements);
         }
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder builder = new StringBuilder();
+        builder.append(identifier()).append(" := ");
+        if(elements().size() > 0) {
+            for (final Element element : elements()) {
+                builder.append(element.toString()).append(",");
+            }
+        }
+        builder.replace(builder.length() - 1, builder.length(), "");
+        return builder.toString();
     }
 }
