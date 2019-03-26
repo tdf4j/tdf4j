@@ -24,6 +24,12 @@
       <artifactId>parser</artifactId>
       <version>1.0-SNAPSHOT</version>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/org.antlr/stringtemplate -->
+    <dependency>
+      <groupId>org.antlr</groupId>
+      <artifactId>stringtemplate</artifactId>
+      <version>4.0.2</version>
+    </dependency>
   </dependencies>
 
 </project>

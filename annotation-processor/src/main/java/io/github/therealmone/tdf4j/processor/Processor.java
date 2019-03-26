@@ -8,6 +8,7 @@ import javax.annotation.processing.*;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
+import javax.tools.Diagnostic;
 import java.util.Set;
 
 @SupportedAnnotationTypes({"io.github.therealmone.tdf4j.parser.api.Parser"})
@@ -31,10 +32,11 @@ public class Processor extends AbstractProcessor {
             }
             for(final Element element : roundEnv.getElementsAnnotatedWith(annotation)) {
                 try {
-                    System.out.println("PARSER GENERATION: " + annotation + " ; " + element);
+                    processingEnv.getMessager().printMessage(Diagnostic.Kind.NOTE,"PARSER GENERATION: " + annotation + " ; " + element);
                     generator.generate(processingEnv, element);
                 } catch (Exception e) {
-                    throw new RuntimeException(e);
+                    processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, e.getMessage());
+                    e.printStackTrace();
                 }
             }
         }

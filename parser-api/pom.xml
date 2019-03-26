@@ -20,54 +20,44 @@
     </dependency>
   </dependencies>
 
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.bsc.maven</groupId>
-        <artifactId>maven-processor-plugin</artifactId>
-        <version>3.3.3</version>
-        <executions>
-          <execution>
-            <id>process</id>
-            <goals>
-              <goal>process</goal>
-            </goals>
-            <phase>process-classes</phase>
-          </execution>
-          <execution>
-            <id>process-test</id>
-            <goals>
-              <goal>process-test</goal>
-            </goals>
-            <phase>process-test-classes</phase>
-          </execution>
-        </executions>
-        <configuration>
-          <processors>
-            <processor>io.github.therealmone.tdf4j.processor.Processor</processor>
-          </processors>
-        </configuration>
-        <dependencies>
-          <!-- https://mvnrepository.com/artifact/org.bsc.maven/maven-processor-plugin -->
-          <dependency>
-            <groupId>org.bsc.maven</groupId>
-            <artifactId>maven-processor-plugin</artifactId>
-            <version>3.3.3</version>
-          </dependency>
-        </dependencies>
-      </plugin>
-      <!-- Disable annotation processors during normal compilation -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <source>1.8</source>
-          <target>1.8</target>
-          <encoding>UTF-8</encoding>
-          <compilerArgument>-proc:none</compilerArgument>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
+  <!--<build>-->
+    <!--<plugins>-->
+      <!--<plugin>-->
+        <!--<groupId>org.bsc.maven</groupId>-->
+        <!--<artifactId>maven-processor-plugin</artifactId>-->
+        <!--<version>3.3.3</version>-->
+        <!--<executions>-->
+          <!--<execution>-->
+            <!--<id>process</id>-->
+            <!--<goals>-->
+              <!--<goal>process</goal>-->
+            <!--</goals>-->
+            <!--<phase>process-classes</phase>-->
+          <!--</execution>-->
+          <!--<execution>-->
+            <!--<id>process-test</id>-->
+            <!--<goals>-->
+              <!--<goal>process-test</goal>-->
+            <!--</goals>-->
+            <!--<phase>process-test-classes</phase>-->
+          <!--</execution>-->
+        <!--</executions>-->
+        <!--<configuration>-->
+          <!--<processors>-->
+            <!--<processor>io.github.therealmone.tdf4j.processor.Processor</processor>-->
+          <!--</processors>-->
+          <!--<outputDirectory>target/generated-sources/annotations</outputDirectory>-->
+        <!--</configuration>-->
+        <!--<dependencies>-->
+          <!--&lt;!&ndash; https://mvnrepository.com/artifact/org.bsc.maven/maven-processor-plugin &ndash;&gt;-->
+          <!--<dependency>-->
+            <!--<groupId>org.bsc.maven</groupId>-->
+            <!--<artifactId>maven-processor-plugin</artifactId>-->
+            <!--<version>3.3.3</version>-->
+          <!--</dependency>-->
+        <!--</dependencies>-->
+      <!--</plugin>-->
+    <!--</plugins>-->
+  <!--</build>-->
 
 </project>
