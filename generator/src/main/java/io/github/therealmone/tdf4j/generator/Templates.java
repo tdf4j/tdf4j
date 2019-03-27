@@ -1,4 +1,4 @@
-package io.github.therealmone.tdf4j.processor;
+package io.github.therealmone.tdf4j.generator;
 
 import org.stringtemplate.v4.ST;
 
