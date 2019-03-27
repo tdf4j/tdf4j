@@ -21,6 +21,7 @@ public class AbstractParserModuleTest {
             }
         }.build();
         assertEquals(2, module.getProductions().size());
+        assertEquals("prod1", module.getInitProduction());
         {
             assertEquals("prod2", module.getProductions().get(0).identifier());
             assertEquals(2, module.getProductions().get(0).elements().size());
@@ -90,6 +91,7 @@ public class AbstractParserModuleTest {
         }.build();
 
         assertEquals(1, module.getProductions().size());
+        assertEquals("prod1", module.getInitProduction());
         final Production production = module.getProductions().get(0);
         assertEquals("prod1", production.identifier());
 
@@ -158,6 +160,7 @@ public class AbstractParserModuleTest {
         }.build();
 
         assertEquals(1, module.getProductions().size());
+        assertEquals("prod1", module.getInitProduction());
         assertEquals("prod1 := {name1,name2,name3},{},{name4|name5|name6},{{},[]}", module.getProductions().get(0).toString());
     }
 
@@ -175,6 +178,7 @@ public class AbstractParserModuleTest {
         }.build();
 
         assertEquals(1, module.getProductions().size());
+        assertEquals("prod1", module.getInitProduction());
         assertEquals("prod1 := (name1,name2)|name3,(),([name4],name5,name6),([]|{},())", module.getProductions().get(0).toString());
     }
 
@@ -198,6 +202,47 @@ public class AbstractParserModuleTest {
         }.build();
 
         assertEquals(1, module.getProductions().size());
+        assertEquals("prod1", module.getInitProduction());
         assertEquals("prod1 := name1|name2|name3|(name4,name5)", module.getProductions().get(0).toString());
+    }
+
+    @Test
+    public void init_prod_test() {
+        //if no prods set - null
+        {
+            final AbstractParserModule module = new AbstractParserModule() {
+                @Override
+                public void configure() {
+                }
+            }.build();
+            assertNull(module.getInitProduction());
+        }
+
+        //if init prod was not specified - first prod
+        {
+            final AbstractParserModule module = new AbstractParserModule() {
+                @Override
+                public void configure() {
+                    prod("prod1");
+                    prod("prod2");
+                    prod("prod3");
+                }
+            }.build();
+            assertEquals("prod1", module.getInitProduction());
+        }
+
+        //specified
+        {
+            final AbstractParserModule module = new AbstractParserModule() {
+                @Override
+                public void configure() {
+                    prod("prod1");
+                    prod("prod2");
+                    prod("prod3");
+                    initProd("prod3");
+                }
+            }.build();
+            assertEquals("prod3", module.getInitProduction());
+        }
     }
 }

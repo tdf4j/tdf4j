@@ -3,6 +3,8 @@ package io.github.therealmone.tdf4j.parser.config;
 import io.github.therealmone.tdf4j.commons.model.ebnf.*;
 
 public interface BindMethods {
+    void initProd(final String identifier);
+
     Production.Builder prod(final String identifier);
 
     Optional optional(final Element ... elements);

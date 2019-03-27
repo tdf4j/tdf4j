@@ -3,6 +3,7 @@ package io.github.therealmone.tdf4j.parser.config;
 import io.github.therealmone.tdf4j.commons.Module;
 import io.github.therealmone.tdf4j.commons.model.ebnf.Production;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,5 +26,10 @@ public abstract class AbstractParserModule extends BindingMapper implements Modu
 
     public List<Production> getProductions() {
         return productions;
+    }
+
+    @Nullable
+    public String getInitProduction() {
+        return initProduction;
     }
 }

@@ -4,9 +4,13 @@ import io.github.therealmone.tdf4j.commons.model.ebnf.*;
 
 public abstract class BindingMapper implements BindMethods {
     ProductionBindStrategy productionBindStrategy = new ProductionBindStrategy();
+    String initProduction;
 
     @Override
     public Production.Builder prod(final String identifier) {
+        if(initProduction == null) {
+            initProduction = identifier;
+        }
         return productionBindStrategy.bind(identifier);
     }
 
@@ -38,5 +42,10 @@ public abstract class BindingMapper implements BindMethods {
     @Override
     public NonTerminal nt(String identifier) {
         return new NonTerminal.Builder().identifier(identifier).build();
+    }
+
+    @Override
+    public void initProd(String identifier) {
+        this.initProduction = identifier;
     }
 }
