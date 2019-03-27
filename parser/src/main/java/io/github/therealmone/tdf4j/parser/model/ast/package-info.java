@@ -3,7 +3,7 @@
         strictBuilder = true,
         passAnnotations = {Nullable.class, Nonnull.class}
 )
-package io.github.therealmone.tdf4j.parser.model;
+package io.github.therealmone.tdf4j.parser.model.ast;
 
 import org.immutables.value.Value;
 

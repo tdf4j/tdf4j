@@ -1,6 +1,6 @@
 package io.github.therealmone.tdf4j.parser.config;
 
-import io.github.therealmone.tdf4j.parser.model.*;
+import io.github.therealmone.tdf4j.parser.model.ebnf.*;
 
 public abstract class BindingMapper implements BindMethods {
     ProductionBindStrategy productionBindStrategy = new ProductionBindStrategy();

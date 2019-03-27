@@ -1,7 +1,7 @@
 package io.github.therealmone.tdf4j.parser.config;
 
 import io.github.therealmone.tdf4j.commons.Module;
-import io.github.therealmone.tdf4j.parser.model.Production;
+import io.github.therealmone.tdf4j.parser.model.ebnf.Production;
 
 import java.util.ArrayList;
 import java.util.List;

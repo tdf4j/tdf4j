@@ -8,7 +8,8 @@ import java.io.StringWriter;
 import java.io.Writer;
 
 public enum Templates {
-    TEST("templates/test.st");
+    PARSER("templates/parser.st"),
+    IMPORTS("templates/imports.st");
 
     private final String resource;
 

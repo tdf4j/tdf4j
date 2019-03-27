@@ -1,7 +1,7 @@
 package io.github.therealmone.tdf4j.parser;
 
 import io.github.therealmone.tdf4j.parser.config.AbstractParserModule;
-import io.github.therealmone.tdf4j.parser.model.Production;
+import io.github.therealmone.tdf4j.parser.model.ebnf.Production;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

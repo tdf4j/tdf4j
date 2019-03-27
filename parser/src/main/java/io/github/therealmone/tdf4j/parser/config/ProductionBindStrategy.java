@@ -1,7 +1,7 @@
 package io.github.therealmone.tdf4j.parser.config;
 
 import io.github.therealmone.tdf4j.commons.BindStrategy;
-import io.github.therealmone.tdf4j.parser.model.Production;
+import io.github.therealmone.tdf4j.parser.model.ebnf.Production;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,7 +25,7 @@ public class ProductionBindStrategy implements BindStrategy<String, Production.B
 
     @Override
     public List<Production> build() {
-        return new ArrayList<Production>() {{
+        return new ArrayList<>() {{
             prods.forEach((key, prod) -> add(prod.build()));
         }};
     }
