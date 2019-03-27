@@ -3,11 +3,11 @@ package <package>;
 <imports>
 
 public class <className> implements Parser {
-    private Stream\<Token> stream;
+    private BufferedStream\<Token> stream;
 
     @Override
     public AST parse(final Stream\<Token> tokens) {
-        this.stream = tokens;
+        this.stream = new BufferedStream\<>(tokens);
         <initProd>();
         return new AST.Builder().build();
     }

@@ -51,9 +51,11 @@ public class ParserGenerator implements Generator<Parser> {
         method.add("prodName", production.identifier());
         for(final Element element : production.elements()) {
             switch (element.kind()) {
+
                 case TERMINAL_TAG: {
                     final ST nameCodeBlock = Templates.TERMINAL_TAG_CODE_BLOCK.template();
                     nameCodeBlock.add("terminal", element.asTerminalTag().value());
+                    nameCodeBlock.add("elementDeclaration", element.toString());
                     method.add("codeBlocks", nameCodeBlock.render());
                 }
 
