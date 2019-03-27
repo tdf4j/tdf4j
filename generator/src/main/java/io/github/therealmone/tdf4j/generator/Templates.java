@@ -9,7 +9,9 @@ import java.io.Writer;
 
 public enum Templates {
     PARSER("templates/parser.st"),
-    IMPORTS("templates/imports.st");
+    IMPORTS("templates/imports.st"),
+    METHOD_DECLARATION("templates/method_declaration.st"),
+    TERMINAL_TAG_CODE_BLOCK("templates/terminal_tag_code_block.st");
 
     private final String resource;
 

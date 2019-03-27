@@ -3,7 +3,7 @@
         strictBuilder = true,
         passAnnotations = {Nullable.class, Nonnull.class}
 )
-package io.github.therealmone.tdf4j.parser.model.ebnf;
+package io.github.therealmone.tdf4j.commons.model.ebnf;
 
 import org.immutables.value.Value;
 

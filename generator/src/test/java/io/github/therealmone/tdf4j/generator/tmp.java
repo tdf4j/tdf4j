@@ -24,12 +24,21 @@ public class tmp {
         final Parser parser = generator.generate(new AbstractParserModule() {
             @Override
             public void configure() {
+                prod("lang")
+                        .then(t("lex1"))
+                        .then(t("lex2"))
+                        .then(t("lex3"));
+                prod("tmpProd")
+                        .then(t("lex1"))
+                        .then(t("lex2"))
+                        .then(t("lex3"));
             }
         });
         System.out.println("Compilation time: " + (System.currentTimeMillis() - current));
         current = System.currentTimeMillis();
-        parser.parse(lexer.stream("lex3 lex2 lex1"));
-        parser.parse(lexer.analyze("lex1 lex2 lex3"));
+//        parser.parse(lexer.stream("lex3 lex2 lex1"));
+        System.out.println(parser.parse(lexer.stream("lex1 lex2 lex3")));
         System.out.println("Parsing time: " + (System.currentTimeMillis() - current));
+        System.out.println(parser.parse(lexer.stream("lex2 lex3 lex1")));
     }
 }

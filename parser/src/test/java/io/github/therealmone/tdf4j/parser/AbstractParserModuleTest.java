@@ -1,7 +1,7 @@
 package io.github.therealmone.tdf4j.parser;
 
 import io.github.therealmone.tdf4j.parser.config.AbstractParserModule;
-import io.github.therealmone.tdf4j.parser.model.ebnf.Production;
+import io.github.therealmone.tdf4j.commons.model.ebnf.Production;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -14,24 +14,24 @@ public class AbstractParserModuleTest {
             @Override
             public void configure() {
                 prod("prod1")
-                        .then(name("ele1"))
-                        .then(name("ele2"));
+                        .then(t("ele1"))
+                        .then(t("ele2"));
                 prod("prod2")
-                        .then(name("ele1"), name("ele2"));
+                        .then(nt("ele1"), nt("ele2"));
             }
         }.build();
         assertEquals(2, module.getProductions().size());
         {
             assertEquals("prod2", module.getProductions().get(0).identifier());
             assertEquals(2, module.getProductions().get(0).elements().size());
-            assertEquals("ele1", module.getProductions().get(0).elements().get(0).asName().value());
-            assertEquals("ele2", module.getProductions().get(0).elements().get(1).asName().value());
+            assertEquals("ele1", module.getProductions().get(0).elements().get(0).asNonTerminal().identifier());
+            assertEquals("ele2", module.getProductions().get(0).elements().get(1).asNonTerminal().identifier());
         }
         {
             assertEquals("prod1", module.getProductions().get(1).identifier());
             assertEquals(2, module.getProductions().get(1).elements().size());
-            assertEquals("ele1", module.getProductions().get(1).elements().get(0).asName().value());
-            assertEquals("ele2", module.getProductions().get(1).elements().get(1).asName().value());
+            assertEquals("ele1", module.getProductions().get(1).elements().get(0).asTerminalTag().value());
+            assertEquals("ele2", module.getProductions().get(1).elements().get(1).asTerminalTag().value());
         }
     }
 
@@ -82,10 +82,10 @@ public class AbstractParserModuleTest {
             @Override
             public void configure() {
                 prod("prod1")
-                        .then(optional(name("name1"), name("name2"), name("name3")))
+                        .then(optional(t("name1"), t("name2"), t("name3")))
                         .then(optional())
-                        .then(optional(or(name("name4"), name("name5"))))
-                        .then(optional(optional(), name("name6")));
+                        .then(optional(or(nt("name4"), nt("name5"))))
+                        .then(optional(optional(), t("name6")));
             }
         }.build();
 
@@ -97,12 +97,12 @@ public class AbstractParserModuleTest {
         {
             assertTrue(production.elements().get(0).isOptional());
             assertEquals(3, production.elements().get(0).asOptional().elements().length);
-            assertTrue(production.elements().get(0).asOptional().elements()[0].isName());
-            assertTrue(production.elements().get(0).asOptional().elements()[1].isName());
-            assertTrue(production.elements().get(0).asOptional().elements()[2].isName());
-            assertEquals("name1", production.elements().get(0).asOptional().elements()[0].asName().value());
-            assertEquals("name2", production.elements().get(0).asOptional().elements()[1].asName().value());
-            assertEquals("name3", production.elements().get(0).asOptional().elements()[2].asName().value());
+            assertTrue(production.elements().get(0).asOptional().elements()[0].isTerminalTag());
+            assertTrue(production.elements().get(0).asOptional().elements()[1].isTerminalTag());
+            assertTrue(production.elements().get(0).asOptional().elements()[2].isTerminalTag());
+            assertEquals("name1", production.elements().get(0).asOptional().elements()[0].asTerminalTag().value());
+            assertEquals("name2", production.elements().get(0).asOptional().elements()[1].asTerminalTag().value());
+            assertEquals("name3", production.elements().get(0).asOptional().elements()[2].asTerminalTag().value());
         }
 
         //.then(optional())
@@ -116,10 +116,10 @@ public class AbstractParserModuleTest {
             assertTrue(production.elements().get(2).isOptional());
             assertEquals(1, production.elements().get(2).asOptional().elements().length);
             assertTrue(production.elements().get(2).asOptional().elements()[0].isOr());
-            assertTrue(production.elements().get(2).asOptional().elements()[0].asOr().first().isName());
-            assertTrue(production.elements().get(2).asOptional().elements()[0].asOr().second().isName());
-            assertEquals("name4", production.elements().get(2).asOptional().elements()[0].asOr().first().asName().value());
-            assertEquals("name5", production.elements().get(2).asOptional().elements()[0].asOr().second().asName().value());
+            assertTrue(production.elements().get(2).asOptional().elements()[0].asOr().first().isNonTerminal());
+            assertTrue(production.elements().get(2).asOptional().elements()[0].asOr().second().isNonTerminal());
+            assertEquals("name4", production.elements().get(2).asOptional().elements()[0].asOr().first().asNonTerminal().identifier());
+            assertEquals("name5", production.elements().get(2).asOptional().elements()[0].asOr().second().asNonTerminal().identifier());
         }
 
         //.then(optional(optional(), name("name6")));
@@ -128,8 +128,8 @@ public class AbstractParserModuleTest {
             assertEquals(2, production.elements().get(3).asOptional().elements().length);
             assertTrue(production.elements().get(3).asOptional().elements()[0].isOptional());
             assertEquals(0, production.elements().get(3).asOptional().elements()[0].asOptional().elements().length);
-            assertTrue(production.elements().get(3).asOptional().elements()[1].isName());
-            assertEquals("name6", production.elements().get(3).asOptional().elements()[1].asName().value());
+            assertTrue(production.elements().get(3).asOptional().elements()[1].isTerminalTag());
+            assertEquals("name6", production.elements().get(3).asOptional().elements()[1].asTerminalTag().value());
         }
 
         //toString()
@@ -144,12 +144,12 @@ public class AbstractParserModuleTest {
             @Override
             public void configure() {
                 prod("prod1")
-                        .then(repeat(name("name1"), name("name2"), name("name3")))
+                        .then(repeat(t("name1"), t("name2"), t("name3")))
                         .then(repeat())
                         .then(repeat(
                                 or(
-                                        name("name4"),
-                                        or(name("name5"), name("name6"))
+                                        t("name4"),
+                                        or(t("name5"), t("name6"))
                                 )
                             )
                         )
@@ -167,9 +167,9 @@ public class AbstractParserModuleTest {
             @Override
             public void configure() {
                 prod("prod1")
-                        .then(or(group(name("name1"), name("name2")), name("name3")))
+                        .then(or(group(t("name1"), t("name2")), t("name3")))
                         .then(group())
-                        .then(group(optional(name("name4")), name("name5"), name("name6")))
+                        .then(group(optional(t("name4")), t("name5"), t("name6")))
                         .then(group(or(optional(), repeat()), group()));
             }
         }.build();
@@ -185,12 +185,12 @@ public class AbstractParserModuleTest {
             public void configure() {
                 prod("prod1")
                         .then(or(
-                                name("name1"),
+                                t("name1"),
                                 or(
-                                        name("name2"),
+                                        t("name2"),
                                         or(
-                                                name("name3"),
-                                                group(name("name4"), name("name5"))
+                                                t("name3"),
+                                                group(t("name4"), t("name5"))
                                         )
                                 )
                         ));

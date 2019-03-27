@@ -1,7 +1,7 @@
 package io.github.therealmone.tdf4j.lexer.config;
 
 import io.github.therealmone.tdf4j.commons.BindStrategy;
-import io.github.therealmone.tdf4j.commons.Terminal;
+import io.github.therealmone.tdf4j.commons.model.ebnf.Terminal;
 
 import javax.annotation.Nullable;
 import java.util.*;
@@ -29,7 +29,7 @@ public class TerminalBindStrategy implements BindStrategy<String, Terminal.Build
 
     @Override
     public List<Terminal> build() {
-        return Collections.unmodifiableList(new ArrayList<Terminal>() {{
+        return Collections.unmodifiableList(new ArrayList<>() {{
             builders.forEach((s, builder) -> add(builder.build()));
         }});
     }

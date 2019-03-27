@@ -1,4 +1,4 @@
-package io.github.therealmone.tdf4j.parser.model.ebnf;
+package io.github.therealmone.tdf4j.commons.model.ebnf;
 
 import org.immutables.value.Value;
 

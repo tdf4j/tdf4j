@@ -1,6 +1,6 @@
 package io.github.therealmone.tdf4j.parser.config;
 
-import io.github.therealmone.tdf4j.parser.model.ebnf.*;
+import io.github.therealmone.tdf4j.commons.model.ebnf.*;
 
 public interface BindMethods {
     Production.Builder prod(final String identifier);
@@ -13,5 +13,7 @@ public interface BindMethods {
 
     Or or(final Element first, final Element second);
 
-    Name name(final String value);
+    Terminal.Tag t(final String tag);
+
+    NonTerminal nt(final String identifier);
 }

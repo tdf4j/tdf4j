@@ -1,14 +1,30 @@
-package io.github.therealmone.tdf4j.parser.model.ebnf;
+package io.github.therealmone.tdf4j.commons.model.ebnf;
 
 public interface Element {
     Kind kind();
 
-    default boolean isName() {
-        return this.kind() == Kind.NAME;
+    default boolean isTerminal() {
+        return this.kind() == Kind.TERMINAL;
     }
 
-    default Name asName() {
-        return (Name) this;
+    default Terminal asTerminal() {
+        return (Terminal) this;
+    }
+
+    default boolean isTerminalTag() {
+        return this.kind() == Kind.TERMINAL_TAG;
+    }
+
+    default Terminal.Tag asTerminalTag() {
+        return (Terminal.Tag) this;
+    }
+
+    default boolean isNonTerminal() {
+        return this.kind() == Kind.NON_TERMINAL;
+    }
+
+    default NonTerminal asNonTerminal() {
+        return (NonTerminal) this;
     }
 
     default boolean isOptional() {

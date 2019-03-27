@@ -1,7 +1,7 @@
 package io.github.therealmone.tdf4j.lexer.impl;
 
 import io.github.therealmone.tdf4j.commons.Stream;
-import io.github.therealmone.tdf4j.commons.Terminal;
+import io.github.therealmone.tdf4j.commons.model.ebnf.Terminal;
 import io.github.therealmone.tdf4j.commons.Token;
 import io.github.therealmone.tdf4j.lexer.config.AbstractLexerModule;
 import io.github.therealmone.tdf4j.lexer.Lexer;
@@ -48,7 +48,7 @@ public class LexerImpl implements Lexer {
                 final Terminal terminal = tryToSpecifyTerminal(buffer);
                 if(terminal != null) {
                     final Token token = new Token.Builder()
-                            .tag(terminal.tag())
+                            .tag(terminal.tag().value())
                             .value(buffer.toString())
                             .build();
                     in.replace(0, buffer.length(), "");

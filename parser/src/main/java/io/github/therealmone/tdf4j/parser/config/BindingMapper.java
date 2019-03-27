@@ -1,6 +1,6 @@
 package io.github.therealmone.tdf4j.parser.config;
 
-import io.github.therealmone.tdf4j.parser.model.ebnf.*;
+import io.github.therealmone.tdf4j.commons.model.ebnf.*;
 
 public abstract class BindingMapper implements BindMethods {
     ProductionBindStrategy productionBindStrategy = new ProductionBindStrategy();
@@ -31,7 +31,12 @@ public abstract class BindingMapper implements BindMethods {
     }
 
     @Override
-    public Name name(final String value) {
-        return new Name.Builder().value(value).build();
+    public Terminal.Tag t(final String tag) {
+        return new Terminal.Tag.Builder().value(tag).build();
+    }
+
+    @Override
+    public NonTerminal nt(String identifier) {
+        return new NonTerminal.Builder().identifier(identifier).build();
     }
 }

@@ -1,6 +1,6 @@
 package io.github.therealmone.tdf4j.lexer;
 
-import io.github.therealmone.tdf4j.commons.Terminal;
+import io.github.therealmone.tdf4j.commons.model.ebnf.Terminal;
 import io.github.therealmone.tdf4j.lexer.config.AbstractLexerModule;
 import org.junit.Test;
 
@@ -24,11 +24,11 @@ public class AbstractLexerModuleTest {
 
         final List<Terminal> terminals = config.getTerminals();
         assertEquals(3, terminals.size());
-        assertEquals("ONE", terminals.get(0).tag());
+        assertEquals("ONE", terminals.get(0).tag().value());
         assertEquals("^one$", terminals.get(0).pattern().pattern());
-        assertEquals("TWO", terminals.get(1).tag());
+        assertEquals("TWO", terminals.get(1).tag().value());
         assertEquals("^two$", terminals.get(1).pattern().pattern());
-        assertEquals("THREE", terminals.get(2).tag());
+        assertEquals("THREE", terminals.get(2).tag().value());
         assertEquals("^three$", terminals.get(2).pattern().pattern());
     }
 
@@ -95,7 +95,7 @@ public class AbstractLexerModuleTest {
             }
         }.build();
         assertEquals(1, config.getTerminals().size());
-        assertEquals("token", config.getTerminals().get(0).tag());
+        assertEquals("token", config.getTerminals().get(0).tag().value());
         assertEquals("pattern", config.getTerminals().get(0).pattern().pattern());
         assertEquals(100, config.getTerminals().get(0).priority());
     }
