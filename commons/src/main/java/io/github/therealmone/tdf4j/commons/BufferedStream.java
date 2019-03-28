@@ -4,7 +4,6 @@ import javax.annotation.Nullable;
 import java.util.concurrent.Callable;
 import java.util.function.Consumer;
 
-//todo: переделать с peek()
 //Stream decorator
 public class BufferedStream<T> implements Stream<T> {
     private final Stream<T> stream;
@@ -22,6 +21,14 @@ public class BufferedStream<T> implements Stream<T> {
     @Nullable
     @Override
     public T next() {
+        peek();
+        final T value = buffer;
+        buffer = null;
+        return value;
+    }
+
+    @Nullable
+    public T peek() {
         if(buffer == null) {
             buffer = stream.next();
         }
@@ -31,9 +38,5 @@ public class BufferedStream<T> implements Stream<T> {
     @Override
     public void forEach(Consumer<? super T> action) {
         stream.forEach(action);
-    }
-
-    public void removeTop() {
-        this.buffer = null;
     }
 }

@@ -1,8 +1,8 @@
 //<elementDeclaration>
 {
-    if(stream.next().value().equalsIgnoreCase("<terminal>")) {
-        stream.removeTop();
+    if(stream.peek().value().equalsIgnoreCase("<terminal>")) {
+        stream.next();
     } else {
-        throw new RuntimeException("Unexpected token: " + stream.next());
+        throw new RuntimeException("Unexpected token: " + stream.peek());
     }
 }

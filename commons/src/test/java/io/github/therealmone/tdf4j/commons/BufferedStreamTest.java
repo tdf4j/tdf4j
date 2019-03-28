@@ -24,20 +24,14 @@ public class BufferedStreamTest {
             }
         }).build());
 
+        assertEquals(1, bufferedStream.peek().intValue());
+        assertEquals(1, bufferedStream.peek().intValue());
         assertEquals(1, bufferedStream.next().intValue());
-        assertEquals(1, bufferedStream.next().intValue());
-        bufferedStream.removeTop();
         assertEquals(2, bufferedStream.next().intValue());
-        assertEquals(2, bufferedStream.next().intValue());
-        bufferedStream.removeTop();
+        assertEquals(3, bufferedStream.peek().intValue());
         assertEquals(3, bufferedStream.next().intValue());
-        assertEquals(3, bufferedStream.next().intValue());
-        bufferedStream.removeTop();
         assertEquals(4, bufferedStream.next().intValue());
-        assertEquals(4, bufferedStream.next().intValue());
-        bufferedStream.removeTop();
+        assertNull(bufferedStream.peek());
         assertNull(bufferedStream.next());
-        assertNull(bufferedStream.next());
-        bufferedStream.removeTop();
     }
 }
