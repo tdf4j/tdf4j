@@ -88,6 +88,8 @@ public class GroupParsingTest extends ParserTest {
         assertNotNull(parse(parser, "ABABCA"));
         assertNotNull(parse(parser, "ABCCA"));
         assertNotNull(parse(parser, "ABABCCA"));
-        assertParserFails(parser, "AC", unexpectedToken(TestTerminal.B));
+        assertParserFails(parser, "B", unexpectedToken(TestTerminal.B));
+        assertParserFails(parser, "BC", unexpectedToken(TestTerminal.B));
+        assertParserFails(parser, "", unexpectedEOF());
     }
 }
