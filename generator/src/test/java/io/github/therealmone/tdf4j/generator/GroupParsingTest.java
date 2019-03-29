@@ -7,6 +7,10 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class GroupParsingTest extends ParserTest {
+
+    /**
+     * prod1 := ((A), ((B, C)))
+     */
     @Test
     public void nested() {
         final Parser parser = generate(new AbstractParserModule() {
@@ -29,6 +33,9 @@ public class GroupParsingTest extends ParserTest {
         assertParserFails(parser, "", unexpectedEOF());
     }
 
+    /**
+     * prod1 := (A, B) | (C | A)
+     */
     @Test
     public void with_or() {
         final Parser parser = generate(new AbstractParserModule() {
@@ -51,6 +58,9 @@ public class GroupParsingTest extends ParserTest {
         assertParserFails(parser, "", unexpectedEOF());
     }
 
+    /**
+     * prod1 := [(A, B)], ([C, C]), A
+     */
     @Test
     public void with_optional() {
         final Parser parser = generate(new AbstractParserModule() {
@@ -71,6 +81,9 @@ public class GroupParsingTest extends ParserTest {
         assertParserFails(parser, "CB", unexpectedToken(TestTerminal.C));
     }
 
+    /**
+     * prod1 := {(A, B)}, ({C, A})
+     */
     @Test
     public void with_repeat() {
         final Parser parser = generate(new AbstractParserModule() {

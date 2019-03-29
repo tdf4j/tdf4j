@@ -7,6 +7,9 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class TerminalParsingTest extends ParserTest {
+    /**
+     * prod1 := A, B, C
+     */
     @Test
     public void sequence() {
         {
@@ -35,6 +38,9 @@ public class TerminalParsingTest extends ParserTest {
         }
     }
 
+    /**
+     * prod1 := A | B, C
+     */
     @Test
     public void with_or() {
         final Parser parser = generate(new AbstractParserModule() {
@@ -49,6 +55,9 @@ public class TerminalParsingTest extends ParserTest {
         assertParserFails(parser, "CB", unexpectedToken(TestTerminal.C));
     }
 
+    /**
+     * prod1 := [A], B, [C]
+     */
     @Test
     public void with_optional() {
         final Parser parser = generate(new AbstractParserModule() {
@@ -66,6 +75,9 @@ public class TerminalParsingTest extends ParserTest {
         assertParserFails(parser, "", unexpectedEOF());
     }
 
+    /**
+     * prod1 := {A, B}, C
+     */
     @Test
     public void with_repeat() {
         final Parser parser = generate(new AbstractParserModule() {
@@ -87,6 +99,9 @@ public class TerminalParsingTest extends ParserTest {
         assertParserFails(parser, "BC", unexpectedToken(TestTerminal.B));
     }
 
+    /**
+     * prod1 := (A, B), C
+     */
     @Test
     public void with_group() {
         final Parser parser = generate(new AbstractParserModule() {
