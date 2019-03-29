@@ -4,10 +4,12 @@ package <package>;
 
 public class <className> implements Parser {
     private BufferedStream\<Token> stream;
+    private Stack\<Anchor> streamAnchors;
 
     @Override
     public AST parse(final Stream\<Token> tokens) {
         this.stream = new BufferedStream\<>(tokens);
+        this.streamAnchors = new Stack\<>();
         <initProd>();
         return new AST.Builder().build();
     }

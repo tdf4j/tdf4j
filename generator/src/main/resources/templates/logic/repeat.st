@@ -1,8 +1,12 @@
 //<comment>
-try {
-    while(true) {
-        <codeBlocks: {codeBlock|<codeBlock>};separator="\n">
+{
+    try {
+        while(true) {
+            streamAnchors.push(stream.setAnchor());
+            <codeBlocks: {codeBlock|<codeBlock>};separator="\n">
+            streamAnchors.pop();
+        }
+    } catch(RuntimeException e<hash>) {
+        stream.revert(streamAnchors.pop());
     }
-} catch(RuntimeException e<hash>) {
-    //ignore
 }

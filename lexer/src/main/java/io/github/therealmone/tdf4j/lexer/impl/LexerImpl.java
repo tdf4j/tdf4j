@@ -42,9 +42,7 @@ public class LexerImpl implements Lexer {
             trim(in);
             buffer.append(in.charAt(buffer.length()));
             if(!anyTerminalHitEnd(buffer) || buffer.length() == in.length()) {
-                if(buffer.length() != in.length()) {
-                    buffer.deleteCharAt(buffer.length() - 1);
-                }
+                removeLast(buffer, in);
                 final Terminal terminal = tryToSpecifyTerminal(buffer);
                 if(terminal != null) {
                     final Token token = new Token.Builder()
@@ -55,12 +53,21 @@ public class LexerImpl implements Lexer {
                     buffer.replace(0, buffer.length(), "");
                     return token;
                 } else {
-                    throw new RuntimeException("Unexpected symbol: " + in.charAt(buffer.length()));
+                    throw new RuntimeException("Unexpected symbol: " +
+                            in.charAt(buffer.length() == 0 ? buffer.length() : buffer.length() - 1));
                 }
             }
         }
 
         return null;
+    }
+
+    private void removeLast(final StringBuilder buffer, final StringBuilder in) {
+        if(buffer.length() != in.length()) {
+            buffer.deleteCharAt(buffer.length() - 1);
+        } else if(tryToSpecifyTerminal(buffer) == null) {
+            buffer.deleteCharAt(buffer.length() - 1);
+        }
     }
 
     private void trim(final StringBuilder builder) {

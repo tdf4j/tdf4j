@@ -1,5 +1,6 @@
 package io.github.therealmone.tdf4j.lexer;
 
+import io.github.therealmone.tdf4j.commons.Stream;
 import io.github.therealmone.tdf4j.commons.Token;
 import io.github.therealmone.tdf4j.lexer.config.AbstractLexerModule;
 import io.github.therealmone.tdf4j.lexer.impl.LexerImpl;
@@ -403,5 +404,22 @@ public class LexerTest {
             assertEquals("java.lang.RuntimeException: Unexpected symbol: u", e.getMessage());
             throw e;
         }
+    }
+
+    @Test
+    public void without_spaces() {
+        final Lexer lexer = new LexerImpl(new AbstractLexerModule() {
+            @Override
+            public void configure() {
+                tokenize("A").pattern("A");
+                tokenize("B").pattern("B");
+                tokenize("C").pattern("C");
+            }
+        }.build());
+
+        final Stream<Token> tokens = lexer.stream("ABC");
+        assertEquals("A", tokens.next().tag());
+        assertEquals("B", tokens.next().tag());
+        assertEquals("C", tokens.next().tag());
     }
 }

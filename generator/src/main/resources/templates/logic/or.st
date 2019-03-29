@@ -1,6 +1,11 @@
 //<comment>
-try {
-     <codeBlocks1: {codeBlock|<codeBlock>};separator="\n">
- } catch (RuntimeException e<hash>) {
-     <codeBlocks2: {codeBlock|<codeBlock>};separator="\n">
- }
+{
+    streamAnchors.push(stream.setAnchor());
+    try {
+         <codeBlocks1: {codeBlock|<codeBlock>};separator="\n">
+         streamAnchors.pop();
+    } catch (RuntimeException e<hash>) {
+        stream.revert(streamAnchors.pop());
+        <codeBlocks2: {codeBlock|<codeBlock>};separator="\n">
+    }
+}
