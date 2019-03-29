@@ -7,21 +7,26 @@ import java.io.InputStream;
 import java.io.StringWriter;
 import java.io.Writer;
 
-public enum Templates {
+public enum Template {
     PARSER("templates/parser.st"),
     IMPORTS("templates/imports.st"),
-    METHOD_DECLARATION("templates/method_declaration.st"),
-    TERMINAL_TAG_CODE_BLOCK("templates/terminal_tag_code_block.st");
+    METHOD("templates/method.st"),
+    LOGIC_TERMINAL("templates/logic/terminal_tag.st"),
+    LOGIC_NON_TERMINAL("templates/logic/non_terminal.st"),
+    LOGIC_OPTIONAL("templates/logic/optional.st"),
+    LOGIC_OR("templates/logic/or.st"),
+    LOGIC_REPEAT("templates/logic/repeat.st"),
+    LOGIC_GROUP("templates/logic/group.st");
 
     private final String resource;
 
-    Templates(final String name) {
+    Template(final String name) {
         this.resource = load(name);
     }
 
     @SuppressWarnings("ConstantConditions")
     private String load(final String path) {
-        try(final InputStream inputStream = new BufferedInputStream(Templates.class.getClassLoader().getResourceAsStream(path));
+        try(final InputStream inputStream = new BufferedInputStream(Template.class.getClassLoader().getResourceAsStream(path));
             final Writer writer = new StringWriter()) {
             int bt;
             while((bt = inputStream.read()) != -1) {

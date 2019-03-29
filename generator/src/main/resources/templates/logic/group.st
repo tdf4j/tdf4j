@@ -1,4 +1,4 @@
-//<prodDeclaration>
-private void <prodName>() {
+//comment
+{
     <codeBlocks: {codeBlock|<codeBlock>};separator="\n">
 }
