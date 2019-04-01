@@ -4,7 +4,6 @@ import org.immutables.value.Value;
 
 @Value.Immutable
 public abstract class Repetition implements Element {
-
     @Override
     public Kind kind() {
         return Kind.REPETITION;
@@ -15,7 +14,6 @@ public abstract class Repetition implements Element {
     public abstract int times();
 
     public static class Builder extends ImmutableRepetition.Builder {
-
     }
 
     @Override

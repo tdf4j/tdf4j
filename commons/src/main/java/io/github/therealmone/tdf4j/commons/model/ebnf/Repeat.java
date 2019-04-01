@@ -12,7 +12,6 @@ public abstract class Repeat implements Element {
     public abstract Element[] elements();
 
     public static class Builder extends ImmutableRepeat.Builder {
-
     }
 
     @Override

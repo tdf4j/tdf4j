@@ -8,5 +8,6 @@ public enum Kind {
     GROUP,
     TERMINAL,
     TERMINAL_TAG,
+    EXCEPT,
     NON_TERMINAL
 }

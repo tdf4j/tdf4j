@@ -20,4 +20,6 @@ public interface BindMethods {
     Terminal.Tag t(final String tag);
 
     NonTerminal nt(final String identifier);
+
+    Except except(final Terminal.Tag ... tags);
 }

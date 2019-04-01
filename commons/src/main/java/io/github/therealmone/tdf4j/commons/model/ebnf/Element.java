@@ -67,6 +67,14 @@ public interface Element {
         return (Repetition) this;
     }
 
+    default boolean isExcept() {
+        return this.kind() == Kind.EXCEPT;
+    }
+
+    default Except asExcept() {
+        return (Except) this;
+    }
+
     default String toStringGroup(final Element ... elements) {
         final StringBuilder builder = new StringBuilder();
         if(elements.length > 0) {

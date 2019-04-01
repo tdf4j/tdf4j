@@ -12,7 +12,6 @@ public abstract class Optional implements Element {
     public abstract Element[] elements();
 
     public static class Builder extends ImmutableOptional.Builder {
-
     }
 
     @Override

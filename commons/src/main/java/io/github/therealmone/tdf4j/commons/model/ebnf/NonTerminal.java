@@ -12,7 +12,6 @@ public abstract class NonTerminal implements Element {
     public abstract String identifier();
 
     public static class Builder extends ImmutableNonTerminal.Builder {
-
     }
 
     @Override

@@ -263,4 +263,19 @@ public class AbstractParserModuleTest {
             assertEquals("prod3", module.getInitProduction());
         }
     }
+
+    @Test
+    public void except_test() {
+        final AbstractParserModule module = new AbstractParserModule() {
+            @Override
+            public void configure() {
+                prod("prod1")
+                        .then(nt("prod2"))
+                        .then(except(t("C")));
+            }
+        }.build();
+        assertEquals(1, module.getProductions().size());
+        assertEquals("prod1", module.getProductions().get(0).identifier());
+        assertEquals("prod1 := prod2,-(C)", module.getProductions().get(0).toString());
+    }
 }

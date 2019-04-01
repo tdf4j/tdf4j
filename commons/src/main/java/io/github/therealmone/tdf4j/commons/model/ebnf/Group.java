@@ -12,7 +12,6 @@ public abstract class Group implements Element {
     public abstract Element[] elements();
 
     public static class Builder extends ImmutableGroup.Builder {
-
     }
 
     @Override

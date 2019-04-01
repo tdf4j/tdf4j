@@ -14,7 +14,6 @@ public abstract class Or implements Element {
     public abstract Element second();
 
     public static class Builder extends ImmutableOr.Builder {
-
     }
 
     @Override

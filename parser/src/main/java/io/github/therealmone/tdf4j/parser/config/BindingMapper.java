@@ -45,12 +45,17 @@ public abstract class BindingMapper implements BindMethods {
     }
 
     @Override
-    public NonTerminal nt(String identifier) {
+    public NonTerminal nt(final String identifier) {
         return new NonTerminal.Builder().identifier(identifier).build();
     }
 
     @Override
-    public void initProd(String identifier) {
+    public void initProd(final String identifier) {
         this.initProduction = identifier;
+    }
+
+    @Override
+    public Except except(final Terminal.Tag ... tags) {
+        return new Except.Builder().tags(tags).build();
     }
 }
