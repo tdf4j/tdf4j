@@ -5,24 +5,31 @@ import io.github.therealmone.tdf4j.lexer.Lexer;
 import io.github.therealmone.tdf4j.lexer.LexerFactory;
 import io.github.therealmone.tdf4j.lexer.config.AbstractLexerModule;
 import io.github.therealmone.tdf4j.parser.Parser;
+import io.github.therealmone.tdf4j.parser.UnexpectedTokenException;
 import io.github.therealmone.tdf4j.parser.config.AbstractParserModule;
 import io.github.therealmone.tdf4j.parser.model.ast.AST;
+import org.junit.BeforeClass;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
-class ParserTest {
-    private static final Generator<Parser> generator = new ParserGenerator();
-    private static final Lexer lexer = new LexerFactory().withModule(new AbstractLexerModule() {
-        @Override
-        public void configure() {
-            for (final TestTerminal testLexeme : TestTerminal.values()) {
-                tokenize(testLexeme.getTerminal().tag().value())
-                        .pattern(testLexeme.getTerminal().pattern().pattern())
-                        .priority(testLexeme.getTerminal().priority());
+public class ParserTest {
+    static Generator<Parser> generator = new ParserGenerator();
+    static Lexer lexer;
+
+    @BeforeClass
+    public static void globalSetup() {
+        lexer = new LexerFactory().withModule(new AbstractLexerModule() {
+            @Override
+            public void configure() {
+                for (final TestTerminal testLexeme : TestTerminal.values()) {
+                    tokenize(testLexeme.getTerminal().tag().value())
+                            .pattern(testLexeme.getTerminal().pattern().pattern())
+                            .priority(testLexeme.getTerminal().priority());
+                }
             }
-        }
-    });
+        });
+    }
 
     static Parser generate(final AbstractParserModule module) {
         final long current = System.currentTimeMillis();
@@ -47,7 +54,7 @@ class ParserTest {
     }
 
     static void assertParserFails(final Parser parser, final String input, final String message) {
-        assertThrows(() -> parse(parser, input), RuntimeException.class, message);
+        assertThrows(() -> parse(parser, input), UnexpectedTokenException.class, message);
     }
 
     static void assertThrows(final Callback callback, final Class<? extends Throwable> ex, final String message) {

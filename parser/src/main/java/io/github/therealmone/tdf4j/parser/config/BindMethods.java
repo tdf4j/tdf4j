@@ -17,6 +17,8 @@ public interface BindMethods {
 
     Or or(final Element first, final Element second);
 
+    Or oneOf(final Element ... elements);
+
     Terminal.Tag t(final String tag);
 
     NonTerminal nt(final String identifier);

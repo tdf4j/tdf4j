@@ -126,7 +126,7 @@ public class ExceptParsingTest extends ParserTest {
             @Override
             public void configure() {
                 prod("prod1")
-                        .then(
+                        .is(
                                 repeat(except(t("C"))),
                                 t("C")
                         );
@@ -154,7 +154,7 @@ public class ExceptParsingTest extends ParserTest {
             @Override
             public void configure() {
                 prod("prod1")
-                        .then(
+                        .is(
                                 repetition(except(t("C")), 2),
                                 repetition(
                                         repetition(except(t("A"), t("B")), 2),

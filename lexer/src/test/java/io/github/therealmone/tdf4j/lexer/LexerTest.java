@@ -401,7 +401,7 @@ public class LexerTest {
         try {
             lexer.analyze("unexpected");
         } catch (RuntimeException e) {
-            assertEquals("java.lang.RuntimeException: Unexpected symbol: u", e.getMessage());
+            assertEquals("io.github.therealmone.tdf4j.lexer.UnexpectedSymbolException: Unexpected symbol: u", e.getMessage());
             throw e;
         }
     }
@@ -421,5 +421,26 @@ public class LexerTest {
         assertEquals("A", tokens.next().tag());
         assertEquals("B", tokens.next().tag());
         assertEquals("C", tokens.next().tag());
+    }
+
+    @SuppressWarnings("ConstantConditions")
+    @Test
+    public void string_test() {
+        final Lexer lexer = new LexerImpl(new AbstractLexerModule() {
+            @Override
+            public void configure() {
+                tokenize("PRINT").pattern("^print$").priority(1);
+                tokenize("LB").pattern("^\\($");
+                tokenize("STRING").pattern("^\"[^\"]*\"$");
+                tokenize("RB").pattern("^\\)$");
+                tokenize("DEL").pattern("^;$");
+            }
+        }.build());
+        final Stream<Token> stream = lexer.stream("print(\"Test String\");");
+        assertEquals("print", stream.next().value());
+        assertEquals("(", stream.next().value());
+        assertEquals("\"Test String\"", stream.next().value());
+        assertEquals(")", stream.next().value());
+        assertEquals(";", stream.next().value());
     }
 }

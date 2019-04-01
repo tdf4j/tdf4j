@@ -4,8 +4,8 @@
     try {
         <codeBlocks: {codeBlock|<codeBlock>};separator="\n">
         streamAnchors.pop();
-    } catch(RuntimeException e) {
+    } catch(UnexpectedTokenException e<hash>) {
         stream.revert(streamAnchors.pop());
-        throw e;
+        throw e<hash>;
     }
 }

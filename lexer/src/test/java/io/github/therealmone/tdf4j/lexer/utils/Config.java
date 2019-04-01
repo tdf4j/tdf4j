@@ -6,7 +6,7 @@ public class Config extends AbstractLexerModule {
     @Override
     public void configure() {
         tokenize("VAR").pattern("^[a-z]+$");
-        tokenize("STRING").pattern("^\"(.*?)\"$");
+        tokenize("STRING").pattern("^\"[^\"]*\"$");
         tokenize("NEW").pattern("^new$").priority(1);
         tokenize("TYPEOF").pattern("^typeof$").priority(1);
         tokenize("HASHSET").pattern("^hashset$").priority(1);

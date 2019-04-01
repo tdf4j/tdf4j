@@ -3,6 +3,7 @@ package io.github.therealmone.tdf4j.lexer.impl;
 import io.github.therealmone.tdf4j.commons.Stream;
 import io.github.therealmone.tdf4j.commons.model.ebnf.Terminal;
 import io.github.therealmone.tdf4j.commons.Token;
+import io.github.therealmone.tdf4j.lexer.UnexpectedSymbolException;
 import io.github.therealmone.tdf4j.lexer.config.AbstractLexerModule;
 import io.github.therealmone.tdf4j.lexer.Lexer;
 
@@ -53,8 +54,7 @@ public class LexerImpl implements Lexer {
                     buffer.replace(0, buffer.length(), "");
                     return token;
                 } else {
-                    throw new RuntimeException("Unexpected symbol: " +
-                            in.charAt(buffer.length() == 0 ? buffer.length() : buffer.length() - 1));
+                    throw new UnexpectedSymbolException(in.charAt(buffer.length() == 0 ? buffer.length() : buffer.length() - 1));
                 }
             }
         }

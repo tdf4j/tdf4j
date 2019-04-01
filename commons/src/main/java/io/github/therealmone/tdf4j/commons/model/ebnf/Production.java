@@ -16,7 +16,7 @@ public abstract class Production {
             return super.addElements(element);
         }
 
-        public Builder then(final Element ... elements) {
+        public Builder is(final Element ... elements) {
             return super.addElements(elements);
         }
     }

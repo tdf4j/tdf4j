@@ -17,7 +17,7 @@ public class AbstractParserModuleTest {
                         .then(t("ele1"))
                         .then(t("ele2"));
                 prod("prod2")
-                        .then(nt("ele1"), nt("ele2"));
+                        .is(nt("ele1"), nt("ele2"));
             }
         }.build();
         assertEquals(2, module.getProductions().size());
@@ -277,5 +277,20 @@ public class AbstractParserModuleTest {
         assertEquals(1, module.getProductions().size());
         assertEquals("prod1", module.getProductions().get(0).identifier());
         assertEquals("prod1 := prod2,-(C)", module.getProductions().get(0).toString());
+    }
+
+    @Test
+    public void one_of_test() {
+        final AbstractParserModule module = new AbstractParserModule() {
+            @Override
+            public void configure() {
+                prod("prod1")
+                        .then(oneOf(t("A"), t("B"), t("C")))
+                        .then(oneOf(optional(t("C")), t("A")));
+            }
+        }.build();
+        assertEquals(1, module.getProductions().size());
+        assertEquals("prod1", module.getInitProduction());
+        assertEquals("prod1 := A|B|C,[C]|A", module.getProductions().get(0).toString());
     }
 }

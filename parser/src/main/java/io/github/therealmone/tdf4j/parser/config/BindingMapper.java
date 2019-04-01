@@ -40,6 +40,21 @@ public abstract class BindingMapper implements BindMethods {
     }
 
     @Override
+    public Or oneOf(Element... elements) {
+        if(elements.length < 2) {
+            throw new RuntimeException("oneOf() accepts 2 ore more elements");
+        }
+
+        if(elements.length == 2) {
+            return new Or.Builder().first(elements[0]).second(elements[1]).build();
+        } else {
+            final Element[] toRecursion = new Element[elements.length - 1];
+            System.arraycopy(elements, 1, toRecursion, 0, elements.length - 1);
+            return new Or.Builder().first(elements[0]).second(oneOf(toRecursion)).build();
+        }
+    }
+
+    @Override
     public Terminal.Tag t(final String tag) {
         return new Terminal.Tag.Builder().value(tag).build();
     }

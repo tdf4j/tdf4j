@@ -16,7 +16,7 @@ public class TerminalParsingTest extends ParserTest {
             final Parser parser = generate(new AbstractParserModule() {
                 @Override
                 public void configure() {
-                    prod("prod1").then(t("A"), t("B"), t("C"));
+                    prod("prod1").is(t("A"), t("B"), t("C"));
                 }
             });
             assertNotNull(parse(parser, "ABC"));
@@ -28,8 +28,8 @@ public class TerminalParsingTest extends ParserTest {
                 @Override
                 public void configure() {
                     prod("prod1").then(nt("prod2"));
-                    prod("prod2").then(t("A"), nt("prod3"));
-                    prod("prod3").then(t("B"), nt("prod4"));
+                    prod("prod2").is(t("A"), nt("prod3"));
+                    prod("prod3").is(t("B"), nt("prod4"));
                     prod("prod4").then(t("C"));
                 }
             });
@@ -46,7 +46,7 @@ public class TerminalParsingTest extends ParserTest {
         final Parser parser = generate(new AbstractParserModule() {
             @Override
             public void configure() {
-                prod("prod1").then(or(t("A"), t("B")), t("C"));
+                prod("prod1").is(or(t("A"), t("B")), t("C"));
             }
         });
         assertNotNull(parse(parser, "AC"));
@@ -63,7 +63,7 @@ public class TerminalParsingTest extends ParserTest {
         final Parser parser = generate(new AbstractParserModule() {
             @Override
             public void configure() {
-                prod("prod1").then(optional(t("A")), t("B"), optional(t("C")));
+                prod("prod1").is(optional(t("A")), t("B"), optional(t("C")));
             }
         });
         assertNotNull(parse(parser, "ABC"));
@@ -107,7 +107,7 @@ public class TerminalParsingTest extends ParserTest {
         final Parser parser = generate(new AbstractParserModule() {
             @Override
             public void configure() {
-                prod("prod1").then(group(t("A"), t("B")), t("C"));
+                prod("prod1").is(group(t("A"), t("B")), t("C"));
             }
         });
         assertNotNull(parse(parser, "ABC"));
