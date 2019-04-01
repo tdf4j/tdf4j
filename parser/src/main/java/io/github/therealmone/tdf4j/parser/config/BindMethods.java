@@ -13,6 +13,8 @@ public interface BindMethods {
 
     Repeat repeat(final Element ... elements);
 
+    Repetition repetition(final Element element, final int times);
+
     Or or(final Element first, final Element second);
 
     Terminal.Tag t(final String tag);

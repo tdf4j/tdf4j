@@ -16,6 +16,7 @@ public enum Template {
     LOGIC_OPTIONAL("templates/logic/optional.st"),
     LOGIC_OR("templates/logic/or.st"),
     LOGIC_REPEAT("templates/logic/repeat.st"),
+    LOGIC_REPETITION("templates/logic/repetition.st"),
     LOGIC_GROUP("templates/logic/group.st");
 
     private final String resource;

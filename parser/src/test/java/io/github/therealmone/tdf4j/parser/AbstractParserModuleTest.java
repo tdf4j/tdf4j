@@ -165,6 +165,24 @@ public class AbstractParserModuleTest {
     }
 
     @Test
+    public void repetition_test() {
+        final AbstractParserModule module = new AbstractParserModule() {
+            @Override
+            public void configure() {
+                prod("prod1")
+                        .then(repetition(t("A"), 5))
+                        .then(repetition(repetition(t("A"), 0), 1_000_000))
+                        .then(repetition(group(t("A"), t("B")), 2))
+                        .then(repetition(optional(t("A"), t("B")), 3))
+                        .then(repetition(repeat(t("A"), t("B")), 4));
+            }
+        }.build();
+        assertEquals(1, module.getProductions().size());
+        assertEquals("prod1", module.getInitProduction());
+        assertEquals("prod1 := 5*A,1000000*0*A,2*(A,B),3*[A,B],4*{A,B}", module.getProductions().get(0).toString());
+    }
+
+    @Test
     public void group_test() {
         final AbstractParserModule module = new AbstractParserModule() {
             @Override

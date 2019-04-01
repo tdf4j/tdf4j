@@ -20,6 +20,8 @@ public interface CodeBlock extends Buildable {
                 return new OrTemplate.Builder().or(element.asOr()).build();
             case REPEAT:
                 return new RepeatTemplate.Builder().repeat(element.asRepeat()).build();
+            case REPETITION:
+                return new RepetitionTemplate.Builder().repetition(element.asRepetition()).build();
             case GROUP:
                 return new GroupTemplate.Builder().group(element.asGroup()).build();
             default:

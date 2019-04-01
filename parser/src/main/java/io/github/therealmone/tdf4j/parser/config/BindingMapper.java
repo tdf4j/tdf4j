@@ -30,6 +30,11 @@ public abstract class BindingMapper implements BindMethods {
     }
 
     @Override
+    public Repetition repetition(final Element element, final int times) {
+        return new Repetition.Builder().element(element).times(times).build();
+    }
+
+    @Override
     public Or or(final Element first, final Element second) {
         return new Or.Builder().first(first).second(second).build();
     }

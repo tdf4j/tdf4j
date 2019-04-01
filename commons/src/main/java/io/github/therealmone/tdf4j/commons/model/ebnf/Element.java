@@ -59,6 +59,14 @@ public interface Element {
         return (Repeat) this;
     }
 
+    default boolean isRepetition() {
+        return this.kind() == Kind.REPETITION;
+    }
+
+    default Repetition asRepetition() {
+        return (Repetition) this;
+    }
+
     default String toStringGroup(final Element ... elements) {
         final StringBuilder builder = new StringBuilder();
         if(elements.length > 0) {
