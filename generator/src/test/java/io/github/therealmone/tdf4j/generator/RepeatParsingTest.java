@@ -50,12 +50,12 @@ public class RepeatParsingTest extends ParserTest {
             }
         });
         assertNotNull(parse(parser, "AB"));
-        assertNotNull(parse(parser, ""));
         assertNotNull(parse(parser, "ABAB"));
         assertNotNull(parse(parser, "C"));
         assertNotNull(parse(parser, "CC"));
-        assertNotNull(parse(parser, "A"));
-        assertNotNull(parse(parser, "AA"));
+        assertParserFails(parser, "AA", unexpectedToken(TestTerminal.A));
+        assertParserFails(parser, "A", unexpectedEOF());
+        assertParserFails(parser, "", unexpectedEOF());
     }
 
     /**
@@ -89,14 +89,16 @@ public class RepeatParsingTest extends ParserTest {
             @Override
             public void configure() {
                 prod("prod1")
-                        .then(repeat(group(t("A"), t("A"))))
+                        .then(repeat(group(t("A"), t("B"))))
                         .then(group(repeat(t("C")), t("A")));
             }
         });
-        assertNotNull(parse(parser, "ABABCCA"));
         assertNotNull(parse(parser, "CCA"));
-        assertNotNull(parse(parser, "A"));
-        assertNotNull(parse(parser, "ABABA"));
+        assertNotNull(parse(parser, "ABCCA"));
+        assertNotNull(parse(parser, "ABCA"));
+        assertParserFails(parser, "AAABCCA", unexpectedToken(TestTerminal.A));
+        assertParserFails(parser, "A", unexpectedEOF());
+        assertParserFails(parser, "ABA", unexpectedEOF());
         assertParserFails(parser, "BCA", unexpectedToken(TestTerminal.B));
         assertParserFails(parser, "", unexpectedEOF());
     }

@@ -36,7 +36,7 @@ public class ParserGenerator implements Generator<Parser> {
         System.out.println(parser.build());
         return Reflect.compile(module.getClass().getPackage().getName() + "." + generatedClassName,
                 parser.build()
-        ).create().get();
+        ).create(module.getGrammar().firstSet(), module.getGrammar().followSet()).get();
     }
 
     private ParserTemplate build(final Grammar grammar, final String className, final String pack) {

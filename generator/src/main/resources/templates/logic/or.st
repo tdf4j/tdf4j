@@ -1,11 +1,14 @@
 //<comment>
 {
-    streamAnchors.push(stream.setAnchor());
-    try {
-         <codeBlocks1: {codeBlock|<codeBlock>};separator="\n">
-         streamAnchors.pop();
-    } catch (UnexpectedTokenException e<hash>) {
-        stream.revert(streamAnchors.pop());
-        <codeBlocks2: {codeBlock|<codeBlock>};separator="\n">
+    if(stream.peek() != null && (
+        <firstStartElements: {startElement|predict(stream.peek()).contains("<startElement>")}; separator=" ||\n">
+    )) {
+        <firstCodeBlocks: {codeBlock|<codeBlock>};separator="\n">
+    } else if(stream.peek() != null && (
+        <secondStartElements: {startElement|predict(stream.peek()).contains("<startElement>")}; separator=" ||\n">
+    )) {
+        <secondCodeBlocks: {codeBlock|<codeBlock>};separator="\n">
+    } else {
+        throw new UnexpectedTokenException(stream.peek());
     }
 }

@@ -34,6 +34,9 @@ public class ParserTest {
     static Parser generate(final AbstractParserModule module) {
         final long current = System.currentTimeMillis();
         final Parser parser = generator.generate(module);
+        System.out.println(module.getGrammar().toString());
+        System.out.println(module.getGrammar().firstSet().toString());
+        System.out.println(module.getGrammar().followSet().toString());
         System.out.println("Compilation time: " + (System.currentTimeMillis() - current));
         return parser;
     }
@@ -62,7 +65,7 @@ public class ParserTest {
             callback.call();
             fail("Expected exception: " + ex.getName() + ": " + message);
         } catch (Exception e) {
-            assertEquals(e.getClass().getName(), ex.getName());
+            assertEquals(ex.getName(), e.getClass().getName());
             assertEquals(message, e.getMessage());
         }
     }

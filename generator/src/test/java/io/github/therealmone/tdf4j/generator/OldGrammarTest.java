@@ -1,6 +1,7 @@
 package io.github.therealmone.tdf4j.generator;
 
 import io.github.therealmone.tdf4j.lexer.LexerFactory;
+import io.github.therealmone.tdf4j.lexer.UnexpectedSymbolException;
 import io.github.therealmone.tdf4j.lexer.config.AbstractLexerModule;
 import io.github.therealmone.tdf4j.parser.Parser;
 import io.github.therealmone.tdf4j.parser.config.AbstractParserModule;
@@ -57,7 +58,8 @@ public class OldGrammarTest extends ParserTest {
         @Override
         public void configure() {
             prod("lang")
-                    .then(repeat(nt("expr")));
+                    .then(repeat(nt("expr")))
+                    .then(t("$"));
 
             prod("expr")
                     .then(oneOf(
@@ -88,11 +90,11 @@ public class OldGrammarTest extends ParserTest {
                     .is(
                             t("FOR"),
                             t("LB"),
-                            nt("assign_expr"),
+                            nt("assign_expr_without_del"),
                             t("DEL"),
                             nt("condition"),
                             t("DEL"),
-                            nt("assign_expr"),
+                            nt("assign_expr_without_del"),
                             t("RB"),
                             t("FLB"),
                             repeat(nt("expr")),
@@ -104,7 +106,7 @@ public class OldGrammarTest extends ParserTest {
                             t("IF"),
                             t("LB"),
                             nt("condition"),
-                            t("BR"),
+                            t("RB"),
                             t("FLB"),
                             repeat(nt("expr")),
                             t("FRB"),
@@ -120,6 +122,14 @@ public class OldGrammarTest extends ParserTest {
                     );
 
             prod("assign_expr")
+                    .is(
+                            t("VAR"),
+                            t("ASSIGN_OP"),
+                            nt("value_expr"),
+                            t("DEL")
+                    );
+
+            prod("assign_expr_without_del")
                     .is(
                             t("VAR"),
                             t("ASSIGN_OP"),
@@ -143,7 +153,8 @@ public class OldGrammarTest extends ParserTest {
                             t("PRINT"),
                             t("LB"),
                             nt("print_parameters"),
-                            t("RB")
+                            t("RB"),
+                            t("DEL")
                     );
 
             prod("print_parameters")
@@ -162,7 +173,8 @@ public class OldGrammarTest extends ParserTest {
                             t("VAR"),
                             t("COMMA"),
                             nt("value"),
-                            t("RB")
+                            t("RB"),
+                            t("DEL")
                     );
 
             prod("remove_expr")
@@ -172,7 +184,8 @@ public class OldGrammarTest extends ParserTest {
                             t("VAR"),
                             t("COMMA"),
                             nt("value"),
-                            t("RB")
+                            t("RB"),
+                            t("DEL")
                     );
 
             prod("rewrite_expr")
@@ -184,14 +197,16 @@ public class OldGrammarTest extends ParserTest {
                             nt("value"),
                             t("COMMA"),
                             nt("value_expr"),
-                            t("RB")
+                            t("RB"),
+                            t("DEL")
                     );
 
             prod("init_expr")
                     .is(
                             t("NEW"),
                             t("VAR"),
-                            optional(nt("inst_expr"))
+                            optional(nt("inst_expr")),
+                            t("DEL")
                     );
 
             prod("inst_expr")
@@ -279,62 +294,62 @@ public class OldGrammarTest extends ParserTest {
 
     @Test
     public void Tests_ParserTest_parserTest() {
-        assertNotNull(parse(parser, "while(a > b) {}"));
-        assertNotNull(parse(parser, "while((a > b) & (c < d)) {}"));
-        assertNotNull(parse(parser, "while((((((a > b))))) & (((((c < d)))))) {}"));
-        assertNotNull(parse(parser, "while((a == b) & (c < d * (5 + 1)) | ((10 *(s + 150) <= 300))){}"));
-        assertNotNull(parse(parser, "while(((((((((((c < d))))))))))) {}"));
-        assertNotNull(parse(parser, "while(a < b & c > d) {}"));
-        assertNotNull(parse(parser, "while(a == b & c < d * (5 + 1) | 10 * (s + 150) <= 300){}"));
-        assertNotNull(parse(parser, "if(a > b) {}"));
-        assertNotNull(parse(parser, "if((a > b) & (c < d)) {}"));
-        assertNotNull(parse(parser, "if((((((a > b))))) & (((((c < d)))))) {}"));
-        assertNotNull(parse(parser, "if((a == b) & (c < d * (5 + 1)) | ((10 *(s + 150) <= 300))){}"));
-        assertNotNull(parse(parser, "if(((((((((((c < d))))))))))) {}"));
-        assertNotNull(parse(parser, "if(a < b & c > d) {}"));
-        assertNotNull(parse(parser, "if(a == b & c < d * (5 + 1) | 10 * (s + 150) <= 300){}"));
-        assertNotNull(parse(parser, "for(i = 0; i < 100; i = i + 1) {}"));
-        assertNotNull(parse(parser, "for(i = (((((a + b))))) * (((((c + d))))); i > 100; i = i + 1){}"));
-        assertNotNull(parse(parser, "for(i = (((1 + 1) * (1 + 2)) * (1 + 1)) * (100 - 10); i > 100; i = i + 1){}"));
-        assertNotNull(parse(parser, "do{}while(a > b)"));
-        assertNotNull(parse(parser, "do{}while((a > b) & (c < d))"));
-        assertNotNull(parse(parser, "do{}while((((((a > b))))) & (((((c < d))))))"));
-        assertNotNull(parse(parser, "do{}while((a == b) & (c < d * (5 + 1)) | ((10 *(s + 150) <= 300)))"));
-        assertNotNull(parse(parser, "do{}while(((((((((((c < d)))))))))))"));
-        assertNotNull(parse(parser, "do{}while(a < b & c > d)"));
-        assertNotNull(parse(parser, "do{}while(a == b & c < d * (5 + 1) | 10 * (s + 150) <= 300)"));
-        assertNotNull(parse(parser, "print(0);"));
-        assertNotNull(parse(parser, "new a = 100; print(a);"));
-        assertNotNull(parse(parser, "new a typeof arraylist; put(a, 100); print(get(a, 0));"));
-        assertNotNull(parse(parser, "new a typeof hashset; new i = 0; put(a, i); print(get(a, i));"));
-        assertNotNull(parse(parser, "new a typeof hashset; new i = 100; put(a, i); i = get(a, i);"));
-        assertNotNull(parse(parser, "new a typeof arraylist; put(a, 100); i = get(a, 0);"));
-        assertNotNull(parse(parser, "new a typeof hashset; new i = 100; put(a, i); remove(a, i);"));
-        assertNotNull(parse(parser, "new a typeof arraylist; put(a, 100); remove(a, 0);"));
-        assertNotNull(parse(parser, "while(a > b) {if (a < d) {do{i = i;}while(a < b)} else {for(i = i; i < 100; i = i + 1){i = i;}}}"));
-        assertNotNull(parse(parser, "a = b; c = a; a = a;"));
+        assertNotNull(parse(parser, "while(a > b) {}$"));
+        assertNotNull(parse(parser, "while((a > b) & (c < d)) {}$"));
+        assertNotNull(parse(parser, "while((((((a > b))))) & (((((c < d)))))) {}$"));
+        assertNotNull(parse(parser, "while((a == b) & (c < d * (5 + 1)) | ((10 *(s + 150) <= 300))){}$"));
+        assertNotNull(parse(parser, "while(((((((((((c < d))))))))))) {}$"));
+        assertNotNull(parse(parser, "while(a < b & c > d) {}$"));
+        assertNotNull(parse(parser, "while(a == b & c < d * (5 + 1) | 10 * (s + 150) <= 300){}$"));
+        assertNotNull(parse(parser, "if(a > b) {}$"));
+        assertNotNull(parse(parser, "if((a > b) & (c < d)) {}$"));
+        assertNotNull(parse(parser, "if((((((a > b))))) & (((((c < d)))))) {}$"));
+        assertNotNull(parse(parser, "if((a == b) & (c < d * (5 + 1)) | ((10 *(s + 150) <= 300))){}$"));
+        assertNotNull(parse(parser, "if(((((((((((c < d))))))))))) {}$"));
+        assertNotNull(parse(parser, "if(a < b & c > d) {}$"));
+        assertNotNull(parse(parser, "if(a == b & c < d * (5 + 1) | 10 * (s + 150) <= 300){}$"));
+        assertNotNull(parse(parser, "for(i = 0; i < 100; i = i + 1) {}$"));
+        assertNotNull(parse(parser, "for(i = (((((a + b))))) * (((((c + d))))); i > 100; i = i + 1){}$"));
+        assertNotNull(parse(parser, "for(i = (((1 + 1) * (1 + 2)) * (1 + 1)) * (100 - 10); i > 100; i = i + 1){}$"));
+        assertNotNull(parse(parser, "do{}while(a > b)$"));
+        assertNotNull(parse(parser, "do{}while((a > b) & (c < d))$"));
+        assertNotNull(parse(parser, "do{}while((((((a > b))))) & (((((c < d))))))$"));
+        assertNotNull(parse(parser, "do{}while((a == b) & (c < d * (5 + 1)) | ((10 *(s + 150) <= 300)))$"));
+        assertNotNull(parse(parser, "do{}while(((((((((((c < d)))))))))))$"));
+        assertNotNull(parse(parser, "do{}while(a < b & c > d)$"));
+        assertNotNull(parse(parser, "do{}while(a == b & c < d * (5 + 1) | 10 * (s + 150) <= 300)$"));
+        assertNotNull(parse(parser, "print(0);$"));
+        assertNotNull(parse(parser, "new a = 100; print(a);$"));
+        assertNotNull(parse(parser, "new a typeof arraylist; put(a, 100); print(get(a, 0));$"));
+        assertNotNull(parse(parser, "new a typeof hashset; new i = 0; put(a, i); print(get(a, i));$"));
+        assertNotNull(parse(parser, "new a typeof hashset; new i = 100; put(a, i); i = get(a, i);$"));
+        assertNotNull(parse(parser, "new a typeof arraylist; put(a, 100); i = get(a, 0);$"));
+        assertNotNull(parse(parser, "new a typeof hashset; new i = 100; put(a, i); remove(a, i);$"));
+        assertNotNull(parse(parser, "new a typeof arraylist; put(a, 100); remove(a, 0);$"));
+        assertNotNull(parse(parser, "while(a > b) {if (a < d) {do{i = i;}while(a < b)} else {for(i = i; i < 100; i = i + 1){i = i;}}}$"));
+        assertNotNull(parse(parser, "a = b; c = a; a = a;$"));
     }
 
     @Test
     public void Tests_ParserTest_converterTests() {
-        assertNotNull(parse(parser, ""));
-        assertNotNull(parse(parser, "while(a < b) {a = a + 1;}"));
-        assertNotNull(parse(parser, "while(a < b & c > d) {}"));
-        assertNotNull(parse(parser, "while(((a < b) & (c > d)) | ((a > c) & (b < d))) {}"));
-        assertNotNull(parse(parser, "while((a < b) & (c > d) | (a > c) & (b < d)) {}"));
-        assertNotNull(parse(parser, "while(a < b) {if (a < b) {}}"));
-        assertNotNull(parse(parser, "while(a < b) {do{} while(a < b)}"));
-        assertNotNull(parse(parser, "while(a < b) {for(i = 1; i < 100; i = i + 1) {}}"));
-        assertNotNull(parse(parser, "while(a < b) {new a typeof hashset; new i = 1; put(a, i);}"));
-        assertNotNull(parse(parser, "for(i = 1; (i < n) & (n > i); i = i + 1) {}"));
+        assertNotNull(parse(parser, "$"));
+        assertNotNull(parse(parser, "while(a < b) {a = a + 1;}$"));
+        assertNotNull(parse(parser, "while(a < b & c > d) {}$"));
+        assertNotNull(parse(parser, "while(((a < b) & (c > d)) | ((a > c) & (b < d))) {}$"));
+        assertNotNull(parse(parser, "while((a < b) & (c > d) | (a > c) & (b < d)) {}$"));
+        assertNotNull(parse(parser, "while(a < b) {if (a < b) {}}$"));
+        assertNotNull(parse(parser, "while(a < b) {do{} while(a < b)}$"));
+        assertNotNull(parse(parser, "while(a < b) {for(i = 1; i < 100; i = i + 1) {}}$"));
+        assertNotNull(parse(parser, "while(a < b) {new a typeof hashset; new i = 1; put(a, i);}$"));
+        assertNotNull(parse(parser, "for(i = 1; (i < n) & (n > i); i = i + 1) {}$"));
     }
 
     @Test
     public void Tests_ParserTest_testOptimizer() {
-        assertNotNull(parse(parser, "print(100 / (25 + 25));"));
-        assertNotNull(parse(parser, "print(1 / (100 * (50 - (1 / 0.16))));"));
-        assertNotNull(parse(parser, "print(100 / (25 + 25 - a));"));
-        assertNotNull(parse(parser, "print(1 / (100 * (50 - (1 / 0.16 - a))));"));
+        assertNotNull(parse(parser, "print(100 / (25 + 25));$"));
+        assertNotNull(parse(parser, "print(1 / (100 * (50 - (1 / 0.16))));$"));
+        assertNotNull(parse(parser, "print(100 / (25 + 25 - a));$"));
+        assertNotNull(parse(parser, "print(1 / (100 * (50 - (1 / 0.16 - a))));$"));
     }
 
     @Test
@@ -348,13 +363,13 @@ public class OldGrammarTest extends ParserTest {
                         "print(get(a, one));" +
                         "print(get(a, two));" +
                         "remove(a, one);" +
-                        "print(get(a, one));"));
+                        "print(get(a, one));$"));
 
         assertNotNull(parse(parser,
                 "new a typeof hashset;" +
                         "new i = 100;" +
                         "put(a, i);" +
-                        "put(a, i);"));
+                        "put(a, i);$"));
 
         assertNotNull(parse(parser,
                 "new a typeof arraylist;" +
@@ -366,15 +381,15 @@ public class OldGrammarTest extends ParserTest {
                         "for(i = 0; i < 5; i = i + 1) {" +
                         "   print(get(a, i));" +
                         "}" +
-                        "print(get(a, -1));"));
+                        "print(get(a, -1));$"));
 
         assertNotNull(parse(parser,
                 "new a typeof hashset;" +
-                        "new i = get(a, 100);"));
+                        "new i = get(a, 100);$"));
 
         assertNotNull(parse(parser,
                 "new a typeof arraylist;" +
-                        "new i = get(a, i);"));
+                        "new i = get(a, i);$"));
     }
 
     @Test
@@ -383,42 +398,42 @@ public class OldGrammarTest extends ParserTest {
                 "new a typeof hashset;" +
                         "new i = 100;" +
                         "put(a, i);" +
-                        "print(get(a, i));"));
+                        "print(get(a, i));$"));
 
         assertNotNull(parse(parser,
                 "new a typeof arraylist;" +
                         "put(a, 100);" +
-                        "print(get(a, 0));"));
+                        "print(get(a, 0));$"));
 
         assertNotNull(parse(parser,
-                "print(\"Test String\");"));
+                "print(\"Test String\");$"));
 
         assertNotNull(parse(parser,
                 "new i = 100;" +
-                        "print(\"This value equals \" ++ i);"));
+                        "print(\"This value equals \" ++ i);$"));
 
         assertNotNull(parse(parser,
                 "new a typeof hashset;" +
                         "new i = 100;" +
                         "put(a, i);" +
-                        "print(\"This value equals \" ++ i ++ \": \" ++ get(a, i));"));
+                        "print(\"This value equals \" ++ i ++ \": \" ++ get(a, i));$"));
 
         assertNotNull(parse(parser,
                 "new a typeof hashset;" +
-                        "print(a);"));
+                        "print(a);$"));
     }
 
     @Test
     public void Tests_StackMachineTest_mathOperationsTest() {
-        assertNotNull(parse(parser, "print(100 + 100);"));
-        assertNotNull(parse(parser, "print(100 * 10);"));
-        assertNotNull(parse(parser, "print(100 - 101);"));
-        assertNotNull(parse(parser, "print(100 - 101);"));
-        assertNotNull(parse(parser, "print(100 / 5 * -1);"));
-        assertNotNull(parse(parser, "print(100 div 10);"));
-        assertNotNull(parse(parser, "print(105 mod 20);"));
-        assertNotNull(parse(parser, "print(2 * 2 + 2);"));
-        assertNotNull(parse(parser, "print(2 * (2 + 2));"));
+        assertNotNull(parse(parser, "print(100 + 100);$"));
+        assertNotNull(parse(parser, "print(100 * 10);$"));
+        assertNotNull(parse(parser, "print(100 - 101);$"));
+        assertNotNull(parse(parser, "print(100 - 101);$"));
+        assertNotNull(parse(parser, "print(100 / 5 * -1);$"));
+        assertNotNull(parse(parser, "print(100 div 10);$"));
+        assertNotNull(parse(parser, "print(105 mod 20);$"));
+        assertNotNull(parse(parser, "print(2 * 2 + 2);$"));
+        assertNotNull(parse(parser, "print(2 * (2 + 2));$"));
     }
 
     @Test
@@ -433,7 +448,7 @@ public class OldGrammarTest extends ParserTest {
                         "a = 100;" +
                         "print(a);" +
                         "a = 101.101;" +
-                        "print(a);"));
+                        "print(a);$"));
 
         assertNotNull(parse(parser,
                 "new a typeof arraylist;" +
@@ -443,16 +458,15 @@ public class OldGrammarTest extends ParserTest {
                         "new b typeof hashset;" +
                         "a = b;" +
                         "print(a);" +
-                        "put(a, 1);"));
+                        "put(a, 1);$"));
     }
 
     @Test
-    @Ignore("Следующее, что надо сделать - пофиксить эти тесты")
     public void Tests_StackMachineTest_errorsTest() {
-        assertParserFails(parser, "new a = hashset;", "Unexpected token: Token{tag=HASHSET, value=hashset}");
-        assertParserFails(parser, "get(a, 1);", "Unexpected token: Token{tag=GET, value=get}");
-        assertParserFails(parser, "while(a & b);", "Unexpected token: Token{tag=LOP, value=&}");
-        assertParserFails(parser, "@", "Unexpected symbol: @");
+        assertParserFails(parser, "new a = hashset;$", "Unexpected token: Token{tag=HASHSET, value=hashset}");
+        assertParserFails(parser, "get(a, 1);$", "Unexpected token: Token{tag=GET, value=get}");
+        assertParserFails(parser, "while(a & b);$", "Unexpected token: Token{tag=LOP, value=&}");
+        assertThrows(() -> parse(parser, "@$"), RuntimeException.class, "io.github.therealmone.tdf4j.lexer.UnexpectedSymbolException: Unexpected symbol: @");
     }
 
 }

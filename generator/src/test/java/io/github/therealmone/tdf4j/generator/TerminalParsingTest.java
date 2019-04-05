@@ -92,9 +92,7 @@ public class TerminalParsingTest extends ParserTest {
         assertNotNull(parse(parser, "ABABC"));
         assertNotNull(parse(parser, "ABABABC"));
         assertNotNull(parse(parser, "C"));
-
-        //todo: при AC - возвращать A? Или C?
-        assertParserFails(parser, "AC", unexpectedToken(TestTerminal.A));
+        assertParserFails(parser, "AC", unexpectedToken(TestTerminal.C));
         assertParserFails(parser, "BAC", unexpectedToken(TestTerminal.B));
         assertParserFails(parser, "BC", unexpectedToken(TestTerminal.B));
     }

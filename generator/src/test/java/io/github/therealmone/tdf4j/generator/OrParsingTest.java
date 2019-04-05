@@ -92,7 +92,7 @@ public class OrParsingTest extends ParserTest {
         });
         assertNotNull(parse(parser, "AB"));
         assertNotNull(parse(parser, "C"));
-        assertParserFails(parser, "AC", unexpectedToken(TestTerminal.A));
+        assertParserFails(parser, "AC", unexpectedToken(TestTerminal.C));
         assertParserFails(parser, "B", unexpectedToken(TestTerminal.B));
         assertParserFails(parser, "", unexpectedEOF());
     }

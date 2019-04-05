@@ -10,7 +10,7 @@ import java.util.Set;
 public abstract class First {
 
     @Value.Default
-    public Map<Production, Set<Terminal.Tag>> set() {
+    public Map<String, Set<Terminal.Tag>> set() {
         return new HashMap<>();
     }
 
@@ -22,9 +22,9 @@ public abstract class First {
         final StringBuilder builder = new StringBuilder();
         set().forEach((production, tags) -> {
             builder.append("first(")
-                    .append(production.identifier())
+                    .append(production)
                     .append(")")
-                    .append("= {");
+                    .append(" = {");
             tags.forEach(tag -> builder.append(tag.value()).append(","));
             builder.replace(builder.length() - 1, builder.length(), "");
             builder.append("}\n");

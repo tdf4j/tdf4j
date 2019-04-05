@@ -6,7 +6,7 @@ import org.immutables.value.Value;
 import org.stringtemplate.v4.ST;
 
 @Value.Immutable
-public interface OrTemplate extends CodeBlock {
+public interface OrTemplate extends CodeBlock, Prediction {
 
     Or or();
 
@@ -17,11 +17,13 @@ public interface OrTemplate extends CodeBlock {
                 .add("hash", Math.abs(this.hashCode()));
         final CodeBlock first = CodeBlock.fromElement(or().first());
         if(first != null) {
-            template.add("codeBlocks1", first.build());
+            template.add("firstStartElements", getStartElements(or().first()));
+            template.add("firstCodeBlocks", first.build());
         }
         final CodeBlock second = CodeBlock.fromElement(or().second());
         if(second != null) {
-            template.add("codeBlocks2", second.build());
+            template.add("secondStartElements", getStartElements(or().second()));
+            template.add("secondCodeBlocks", second.build());
         }
         return template.render();
     }

@@ -7,7 +7,7 @@ import org.immutables.value.Value;
 import org.stringtemplate.v4.ST;
 
 @Value.Immutable
-public interface RepeatTemplate extends CodeBlock {
+public interface RepeatTemplate extends CodeBlock, Prediction {
 
     Repeat repeat();
 
@@ -21,6 +21,9 @@ public interface RepeatTemplate extends CodeBlock {
             if (codeBlock != null) {
                 template.add("codeBlocks", codeBlock.build());
             }
+        }
+        if(repeat().elements().length != 0) {
+            template.add("firstElements", getStartElements(repeat().elements()[0]));
         }
         return template.render();
     }

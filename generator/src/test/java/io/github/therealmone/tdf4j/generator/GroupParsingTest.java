@@ -52,8 +52,8 @@ public class GroupParsingTest extends ParserTest {
             }
         });
         assertNotNull(parse(parser, "AB"));
-        assertNotNull(parse(parser, "A"));
         assertNotNull(parse(parser, "C"));
+        assertParserFails(parser, "A", unexpectedEOF());
         assertParserFails(parser, "B", unexpectedToken(TestTerminal.B));
         assertParserFails(parser, "", unexpectedEOF());
     }
@@ -75,10 +75,10 @@ public class GroupParsingTest extends ParserTest {
         assertNotNull(parse(parser, "ABCCA"));
         assertNotNull(parse(parser, "ABA"));
         assertNotNull(parse(parser, "CCA"));
-        assertNotNull(parse(parser, "A"));
+        assertParserFails(parser, "A", unexpectedEOF());
         assertParserFails(parser, "B", unexpectedToken(TestTerminal.B));
-        assertParserFails(parser, "CA", unexpectedToken(TestTerminal.C));
-        assertParserFails(parser, "CB", unexpectedToken(TestTerminal.C));
+        assertParserFails(parser, "CA", unexpectedToken(TestTerminal.A));
+        assertParserFails(parser, "CB", unexpectedToken(TestTerminal.B));
     }
 
     /**
@@ -94,13 +94,14 @@ public class GroupParsingTest extends ParserTest {
                         .then(group(repeat(t("C")), t("A")));
             }
         });
-        assertNotNull(parse(parser, "A"));
+
         assertNotNull(parse(parser, "ABCA"));
-        assertNotNull(parse(parser, "ABA"));
         assertNotNull(parse(parser, "CA"));
         assertNotNull(parse(parser, "ABABCA"));
         assertNotNull(parse(parser, "ABCCA"));
         assertNotNull(parse(parser, "ABABCCA"));
+        assertParserFails(parser, "ABA", unexpectedEOF());
+        assertParserFails(parser, "A", unexpectedEOF());
         assertParserFails(parser, "B", unexpectedToken(TestTerminal.B));
         assertParserFails(parser, "BC", unexpectedToken(TestTerminal.B));
         assertParserFails(parser, "", unexpectedEOF());

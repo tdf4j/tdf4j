@@ -2,10 +2,12 @@ package io.github.therealmone.tdf4j.generator;
 
 import io.github.therealmone.tdf4j.parser.Parser;
 import io.github.therealmone.tdf4j.parser.config.AbstractParserModule;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+@Ignore("Unsupported")
 public class ExceptParsingTest extends ParserTest {
 
     /**

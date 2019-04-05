@@ -6,9 +6,8 @@ import io.github.therealmone.tdf4j.generator.Template;
 import org.immutables.value.Value;
 import org.stringtemplate.v4.ST;
 
-
 @Value.Immutable
-public interface OptionalTemplate extends CodeBlock {
+public interface OptionalTemplate extends CodeBlock, Prediction {
 
     Optional optional();
 
@@ -22,6 +21,9 @@ public interface OptionalTemplate extends CodeBlock {
             if(codeBlock != null) {
                 template.add("codeBlocks", codeBlock.build());
             }
+        }
+        if(optional().elements().length != 0) {
+            template.add("firstElements", getStartElements(optional().elements()[0]));
         }
         return template.render();
     }
