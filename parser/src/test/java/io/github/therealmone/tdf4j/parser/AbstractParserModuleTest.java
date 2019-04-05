@@ -1,5 +1,6 @@
 package io.github.therealmone.tdf4j.parser;
 
+import io.github.therealmone.tdf4j.commons.model.ebnf.Grammar;
 import io.github.therealmone.tdf4j.parser.config.AbstractParserModule;
 import io.github.therealmone.tdf4j.commons.model.ebnf.Production;
 import org.junit.Test;
@@ -20,19 +21,20 @@ public class AbstractParserModuleTest {
                         .is(nt("ele1"), nt("ele2"));
             }
         }.build();
-        assertEquals(2, module.getProductions().size());
-        assertEquals("prod1", module.getInitProduction());
+        final Grammar grammar = module.getGrammar();
+        assertEquals(2, grammar.productions().size());
+        assertEquals("prod1", grammar.initProduction());
         {
-            assertEquals("prod2", module.getProductions().get(0).identifier());
-            assertEquals(2, module.getProductions().get(0).elements().size());
-            assertEquals("ele1", module.getProductions().get(0).elements().get(0).asNonTerminal().identifier());
-            assertEquals("ele2", module.getProductions().get(0).elements().get(1).asNonTerminal().identifier());
+            assertEquals("prod2", grammar.productions().get(0).identifier());
+            assertEquals(2, grammar.productions().get(0).elements().size());
+            assertEquals("ele1", grammar.productions().get(0).elements().get(0).asNonTerminal().identifier());
+            assertEquals("ele2", grammar.productions().get(0).elements().get(1).asNonTerminal().identifier());
         }
         {
-            assertEquals("prod1", module.getProductions().get(1).identifier());
-            assertEquals(2, module.getProductions().get(1).elements().size());
-            assertEquals("ele1", module.getProductions().get(1).elements().get(0).asTerminalTag().value());
-            assertEquals("ele2", module.getProductions().get(1).elements().get(1).asTerminalTag().value());
+            assertEquals("prod1", grammar.productions().get(1).identifier());
+            assertEquals(2, grammar.productions().get(1).elements().size());
+            assertEquals("ele1", grammar.productions().get(1).elements().get(0).asTerminalTag().value());
+            assertEquals("ele2", grammar.productions().get(1).elements().get(1).asTerminalTag().value());
         }
     }
 
@@ -43,7 +45,7 @@ public class AbstractParserModuleTest {
             public void configure() {
             }
         }.build();
-        assertEquals(0, module.getProductions().size());
+        assertEquals(0, module.getGrammar().productions().size());
     }
 
     @Test(expected = RuntimeException.class)
@@ -90,9 +92,10 @@ public class AbstractParserModuleTest {
             }
         }.build();
 
-        assertEquals(1, module.getProductions().size());
-        assertEquals("prod1", module.getInitProduction());
-        final Production production = module.getProductions().get(0);
+        final Grammar grammar = module.getGrammar();
+        assertEquals(1, grammar.productions().size());
+        assertEquals("prod1", grammar.initProduction());
+        final Production production = grammar.productions().get(0);
         assertEquals("prod1", production.identifier());
 
         //.then(optional(name("name1"), name("name2"), name("name3")))
@@ -159,9 +162,10 @@ public class AbstractParserModuleTest {
             }
         }.build();
 
-        assertEquals(1, module.getProductions().size());
-        assertEquals("prod1", module.getInitProduction());
-        assertEquals("prod1 := {name1,name2,name3},{},{name4|name5|name6},{{},[]}", module.getProductions().get(0).toString());
+        final Grammar grammar = module.getGrammar();
+        assertEquals(1, grammar.productions().size());
+        assertEquals("prod1", grammar.initProduction());
+        assertEquals("prod1 := {name1,name2,name3},{},{name4|name5|name6},{{},[]}", grammar.productions().get(0).toString());
     }
 
     @Test
@@ -177,9 +181,10 @@ public class AbstractParserModuleTest {
                         .then(repetition(repeat(t("A"), t("B")), 4));
             }
         }.build();
-        assertEquals(1, module.getProductions().size());
-        assertEquals("prod1", module.getInitProduction());
-        assertEquals("prod1 := 5*A,1000000*0*A,2*(A,B),3*[A,B],4*{A,B}", module.getProductions().get(0).toString());
+        final Grammar grammar = module.getGrammar();
+        assertEquals(1, grammar.productions().size());
+        assertEquals("prod1", grammar.initProduction());
+        assertEquals("prod1 := 5*A,1000000*0*A,2*(A,B),3*[A,B],4*{A,B}", grammar.productions().get(0).toString());
     }
 
     @Test
@@ -194,10 +199,10 @@ public class AbstractParserModuleTest {
                         .then(group(or(optional(), repeat()), group()));
             }
         }.build();
-
-        assertEquals(1, module.getProductions().size());
-        assertEquals("prod1", module.getInitProduction());
-        assertEquals("prod1 := (name1,name2)|name3,(),([name4],name5,name6),([]|{},())", module.getProductions().get(0).toString());
+        final Grammar grammar = module.getGrammar();
+        assertEquals(1, grammar.productions().size());
+        assertEquals("prod1", grammar.initProduction());
+        assertEquals("prod1 := (name1,name2)|name3,(),([name4],name5,name6),([]|{},())", grammar.productions().get(0).toString());
     }
 
     @Test
@@ -218,10 +223,10 @@ public class AbstractParserModuleTest {
                         ));
             }
         }.build();
-
-        assertEquals(1, module.getProductions().size());
-        assertEquals("prod1", module.getInitProduction());
-        assertEquals("prod1 := name1|name2|name3|(name4,name5)", module.getProductions().get(0).toString());
+        final Grammar grammar = module.getGrammar();
+        assertEquals(1, grammar.productions().size());
+        assertEquals("prod1", grammar.initProduction());
+        assertEquals("prod1 := name1|name2|name3|(name4,name5)", grammar.productions().get(0).toString());
     }
 
     @Test
@@ -233,7 +238,7 @@ public class AbstractParserModuleTest {
                 public void configure() {
                 }
             }.build();
-            assertNull(module.getInitProduction());
+            assertNull(module.getGrammar().initProduction());
         }
 
         //if init prod was not specified - first prod
@@ -246,7 +251,7 @@ public class AbstractParserModuleTest {
                     prod("prod3");
                 }
             }.build();
-            assertEquals("prod1", module.getInitProduction());
+            assertEquals("prod1", module.getGrammar().initProduction());
         }
 
         //specified
@@ -260,7 +265,7 @@ public class AbstractParserModuleTest {
                     initProd("prod3");
                 }
             }.build();
-            assertEquals("prod3", module.getInitProduction());
+            assertEquals("prod3", module.getGrammar().initProduction());
         }
     }
 
@@ -274,9 +279,10 @@ public class AbstractParserModuleTest {
                         .then(except(t("C")));
             }
         }.build();
-        assertEquals(1, module.getProductions().size());
-        assertEquals("prod1", module.getProductions().get(0).identifier());
-        assertEquals("prod1 := prod2,-(C)", module.getProductions().get(0).toString());
+        final Grammar grammar = module.getGrammar();
+        assertEquals(1, grammar.productions().size());
+        assertEquals("prod1", grammar.productions().get(0).identifier());
+        assertEquals("prod1 := prod2,-(C)", grammar.productions().get(0).toString());
     }
 
     @Test
@@ -289,8 +295,9 @@ public class AbstractParserModuleTest {
                         .then(oneOf(optional(t("C")), t("A")));
             }
         }.build();
-        assertEquals(1, module.getProductions().size());
-        assertEquals("prod1", module.getInitProduction());
-        assertEquals("prod1 := A|B|C,[C]|A", module.getProductions().get(0).toString());
+        final Grammar grammar = module.getGrammar();
+        assertEquals(1, grammar.productions().size());
+        assertEquals("prod1", grammar.initProduction());
+        assertEquals("prod1 := A|B|C,[C]|A", grammar.productions().get(0).toString());
     }
 }
