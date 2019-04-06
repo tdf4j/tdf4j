@@ -1,5 +1,6 @@
 package io.github.therealmone.tdf4j.parser.config;
 
+import io.github.therealmone.tdf4j.commons.Environment;
 import io.github.therealmone.tdf4j.commons.Module;
 import io.github.therealmone.tdf4j.commons.model.ebnf.First;
 import io.github.therealmone.tdf4j.commons.model.ebnf.Follow;
@@ -16,11 +17,13 @@ public abstract class AbstractParserModule extends BindingMapper implements Modu
     private final FollowSetCollector followSetCollector = new FollowSetCollector();
     private boolean built;
     private Grammar grammar;
+    private Environment environment;
 
     public AbstractParserModule build() {
         if(!built) {
             this.configure();
             final List<Production> productions = productionBindStrategy.build();
+            this.environment = environmentBindStrategy.build();
             this.grammar = new Grammar.Builder()
                     .addAllProductions(productions)
                     .initProduction(initProduction)
@@ -40,5 +43,12 @@ public abstract class AbstractParserModule extends BindingMapper implements Modu
                     .firstSet(new First.Builder().build())
                     .followSet(new Follow.Builder().build())
                     .build();
+    }
+
+    @Nonnull
+    public Environment getEnvironment() {
+        return environment != null
+                ? environment
+                : new Environment.Builder().build();
     }
 }

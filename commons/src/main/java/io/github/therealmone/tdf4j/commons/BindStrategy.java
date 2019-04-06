@@ -4,4 +4,10 @@ public interface BindStrategy<K, B, R> {
     B bind(K key);
 
     R build();
+
+    interface WithoutArgs<B, R> {
+        B bind();
+
+        R build();
+    }
 }

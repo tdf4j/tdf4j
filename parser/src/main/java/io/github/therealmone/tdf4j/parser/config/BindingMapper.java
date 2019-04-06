@@ -1,9 +1,12 @@
 package io.github.therealmone.tdf4j.parser.config;
 
+import io.github.therealmone.tdf4j.commons.Dependency;
+import io.github.therealmone.tdf4j.commons.Environment;
 import io.github.therealmone.tdf4j.commons.model.ebnf.*;
 
 public abstract class BindingMapper implements BindMethods {
     ProductionBindStrategy productionBindStrategy = new ProductionBindStrategy();
+    EnvironmentBindStrategy environmentBindStrategy = new EnvironmentBindStrategy();
     String initProduction;
 
     @Override
@@ -12,6 +15,21 @@ public abstract class BindingMapper implements BindMethods {
             initProduction = identifier;
         }
         return productionBindStrategy.bind(identifier);
+    }
+
+    @Override
+    public Environment.Builder environment() {
+        return environmentBindStrategy.bind();
+    }
+
+    @Override
+    public <T> Dependency<T> dependency(final Class<T> clazz, final String name, final T instance) {
+        return new Dependency.Builder<T>().clazz(clazz).name(name).instance(instance).build();
+    }
+
+    @Override
+    public <T> Dependency<T> dependency(final Class<T> clazz, final String name) {
+        return new Dependency.Builder<T>().clazz(clazz).name(name).build();
     }
 
     @Override
@@ -40,7 +58,7 @@ public abstract class BindingMapper implements BindMethods {
     }
 
     @Override
-    public Or oneOf(Element... elements) {
+    public Or oneOf(final Element... elements) {
         if(elements.length < 2) {
             throw new RuntimeException("oneOf() accepts 2 ore more elements");
         }

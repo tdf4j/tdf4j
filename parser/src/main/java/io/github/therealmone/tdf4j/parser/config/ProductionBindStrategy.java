@@ -1,18 +1,20 @@
 package io.github.therealmone.tdf4j.parser.config;
 
 import io.github.therealmone.tdf4j.commons.BindStrategy;
+import io.github.therealmone.tdf4j.commons.model.ebnf.ImmutableProduction;
 import io.github.therealmone.tdf4j.commons.model.ebnf.Production;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ProductionBindStrategy implements BindStrategy<String, Production.Builder, List<Production>> {
     private final Map<String, Production.Builder> prods = new HashMap<>();
 
     @Override
     public Production.Builder bind(final String key) {
+        //noinspection ConstantConditions
         if(key == null || key.trim().equals("")) {
             throw new RuntimeException("Key can't be blank or null");
         }
@@ -25,8 +27,6 @@ public class ProductionBindStrategy implements BindStrategy<String, Production.B
 
     @Override
     public List<Production> build() {
-        return new ArrayList<>() {{
-            prods.forEach((key, prod) -> add(prod.build()));
-        }};
+        return prods.values().stream().map(ImmutableProduction.Builder::build).collect(Collectors.toList());
     }
 }
