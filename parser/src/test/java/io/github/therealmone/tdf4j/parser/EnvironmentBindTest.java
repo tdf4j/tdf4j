@@ -50,33 +50,39 @@ public class EnvironmentBindTest {
         }
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void without_args() {
-        new AbstractParserModule() {
+        final AbstractParserModule module = new AbstractParserModule() {
             @Override
             public void configure() {
                 environment();
             }
         }.build();
+        assertEquals(0, module.getEnvironment().packages().length);
+        assertEquals(0, module.getEnvironment().dependencies().length);
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void without_dependencies() {
-        new AbstractParserModule() {
+        final AbstractParserModule module = new AbstractParserModule() {
             @Override
             public void configure() {
                 environment().packages("");
             }
         }.build();
+        assertEquals(1, module.getEnvironment().packages().length);
+        assertEquals(0, module.getEnvironment().dependencies().length);
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void without_packages() {
-        new AbstractParserModule() {
+        final AbstractParserModule module = new AbstractParserModule() {
             @Override
             public void configure() {
                 environment().dependencies(dependency(FirstSetCollector.class, "class"));
             }
         }.build();
+        assertEquals(0, module.getEnvironment().packages().length);
+        assertEquals(1, module.getEnvironment().dependencies().length);
     }
 }

@@ -7,7 +7,15 @@ public interface Dependency<T> {
 
     Class<? extends T> clazz();
 
+    default Class<? extends T> getClazz() {
+        return clazz();
+    }
+
     String name();
+
+    default String getName() {
+        return name();
+    }
 
     @Value.Default
     default T instance() {
@@ -16,7 +24,6 @@ public interface Dependency<T> {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
     }
 
     class Builder<T> extends ImmutableDependency.Builder<T> {

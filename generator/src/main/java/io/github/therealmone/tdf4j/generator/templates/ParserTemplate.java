@@ -1,5 +1,6 @@
 package io.github.therealmone.tdf4j.generator.templates;
 
+import io.github.therealmone.tdf4j.commons.Environment;
 import io.github.therealmone.tdf4j.generator.Template;
 import org.immutables.value.Value;
 import org.stringtemplate.v4.ST;
@@ -15,6 +16,8 @@ public interface ParserTemplate extends Buildable {
 
     String className();
 
+    Environment environment();
+
     String initProd();
 
     List<MethodTemplate> methods();
@@ -25,6 +28,7 @@ public interface ParserTemplate extends Buildable {
                 .add("package", pack())
                 .add("imports", imports())
                 .add("className", className())
+                .add("environment", environment())
                 .add("initProd", initProd());
         methods().forEach(method -> template.add("methods", method.build()));
         return template.render();

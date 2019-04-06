@@ -1,17 +1,23 @@
-parser(package, imports, className, initProd, methods) ::= <<
+parser(package, imports, environment, className, initProd, methods) ::= <<
 package <package>;
 
 <imports>
+<environment.packages: {package| import <package>;}; separator="\n">
 
 public class <className> implements Parser {
     private final First first;
     private final Follow follow;
     private BufferedStream\<Token> stream;
     private Stack\<Anchor> streamAnchors;
+    <environment.dependencies: {dependency| private final <dependency.clazz.simpleName> <dependency.name>;}; separator="\n">
 
-    public <className>(final First first, final Follow follow) {
+    public <className>(
+        final First first,
+        final Follow follow<environment.dependencies: {dependency|,<\n><\t><\t>final <dependency.clazz.simpleName> <dependency.name>}>
+    ) {
         this.first = first;
         this.follow = follow;
+        <environment.dependencies: {dependency| this.<dependency.name> = <dependency.name>;}; separator="\n">
     }
 
     @Override
