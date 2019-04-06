@@ -1,0 +1,174 @@
+parser(package, imports, className, initProd, methods) ::= <<
+package <package>;
+
+<imports>
+
+public class <className> implements Parser {
+    private final First first;
+    private final Follow follow;
+    private BufferedStream\<Token> stream;
+    private Stack\<Anchor> streamAnchors;
+
+    public <className>(final First first, final Follow follow) {
+        this.first = first;
+        this.follow = follow;
+    }
+
+    @Override
+    public AST parse(final Stream\<Token> tokens) {
+        this.stream = new BufferedStream\<>(tokens);
+        this.streamAnchors = new Stack\<>();
+        <initProd>();
+        return new AST.Builder().build();
+    }
+
+    @Override
+    public AST parse(final List\<Token> tokens) {
+        tokens.forEach(token -> {
+            System.out.println(token.tag() + " : " + token.value());
+        });
+        return null;
+    }
+
+    <methods: {method|<method><\n><\n>}>
+
+    private List\<String> predict(final Token token) {
+        if(token == null) {
+            return new ArrayList\<>();
+        }
+        final List\<String> predictions = new ArrayList\<>();
+        first.set().forEach((ident, set) -> {
+            if(set.stream().map(Terminal.Tag::value).collect(Collectors.toSet()).contains(token.tag())) {
+                predictions.add(ident);
+            }
+        });
+        predictions.add(token.tag());
+        return predictions;
+    }
+
+    private boolean contains(final List\<String> predictions, final String element) {
+        return predictions.contains(element);
+    }
+}
+>>
+
+method(comment, returnValue, name, codeBlocks) ::= <<
+//<comment>
+private <returnValue> <name>() {
+    <codeBlocks: {codeBlock|<codeBlock>};separator="\n">
+}
+>>
+
+imports() ::= <<
+import io.github.therealmone.tdf4j.parser.*;
+import io.github.therealmone.tdf4j.parser.model.ast.*;
+import io.github.therealmone.tdf4j.commons.model.ebnf.*;
+import io.github.therealmone.tdf4j.commons.*;
+import io.github.therealmone.tdf4j.commons.Stream;
+import io.github.therealmone.tdf4j.commons.utils.*;
+import java.util.*;
+import java.util.stream.*;
+>>
+
+except(comment, exceptions) ::= <<
+//<comment>
+if(stream.peek() == null ||
+    <exceptions: {exception|stream.peek().tag().equalsIgnoreCase("<exception>")};separator=" ||\n">
+) {
+    throw new UnexpectedTokenException(stream.peek());
+} else {
+    stream.next();
+}
+>>
+
+ele_group(comment, codeBlocks, hash) ::= <<
+//<comment>
+{
+    streamAnchors.push(stream.setAnchor());
+    try {
+        <codeBlocks: {codeBlock|<codeBlock>};separator="\n">
+        streamAnchors.pop();
+    } catch(UnexpectedTokenException e<hash>) {
+        stream.revert(streamAnchors.pop());
+        throw e<hash>;
+    }
+}
+>>
+
+non_terminal(comment, nonTerminal) ::= <<
+//<comment>
+<nonTerminal>();
+>>
+
+optional(comment, firstElements, codeBlocks, hash) ::= <<
+//<comment>
+{
+    try {
+        streamAnchors.push(stream.setAnchor());
+        if(<firstElements: {firstElement|predict(stream.peek()).contains("<firstElement>")}; separator=" ||\n">) {
+            <codeBlocks: {codeBlock|<codeBlock>};separator="\n">
+            streamAnchors.pop();
+        }
+     } catch (UnexpectedTokenException e<hash>) {
+         stream.revert(streamAnchors.pop());
+         throw e<hash>;
+     }
+}
+>>
+
+or(comment, firstStartElements, firstCodeBlocks, secondStartElements, secondCodeBlocks) ::= <<
+//<comment>
+{
+    if(stream.peek() != null && (
+        <firstStartElements: {startElement|predict(stream.peek()).contains("<startElement>")}; separator=" ||\n">
+    )) {
+        <firstCodeBlocks: {codeBlock|<codeBlock>};separator="\n">
+    } else if(stream.peek() != null && (
+        <secondStartElements: {startElement|predict(stream.peek()).contains("<startElement>")}; separator=" ||\n">
+    )) {
+        <secondCodeBlocks: {codeBlock|<codeBlock>};separator="\n">
+    } else {
+        throw new UnexpectedTokenException(stream.peek());
+    }
+}
+>>
+
+repeat(comment, firstElements, codeBlocks, hash) ::= <<
+//<comment>
+{
+    while(true) {
+        try {
+            streamAnchors.push(stream.setAnchor());
+            if(<firstElements: {firstElement|predict(stream.peek()).contains("<firstElement>")}; separator=" ||\n">) {
+                <codeBlocks: {codeBlock|<codeBlock>};separator="\n">
+                streamAnchors.pop();
+            } else {
+                streamAnchors.pop();
+                break;
+            }
+        } catch (UnexpectedTokenException e<hash>) {
+            stream.revert(streamAnchors.pop());
+            throw e<hash>;
+        }
+    }
+}
+>>
+
+repetition(comment, hash, times, codeBlocks) ::= <<
+//<comment>
+{
+    for(int i<hash> = 0; i<hash> \< <times>; i<hash>++) {
+        <codeBlocks: {codeBlock|<codeBlock>};separator="\n">
+    }
+}
+>>
+
+terminal_tag(comment, terminal) ::= <<
+//<comment>
+if(stream.peek() != null && stream.peek().tag().equalsIgnoreCase("<terminal>")) {
+    stream.next();
+} else {
+    throw new UnexpectedTokenException(stream.peek());
+}
+>>
+

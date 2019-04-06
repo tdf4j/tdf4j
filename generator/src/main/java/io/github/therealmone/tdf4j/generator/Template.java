@@ -1,50 +1,35 @@
 package io.github.therealmone.tdf4j.generator;
 
 import org.stringtemplate.v4.ST;
-
-import java.io.BufferedInputStream;
-import java.io.InputStream;
-import java.io.StringWriter;
-import java.io.Writer;
+import org.stringtemplate.v4.STGroup;
+import org.stringtemplate.v4.STGroupFile;
 
 public enum Template {
-    PARSER("templates/parser.st"),
-    IMPORTS("templates/imports.st"),
-    METHOD("templates/method.st"),
-    LOGIC_TERMINAL("templates/logic/terminal_tag.st"),
-    LOGIC_NON_TERMINAL("templates/logic/non_terminal.st"),
-    LOGIC_OPTIONAL("templates/logic/optional.st"),
-    LOGIC_OR("templates/logic/or.st"),
-    LOGIC_REPEAT("templates/logic/repeat.st"),
-    LOGIC_REPETITION("templates/logic/repetition.st"),
-    LOGIC_GROUP("templates/logic/group.st"),
-    LOGIC_EXCEPT("templates/logic/except.st");
+    PARSER("parser"),
+    IMPORTS("imports"),
+    METHOD("method"),
+    LOGIC_TERMINAL("terminal_tag"),
+    LOGIC_NON_TERMINAL("non_terminal"),
+    LOGIC_OPTIONAL("optional"),
+    LOGIC_OR("or"),
+    LOGIC_REPEAT("repeat"),
+    LOGIC_REPETITION("repetition"),
+    LOGIC_GROUP("ele_group"),
+    LOGIC_EXCEPT("except");
 
-    private final String resource;
+    private static final STGroup JAVA_TEMPLATE = new STGroupFile("templates/java.stg");
 
-    Template(final String name) {
-        this.resource = load(name);
+    static {
+        JAVA_TEMPLATE.load();
     }
 
-    @SuppressWarnings("ConstantConditions")
-    private String load(final String path) {
-        try(final InputStream inputStream = new BufferedInputStream(Template.class.getClassLoader().getResourceAsStream(path));
-            final Writer writer = new StringWriter()) {
-            int bt;
-            while((bt = inputStream.read()) != -1) {
-                writer.write(bt);
-            }
-            return writer.toString();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
+    private final String template;
 
-    public String resource() {
-        return this.resource;
+    Template(final String template) {
+        this.template = template;
     }
 
     public ST template() {
-        return new ST(this.resource);
+        return JAVA_TEMPLATE.getInstanceOf(template);
     }
 }
