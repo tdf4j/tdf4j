@@ -66,7 +66,7 @@ public class ParserGenerator implements Generator<Parser> {
             if(!declaredMethods.containsKey(production.identifier())) {
                 declaredMethods.put(production.identifier(), new MethodTemplate.Builder()
                         .name(production.identifier())
-                        .comment(production.toString())
+                        .comment(production.toString().replaceAll("\n", "\n//"))
                 );
             }
 
@@ -77,6 +77,7 @@ public class ParserGenerator implements Generator<Parser> {
                     builder.addCodeBlocks(codeBlock);
                 }
             });
+            builder.inlineAction(production.inlineAction().code());
         }
         return declaredMethods.values().stream().map((Function<MethodTemplate.Builder, MethodTemplate>) ImmutableMethodTemplate.Builder::build).collect(Collectors.toList());
     }

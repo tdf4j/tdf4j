@@ -58,10 +58,13 @@ public class <className> implements Parser {
 }
 >>
 
-method(comment, returnValue, name, codeBlocks) ::= <<
+method(comment, returnValue, name, codeBlocks, inlineAction) ::= <<
 //<comment>
 private <returnValue> <name>() {
     <codeBlocks: {codeBlock|<codeBlock>};separator="\n">
+
+    //<name> inline action
+    <inlineAction>
 }
 >>
 
