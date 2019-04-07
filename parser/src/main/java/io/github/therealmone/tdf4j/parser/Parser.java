@@ -10,4 +10,6 @@ public interface Parser {
     AST parse(final Stream<Token> tokens);
 
     AST parse(final List<Token> tokens);
+
+    MetaInf meta();
 }

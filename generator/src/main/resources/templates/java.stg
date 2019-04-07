@@ -5,6 +5,7 @@ package <package>;
 <environment.packages: {package| import <package>;}; separator="\n">
 
 public class <className> implements Parser {
+    private final MetaInf meta;
     private final First first;
     private final Follow follow;
     private BufferedStream\<Token> stream;
@@ -12,9 +13,11 @@ public class <className> implements Parser {
     <environment.dependencies: {dependency| private final <dependency.clazz.simpleName> <dependency.name>;}; separator="\n">
 
     public <className>(
+        final MetaInf meta,
         final First first,
         final Follow follow<environment.dependencies: {dependency|,<\n><\t><\t>final <dependency.clazz.simpleName> <dependency.name>}>
     ) {
+        this.meta = meta;
         this.first = first;
         this.follow = follow;
         <environment.dependencies: {dependency| this.<dependency.name> = <dependency.name>;}; separator="\n">
@@ -36,6 +39,11 @@ public class <className> implements Parser {
         return null;
     }
 
+    @Override
+    public MetaInf meta() {
+        return this.meta;
+    }
+
     <methods: {method|<method><\n><\n>}>
 
     private List\<String> predict(final Token token) {
@@ -55,6 +63,8 @@ public class <className> implements Parser {
     private boolean contains(final List\<String> predictions, final String element) {
         return predictions.contains(element);
     }
+
+    <environment.code>
 }
 >>
 

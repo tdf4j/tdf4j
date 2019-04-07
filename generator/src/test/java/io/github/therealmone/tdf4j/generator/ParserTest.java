@@ -34,6 +34,7 @@ public class ParserTest {
     static Parser generate(final AbstractParserModule module) {
         final long current = System.currentTimeMillis();
         final Parser parser = generator.generate(module);
+        System.out.println(parser.meta().sourceCode());
         System.out.println(module.getGrammar().toString());
         System.out.println(module.getGrammar().firstSet().toString());
         System.out.println(module.getGrammar().followSet().toString());

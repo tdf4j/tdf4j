@@ -23,6 +23,15 @@ public interface Environment {
         return dependencies();
     }
 
+    @Value.Default
+    default String code() {
+        return "";
+    }
+
+    default String getCode() {
+        return code();
+    }
+
     class Builder extends ImmutableEnvironment.Builder {
     }
 }
