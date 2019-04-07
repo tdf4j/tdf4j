@@ -103,14 +103,7 @@ if(stream.peek() == null ||
 ele_group(comment, codeBlocks, hash) ::= <<
 //<comment>
 {
-    streamAnchors.push(stream.setAnchor());
-    try {
-        <codeBlocks: {codeBlock|<codeBlock>};separator="\n">
-        streamAnchors.pop();
-    } catch(UnexpectedTokenException e<hash>) {
-        stream.revert(streamAnchors.pop());
-        throw e<hash>;
-    }
+    <codeBlocks: {codeBlock|<codeBlock>};separator="\n">
 }
 >>
 
@@ -122,16 +115,9 @@ non_terminal(comment, nonTerminal) ::= <<
 optional(comment, firstElements, codeBlocks, hash) ::= <<
 //<comment>
 {
-    try {
-        streamAnchors.push(stream.setAnchor());
-        if(<firstElements: {firstElement|predict(stream.peek()).contains("<firstElement>")}; separator=" ||\n">) {
-            <codeBlocks: {codeBlock|<codeBlock>};separator="\n">
-            streamAnchors.pop();
-        }
-     } catch (UnexpectedTokenException e<hash>) {
-         stream.revert(streamAnchors.pop());
-         throw e<hash>;
-     }
+    if(<firstElements: {firstElement|predict(stream.peek()).contains("<firstElement>")}; separator=" ||\n">) {
+        <codeBlocks: {codeBlock|<codeBlock>};separator="\n">
+    }
 }
 >>
 
@@ -156,18 +142,10 @@ repeat(comment, firstElements, codeBlocks, hash) ::= <<
 //<comment>
 {
     while(true) {
-        try {
-            streamAnchors.push(stream.setAnchor());
-            if(<firstElements: {firstElement|predict(stream.peek()).contains("<firstElement>")}; separator=" ||\n">) {
-                <codeBlocks: {codeBlock|<codeBlock>};separator="\n">
-                streamAnchors.pop();
-            } else {
-                streamAnchors.pop();
-                break;
-            }
-        } catch (UnexpectedTokenException e<hash>) {
-            stream.revert(streamAnchors.pop());
-            throw e<hash>;
+        if(<firstElements: {firstElement|predict(stream.peek()).contains("<firstElement>")}; separator=" ||\n">) {
+            <codeBlocks: {codeBlock|<codeBlock>};separator="\n">
+        } else {
+            break;
         }
     }
 }
