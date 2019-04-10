@@ -3,20 +3,16 @@ package io.github.therealmone.tdf4j.commons;
 import org.immutables.value.Value;
 
 import javax.annotation.Nullable;
-import java.util.concurrent.Callable;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 @Value.Immutable
 public interface Stream<T> {
-    Callable<T> generator();
+    Supplier<T> generator();
 
     @Nullable
     default T next() {
-        try {
-            return generator().call();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        return generator().get();
     }
 
     default void forEach(final Consumer<? super T> action) {

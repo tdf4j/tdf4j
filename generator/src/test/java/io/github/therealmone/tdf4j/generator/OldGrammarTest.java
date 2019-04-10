@@ -6,7 +6,6 @@ import io.github.therealmone.tdf4j.lexer.config.AbstractLexerModule;
 import io.github.therealmone.tdf4j.parser.Parser;
 import io.github.therealmone.tdf4j.parser.config.AbstractParserModule;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -466,7 +465,7 @@ public class OldGrammarTest extends ParserTest {
         assertParserFails(parser, "new a = hashset;$", "Unexpected token: Token{tag=HASHSET, value=hashset}");
         assertParserFails(parser, "get(a, 1);$", "Unexpected token: Token{tag=GET, value=get}");
         assertParserFails(parser, "while(a & b);$", "Unexpected token: Token{tag=LOP, value=&}");
-        assertThrows(() -> parse(parser, "@$"), RuntimeException.class, "io.github.therealmone.tdf4j.lexer.UnexpectedSymbolException: Unexpected symbol: @");
+        assertThrows(() -> parse(parser, "@$"), UnexpectedSymbolException.class, "Unexpected symbol: @ ( line 1, column 1 )");
     }
 
 }

@@ -4,6 +4,7 @@ import io.github.therealmone.tdf4j.commons.Stream;
 import io.github.therealmone.tdf4j.commons.Token;
 import io.github.therealmone.tdf4j.lexer.config.AbstractLexerModule;
 import io.github.therealmone.tdf4j.lexer.impl.LexerImpl;
+import io.github.therealmone.tdf4j.lexer.impl.SymbolListenerImpl;
 import io.github.therealmone.tdf4j.lexer.utils.Config;
 import org.junit.Test;
 
@@ -15,7 +16,7 @@ public class LexerTest {
     @Test
     //these are old tests from http://github.com/therealmone/SPOTranslator
     public void analyze() {
-        Lexer lexer = new LexerImpl(new Config().build());
+        Lexer lexer = new LexerImpl(new Config().build(), new SymbolListenerImpl());
 
         {
             final List<Token> tokens = lexer.analyze("value");
@@ -396,12 +397,12 @@ public class LexerTest {
             @Override
             public void configure() {
             }
-        });
+        }, new SymbolListenerImpl());
 
         try {
             lexer.analyze("unexpected");
-        } catch (RuntimeException e) {
-            assertEquals("io.github.therealmone.tdf4j.lexer.UnexpectedSymbolException: Unexpected symbol: u", e.getMessage());
+        } catch (UnexpectedSymbolException e) {
+            assertEquals("Unexpected symbol: u ( line 1, column 1 )", e.getMessage());
             throw e;
         }
     }
@@ -415,7 +416,7 @@ public class LexerTest {
                 tokenize("B").pattern("B");
                 tokenize("C").pattern("C");
             }
-        }.build());
+        }.build(), new SymbolListenerImpl());
 
         final Stream<Token> tokens = lexer.stream("ABC");
         assertEquals("A", tokens.next().tag());
@@ -435,7 +436,7 @@ public class LexerTest {
                 tokenize("RB").pattern("^\\)$");
                 tokenize("DEL").pattern("^;$");
             }
-        }.build());
+        }.build(), new SymbolListenerImpl());
         final Stream<Token> stream = lexer.stream("print(\"Test String\");");
         assertEquals("print", stream.next().value());
         assertEquals("(", stream.next().value());
