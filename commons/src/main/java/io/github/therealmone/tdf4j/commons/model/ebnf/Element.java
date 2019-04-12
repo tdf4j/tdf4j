@@ -85,4 +85,16 @@ public interface Element {
         }
         return builder.toString();
     }
+
+    enum Kind {
+        OPTIONAL,
+        OR,
+        REPEAT,
+        REPETITION,
+        GROUP,
+        TERMINAL,
+        TERMINAL_TAG,
+        EXCEPT,
+        NON_TERMINAL
+    }
 }

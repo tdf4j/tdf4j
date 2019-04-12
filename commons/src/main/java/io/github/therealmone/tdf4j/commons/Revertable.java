@@ -1,7 +1,7 @@
 package io.github.therealmone.tdf4j.commons;
 
-public interface Revertable<T> {
-    T revert(final Anchor anchor);
+public interface Revertable {
+    void revert(final Anchor anchor);
 
     Anchor setAnchor();
 }

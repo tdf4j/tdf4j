@@ -8,9 +8,11 @@ public class <className> implements Parser {
     private final MetaInf meta;
     private final First first;
     private final Follow follow;
-    private BufferedStream\<Token> stream;
-    private Stack\<Anchor> streamAnchors;
+
     <environment.dependencies: {dependency| private final <dependency.clazz.simpleName> <dependency.name>;}; separator="\n">
+
+    private AST ast;
+    private BufferedStream\<Token> stream;
 
     public <className>(
         final MetaInf meta,
@@ -26,9 +28,9 @@ public class <className> implements Parser {
     @Override
     public AST parse(final Stream\<Token> tokens) {
         this.stream = new BufferedStream\<>(tokens);
-        this.streamAnchors = new Stack\<>();
+        this.ast = new AST("<initProd>");
         <initProd>();
-        return new AST.Builder().build();
+        return ast;
     }
 
     @Override
@@ -96,7 +98,7 @@ if(stream.peek() == null ||
 ) {
     throw new UnexpectedTokenException(stream.peek());
 } else {
-    stream.next();
+    ast.addLeaf(stream.next());
 }
 >>
 
@@ -109,7 +111,12 @@ ele_group(comment, codeBlocks, hash) ::= <<
 
 non_terminal(comment, nonTerminal) ::= <<
 //<comment>
-<nonTerminal>();
+{
+    ast.addNode("<nonTerminal>")
+        .moveCursor(AST.Movement.TO_LAST_ADDED_NODE);
+    <nonTerminal>();
+    ast.moveCursor(AST.Movement.TO_PARENT);
+}
 >>
 
 optional(comment, firstElements, codeBlocks, hash) ::= <<
@@ -163,7 +170,7 @@ repetition(comment, hash, times, codeBlocks) ::= <<
 terminal_tag(comment, terminal) ::= <<
 //<comment>
 if(stream.peek() != null && stream.peek().tag().equalsIgnoreCase("<terminal>")) {
-    stream.next();
+    ast.addLeaf(stream.next());
 } else {
     throw new UnexpectedTokenException(stream.peek());
 }

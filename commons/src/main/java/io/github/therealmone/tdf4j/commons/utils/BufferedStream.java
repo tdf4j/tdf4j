@@ -11,7 +11,7 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 //Stream decorator
-public class BufferedStream<T> implements Stream<T>, Revertable<BufferedStream<T>> {
+public class BufferedStream<T> implements Stream<T>, Revertable {
     private final Stream<T> stream;
     private List<T> buffer;
     private int cursor;
@@ -52,10 +52,9 @@ public class BufferedStream<T> implements Stream<T>, Revertable<BufferedStream<T
 
     @Override
     @SuppressWarnings("unchecked")
-    public BufferedStream<T> revert(Anchor anchor) {
+    public void revert(Anchor anchor) {
         try {
             this.cursor = ((AnchorImpl) anchor).getCursor();
-            return this;
         } catch (ClassCastException e) {
             throw new RuntimeException("Invalid anchor", e);
         }
