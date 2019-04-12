@@ -18,6 +18,6 @@ public abstract class ASTLeaf implements ASTElement{
 
     @Override
     public String toString() {
-        return this.getClass().getName() + this.hashCode();
+        return token().toString();
     }
 }

@@ -19,6 +19,13 @@ public abstract class ASTRoot implements ASTElement {
 
     @Override
     public String toString() {
-        return this.getClass().getName() + this.hashCode();
+        final StringBuilder builder = new StringBuilder();
+        builder.append(tag());
+        for(final ASTElement child : children()) {
+            builder.append("\n║\n")
+                    .append("╠┉")
+                    .append(child.toString());
+        }
+        return builder.toString();
     }
 }

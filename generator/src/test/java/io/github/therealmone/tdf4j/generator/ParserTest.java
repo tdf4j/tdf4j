@@ -46,6 +46,7 @@ public class ParserTest {
         final long current = System.currentTimeMillis();
         final AST ast = parser.parse(lexer.stream(input));
         System.out.println("Parsing time: " + (System.currentTimeMillis() - current));
+        System.out.println(ast);
         return ast;
     }
 

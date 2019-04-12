@@ -147,6 +147,6 @@ public class AST {
 
     @Override
     public String toString() {
-        return this.getClass().getName() + this.hashCode();
+        return root.toString();
     }
 }
