@@ -26,7 +26,7 @@ public abstract class ASTNode implements ASTElement {
         for(final ASTElement child : children()) {
             builder.append("\n")
                     .append(collectColumns())
-                    .append("╠┉")
+                    .append("|--")
                     .append(child.toString());
         }
         return builder.toString();
@@ -36,7 +36,7 @@ public abstract class ASTNode implements ASTElement {
         final StringBuilder builder = new StringBuilder();
         ASTElement current = this;
         while(!current.isRoot()) {
-            builder.append(isLat(current) ? "\t " : "\t║");
+            builder.append(isLat(current) ? "\t " : "\t|");
             current = current.isLeaf()
                     ? current.asLeaf().parent()
                     : current.asNode().parent();

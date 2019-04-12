@@ -22,8 +22,8 @@ public abstract class ASTRoot implements ASTElement {
         final StringBuilder builder = new StringBuilder();
         builder.append(tag());
         for(final ASTElement child : children()) {
-            builder.append("\n║\n")
-                    .append("╠┉")
+            builder.append("\n|\n")
+                    .append("|--")
                     .append(child.toString());
         }
         return builder.toString();
