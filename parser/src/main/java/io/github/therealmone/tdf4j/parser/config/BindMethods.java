@@ -32,4 +32,6 @@ public interface BindMethods {
     NonTerminal nt(final String identifier);
 
     Except except(final Terminal.Tag ... tags);
+
+    InlineAction inline(final String code);
 }

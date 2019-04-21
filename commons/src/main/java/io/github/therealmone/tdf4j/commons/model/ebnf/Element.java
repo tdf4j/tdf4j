@@ -75,6 +75,14 @@ public interface Element {
         return (Except) this;
     }
 
+    default boolean isInlineAction() {
+        return this.kind() == Kind.INLINE_ACTION;
+    }
+
+    default InlineAction asInlineAction() {
+        return (InlineAction) this;
+    }
+
     default String toStringGroup(final Element ... elements) {
         final StringBuilder builder = new StringBuilder();
         if(elements.length > 0) {
@@ -95,6 +103,7 @@ public interface Element {
         TERMINAL,
         TERMINAL_TAG,
         EXCEPT,
-        NON_TERMINAL
+        NON_TERMINAL,
+        INLINE_ACTION
     }
 }

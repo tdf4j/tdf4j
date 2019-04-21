@@ -26,9 +26,9 @@ public class AdditionalCodeGenerationTest extends ParserTest {
                         .is(
                                 t("A"),
                                 t("B"),
-                                t("C")
-                        )
-                        .inline("sayHello();");
+                                t("C"),
+                                inline("sayHello();")
+                        );
             }
         });
         assertNotNull(parse(parser, "ABC"));
@@ -53,9 +53,9 @@ public class AdditionalCodeGenerationTest extends ParserTest {
                         .is(
                                 t("A"),
                                 t("B"),
-                                t("C")
-                        )
-                        .inline("test();");
+                                t("C"),
+                                inline("test();")
+                        );
             }
         });
         assertNotNull(parse(parser, "ABC"));

@@ -26,6 +26,8 @@ public interface CodeBlock extends Buildable {
                 return new GroupTemplate.Builder().group(element.asGroup()).build();
             case EXCEPT:
                 return new ExceptTemplate.Builder().except(element.asExcept()).build();
+            case INLINE_ACTION:
+                return new InlineActionTemplate.Builder().inline(element.asInlineAction()).build();
             default:
                 return null;
         }

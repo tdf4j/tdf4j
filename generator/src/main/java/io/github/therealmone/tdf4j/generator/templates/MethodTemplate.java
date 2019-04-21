@@ -24,14 +24,11 @@ public interface MethodTemplate extends Buildable {
         return "...";
     }
 
-    String inlineAction();
-
     @Override
     default String build() {
         final ST template = Template.METHOD.template()
                 .add("name", name())
                 .add("comment", comment())
-                .add("inlineAction", inlineAction())
                 .add("returnValue", returnValue());
         codeBlocks().forEach(codeBlock -> template.add("codeBlocks", codeBlock.build()));
         return template.render();

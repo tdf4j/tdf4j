@@ -91,4 +91,13 @@ public abstract class BindingMapper implements BindMethods {
     public Except except(final Terminal.Tag ... tags) {
         return new Except.Builder().tags(tags).build();
     }
+
+    @Override
+    public InlineAction inline(final String code) {
+        //noinspection ConstantConditions
+        if(code == null || code.trim().equalsIgnoreCase("")) {
+            throw new IllegalStateException("Code can't be blank or null");
+        }
+        return new InlineAction.Builder().code(code).build();
+    }
 }

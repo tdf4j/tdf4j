@@ -12,11 +12,14 @@ public class InlineActionBindTest {
         final AbstractParserModule module = new AbstractParserModule() {
             @Override
             public void configure() {
-                prod("prod1").inline("System.out.println(\"inline action\")");
+                prod("prod1")
+                        .is(
+                                inline("System.out.println(\"inline action\")")
+                        );
             }
         }.build();
-        assertEquals("System.out.println(\"inline action\")", module.getGrammar().productions().get(0).inlineAction().code());
-        assertEquals("prod1 :=\n<<\nSystem.out.println(\"inline action\")\n>>", module.getGrammar().productions().get(0).toString());
+        assertEquals("System.out.println(\"inline action\")", module.getGrammar().productions().get(0).elements().get(0).asInlineAction().code());
+        assertEquals("prod1 := <<\nSystem.out.println(\"inline action\")\n>>", module.getGrammar().productions().get(0).toString());
     }
 
     @Test(expected = IllegalStateException.class)
@@ -24,7 +27,10 @@ public class InlineActionBindTest {
         new AbstractParserModule() {
             @Override
             public void configure() {
-                prod("prod1").inline(null);
+                prod("prod1")
+                        .is(
+                                inline(null)
+                        );
             }
         }.build();
     }
@@ -34,7 +40,10 @@ public class InlineActionBindTest {
         new AbstractParserModule() {
             @Override
             public void configure() {
-                prod("prod1").inline("     ");
+                prod("prod1")
+                        .is(
+                                inline("     ")
+                        );
             }
         }.build();
     }

@@ -76,7 +76,6 @@ public class ParserGenerator implements Generator<Parser> {
                     builder.addCodeBlocks(codeBlock);
                 }
             });
-            builder.inlineAction(production.inlineAction().code());
         }
         return declaredMethods.values().stream().map((Function<MethodTemplate.Builder, MethodTemplate>) ImmutableMethodTemplate.Builder::build).collect(Collectors.toList());
     }

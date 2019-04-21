@@ -70,13 +70,10 @@ public class <className> implements Parser {
 }
 >>
 
-method(comment, returnValue, name, codeBlocks, inlineAction) ::= <<
+method(comment, returnValue, name, codeBlocks) ::= <<
 //<comment>
 private <returnValue> <name>() {
     <codeBlocks: {codeBlock|<codeBlock>};separator="\n">
-
-    //<name> inline action
-    <inlineAction>
 }
 >>
 
@@ -174,5 +171,9 @@ if(stream.peek() != null && stream.peek().tag().equalsIgnoreCase("<terminal>")) 
 } else {
     throw new UnexpectedTokenException(stream.peek());
 }
+>>
+
+inline_action(inlineAction) ::= <<
+<inlineAction>
 >>
 
