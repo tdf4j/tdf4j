@@ -2,6 +2,8 @@ package io.github.therealmone.tdf4j.lexer.utils;
 
 import io.github.therealmone.tdf4j.lexer.config.AbstractLexerModule;
 
+import java.util.regex.Pattern;
+
 public class Config extends AbstractLexerModule {
     @Override
     public void configure() {
@@ -24,7 +26,7 @@ public class Config extends AbstractLexerModule {
         tokenize("DOUBLE").pattern("^-?((0[.][0-9]*)|([1-9][0-9]*[.][0-9]*))$");
         tokenize("ASSIGN_OP").pattern("^=$");
         tokenize("OP").pattern("^[\\+\\-\\/\\*]|(div)|(mod)$").priority(1);
-        tokenize("DEL").pattern("^;$");
+        tokenize("DEL").pattern("^;$", Pattern.MULTILINE);
         tokenize("WHILE").pattern("^while$").priority(1);
         tokenize("IF").pattern("^if$").priority(1);
         tokenize("ELSE").pattern("^else$").priority(1);
@@ -37,5 +39,6 @@ public class Config extends AbstractLexerModule {
         tokenize("FLB").pattern("^\\{$");
         tokenize("FRB").pattern("^\\}$");
         tokenize("$").pattern("^\\$$");
+        tokenize("ws").pattern("\\s|\\n|\\r").priority(Integer.MAX_VALUE).hidden(true);
     }
 }

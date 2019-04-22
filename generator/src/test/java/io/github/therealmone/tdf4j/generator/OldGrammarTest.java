@@ -8,6 +8,8 @@ import io.github.therealmone.tdf4j.parser.config.AbstractParserModule;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.util.regex.Pattern;
+
 import static org.junit.Assert.*;
 
 public class OldGrammarTest extends ParserTest {
@@ -36,7 +38,7 @@ public class OldGrammarTest extends ParserTest {
                 tokenize("DOUBLE").pattern("^-?((0[.][0-9]*)|([1-9][0-9]*[.][0-9]*))$");
                 tokenize("ASSIGN_OP").pattern("^=$");
                 tokenize("OP").pattern("^[\\+\\-\\/\\*]|(div)|(mod)$").priority(1);
-                tokenize("DEL").pattern("^;$");
+                tokenize("DEL").pattern("^;$", Pattern.MULTILINE);
                 tokenize("WHILE").pattern("^while$").priority(1);
                 tokenize("IF").pattern("^if$").priority(1);
                 tokenize("ELSE").pattern("^else$").priority(1);
@@ -49,6 +51,7 @@ public class OldGrammarTest extends ParserTest {
                 tokenize("FLB").pattern("^\\{$");
                 tokenize("FRB").pattern("^\\}$");
                 tokenize("$").pattern("^\\$$");
+                tokenize("ws").pattern("\\s|\\n|\\r").priority(Integer.MAX_VALUE).hidden(true);
             }
         });
     }

@@ -26,6 +26,7 @@ public class SymbolPositionTrackingTest {
             public void configure() {
                 tokenize("A").pattern("A");
                 tokenize("B").pattern("B");
+                tokenize("ws").pattern("\\s|\\n|\\r").hidden(true);
             }
         });
         assertThrows(() -> lexer.analyze("ABC\nA\nB"), UnexpectedSymbolException.class, unexpectedSymbol('C', 1, 3));
@@ -38,6 +39,7 @@ public class SymbolPositionTrackingTest {
             public void configure() {
                 tokenize("A").pattern("A");
                 tokenize("B").pattern("B");
+                tokenize("ws").pattern("\\s|\\n|\\r").hidden(true);
             }
         });
         assertThrows(() -> lexer.analyze("A \n B \n C"), UnexpectedSymbolException.class, unexpectedSymbol('C', 3, 2));
@@ -50,6 +52,7 @@ public class SymbolPositionTrackingTest {
             public void configure() {
                 tokenize("A").pattern("A");
                 tokenize("B").pattern("B");
+                tokenize("ws").pattern("\\s|\\n|\\r").hidden(true);
             }
         });
         assertThrows(() -> lexer.analyze("AA\n BBBA \n ABC"), UnexpectedSymbolException.class, unexpectedSymbol('C', 3, 4));
@@ -62,6 +65,7 @@ public class SymbolPositionTrackingTest {
             public void configure() {
                 tokenize("A").pattern("A");
                 tokenize("B").pattern("B");
+                tokenize("ws").pattern("\\s|\\n|\\r").hidden(true);
             }
         });
         assertThrows(() -> lexer.analyze("AA \nBBABCA\n ABC"), UnexpectedSymbolException.class, unexpectedSymbol('C', 2, 5));

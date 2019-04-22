@@ -44,13 +44,13 @@ public class LexerImpl implements Lexer {
     private Token nextToken(final StringBuilder in) {
         final StringBuilder buffer = new StringBuilder();
         while(in.length() != 0) {
-            trim(in);
             buffer.append(in.charAt(buffer.length()));
             if(!anyTerminalHitEnd(buffer) || buffer.length() == in.length()) {
                 removeLast(buffer, in);
                 final Terminal terminal = tryToSpecifyTerminal(buffer);
                 if(terminal != null) {
-                    return tokenFrom(terminal, buffer, in);
+                    final Token token = tokenFrom(terminal, buffer, in);
+                    return terminal.hidden() ? nextToken(in) : token;
                 } else {
                     throw exception(buffer, in);
                 }
@@ -85,29 +85,6 @@ public class LexerImpl implements Lexer {
         } else if(tryToSpecifyTerminal(buffer) == null) {
             buffer.deleteCharAt(buffer.length() - 1);
         }
-    }
-
-    private void trim(final StringBuilder builder) {
-        trimLeading(builder);
-        trimFollowing(builder);
-    }
-
-    private void trimLeading(final StringBuilder builder) {
-        while(builder.length() > 0 && spaceOrNewLine(builder.charAt(builder.length() - 1))) {
-            builder.replace(builder.length() - 1, builder.length(), "");
-        }
-    }
-
-    private void trimFollowing(final StringBuilder builder) {
-        while(builder.length() > 0 && spaceOrNewLine(builder.charAt(0))) {
-            //tracking following spaces
-            listener.listen(builder.charAt(0));
-            builder.replace(0, 1, "");
-        }
-    }
-
-    private boolean spaceOrNewLine(final char ch) {
-        return ch == ' ' || ch == '\n';
     }
 
     private boolean anyTerminalHitEnd(final StringBuilder buffer) {

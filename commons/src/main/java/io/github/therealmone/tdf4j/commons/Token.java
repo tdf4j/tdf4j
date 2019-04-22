@@ -9,6 +9,5 @@ public interface Token {
     String value();
 
     class Builder extends ImmutableToken.Builder {
-
     }
 }

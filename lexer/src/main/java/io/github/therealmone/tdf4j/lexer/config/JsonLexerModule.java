@@ -20,7 +20,8 @@ public class JsonLexerModule extends AbstractLexerModule {
             final JSONObject terminal = (JSONObject) o;
             tokenize((String) terminal.get("tag"))
                     .pattern((String) terminal.get("pattern"))
-                    .priority((long) terminal.getOrDefault("priority", 0L));
+                    .priority((long) terminal.getOrDefault("priority", 0L))
+                    .hidden((boolean) terminal.getOrDefault("hidden", false));
         }
     }
 }

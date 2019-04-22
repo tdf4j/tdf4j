@@ -20,6 +20,11 @@ public abstract class Terminal implements Element {
         return 0;
     }
 
+    @Value.Default
+    public boolean hidden() {
+        return false;
+    }
+
     public static class Builder extends ImmutableTerminal.Builder {
         public Terminal.Builder pattern(final String pattern) {
             super.pattern(Pattern.compile(pattern));

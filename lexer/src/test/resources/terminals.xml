@@ -2,4 +2,5 @@
   <terminal tag="tag1" pattern="pattern1" priority="1"/>
   <terminal tag="tag2" pattern="pattern2"/>
   <terminal tag="tag3" pattern="pattern3" priority="10000"/>
+  <terminal tag="ws" pattern="\s|\n|\r" priority="20000" hidden="true"/>
 </terminals>

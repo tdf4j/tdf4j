@@ -18,7 +18,8 @@ public class XmlLexerModule extends AbstractLexerModule {
             public void begin(String namespace, String name, Attributes attributes) throws Exception {
                 tokenize(attributes.getValue("tag"))
                         .pattern(attributes.getValue("pattern"))
-                        .priority(attributes.getValue("priority") != null ? Long.parseLong(attributes.getValue("priority")) : 0);
+                        .priority(attributes.getValue("priority") != null ? Long.parseLong(attributes.getValue("priority")) : 0)
+                        .hidden(attributes.getValue("hidden") != null && Boolean.parseBoolean(attributes.getValue("hidden")));
             }
         });
     }

@@ -27,6 +27,7 @@ public class ParserTest {
                             .pattern(testLexeme.getTerminal().pattern().pattern())
                             .priority(testLexeme.getTerminal().priority());
                 }
+                tokenize("ws").pattern("\\s|\\n|\\r").priority(Integer.MAX_VALUE).hidden(true);
             }
         });
     }

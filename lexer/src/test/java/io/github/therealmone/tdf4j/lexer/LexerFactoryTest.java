@@ -46,6 +46,7 @@ public class LexerFactoryTest {
                 "    {\"tag\": \"tag1\", \"pattern\": \"pattern1\", \"priority\": 1},\n" +
                 "    {\"tag\": \"tag2\", \"pattern\": \"pattern2\"},\n" +
                 "    {\"tag\": \"tag3\", \"pattern\": \"pattern3\", \"priority\": 10000}\n" +
+                "    {\"tag\": \"ws\", \"pattern\": \"\\s|\\n|\\r\", \"priority\": 20000, \"hidden\": true}\n" +
                 "  ]\n" +
                 "}");
         assertTokens(lexer.analyze("pattern1 pattern2 pattern3"));
@@ -58,6 +59,7 @@ public class LexerFactoryTest {
                 "    {\"tag\": \"tag1\", \"pattern\": \"pattern1\", \"priority\": 1},\n" +
                 "    {\"tag\": \"tag2\", \"pattern\": \"pattern2\"},\n" +
                 "    {\"tag\": \"tag3\", \"pattern\": \"pattern3\", \"priority\": 10000}\n" +
+                "    {\"tag\": \"ws\", \"pattern\": \"\\s|\\n|\\r\", \"priority\": 20000, \"hidden\": true}\n" +
                 "  ]\n" +
                 "}", listener);
         assertTokens(lexer.analyze("pattern1 pattern2 pattern3"));
@@ -98,6 +100,7 @@ public class LexerFactoryTest {
                 "  <terminal tag=\"tag1\" pattern=\"pattern1\" priority=\"1\"/>\n" +
                 "  <terminal tag=\"tag2\" pattern=\"pattern2\"/>\n" +
                 "  <terminal tag=\"tag3\" pattern=\"pattern3\" priority=\"10000\"/>\n" +
+                "  <terminal tag=\"ws\" pattern=\"\\s|\\n|\\r\" priority=\"20000\" hidden=\"true\"/>\n" +
                 "</terminals>");
         assertTokens(lexer.analyze("pattern1 pattern2 pattern3"));
     }
@@ -108,6 +111,7 @@ public class LexerFactoryTest {
                 "  <terminal tag=\"tag1\" pattern=\"pattern1\" priority=\"1\"/>\n" +
                 "  <terminal tag=\"tag2\" pattern=\"pattern2\"/>\n" +
                 "  <terminal tag=\"tag3\" pattern=\"pattern3\" priority=\"10000\"/>\n" +
+                "  <terminal tag=\"ws\" pattern=\"\\s|\\n|\\r\" priority=\"20000\" hidden=\"true\"/>\n" +
                 "</terminals>", listener);
         assertTokens(lexer.analyze("pattern1 pattern2 pattern3"));
         assertEquals("pattern1 pattern2 pattern3", text.toString());

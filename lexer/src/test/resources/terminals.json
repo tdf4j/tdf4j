@@ -2,6 +2,7 @@
   "terminals": [
     {"tag": "tag1", "pattern": "pattern1", "priority": 1},
     {"tag": "tag2", "pattern": "pattern2"},
-    {"tag": "tag3", "pattern": "pattern3", "priority": 10000}
+    {"tag": "tag3", "pattern": "pattern3", "priority": 10000},
+    {"tag": "ws", "pattern": "\\s|\\n|\\r", "priority": 20000, "hidden": true}
   ]
 }
