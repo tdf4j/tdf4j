@@ -14,7 +14,6 @@ public interface RepeatTemplate extends CodeBlock, Prediction {
     @Override
     default String build() {
         final ST template = Template.LOGIC_REPEAT.template()
-                .add("comment", repeat().toString())
                 .add("hash", Math.abs(this.hashCode()));
         for(final Element element : repeat().elements()) {
             final CodeBlock codeBlock = CodeBlock.fromElement(element);

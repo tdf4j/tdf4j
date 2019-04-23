@@ -65,7 +65,6 @@ public class ParserGenerator implements Generator<Parser> {
             if(!declaredMethods.containsKey(production.identifier())) {
                 declaredMethods.put(production.identifier(), new MethodTemplate.Builder()
                         .name(production.identifier())
-                        .comment(production.toString().replaceAll("\n", "\n//"))
                 );
             }
 

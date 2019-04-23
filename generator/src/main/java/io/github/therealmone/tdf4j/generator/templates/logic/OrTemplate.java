@@ -12,8 +12,7 @@ public interface OrTemplate extends CodeBlock, Prediction {
 
     @Override
     default String build() {
-        final ST template = Template.LOGIC_OR.template()
-                .add("comment", or().toString());
+        final ST template = Template.LOGIC_OR.template();
         final CodeBlock first = CodeBlock.fromElement(or().first());
         if(first != null) {
             template.add("firstStartElements", getStartElements(or().first()));

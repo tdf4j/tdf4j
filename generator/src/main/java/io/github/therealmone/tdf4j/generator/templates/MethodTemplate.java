@@ -19,16 +19,10 @@ public interface MethodTemplate extends Buildable {
 
     List<CodeBlock> codeBlocks();
 
-    @Value.Default
-    default String comment() {
-        return "...";
-    }
-
     @Override
     default String build() {
         final ST template = Template.METHOD.template()
                 .add("name", name())
-                .add("comment", comment())
                 .add("returnValue", returnValue());
         codeBlocks().forEach(codeBlock -> template.add("codeBlocks", codeBlock.build()));
         return template.render();

@@ -13,8 +13,7 @@ public interface ExceptTemplate extends CodeBlock {
 
     @Override
     default String build() {
-        final ST template = Template.LOGIC_EXCEPT.template()
-                .add("comment", except().toString());
+        final ST template = Template.LOGIC_EXCEPT.template();
         for(final Terminal.Tag tag : except().tags()) {
             template.add("exceptions", tag.value());
         }

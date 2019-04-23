@@ -14,7 +14,6 @@ public interface TerminalTagTemplate extends CodeBlock {
     default String build() {
         return Template.LOGIC_TERMINAL.template()
                 .add("terminal", terminalTag().value())
-                .add("comment", terminalTag().toString())
                 .render();
     }
 

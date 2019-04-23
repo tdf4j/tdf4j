@@ -13,7 +13,6 @@ public interface RepetitionTemplate extends CodeBlock {
     @Override
     default String build() {
         final ST template = Template.LOGIC_REPETITION.template()
-                .add("comment", repetition().toString())
                 .add("hash", Math.abs(this.hashCode()))
                 .add("times", repetition().times());
         final CodeBlock codeBlock = CodeBlock.fromElement(repetition().element());

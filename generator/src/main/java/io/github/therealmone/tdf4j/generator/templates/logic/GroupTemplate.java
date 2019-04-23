@@ -14,8 +14,7 @@ public interface GroupTemplate extends CodeBlock {
     @Override
     default String build() {
         final ST template = Template.LOGIC_GROUP.template()
-                .add("hash", Math.abs(this.hashCode()))
-                .add("comment", group().toString());
+                .add("hash", Math.abs(this.hashCode()));
         for(final Element element : group().elements()) {
             final CodeBlock codeBlock = CodeBlock.fromElement(element);
             if(codeBlock != null) {

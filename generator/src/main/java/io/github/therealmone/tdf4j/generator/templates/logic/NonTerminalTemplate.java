@@ -13,7 +13,6 @@ public interface NonTerminalTemplate extends CodeBlock {
     default String build() {
         return Template.LOGIC_NON_TERMINAL.template()
                 .add("nonTerminal", nonTerminal().identifier())
-                .add("comment", nonTerminal().toString())
                 .render();
     }
 

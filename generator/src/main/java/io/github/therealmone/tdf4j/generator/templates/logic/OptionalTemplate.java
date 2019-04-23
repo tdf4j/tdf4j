@@ -14,7 +14,6 @@ public interface OptionalTemplate extends CodeBlock, Prediction {
     @Override
     default String build() {
         final ST template = Template.LOGIC_OPTIONAL.template()
-                .add("comment", optional().toString())
                 .add("hash", Math.abs(this.hashCode()));
         for(final Element element : optional().elements()) {
             final CodeBlock codeBlock = CodeBlock.fromElement(element);

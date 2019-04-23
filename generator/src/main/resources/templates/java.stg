@@ -70,8 +70,7 @@ public class <className> implements Parser {
 }
 >>
 
-method(comment, returnValue, name, codeBlocks) ::= <<
-//<comment>
+method(returnValue, name, codeBlocks) ::= <<
 private <returnValue> <name>() {
     <codeBlocks: {codeBlock|<codeBlock>};separator="\n">
 }
@@ -88,8 +87,7 @@ import java.util.*;
 import java.util.stream.*;
 >>
 
-except(comment, exceptions) ::= <<
-//<comment>
+except(exceptions) ::= <<
 if(stream.peek() == null ||
     <exceptions: {exception|stream.peek().tag().equalsIgnoreCase("<exception>")};separator=" ||\n">
 ) {
@@ -99,15 +97,13 @@ if(stream.peek() == null ||
 }
 >>
 
-ele_group(comment, codeBlocks, hash) ::= <<
-//<comment>
+ele_group(codeBlocks, hash) ::= <<
 {
     <codeBlocks: {codeBlock|<codeBlock>};separator="\n">
 }
 >>
 
-non_terminal(comment, nonTerminal) ::= <<
-//<comment>
+non_terminal(nonTerminal) ::= <<
 {
     ast.addNode("<nonTerminal>")
         .moveCursor(AST.Movement.TO_LAST_ADDED_NODE);
@@ -116,8 +112,7 @@ non_terminal(comment, nonTerminal) ::= <<
 }
 >>
 
-optional(comment, firstElements, codeBlocks, hash) ::= <<
-//<comment>
+optional(firstElements, codeBlocks, hash) ::= <<
 {
     if(<firstElements: {firstElement|predict(stream.peek()).contains("<firstElement>")}; separator=" ||\n">) {
         <codeBlocks: {codeBlock|<codeBlock>};separator="\n">
@@ -125,8 +120,7 @@ optional(comment, firstElements, codeBlocks, hash) ::= <<
 }
 >>
 
-or(comment, firstStartElements, firstCodeBlocks, secondStartElements, secondCodeBlocks) ::= <<
-//<comment>
+or(firstStartElements, firstCodeBlocks, secondStartElements, secondCodeBlocks) ::= <<
 {
     if(stream.peek() != null && (
         <firstStartElements: {startElement|predict(stream.peek()).contains("<startElement>")}; separator=" ||\n">
@@ -142,8 +136,7 @@ or(comment, firstStartElements, firstCodeBlocks, secondStartElements, secondCode
 }
 >>
 
-repeat(comment, firstElements, codeBlocks, hash) ::= <<
-//<comment>
+repeat(firstElements, codeBlocks, hash) ::= <<
 {
     while(true) {
         if(<firstElements: {firstElement|predict(stream.peek()).contains("<firstElement>")}; separator=" ||\n">) {
@@ -155,8 +148,7 @@ repeat(comment, firstElements, codeBlocks, hash) ::= <<
 }
 >>
 
-repetition(comment, hash, times, codeBlocks) ::= <<
-//<comment>
+repetition(hash, times, codeBlocks) ::= <<
 {
     for(int i<hash> = 0; i<hash> \< <times>; i<hash>++) {
         <codeBlocks: {codeBlock|<codeBlock>};separator="\n">
@@ -164,8 +156,7 @@ repetition(comment, hash, times, codeBlocks) ::= <<
 }
 >>
 
-terminal_tag(comment, terminal) ::= <<
-//<comment>
+terminal_tag(terminal) ::= <<
 if(stream.peek() != null && stream.peek().tag().equalsIgnoreCase("<terminal>")) {
     ast.addLeaf(stream.next());
 } else {
