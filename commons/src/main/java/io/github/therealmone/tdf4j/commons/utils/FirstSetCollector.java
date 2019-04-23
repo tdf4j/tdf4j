@@ -24,13 +24,17 @@ public class FirstSetCollector {
         }
         if (!production.elements().isEmpty()) {
             context.getSet().get(production.identifier()).addAll(
-                    firstOf(context, production.identifier(), production.elements().get(0))
+                    firstOf(context, production.identifier(), firstElement(production))
             );
         }
         return new ArrayList<>(context.getSet().get(production.identifier()));
     }
 
-    private List<Terminal.Tag> firstOf(final Context context, final String currentNT, final Element element) {
+    private List<Terminal.Tag> firstOf(final Context context, final String currentNT, @Nullable final Element element) {
+        if(element == null) {
+            return new ArrayList<>();
+        }
+
         switch (element.kind()) {
 
             case EXCEPT:
@@ -82,6 +86,17 @@ public class FirstSetCollector {
 
             default: return new ArrayList<>();
         }
+    }
+
+    @Nullable
+    private Element firstElement(final Production production) {
+        for(final Element element : production.elements()) {
+            if(element.isInlineAction()) {
+                continue;
+            }
+            return element;
+        }
+        return null;
     }
 
     private class Context {

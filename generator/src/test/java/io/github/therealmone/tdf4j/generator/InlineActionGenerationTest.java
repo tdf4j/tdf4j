@@ -92,4 +92,32 @@ public class InlineActionGenerationTest extends ParserTest {
         assertEquals("A", test.get(0));
         assertEquals("B", test.get(1));
     }
+
+    @Test
+    public void at_the_beginning() {
+        final List<String> test = new ArrayList<>();
+        final Parser parser = generate(new AbstractParserModule() {
+            @Override
+            public void configure() {
+                environment()
+                        .dependencies(
+                                dependency(List.class, "list", test),
+                                dependency(HashMap.class, "hashmap")
+                        );
+                prod("prod1")
+                        .is(
+                                inline("list.add(\"value1\");"),
+                                oneOf(
+                                        t("A"),
+                                        t("B"),
+                                        t("C")
+                                )
+
+                        );
+            }
+        });
+        assertNotNull(parse(parser, "C"));
+        assertEquals(1, test.size());
+        assertEquals("value1", test.get(0));
+    }
 }

@@ -18,6 +18,7 @@ public class FirstSetCollectorTest {
     public void nested() {
         final First first = firstSetCollector.collect(new ArrayList<>() {{
             add(prod("prod1").is(
+                    inline("inline"),
                     nt("prod2"),
                     t("A"),
                     nt("prod3")
@@ -39,6 +40,7 @@ public class FirstSetCollectorTest {
     public void nested_with_group() {
         final First first = firstSetCollector.collect(new ArrayList<>() {{
             add(prod("prod1").is(
+                    inline("inline"),
                     group(nt("prod2")),
                     t("B"),
                     nt("prod3")
@@ -60,6 +62,7 @@ public class FirstSetCollectorTest {
     public void nested_with_optional() {
         final First first = firstSetCollector.collect(new ArrayList<>() {{
             add(prod("prod1").is(
+                    inline("inline"),
                     optional(nt("prod2")),
                     t("B"),
                     nt("prod3")
@@ -81,6 +84,7 @@ public class FirstSetCollectorTest {
     public void nested_with_or() {
         final First first = firstSetCollector.collect(new ArrayList<>() {{
             add(prod("prod1").is(
+                    inline("inline"),
                     or(
                             nt("prod2"),
                             t("A")
@@ -104,6 +108,7 @@ public class FirstSetCollectorTest {
     public void nested_with_repeat() {
         final First first = firstSetCollector.collect(new ArrayList<>() {{
             add(prod("prod1").is(
+                    inline("inline"),
                     repeat(nt("prod2")),
                     t("B"),
                     nt("prod3")
@@ -125,6 +130,7 @@ public class FirstSetCollectorTest {
     public void nested_with_repetition() {
         final First first = firstSetCollector.collect(new ArrayList<>() {{
             add(prod("prod1").is(
+                    inline("inline"),
                     repetition(nt("prod2"), 2),
                     t("B"),
                     nt("prod3")
@@ -192,6 +198,14 @@ public class FirstSetCollectorTest {
 
     private NonTerminal nt(final String identifier) {
         return new NonTerminal.Builder().identifier(identifier).build();
+    }
+
+    public InlineAction inline(final String code) {
+        //noinspection ConstantConditions
+        if(code == null || code.trim().equalsIgnoreCase("")) {
+            throw new IllegalStateException("Code can't be blank or null");
+        }
+        return new InlineAction.Builder().code(code).build();
     }
 
     private Except except(final Terminal.Tag ... tags) {
