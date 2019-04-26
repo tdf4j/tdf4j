@@ -76,7 +76,7 @@ public class LexerImpl implements Lexer {
 
     private Token tokenFrom(final Terminal terminal, final StringBuilder buffer, final StringBuilder in) {
         final Token token = new Token.Builder()
-                .tag(terminal.tag().value())
+                .tag(terminal.tag())
                 .value(buffer.toString())
                 .build();
         buffer.chars().forEach(ch -> listener.listen((char) ch));

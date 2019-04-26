@@ -25,13 +25,13 @@ public class AbstractParserModuleTest {
         assertEquals(2, grammar.productions().size());
         assertEquals("prod1", grammar.initProduction());
         {
-            assertEquals("prod2", grammar.productions().get(0).identifier());
+            assertEquals("prod2", grammar.productions().get(0).identifier().identifier());
             assertEquals(2, grammar.productions().get(0).elements().size());
             assertEquals("ele1", grammar.productions().get(0).elements().get(0).asNonTerminal().identifier());
             assertEquals("ele2", grammar.productions().get(0).elements().get(1).asNonTerminal().identifier());
         }
         {
-            assertEquals("prod1", grammar.productions().get(1).identifier());
+            assertEquals("prod1", grammar.productions().get(1).identifier().identifier());
             assertEquals(2, grammar.productions().get(1).elements().size());
             assertEquals("ele1", grammar.productions().get(1).elements().get(0).asTerminalTag().value());
             assertEquals("ele2", grammar.productions().get(1).elements().get(1).asTerminalTag().value());
@@ -96,7 +96,7 @@ public class AbstractParserModuleTest {
         assertEquals(1, grammar.productions().size());
         assertEquals("prod1", grammar.initProduction());
         final Production production = grammar.productions().get(0);
-        assertEquals("prod1", production.identifier());
+        assertEquals("prod1", production.identifier().identifier());
 
         //.then(optional(name("name1"), name("name2"), name("name3")))
         {
@@ -281,7 +281,7 @@ public class AbstractParserModuleTest {
         }.build();
         final Grammar grammar = module.getGrammar();
         assertEquals(1, grammar.productions().size());
-        assertEquals("prod1", grammar.productions().get(0).identifier());
+        assertEquals("prod1", grammar.productions().get(0).identifier().identifier());
         assertEquals("prod1 := prod2,-(C)", grammar.productions().get(0).toString());
     }
 

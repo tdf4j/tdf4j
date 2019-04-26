@@ -30,7 +30,7 @@ public abstract class Grammar {
         if(productions().isEmpty()) {
             return null;
         } else {
-            return productions().get(0).identifier();
+            return productions().get(0).identifier().toString();
         }
     }
 

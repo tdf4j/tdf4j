@@ -17,9 +17,9 @@ package io.github.therealmone.tdf4j.generator.impl;
 
 import io.github.therealmone.tdf4j.commons.Dependency;
 import io.github.therealmone.tdf4j.commons.Module;
-import io.github.therealmone.tdf4j.commons.model.ebnf.First;
-import io.github.therealmone.tdf4j.commons.model.ebnf.Follow;
+import io.github.therealmone.tdf4j.commons.model.ebnf.NonTerminal;
 import io.github.therealmone.tdf4j.commons.model.ebnf.Production;
+import io.github.therealmone.tdf4j.commons.utils.Predictor;
 import io.github.therealmone.tdf4j.generator.Generator;
 import io.github.therealmone.tdf4j.generator.Template;
 import io.github.therealmone.tdf4j.generator.templates.ImmutableMethodTemplate;
@@ -53,8 +53,7 @@ public class ParserGenerator implements Generator<Parser> {
                 parser.build()
         ).create(args(
                 collectMetaInformation(parser),
-                module.getGrammar().firstSet(),
-                module.getGrammar().followSet(),
+                new Predictor(module.getGrammar().firstSet(), module.getGrammar().followSet()),
                 module.getEnvironment().dependencies()
         )).get();
     }
@@ -75,11 +74,11 @@ public class ParserGenerator implements Generator<Parser> {
     }
 
     private List<MethodTemplate> collectMethods(final List<Production> productions) {
-        final Map<String, MethodTemplate.Builder> declaredMethods = new HashMap<>();
+        final Map<NonTerminal, MethodTemplate.Builder> declaredMethods = new HashMap<>();
         for (final Production production : productions) {
             if(!declaredMethods.containsKey(production.identifier())) {
                 declaredMethods.put(production.identifier(), new MethodTemplate.Builder()
-                        .name(production.identifier())
+                        .name(production.identifier().identifier())
                 );
             }
 
@@ -94,13 +93,12 @@ public class ParserGenerator implements Generator<Parser> {
         return declaredMethods.values().stream().map((Function<MethodTemplate.Builder, MethodTemplate>) ImmutableMethodTemplate.Builder::build).collect(Collectors.toList());
     }
 
-    private Object[] args(final MetaInf meta, final First first, final Follow follow, final Dependency[] dependencies) {
-        final Object[] args = new Object[dependencies.length + 3];
+    private Object[] args(final MetaInf meta, final Predictor predictor, final Dependency[] dependencies) {
+        final Object[] args = new Object[dependencies.length + 2];
         args[0] = meta;
-        args[1] = first;
-        args[2] = follow;
+        args[1] = predictor;
         for (int i = 0; i < dependencies.length; i++) {
-            args[i + 3] = dependencies[i].instance();
+            args[i + 2] = dependencies[i].instance();
         }
         return args;
     }

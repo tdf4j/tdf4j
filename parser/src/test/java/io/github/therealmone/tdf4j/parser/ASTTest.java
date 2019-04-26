@@ -43,7 +43,7 @@ public class ASTTest {
         {
             final ASTElement child = ast.onCursor().asRoot().children().get(2);
             assertTrue(child.isLeaf());
-            assertEquals("leaf1", child.asLeaf().token().tag());
+            assertEquals("leaf1", child.asLeaf().token().tag().value());
             assertEquals("leaf1", child.asLeaf().token().value());
             assertEquals(ast.onCursor(), child.asLeaf().parent());
         }
@@ -52,7 +52,7 @@ public class ASTTest {
         {
             final ASTElement child = ast.onCursor().asRoot().children().get(3);
             assertTrue(child.isLeaf());
-            assertEquals("leaf2", child.asLeaf().token().tag());
+            assertEquals("leaf2", child.asLeaf().token().tag().value());
             assertEquals("leaf2", child.asLeaf().token().value());
             assertEquals(ast.onCursor(), child.asLeaf().parent());
         }
@@ -95,7 +95,7 @@ public class ASTTest {
         {
             ast.moveCursor(cursor -> cursor.setValue(cursor.asRoot().children().get(0)));
             assertTrue(ast.onCursor().isLeaf());
-            assertEquals("leaf1", ast.onCursor().asLeaf().token().tag());
+            assertEquals("leaf1", ast.onCursor().asLeaf().token().tag().value());
             assertEquals("leaf1", ast.onCursor().asLeaf().token().value());
             ast.moveCursor(AST.Movement.TO_PARENT);
             assertTrue(ast.onCursor().isRoot());
@@ -106,7 +106,7 @@ public class ASTTest {
         {
             ast.moveCursor(cursor -> cursor.setValue(cursor.asRoot().children().get(1)));
             assertTrue(ast.onCursor().isLeaf());
-            assertEquals("leaf2", ast.onCursor().asLeaf().token().tag());
+            assertEquals("leaf2", ast.onCursor().asLeaf().token().tag().value());
             assertEquals("leaf2", ast.onCursor().asLeaf().token().value());
             ast.moveCursor(AST.Movement.TO_PARENT);
             assertTrue(ast.onCursor().isRoot());

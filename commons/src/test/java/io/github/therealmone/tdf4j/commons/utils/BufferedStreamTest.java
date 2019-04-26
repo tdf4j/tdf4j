@@ -1,6 +1,7 @@
-package io.github.therealmone.tdf4j.commons;
+package io.github.therealmone.tdf4j.commons.utils;
 
-import io.github.therealmone.tdf4j.commons.utils.BufferedStream;
+import io.github.therealmone.tdf4j.commons.Anchor;
+import io.github.therealmone.tdf4j.commons.Stream;
 import org.junit.Test;
 
 import java.util.ArrayList;

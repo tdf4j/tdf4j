@@ -21,8 +21,7 @@ package <package>;
 
 public class <className> implements Parser {
     private final MetaInf meta;
-    private final First first;
-    private final Follow follow;
+    private final Predictor predictor;
 
     <environment.dependencies: {dependency| private final <dependency.clazz.simpleName> <dependency.name>;}; separator="\n">
 
@@ -31,12 +30,10 @@ public class <className> implements Parser {
 
     public <className>(
         final MetaInf meta,
-        final First first,
-        final Follow follow<environment.dependencies: {dependency|,<\n><\t><\t>final <dependency.clazz.simpleName> <dependency.name>}>
+        final Predictor predictor<environment.dependencies: {dependency|,<\n><\t><\t>final <dependency.clazz.simpleName> <dependency.name>}>
     ) {
         this.meta = meta;
-        this.first = first;
-        this.follow = follow;
+        this.predictor = predictor;
         <environment.dependencies: {dependency| this.<dependency.name> = <dependency.name>;}; separator="\n">
     }
 
@@ -50,10 +47,7 @@ public class <className> implements Parser {
 
     @Override
     public AST parse(final List\<Token> tokens) {
-        tokens.forEach(token -> {
-            System.out.println(token.tag() + " : " + token.value());
-        });
-        return null;
+        return parse(Stream.of(tokens));
     }
 
     @Override
@@ -63,29 +57,12 @@ public class <className> implements Parser {
 
     <methods: {method|<method><\n><\n>}>
 
-    private List\<String> predict(final Token token) {
-        if(token == null) {
-            return new ArrayList\<>();
-        }
-        final List\<String> predictions = new ArrayList\<>();
-        first.set().forEach((ident, set) -> {
-            if(set.stream().map(Terminal.Tag::value).collect(Collectors.toSet()).contains(token.tag())) {
-                predictions.add(ident);
-            }
-        });
-        predictions.add(token.tag());
-        return predictions;
-    }
-
-    private boolean contains(final List\<String> predictions, final String element) {
-        return predictions.contains(element);
-    }
-
     <environment.code>
 }
 >>
 
 method(returnValue, name, codeBlocks) ::= <<
+@SuppressWarnings("ConstantConditions")
 private <returnValue> <name>() {
     <codeBlocks: {codeBlock|<codeBlock>};separator="\n">
 }
@@ -104,7 +81,7 @@ import java.util.stream.*;
 
 except(exceptions) ::= <<
 if(stream.peek() == null ||
-    <exceptions: {exception|stream.peek().tag().equalsIgnoreCase("<exception>")};separator=" ||\n">
+    <exceptions: {exception|stream.peek().tag().value().equalsIgnoreCase("<exception>")};separator="\n|| ">
 ) {
     throw new UnexpectedTokenException(stream.peek());
 } else {
@@ -113,66 +90,53 @@ if(stream.peek() == null ||
 >>
 
 ele_group(codeBlocks, hash) ::= <<
-{
+<codeBlocks: {codeBlock|<codeBlock>};separator="\n">
+>>
+
+non_terminal(nonTerminal) ::= <<
+ast.addNode("<nonTerminal>").moveCursor(AST.Movement.TO_LAST_ADDED_NODE);
+<nonTerminal>();
+ast.moveCursor(AST.Movement.TO_PARENT);
+>>
+
+optional(firstElements, codeBlocks, hash) ::= <<
+if(<firstElements: {firstElement|predictor.predict(stream.peek()).contains("<firstElement>")}; separator="\n|| ">) {
     <codeBlocks: {codeBlock|<codeBlock>};separator="\n">
 }
 >>
 
-non_terminal(nonTerminal) ::= <<
-{
-    ast.addNode("<nonTerminal>")
-        .moveCursor(AST.Movement.TO_LAST_ADDED_NODE);
-    <nonTerminal>();
-    ast.moveCursor(AST.Movement.TO_PARENT);
-}
->>
-
-optional(firstElements, codeBlocks, hash) ::= <<
-{
-    if(<firstElements: {firstElement|predict(stream.peek()).contains("<firstElement>")}; separator=" ||\n">) {
-        <codeBlocks: {codeBlock|<codeBlock>};separator="\n">
-    }
-}
->>
-
 or(firstStartElements, firstCodeBlocks, secondStartElements, secondCodeBlocks) ::= <<
-{
-    if(stream.peek() != null && (
-        <firstStartElements: {startElement|predict(stream.peek()).contains("<startElement>")}; separator=" ||\n">
-    )) {
-        <firstCodeBlocks: {codeBlock|<codeBlock>};separator="\n">
-    } else if(stream.peek() != null && (
-        <secondStartElements: {startElement|predict(stream.peek()).contains("<startElement>")}; separator=" ||\n">
-    )) {
-        <secondCodeBlocks: {codeBlock|<codeBlock>};separator="\n">
-    } else {
-        throw new UnexpectedTokenException(stream.peek());
-    }
+if(stream.peek() != null && (
+    <firstStartElements: {startElement|predictor.predict(stream.peek()).contains("<startElement>")}; separator="\n|| ">
+)) {
+    <firstCodeBlocks: {codeBlock|<codeBlock>};separator="\n">
+} else if(stream.peek() != null && (
+    <secondStartElements: {startElement|predictor.predict(stream.peek()).contains("<startElement>")}; separator="\n|| ">
+)) {
+    <secondCodeBlocks: {codeBlock|<codeBlock>};separator="\n">
+} else {
+    throw new UnexpectedTokenException(stream.peek());
 }
 >>
 
 repeat(firstElements, codeBlocks, hash) ::= <<
-{
-    while(true) {
-        if(<firstElements: {firstElement|predict(stream.peek()).contains("<firstElement>")}; separator=" ||\n">) {
-            <codeBlocks: {codeBlock|<codeBlock>};separator="\n">
-        } else {
-            break;
-        }
+while(true) {
+    if(<firstElements: {firstElement|predictor.predict(stream.peek()).contains("<firstElement>")}; separator="\n|| ">) {
+        <codeBlocks: {codeBlock|<codeBlock>};separator="\n">
+    } else {
+        break;
     }
 }
 >>
 
 repetition(hash, times, codeBlocks) ::= <<
-{
-    for(int i<hash> = 0; i<hash> \< <times>; i<hash>++) {
-        <codeBlocks: {codeBlock|<codeBlock>};separator="\n">
-    }
+for(int i<hash> = 0; i<hash> \< <times>; i<hash>++) {
+    <codeBlocks: {codeBlock|<codeBlock>};separator="\n">
 }
 >>
 
 terminal_tag(terminal) ::= <<
-if(stream.peek() != null && stream.peek().tag().equalsIgnoreCase("<terminal>")) {
+if(stream.peek() != null && stream.peek().tag().value().equalsIgnoreCase("<terminal>")) {
     ast.addLeaf(stream.next());
 } else {
     throw new UnexpectedTokenException(stream.peek());

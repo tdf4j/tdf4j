@@ -25,7 +25,7 @@ import java.util.Set;
 public abstract class First {
 
     @Value.Default
-    public Map<String, Set<Terminal.Tag>> set() {
+    public Map<NonTerminal, Set<Terminal.Tag>> set() {
         return new HashMap<>();
     }
 

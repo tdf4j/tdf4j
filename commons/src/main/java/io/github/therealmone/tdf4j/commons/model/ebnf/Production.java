@@ -22,7 +22,7 @@ import java.util.List;
 @Value.Immutable
 public abstract class Production {
 
-    public abstract String identifier();
+    public abstract NonTerminal identifier();
 
     public abstract List<Element> elements();
 
@@ -33,6 +33,10 @@ public abstract class Production {
 
         public Builder is(final Element ... elements) {
             return super.addElements(elements);
+        }
+
+        public Builder identifier(final String identifier) {
+            return super.identifier(new NonTerminal.Builder().identifier(identifier).build());
         }
     }
 
