@@ -1,5 +1,5 @@
 /*
- * Copyright Roman Fatnev
+ * Copyright 2019 Roman Fatnev
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ import io.github.therealmone.tdf4j.commons.Module;
 import io.github.therealmone.tdf4j.commons.model.ebnf.Terminal;
 import java.util.*;
 
-@SuppressWarnings("ALL")
 public abstract class AbstractLexerModule extends BindingMapper implements Module {
     private final List<Terminal> terminals;
     private boolean built = false;
