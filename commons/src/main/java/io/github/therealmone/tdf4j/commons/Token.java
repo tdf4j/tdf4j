@@ -15,14 +15,18 @@
  */
 package io.github.therealmone.tdf4j.commons;
 
+import io.github.therealmone.tdf4j.commons.model.ebnf.Terminal;
 import org.immutables.value.Value;
 
 @Value.Immutable
 public interface Token {
-    String tag();
+    Terminal.Tag tag();
 
     String value();
 
     class Builder extends ImmutableToken.Builder {
+        public Builder tag(final String tag) {
+            return super.tag(new Terminal.Tag.Builder().value(tag).build());
+        }
     }
 }

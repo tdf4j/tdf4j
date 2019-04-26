@@ -175,15 +175,15 @@ public class LexerFactoryTest {
     private void assertTokens(final List<Token> tokens) {
         assertEquals(3, tokens.size());
         {
-            assertEquals("tag1", tokens.get(0).tag());
+            assertEquals("tag1", tokens.get(0).tag().value());
             assertEquals("pattern1", tokens.get(0).value());
         }
         {
-            assertEquals("tag2", tokens.get(1).tag());
+            assertEquals("tag2", tokens.get(1).tag().value());
             assertEquals("pattern2", tokens.get(1).value());
         }
         {
-            assertEquals("tag3", tokens.get(2).tag());
+            assertEquals("tag3", tokens.get(2).tag().value());
             assertEquals("pattern3", tokens.get(2).value());
         }
     }

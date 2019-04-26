@@ -45,7 +45,7 @@ public class FirstSetCollector {
         return new ArrayList<>(context.getSet().get(production.identifier()));
     }
 
-    private List<Terminal.Tag> firstOf(final Context context, final String currentNT, @Nullable final Element element) {
+    private List<Terminal.Tag> firstOf(final Context context, final NonTerminal currentNT, @Nullable final Element element) {
         if(element == null) {
             return new ArrayList<>();
         }
@@ -62,9 +62,9 @@ public class FirstSetCollector {
             }
 
             case NON_TERMINAL: {
-                return element.asNonTerminal().identifier().equalsIgnoreCase(currentNT)
+                return element.asNonTerminal().identifier().equalsIgnoreCase(currentNT.identifier())
                         ? new ArrayList<>()
-                        : firstOf(context, context.getProduction(element.asNonTerminal().identifier()));
+                        : firstOf(context, context.getProduction(element.asNonTerminal()));
             }
 
             case OPTIONAL: {
@@ -116,21 +116,21 @@ public class FirstSetCollector {
 
     private class Context {
         private final List<Production> productions;
-        private final Map<String, Set<Terminal.Tag>> set;
+        private final Map<NonTerminal, Set<Terminal.Tag>> set;
 
         Context(final List<Production> productions) {
             this.productions = productions;
             this.set = new HashMap<>();
         }
 
-        Map<String, Set<Terminal.Tag>> getSet() {
+        Map<NonTerminal, Set<Terminal.Tag>> getSet() {
             return set;
         }
 
         @Nullable
-        Production getProduction(final String ident) {
+        Production getProduction(final NonTerminal ident) {
             for(final Production production : productions) {
-                if(production.identifier().equalsIgnoreCase(ident)) {
+                if(production.identifier().equals(ident)) {
                     return production;
                 }
             }

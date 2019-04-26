@@ -1,7 +1,6 @@
-package io.github.therealmone.tdf4j.commons;
+package io.github.therealmone.tdf4j.commons.utils;
 
 import io.github.therealmone.tdf4j.commons.model.ebnf.*;
-import io.github.therealmone.tdf4j.commons.utils.FirstSetCollector;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -213,7 +212,11 @@ public class FirstSetCollectorTest {
     }
 
     private static void assertFirstContains(final First first, final String ident, final String ... tags) {
-        final Set<String> set = first.set().get(ident).stream().map(Terminal.Tag::value).collect(Collectors.toSet());
+        final Set<String> set = first.set()
+                .get(new NonTerminal.Builder().identifier(ident).build())
+                .stream()
+                .map(Terminal.Tag::value)
+                .collect(Collectors.toSet());
         for(final String tag : tags) {
             assertTrue(set.contains(tag));
             set.remove(tag);
