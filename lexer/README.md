@@ -17,13 +17,21 @@ as known `terminals` to use lexer.
 rules constituting a formal grammar. Terminal symbols are the elementary symbols of the language defined by a formal grammar.
  Nonterminal symbols (or syntactic variables) are replaced by groups of terminal symbols according to the production rules.
  
-Terminals consist of `tag`, `pattern`, and `priority`.
-- Tag is a `String` which defines the name of parsed token.
-- Pattern is a `Regular expression` which token should match.
-- Priority is an `Integer` which uses for collision resolution. By default: 0.
-(For example there is 2 terminals: `tag: VAR, pattern: ^[a-z]+$` and `tag: for, pattern: ^for$`, so input `"for"` matches both
-terminals. To avoid this specify priorities for terminals: `tag: var, pattern ^[a-z]+$, priority: 0` and `tag: FOR, pattern: ^for$, priority: 1`.
-Now input `"for"` will match terminal with tag `FOR`)
+Terminals consist of **tag**, **pattern**, **priority** and **hidden flag**.
+- **Tag** is a `String` which defines the name of parsed token.
+- **Pattern** is a `Regular expression` which token should match.
+- **Priority** is an `Integer` which uses for collision resolution. By default: 0.
+
+    For example there is 2 terminals: `tag: VAR, pattern: ^[a-z]+$` and `tag: FOR, pattern: ^for$`, so input `"for"` matches both
+    terminals. To avoid this specify priorities for terminals: `tag: var, pattern ^[a-z]+$, priority: 0` and `tag: FOR, pattern: ^for$, priority: 1`.
+    Now input `"for"` will match terminal with tag `FOR`.
+    
+- **Hidden flag** is a `Boolean` that represents tokens which will be skipped. By default: false
+ 
+    By default lexical analyzer
+    doesnt skip any symbols. For example to make lexical analyzer skip any white spaces
+    or new lines add next terminal: `tag: IGNORE, pattern: (\s|\n|\r)+, hidden: true`.
+    (Also commentaries are usually skipped by lexical analyzer)
  
 There is three ways for configuration:
 ##### 1. In code
@@ -32,37 +40,37 @@ Lexer accepts ```AbstractLexerModule``` as configuration class. To configure lex
     class Configuration extends AbstractLexerModule {
         @Override
         public void configure() {
-            tokenize("tag").pattern("pattern").priority(1);
-            tokenize("tag").pattern("pattern");
-            tokenize("tag").pattern("pattern").priority(10000);
+            tokenize("TAG1").pattern("pattern1").priority(1);
+            tokenize("TAG2").pattern("pattern2");
+            tokenize("TAG3").pattern("pattern3").priority(10000);
+            tokenize("IGNORE").pattern("(\\s|\\n|\\r)+").hidden(true);
         }
     }
 ```
-Priority is not necessary element. By default it is 0.
 
 ##### 2. XML
 Xml file must contains `<terminals>` as root element and `<terminal tag="tag" pattern="pattern" priority="100"/>` as child.
 Example:
 ```xml
     <terminals>
-      <terminal tag="tag1" pattern="pattern1" priority="1"/>
-      <terminal tag="tag2" pattern="pattern2"/>
-      <terminal tag="tag3" pattern="pattern3" priority="10000"/>
+      <terminal tag="TAG1" pattern="pattern1" priority="1"/>
+      <terminal tag="TAG2" pattern="pattern2"/>
+      <terminal tag="TAG3" pattern="pattern3" priority="10000"/>
+      <terminal tag="IGNORE" pattern="(\s|\n|\r)+" hidden="true"/>
     </terminals>
 ```
-Priority is not necessary element. By default it is 0.
 
 ##### 3. JSON
 ```json
     {
       "terminals": [
-        {"tag": "tag1", "pattern": "pattern1", "priority": 1},
-        {"tag": "tag2", "pattern": "pattern2"},
-        {"tag": "tag3", "pattern": "pattern3", "priority": 10000}
+        {"tag": "TAG1", "pattern": "pattern1", "priority": 1},
+        {"tag": "TAG2", "pattern": "pattern2"},
+        {"tag": "TAG3", "pattern": "pattern3", "priority": 10000},
+        {"tag": "IGNORE", "pattern": "(\s|\n|\r)+", "hidden":  true}
       ]
     }
 ```
-Priority is not necessary element. By default it is 0.
 
 ### Lexer factory
 Lexer factory can build lexer for each type of configuration:
