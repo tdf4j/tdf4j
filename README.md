@@ -1,4 +1,4 @@
-#tdf4j
+# tdf4j
 Programming languages are the way to describe process of
 computing for different devices. Modern world highly 
 depends on programming languages because almost every
@@ -15,7 +15,7 @@ languages includes two main phases: lexical and syntax
 analysis. This framework provides classes for generating
 both lexical and syntax analyzers.
 
-##Usage
+## Usage
 Add a dependency to pom file.
 ```xml
 <dependency>

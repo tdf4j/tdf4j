@@ -1,1 +1,1 @@
-#Syntax analyzer generator
+# Syntax analyzer generator
