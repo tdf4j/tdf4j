@@ -15,6 +15,7 @@
  */
 package io.github.therealmone.tdf4j.generator;
 
+import io.github.therealmone.tdf4j.generator.impl.LexerGeneratorImpl;
 import io.github.therealmone.tdf4j.lexer.Lexer;
 import io.github.therealmone.tdf4j.lexer.SymbolListener;
 import io.github.therealmone.tdf4j.lexer.config.AbstractLexerModule;
@@ -49,4 +50,8 @@ public interface LexerGenerator extends Generator<Lexer, AbstractLexerModule> {
     Lexer fromJson(final File file) throws IOException, ParseException;
 
     Lexer generate(final AbstractLexerModule module, final SymbolListener listener);
+
+    static LexerGenerator newInstance() {
+        return new LexerGeneratorImpl();
+    }
 }

@@ -1,7 +1,6 @@
 package io.github.therealmone.tdf4j.generator;
 
 import io.github.therealmone.tdf4j.commons.Token;
-import io.github.therealmone.tdf4j.generator.impl.LexerGeneratorImpl;
 import io.github.therealmone.tdf4j.lexer.Lexer;
 import io.github.therealmone.tdf4j.lexer.SymbolListener;
 import io.github.therealmone.tdf4j.lexer.config.AbstractLexerModule;
@@ -14,7 +13,7 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 public class LexerFactoryTest {
-    private final LexerGenerator lexerGenerator = new LexerGeneratorImpl();
+    private final LexerGenerator lexerGenerator = LexerGenerator.newInstance();
     private final StringBuilder text = new StringBuilder();
     private final SymbolListener listener = new SymbolListener() {
         @Override
