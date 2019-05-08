@@ -15,8 +15,13 @@
  */
 package io.github.therealmone.tdf4j.generator;
 
+import io.github.therealmone.tdf4j.generator.impl.ParserGeneratorImpl;
 import io.github.therealmone.tdf4j.parser.Parser;
 import io.github.therealmone.tdf4j.parser.config.AbstractParserModule;
 
 public interface ParserGenerator extends Generator<Parser, AbstractParserModule> {
+
+    static ParserGenerator newInstance() {
+        return new ParserGeneratorImpl();
+    }
 }

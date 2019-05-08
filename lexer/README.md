@@ -72,21 +72,21 @@ Example:
     }
 ```
 
-### Lexer factory
-Lexer factory can build lexer for each type of configuration:
+### Lexer generator
+Lexer generator can build lexer for each type of configuration:
 - In Code: 
 ```java
-    Lexer lexer = new LexerFactory().withModule(new Configuration());
+    Lexer lexer = LexerGenerator.newInstance().generate(new Configuration());
 ```
 - Xml:
 ```java
-    Lexer lexer = new LexerFactory().fromXml(new File("terminals.xml"));
-    Lexer lexer = new LexerFactory().fromXml(new FileInputStream(new File("terminals.xml")));
-    Lexer lexer = new LexerFactory().fromXml("<terminals></terminals>");
+    Lexer lexer = LexerGenerator.newInstance().fromXml(new File("terminals.xml"));
+    Lexer lexer = LexerGenerator.newInstance().fromXml(new FileInputStream(new File("terminals.xml")));
+    Lexer lexer = LexerGenerator.newInstance().fromXml("<terminals></terminals>");
 ```
 - Json:
 ```java
-    Lexer lexer = new LexerFactory().fromJson(new File("terminals.json"));
-    Lexer lexer = new LexerFactory().fromJson(new FileInputStream(new File("terminals.json")));
-    Lexer lexer = new LexerFactory().fromJson("{\"terminals:\"[]}");
+    Lexer lexer = LexerGenerator.newInstance().fromJson(new File("terminals.json"));
+    Lexer lexer = LexerGenerator.newInstance().fromJson(new FileInputStream(new File("terminals.json")));
+    Lexer lexer = LexerGenerator.newInstance().fromJson("{\"terminals:\"[]}");
 ```

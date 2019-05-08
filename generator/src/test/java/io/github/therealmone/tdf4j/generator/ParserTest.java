@@ -1,7 +1,5 @@
 package io.github.therealmone.tdf4j.generator;
 
-import io.github.therealmone.tdf4j.generator.impl.LexerGeneratorImpl;
-import io.github.therealmone.tdf4j.generator.impl.ParserGeneratorImpl;
 import io.github.therealmone.tdf4j.lexer.Lexer;
 import io.github.therealmone.tdf4j.lexer.config.AbstractLexerModule;
 import io.github.therealmone.tdf4j.parser.Parser;
@@ -14,12 +12,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 public class ParserTest {
-    static ParserGenerator generator = new ParserGeneratorImpl();
+    static ParserGenerator generator = ParserGenerator.newInstance();
     static Lexer lexer;
 
     @BeforeClass
     public static void globalSetup() {
-        lexer = new LexerGeneratorImpl().generate(new AbstractLexerModule() {
+        lexer = LexerGenerator.newInstance().generate(new AbstractLexerModule() {
             @Override
             public void configure() {
                 for (final TestTerminal testLexeme : TestTerminal.values()) {
