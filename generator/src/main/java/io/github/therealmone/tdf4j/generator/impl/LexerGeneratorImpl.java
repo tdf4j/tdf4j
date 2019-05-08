@@ -13,8 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.therealmone.tdf4j.lexer;
+package io.github.therealmone.tdf4j.generator.impl;
 
+import io.github.therealmone.tdf4j.generator.LexerGenerator;
+import io.github.therealmone.tdf4j.lexer.Lexer;
+import io.github.therealmone.tdf4j.lexer.SymbolListener;
 import io.github.therealmone.tdf4j.lexer.config.AbstractLexerModule;
 import io.github.therealmone.tdf4j.lexer.config.JsonLexerModule;
 import io.github.therealmone.tdf4j.lexer.config.XmlLexerModule;
@@ -24,15 +27,19 @@ import org.json.simple.parser.ParseException;
 
 import java.io.*;
 
-public class LexerFactory{
+public class LexerGeneratorImpl implements LexerGenerator {
+
+    @Override
     public Lexer fromXml(final String xml, final SymbolListener listener) {
         return new LexerImpl(new XmlLexerModule(xml).build(), listener);
     }
 
+    @Override
     public Lexer fromXml(final String xml) {
         return fromXml(xml, new SymbolListenerImpl());
     }
 
+    @Override
     public Lexer fromXml(final InputStream inputStream, final SymbolListener listener) throws IOException {
         try(final StringWriter writer = new StringWriter()) {
             int bt;
@@ -43,28 +50,34 @@ public class LexerFactory{
         }
     }
 
+    @Override
     public Lexer fromXml(final InputStream inputStream) throws IOException {
         return fromXml(inputStream, new SymbolListenerImpl());
     }
 
+    @Override
     public Lexer fromXml(final File file, final SymbolListener listener) throws IOException{
         try(final InputStream inputStream = new BufferedInputStream(new FileInputStream(file))) {
             return fromXml(inputStream, listener);
         }
     }
 
+    @Override
     public Lexer fromXml(final File file) throws IOException{
         return fromXml(file, new SymbolListenerImpl());
     }
 
+    @Override
     public Lexer fromJson(final String json, final SymbolListener listener) throws ParseException {
         return new LexerImpl(new JsonLexerModule(json).build(), listener);
     }
 
+    @Override
     public Lexer fromJson(final String json) throws ParseException {
         return fromJson(json, new SymbolListenerImpl());
     }
 
+    @Override
     public Lexer fromJson(final InputStream inputStream, final SymbolListener listener) throws IOException, ParseException {
         try(final StringWriter writer = new StringWriter()) {
             int bt;
@@ -75,25 +88,30 @@ public class LexerFactory{
         }
     }
 
+    @Override
     public Lexer fromJson(final InputStream inputStream) throws IOException, ParseException {
         return fromJson(inputStream, new SymbolListenerImpl());
     }
 
+    @Override
     public Lexer fromJson(final File file, final SymbolListener listener) throws IOException, ParseException {
         try(final InputStream inputStream = new BufferedInputStream(new FileInputStream(file))) {
             return fromJson(inputStream, listener);
         }
     }
 
+    @Override
     public Lexer fromJson(final File file) throws IOException, ParseException {
         return fromJson(file, new SymbolListenerImpl());
     }
 
-    public Lexer withModule(final AbstractLexerModule module, final SymbolListener listener) {
+    @Override
+    public Lexer generate(final AbstractLexerModule module, final SymbolListener listener) {
         return new LexerImpl(module.build(), listener);
     }
 
-    public Lexer withModule(final AbstractLexerModule module) {
-        return withModule(module, new SymbolListenerImpl());
+    @Override
+    public Lexer generate(final AbstractLexerModule module) {
+        return generate(module, new SymbolListenerImpl());
     }
 }

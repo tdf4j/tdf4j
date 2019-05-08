@@ -1,8 +1,8 @@
 package io.github.therealmone.tdf4j.generator;
 
-import io.github.therealmone.tdf4j.generator.impl.ParserGenerator;
+import io.github.therealmone.tdf4j.generator.impl.LexerGeneratorImpl;
+import io.github.therealmone.tdf4j.generator.impl.ParserGeneratorImpl;
 import io.github.therealmone.tdf4j.lexer.Lexer;
-import io.github.therealmone.tdf4j.lexer.LexerFactory;
 import io.github.therealmone.tdf4j.lexer.config.AbstractLexerModule;
 import io.github.therealmone.tdf4j.parser.Parser;
 import io.github.therealmone.tdf4j.parser.UnexpectedTokenException;
@@ -14,12 +14,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 public class ParserTest {
-    static Generator<Parser> generator = new ParserGenerator();
+    static ParserGenerator generator = new ParserGeneratorImpl();
     static Lexer lexer;
 
     @BeforeClass
     public static void globalSetup() {
-        lexer = new LexerFactory().withModule(new AbstractLexerModule() {
+        lexer = new LexerGeneratorImpl().generate(new AbstractLexerModule() {
             @Override
             public void configure() {
                 for (final TestTerminal testLexeme : TestTerminal.values()) {

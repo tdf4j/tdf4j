@@ -16,11 +16,10 @@
 package io.github.therealmone.tdf4j.generator.impl;
 
 import io.github.therealmone.tdf4j.commons.Dependency;
-import io.github.therealmone.tdf4j.commons.Module;
 import io.github.therealmone.tdf4j.commons.model.ebnf.NonTerminal;
 import io.github.therealmone.tdf4j.commons.model.ebnf.Production;
 import io.github.therealmone.tdf4j.commons.utils.Predictor;
-import io.github.therealmone.tdf4j.generator.Generator;
+import io.github.therealmone.tdf4j.generator.ParserGenerator;
 import io.github.therealmone.tdf4j.generator.Template;
 import io.github.therealmone.tdf4j.generator.templates.ImmutableMethodTemplate;
 import io.github.therealmone.tdf4j.generator.templates.MethodTemplate;
@@ -35,15 +34,11 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-
-public class ParserGenerator implements Generator<Parser> {
+public class ParserGeneratorImpl implements ParserGenerator {
 
     @Override
-    public Parser generate(Module module) {
-        if(!(module instanceof AbstractParserModule)) {
-            throw new RuntimeException("Parser can be generated only from AbstractParserModule");
-        }
-        return process(((AbstractParserModule) module).build());
+    public Parser generate(AbstractParserModule module) {
+        return process(module.build());
     }
 
     private Parser process(final AbstractParserModule module) {

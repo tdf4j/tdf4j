@@ -31,15 +31,13 @@ public class MetaInformationTest extends ParserTest {
             }
         });
         final String[] imports = parser.meta().imports();
-        assertEquals(8, imports.length);
+        assertEquals(6, imports.length);
         assertEquals("import io.github.therealmone.tdf4j.parser.*", imports[0]);
         assertEquals("import io.github.therealmone.tdf4j.parser.model.ast.*", imports[1]);
-        assertEquals("import io.github.therealmone.tdf4j.commons.model.ebnf.*", imports[2]);
-        assertEquals("import io.github.therealmone.tdf4j.commons.*", imports[3]);
-        assertEquals("import io.github.therealmone.tdf4j.commons.Stream", imports[4]);
-        assertEquals("import io.github.therealmone.tdf4j.commons.utils.*", imports[5]);
-        assertEquals("import java.util.*", imports[6]);
-        assertEquals("import java.util.stream.*", imports[7]);
+        assertEquals("import io.github.therealmone.tdf4j.commons.*", imports[2]);
+        assertEquals("import io.github.therealmone.tdf4j.commons.Stream", imports[3]);
+        assertEquals("import io.github.therealmone.tdf4j.commons.utils.*", imports[4]);
+        assertEquals("import java.util.*", imports[5]);
     }
 
     @Test

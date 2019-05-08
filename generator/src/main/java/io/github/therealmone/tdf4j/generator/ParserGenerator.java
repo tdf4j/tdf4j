@@ -15,8 +15,8 @@
  */
 package io.github.therealmone.tdf4j.generator;
 
-import io.github.therealmone.tdf4j.commons.Module;
+import io.github.therealmone.tdf4j.parser.Parser;
+import io.github.therealmone.tdf4j.parser.config.AbstractParserModule;
 
-public interface Generator<T, M extends Module> {
-    T generate(final M module);
+public interface ParserGenerator extends Generator<Parser, AbstractParserModule> {
 }
