@@ -71,12 +71,10 @@ private <returnValue> <name>() {
 imports() ::= <<
 import io.github.therealmone.tdf4j.parser.*;
 import io.github.therealmone.tdf4j.parser.model.ast.*;
-import io.github.therealmone.tdf4j.commons.model.ebnf.*;
 import io.github.therealmone.tdf4j.commons.*;
 import io.github.therealmone.tdf4j.commons.Stream;
 import io.github.therealmone.tdf4j.commons.utils.*;
 import java.util.*;
-import java.util.stream.*;
 >>
 
 except(exceptions) ::= <<
@@ -117,6 +115,14 @@ if(stream.peek() != null && (
 } else {
     throw new UnexpectedTokenException(stream.peek());
 }
+>>
+
+oneOf(elements, codeBlocks) ::= <<
+<elements: {element|
+if(stream.peek() != null && predictor.predict(stream.peek()).contains("<element>") {
+
+\}
+}; separator=" else ">
 >>
 
 repeat(firstElements, codeBlocks, hash) ::= <<
