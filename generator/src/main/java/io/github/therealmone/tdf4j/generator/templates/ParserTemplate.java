@@ -27,7 +27,7 @@ public interface ParserTemplate extends Buildable {
 
     String pack();
 
-    String imports();
+    String[] imports();
 
     String className();
 
@@ -37,6 +37,8 @@ public interface ParserTemplate extends Buildable {
 
     List<MethodTemplate> methods();
 
+    String interfaceToImplement();
+
     @Override
     default String build() {
         final ST template = Template.PARSER.template()
@@ -44,7 +46,8 @@ public interface ParserTemplate extends Buildable {
                 .add("imports", imports())
                 .add("className", className())
                 .add("environment", environment())
-                .add("initProd", initProd());
+                .add("initProd", initProd())
+                .add("interface", interfaceToImplement());
         methods().forEach(method -> template.add("methods", method.build()));
         return template.render();
     }

@@ -41,6 +41,17 @@ public class ParserTest {
         return parser;
     }
 
+    static <T extends Parser> T generate(final AbstractParserModule module, final Class<T> interfaceToImplement) {
+        final long current = System.currentTimeMillis();
+        final T parser = generator.generate(module, interfaceToImplement);
+        System.out.println(parser.meta().sourceCode());
+        System.out.println(module.getGrammar().toString());
+        System.out.println(module.getGrammar().firstSet().toString());
+        System.out.println(module.getGrammar().followSet().toString());
+        System.out.println("Compilation time: " + (System.currentTimeMillis() - current));
+        return parser;
+    }
+
     static AST parse(final Parser parser, final String input) {
         final long current = System.currentTimeMillis();
         final AST ast = parser.parse(lexer.stream(input));

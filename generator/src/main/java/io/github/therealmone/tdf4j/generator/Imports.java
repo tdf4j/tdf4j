@@ -15,15 +15,20 @@
  */
 package io.github.therealmone.tdf4j.generator;
 
-import io.github.therealmone.tdf4j.generator.impl.ParserGeneratorImpl;
-import io.github.therealmone.tdf4j.parser.Parser;
-import io.github.therealmone.tdf4j.parser.config.AbstractParserModule;
+public enum Imports {
+    PARSER("io.github.therealmone.tdf4j.parser.*"),
+    MODEL_AST("io.github.therealmone.tdf4j.parser.model.ast.*"),
+    COMMONS("io.github.therealmone.tdf4j.commons.*"),
+    COMMONS_UTILS("io.github.therealmone.tdf4j.commons.utils.*"),
+    JAVA_UTIL("java.util.*");
 
-public interface ParserGenerator extends Generator<Parser, AbstractParserModule> {
+    private final String value;
 
-    <T extends Parser> T generate(final AbstractParserModule module, final Class<T> interfaceToImplement);
+    Imports(final String value) {
+        this.value = value;
+    }
 
-    static ParserGenerator newInstance() {
-        return new ParserGeneratorImpl();
+    public String getValue() {
+        return value;
     }
 }
