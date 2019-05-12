@@ -2,3 +2,6 @@ coverage:
   precision: 2
   round: nearest
   range: "40...70"
+  ignore:
+    - "commons/src/main/java/io/github/therealmone/tdf4j/commons/model/ebnf"
+    - "parser/src/main/java/io/github/therealmone/tdf4j/parser/model/ast"
