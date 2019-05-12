@@ -13,13 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-parser(package, imports, environment, className, initProd, methods) ::= <<
+parser(package, imports, environment, className, initProd, methods, interface) ::= <<
 package <package>;
 
-<imports>
+<imports: {import| import <import>;}; separator="\n">
 <environment.packages: {package| import <package>;}; separator="\n">
 
-public class <className> implements Parser {
+public class <className> implements <interface> {
     private final MetaInf meta;
     private final Predictor predictor;
 
@@ -36,6 +36,8 @@ public class <className> implements Parser {
         this.predictor = predictor;
         <environment.dependencies: {dependency| this.<dependency.name> = <dependency.name>;}; separator="\n">
     }
+
+    <environment.code>
 
     @Override
     public AST parse(final Stream\<Token> tokens) {
@@ -56,8 +58,6 @@ public class <className> implements Parser {
     }
 
     <methods: {method|<method><\n><\n>}>
-
-    <environment.code>
 }
 >>
 
@@ -66,15 +66,6 @@ method(returnValue, name, codeBlocks) ::= <<
 private <returnValue> <name>() {
     <codeBlocks: {codeBlock|<codeBlock>};separator="\n">
 }
->>
-
-imports() ::= <<
-import io.github.therealmone.tdf4j.parser.*;
-import io.github.therealmone.tdf4j.parser.model.ast.*;
-import io.github.therealmone.tdf4j.commons.*;
-import io.github.therealmone.tdf4j.commons.Stream;
-import io.github.therealmone.tdf4j.commons.utils.*;
-import java.util.*;
 >>
 
 except(exceptions) ::= <<

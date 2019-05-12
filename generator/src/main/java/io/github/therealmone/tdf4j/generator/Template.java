@@ -21,7 +21,6 @@ import org.stringtemplate.v4.STGroupFile;
 
 public enum Template {
     PARSER("parser"),
-    IMPORTS("imports"),
     METHOD("method"),
     LOGIC_TERMINAL("terminal_tag"),
     LOGIC_NON_TERMINAL("non_terminal"),
