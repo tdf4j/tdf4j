@@ -24,8 +24,8 @@ import java.util.List;
 public abstract class ASTNode implements ASTElement {
 
     @Override
-    public Kind kind() {
-        return Kind.NODE;
+    public ASTKind kind() {
+        return ASTKind.NODE;
     }
 
     public abstract ASTElement parent();

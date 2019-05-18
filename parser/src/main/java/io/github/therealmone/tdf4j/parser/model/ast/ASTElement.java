@@ -17,35 +17,37 @@ package io.github.therealmone.tdf4j.parser.model.ast;
 
 public interface ASTElement {
 
-    Kind kind();
+    ASTKind kind();
 
-    default boolean isLeaf() {
-        return this.kind() == Kind.LEAF;
+    default boolean is(final ASTKind kind) {
+        return this.kind() == kind;
     }
 
-    default ASTLeaf asLeaf() {
-        return (ASTLeaf) this;
-    }
-
-    default boolean isNode() {
-        return this.kind() == Kind.NODE;
+    default <T extends ASTElement> T as(final Class<T> clazz) {
+        return clazz.cast(this);
     }
 
     default ASTNode asNode() {
-        return (ASTNode) this;
+        return as(ASTNode.class);
     }
 
-    default boolean isRoot() {
-        return this.kind() == Kind.ROOT;
+    default ASTLeaf asLeaf() {
+        return as(ASTLeaf.class);
     }
 
     default ASTRoot asRoot() {
-        return (ASTRoot) this;
+        return as(ASTRoot.class);
     }
 
-    enum Kind {
-        NODE,
-        LEAF,
-        ROOT
+    default boolean isNode() {
+        return is(ASTKind.NODE);
+    }
+
+    default boolean isLeaf() {
+        return is(ASTKind.LEAF);
+    }
+
+    default boolean isRoot() {
+        return is(ASTKind.ROOT);
     }
 }

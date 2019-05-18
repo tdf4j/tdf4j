@@ -2,6 +2,7 @@ package io.github.therealmone.tdf4j.parser;
 
 import io.github.therealmone.tdf4j.commons.Token;
 import io.github.therealmone.tdf4j.parser.model.ast.AST;
+import io.github.therealmone.tdf4j.parser.model.ast.ASTCursor;
 import io.github.therealmone.tdf4j.parser.model.ast.ASTElement;
 import org.junit.Test;
 
@@ -11,7 +12,7 @@ public class ASTTest {
 
     @Test
     public void add_child() {
-        final AST ast = new AST("lang")
+        final AST ast = AST.create("lang")
                 .addNode("node1")
                 .addNode("node2")
                 .addLeaf(new Token.Builder().tag("leaf1").value("leaf1").build())
@@ -60,7 +61,7 @@ public class ASTTest {
 
     @Test
     public void move_to_parent_from_node() {
-        final AST ast = new AST("lang")
+        final AST ast = AST.create("lang")
                 .addNode("node1")
                 .addNode("node2");
 
@@ -69,7 +70,7 @@ public class ASTTest {
             ast.moveCursor(cursor -> cursor.setValue(cursor.asRoot().children().get(0)));
             assertTrue(ast.onCursor().isNode());
             assertEquals("node1", ast.onCursor().asNode().tag());
-            ast.moveCursor(AST.Movement.TO_PARENT);
+            ast.moveCursor(ASTCursor.Movement.TO_PARENT);
             assertTrue(ast.onCursor().isRoot());
             assertEquals("lang", ast.onCursor().asRoot().tag());
         }
@@ -79,7 +80,7 @@ public class ASTTest {
             ast.moveCursor(cursor -> cursor.setValue(cursor.asRoot().children().get(1)));
             assertTrue(ast.onCursor().isNode());
             assertEquals("node2", ast.onCursor().asNode().tag());
-            ast.moveCursor(AST.Movement.TO_PARENT);
+            ast.moveCursor(ASTCursor.Movement.TO_PARENT);
             assertTrue(ast.onCursor().isRoot());
             assertEquals("lang", ast.onCursor().asRoot().tag());
         }
@@ -87,7 +88,7 @@ public class ASTTest {
 
     @Test
     public void move_to_parent_from_leaf() {
-        final AST ast = new AST("lang")
+        final AST ast = AST.create("lang")
                 .addLeaf(new Token.Builder().tag("leaf1").value("leaf1").build())
                 .addLeaf(new Token.Builder().tag("leaf2").value("leaf2").build());
 
@@ -97,7 +98,7 @@ public class ASTTest {
             assertTrue(ast.onCursor().isLeaf());
             assertEquals("leaf1", ast.onCursor().asLeaf().token().tag().value());
             assertEquals("leaf1", ast.onCursor().asLeaf().token().value());
-            ast.moveCursor(AST.Movement.TO_PARENT);
+            ast.moveCursor(ASTCursor.Movement.TO_PARENT);
             assertTrue(ast.onCursor().isRoot());
             assertEquals("lang", ast.onCursor().asRoot().tag());
         }
@@ -108,7 +109,7 @@ public class ASTTest {
             assertTrue(ast.onCursor().isLeaf());
             assertEquals("leaf2", ast.onCursor().asLeaf().token().tag().value());
             assertEquals("leaf2", ast.onCursor().asLeaf().token().value());
-            ast.moveCursor(AST.Movement.TO_PARENT);
+            ast.moveCursor(ASTCursor.Movement.TO_PARENT);
             assertTrue(ast.onCursor().isRoot());
             assertEquals("lang", ast.onCursor().asRoot().tag());
         }
@@ -116,14 +117,14 @@ public class ASTTest {
 
     @Test
     public void move_to_parent_from_root() {
-        final AST ast = new AST("lang")
+        final AST ast = AST.create("lang")
                 .addLeaf(new Token.Builder().tag("leaf1").value("leaf1").build())
                 .addLeaf(new Token.Builder().tag("leaf2").value("leaf2").build());
 
         ast.moveCursor(cursor -> cursor.setValue(cursor.getValue())); //xd
         assertTrue(ast.onCursor().isRoot());
         assertEquals("lang", ast.onCursor().asRoot().tag());
-        ast.moveCursor(AST.Movement.TO_PARENT);
+        ast.moveCursor(ASTCursor.Movement.TO_PARENT);
         assertTrue(ast.onCursor().isRoot());
         assertEquals("lang", ast.onCursor().asRoot().tag());
     }

@@ -42,7 +42,7 @@ public class <className> implements <interface> {
     @Override
     public AST parse(final Stream\<Token> tokens) {
         this.stream = new BufferedStream\<>(tokens);
-        this.ast = new AST("<initProd>");
+        this.ast = AST.create("<initProd>");
         <initProd>();
         return ast;
     }
@@ -83,9 +83,9 @@ ele_group(codeBlocks, hash) ::= <<
 >>
 
 non_terminal(nonTerminal) ::= <<
-ast.addNode("<nonTerminal>").moveCursor(AST.Movement.TO_LAST_ADDED_NODE);
+ast.addNode("<nonTerminal>").moveCursor(ASTCursor.Movement.TO_LAST_ADDED_NODE);
 <nonTerminal>();
-ast.moveCursor(AST.Movement.TO_PARENT);
+ast.moveCursor(ASTCursor.Movement.TO_PARENT);
 >>
 
 optional(firstElements, codeBlocks, hash) ::= <<

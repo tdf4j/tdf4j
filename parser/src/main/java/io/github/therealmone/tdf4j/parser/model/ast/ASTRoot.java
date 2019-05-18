@@ -24,8 +24,8 @@ import java.util.List;
 public abstract class ASTRoot implements ASTElement {
 
     @Override
-    public Kind kind() {
-        return Kind.ROOT;
+    public ASTKind kind() {
+        return ASTKind.ROOT;
     }
 
     public abstract List<ASTElement> children();
