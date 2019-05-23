@@ -1,8 +1,8 @@
 package io.github.therealmone.tdf4j.lexer;
 
-import io.github.therealmone.tdf4j.lexer.config.AbstractLexerModule;
 import io.github.therealmone.tdf4j.lexer.impl.LexerImpl;
 import io.github.therealmone.tdf4j.lexer.impl.SymbolListenerImpl;
+import io.github.therealmone.tdf4j.module.lexer.AbstractLexerModule;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

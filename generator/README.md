@@ -1,1 +1,1 @@
-# Syntax analyzer generator
+# Lexer parser generator

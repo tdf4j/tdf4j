@@ -16,9 +16,10 @@
 package io.github.therealmone.tdf4j.generator.impl;
 
 import io.github.therealmone.tdf4j.commons.Dependency;
-import io.github.therealmone.tdf4j.commons.model.ebnf.NonTerminal;
-import io.github.therealmone.tdf4j.commons.model.ebnf.Production;
-import io.github.therealmone.tdf4j.commons.utils.Predictor;
+import io.github.therealmone.tdf4j.model.ebnf.NonTerminal;
+import io.github.therealmone.tdf4j.model.ebnf.Production;
+import io.github.therealmone.tdf4j.module.parser.AbstractParserModule;
+import io.github.therealmone.tdf4j.utils.Predictor;
 import io.github.therealmone.tdf4j.generator.Imports;
 import io.github.therealmone.tdf4j.generator.ParserGenerator;
 import io.github.therealmone.tdf4j.generator.templates.ImmutableMethodTemplate;
@@ -28,7 +29,6 @@ import io.github.therealmone.tdf4j.generator.templates.logic.CodeBlock;
 import io.github.therealmone.tdf4j.generator.utils.MetaInfCollector;
 import io.github.therealmone.tdf4j.parser.MetaInf;
 import io.github.therealmone.tdf4j.parser.Parser;
-import io.github.therealmone.tdf4j.parser.config.AbstractParserModule;
 import org.joor.Reflect;
 
 import java.util.*;

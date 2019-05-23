@@ -1,9 +1,9 @@
 package io.github.therealmone.tdf4j.generator;
 
-import io.github.therealmone.tdf4j.commons.utils.FirstSetCollector;
-import io.github.therealmone.tdf4j.commons.utils.FollowSetCollector;
+import io.github.therealmone.tdf4j.module.parser.AbstractParserModule;
+import io.github.therealmone.tdf4j.utils.FirstSetCollector;
+import io.github.therealmone.tdf4j.utils.FollowSetCollector;
 import io.github.therealmone.tdf4j.parser.Parser;
-import io.github.therealmone.tdf4j.parser.config.AbstractParserModule;
 import org.apache.commons.digester3.Digester;
 import org.joor.ReflectException;
 import org.junit.Test;

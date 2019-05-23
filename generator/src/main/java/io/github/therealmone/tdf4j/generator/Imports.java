@@ -17,9 +17,11 @@ package io.github.therealmone.tdf4j.generator;
 
 public enum Imports {
     PARSER("io.github.therealmone.tdf4j.parser.*"),
-    MODEL_AST("io.github.therealmone.tdf4j.parser.model.ast.*"),
+    MODEL("io.github.therealmone.tdf4j.model.*"),
+    MODEL_AST("io.github.therealmone.tdf4j.model.ast.*"),
+    MODEL_EBNF("io.github.therealmone.tdf4j.model.ebnf.*"),
     COMMONS("io.github.therealmone.tdf4j.commons.*"),
-    COMMONS_UTILS("io.github.therealmone.tdf4j.commons.utils.*"),
+    UTILS("io.github.therealmone.tdf4j.utils.*"),
     JAVA_UTIL("java.util.*");
 
     private final String value;

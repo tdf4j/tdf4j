@@ -1,9 +1,9 @@
 package io.github.therealmone.tdf4j.generator;
 
-import io.github.therealmone.tdf4j.commons.Token;
+import io.github.therealmone.tdf4j.model.Token;
 import io.github.therealmone.tdf4j.lexer.Lexer;
 import io.github.therealmone.tdf4j.lexer.SymbolListener;
-import io.github.therealmone.tdf4j.lexer.config.AbstractLexerModule;
+import io.github.therealmone.tdf4j.module.lexer.AbstractLexerModule;
 import org.junit.Before;
 import org.junit.Test;
 

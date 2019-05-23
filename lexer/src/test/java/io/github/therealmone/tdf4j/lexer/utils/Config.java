@@ -1,6 +1,6 @@
 package io.github.therealmone.tdf4j.lexer.utils;
 
-import io.github.therealmone.tdf4j.lexer.config.AbstractLexerModule;
+import io.github.therealmone.tdf4j.module.lexer.AbstractLexerModule;
 
 import java.util.regex.Pattern;
 

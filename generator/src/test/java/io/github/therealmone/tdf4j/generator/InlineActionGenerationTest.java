@@ -1,7 +1,7 @@
 package io.github.therealmone.tdf4j.generator;
 
+import io.github.therealmone.tdf4j.module.parser.AbstractParserModule;
 import io.github.therealmone.tdf4j.parser.Parser;
-import io.github.therealmone.tdf4j.parser.config.AbstractParserModule;
 import org.junit.Test;
 
 import java.util.ArrayList;
