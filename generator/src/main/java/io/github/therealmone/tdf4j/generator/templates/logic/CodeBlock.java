@@ -15,7 +15,7 @@
  */
 package io.github.therealmone.tdf4j.generator.templates.logic;
 
-import io.github.therealmone.tdf4j.commons.model.ebnf.Element;
+import io.github.therealmone.tdf4j.model.ebnf.Element;
 import io.github.therealmone.tdf4j.generator.templates.Buildable;
 
 import javax.annotation.Nullable;

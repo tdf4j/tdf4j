@@ -1,9 +1,9 @@
 package io.github.therealmone.tdf4j.generator;
 
-import io.github.therealmone.tdf4j.commons.utils.FirstSetCollector;
-import io.github.therealmone.tdf4j.commons.utils.FollowSetCollector;
+import io.github.therealmone.tdf4j.module.parser.AbstractParserModule;
+import io.github.therealmone.tdf4j.utils.FirstSetCollector;
+import io.github.therealmone.tdf4j.utils.FollowSetCollector;
 import io.github.therealmone.tdf4j.parser.Parser;
-import io.github.therealmone.tdf4j.parser.config.AbstractParserModule;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -31,13 +31,11 @@ public class MetaInformationTest extends ParserTest {
             }
         });
         final String[] imports = parser.meta().imports();
-        assertEquals(6, imports.length);
-        assertEquals("io.github.therealmone.tdf4j.parser.*", imports[0]);
-        assertEquals("io.github.therealmone.tdf4j.parser.model.ast.*", imports[1]);
-        assertEquals("io.github.therealmone.tdf4j.commons.*", imports[2]);
-        assertEquals("io.github.therealmone.tdf4j.commons.utils.*", imports[3]);
-        assertEquals("java.util.*", imports[4]);
-        assertEquals("io.github.therealmone.tdf4j.parser.Parser", imports[5]);
+        assertEquals(8, imports.length);
+        for (int i = 0; i < Imports.values().length; i++) {
+            assertEquals(Imports.values()[i].getValue(), imports[i]);
+        }
+        assertEquals(Parser.class.getCanonicalName(), imports[imports.length - 1]);
     }
 
     @Test
@@ -74,8 +72,8 @@ public class MetaInformationTest extends ParserTest {
         });
         final String[] dependencies = parser.meta().dependencies();
         assertEquals(2, dependencies.length);
-        assertEquals("io.github.therealmone.tdf4j.commons.utils.FirstSetCollector", dependencies[0]);
-        assertEquals("io.github.therealmone.tdf4j.commons.utils.FollowSetCollector", dependencies[1]);
+        assertEquals(FirstSetCollector.class.getCanonicalName(), dependencies[0]);
+        assertEquals(FollowSetCollector.class.getCanonicalName(), dependencies[1]);
     }
 
     @Test

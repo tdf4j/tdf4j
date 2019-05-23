@@ -1,11 +1,11 @@
 package io.github.therealmone.tdf4j.generator;
 
 import io.github.therealmone.tdf4j.lexer.Lexer;
-import io.github.therealmone.tdf4j.lexer.config.AbstractLexerModule;
+import io.github.therealmone.tdf4j.module.lexer.AbstractLexerModule;
+import io.github.therealmone.tdf4j.module.parser.AbstractParserModule;
 import io.github.therealmone.tdf4j.parser.Parser;
 import io.github.therealmone.tdf4j.parser.UnexpectedTokenException;
-import io.github.therealmone.tdf4j.parser.config.AbstractParserModule;
-import io.github.therealmone.tdf4j.parser.model.ast.AST;
+import io.github.therealmone.tdf4j.model.ast.AST;
 import org.junit.BeforeClass;
 
 import static org.junit.Assert.assertEquals;

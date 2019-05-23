@@ -1,6 +1,6 @@
 package io.github.therealmone.tdf4j.generator;
 
-import io.github.therealmone.tdf4j.commons.model.ebnf.Terminal;
+import io.github.therealmone.tdf4j.model.ebnf.Terminal;
 
 public enum TestTerminal {
     A("A", 0),

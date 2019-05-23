@@ -15,7 +15,7 @@
  */
 package io.github.therealmone.tdf4j.parser;
 
-import io.github.therealmone.tdf4j.commons.Token;
+import io.github.therealmone.tdf4j.model.Token;
 
 public class UnexpectedTokenException extends RuntimeException {
     public UnexpectedTokenException(final Token token) {

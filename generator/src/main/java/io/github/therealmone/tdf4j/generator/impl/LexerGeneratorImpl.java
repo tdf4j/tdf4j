@@ -18,11 +18,11 @@ package io.github.therealmone.tdf4j.generator.impl;
 import io.github.therealmone.tdf4j.generator.LexerGenerator;
 import io.github.therealmone.tdf4j.lexer.Lexer;
 import io.github.therealmone.tdf4j.lexer.SymbolListener;
-import io.github.therealmone.tdf4j.lexer.config.AbstractLexerModule;
-import io.github.therealmone.tdf4j.lexer.config.JsonLexerModule;
-import io.github.therealmone.tdf4j.lexer.config.XmlLexerModule;
 import io.github.therealmone.tdf4j.lexer.impl.LexerImpl;
 import io.github.therealmone.tdf4j.lexer.impl.SymbolListenerImpl;
+import io.github.therealmone.tdf4j.module.lexer.AbstractLexerModule;
+import io.github.therealmone.tdf4j.module.lexer.JsonLexerModule;
+import io.github.therealmone.tdf4j.module.lexer.XmlLexerModule;
 import org.json.simple.parser.ParseException;
 
 import java.io.*;
