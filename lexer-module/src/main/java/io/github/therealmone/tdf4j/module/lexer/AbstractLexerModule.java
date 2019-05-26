@@ -28,7 +28,7 @@ public abstract class AbstractLexerModule extends BindingMapper implements Modul
     }
 
     public AbstractLexerModule build() {
-        if(!built) {
+        if(!isBuilt()) {
             this.configure();
             this.terminals.addAll(terminalBindStrategy.build());
             built = true;
@@ -38,5 +38,9 @@ public abstract class AbstractLexerModule extends BindingMapper implements Modul
 
     public List<Terminal> getTerminals() {
         return Collections.unmodifiableList(terminals);
+    }
+
+    public boolean isBuilt() {
+        return built;
     }
 }

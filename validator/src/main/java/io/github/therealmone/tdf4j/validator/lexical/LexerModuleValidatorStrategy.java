@@ -13,17 +13,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.therealmone.tdf4j.validator.strategies;
+package io.github.therealmone.tdf4j.validator.lexical;
 
 import io.github.therealmone.tdf4j.module.lexer.AbstractLexerModule;
 import io.github.therealmone.tdf4j.validator.ValidatorException;
+import io.github.therealmone.tdf4j.validator.ValidatorRule;
 import io.github.therealmone.tdf4j.validator.ValidatorStrategy;
 
+import java.util.*;
+
 public class LexerModuleValidatorStrategy implements ValidatorStrategy<AbstractLexerModule> {
+    private final List<ValidatorRule<AbstractLexerModule>> rules;
+
+    public LexerModuleValidatorStrategy() {
+        this.rules = List.of(
+                new TerminalListNotNullRule(),
+                new TerminalTagNotNullRule(),
+                new TerminalTagValueNotNull(),
+                new TerminalPatternNullRule(),
+                new TerminalCollisionRule()
+        );
+    }
 
     @Override
     public void apply(final AbstractLexerModule module) throws ValidatorException {
-
+        if(!module.isBuilt()) {
+            module.build();
+        }
+        for(final ValidatorRule<AbstractLexerModule> rule : rules) {
+            rule.visit(module);
+        }
     }
 
 }

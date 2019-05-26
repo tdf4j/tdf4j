@@ -13,17 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.therealmone.tdf4j.validator.strategies;
+@ParametersAreNonnullByDefault
+package io.github.therealmone.tdf4j.validator.syntax;
 
-import io.github.therealmone.tdf4j.module.parser.AbstractParserModule;
-import io.github.therealmone.tdf4j.validator.ValidatorException;
-import io.github.therealmone.tdf4j.validator.ValidatorStrategy;
-
-public class ParserModuleValidatorStrategy implements ValidatorStrategy<AbstractParserModule> {
-
-    @Override
-    public void apply(final AbstractParserModule module) throws ValidatorException {
-
-    }
-
-}
+import javax.annotation.ParametersAreNonnullByDefault;
