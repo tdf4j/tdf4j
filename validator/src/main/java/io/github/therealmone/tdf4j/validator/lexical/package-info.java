@@ -13,14 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.therealmone.tdf4j.validator;
+@ParametersAreNonnullByDefault
+package io.github.therealmone.tdf4j.validator.lexical;
 
-import io.github.therealmone.tdf4j.commons.Module;
-
-public class ValidatorNotFoundException extends Exception {
-
-    ValidatorNotFoundException(final Module module) {
-        super("Validator not found for " + module.getClass().getCanonicalName());
-    }
-
-}
+import javax.annotation.ParametersAreNonnullByDefault;

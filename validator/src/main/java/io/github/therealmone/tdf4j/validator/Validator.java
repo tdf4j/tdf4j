@@ -16,9 +16,21 @@
 package io.github.therealmone.tdf4j.validator;
 
 import io.github.therealmone.tdf4j.commons.Module;
+import io.github.therealmone.tdf4j.module.lexer.AbstractLexerModule;
+import io.github.therealmone.tdf4j.module.parser.AbstractParserModule;
+import io.github.therealmone.tdf4j.validator.impl.ValidatorImpl;
+import io.github.therealmone.tdf4j.validator.lexical.LexerModuleValidatorStrategy;
+import io.github.therealmone.tdf4j.validator.syntax.ParserModuleValidatorStrategy;
 
 public interface Validator<T extends Module> {
 
     void validate(final T module) throws ValidatorException;
 
+    static Validator<AbstractLexerModule> lexical() {
+        return new ValidatorImpl<>(new LexerModuleValidatorStrategy());
+    }
+
+    static Validator<AbstractParserModule> syntax() {
+        return new ValidatorImpl<>(new ParserModuleValidatorStrategy());
+    }
 }

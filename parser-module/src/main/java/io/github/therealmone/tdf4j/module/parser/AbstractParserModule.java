@@ -35,7 +35,7 @@ public abstract class AbstractParserModule extends BindingMapper implements Modu
     private Environment environment;
 
     public AbstractParserModule build() {
-        if(!built) {
+        if(!isBuilt()) {
             this.configure();
             final List<Production> productions = productionBindStrategy.build();
             this.environment = environmentBindStrategy.build();
@@ -65,5 +65,9 @@ public abstract class AbstractParserModule extends BindingMapper implements Modu
         return environment != null
                 ? environment
                 : new Environment.Builder().build();
+    }
+
+    public boolean isBuilt() {
+        return built;
     }
 }

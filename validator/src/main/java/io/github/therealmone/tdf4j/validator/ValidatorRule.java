@@ -15,9 +15,11 @@
  */
 package io.github.therealmone.tdf4j.validator;
 
-@FunctionalInterface
-public interface ValidatorRule<T> {
+import io.github.therealmone.tdf4j.commons.Module;
 
-    void visit(final T element) throws ValidatorException;
+@FunctionalInterface
+public interface ValidatorRule<T extends Module> {
+
+    void visit(final T module) throws ValidatorException;
 
 }
