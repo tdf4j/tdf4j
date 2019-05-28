@@ -29,7 +29,7 @@ public interface AST {
 
     AST addLeaf(final Token token);
 
-    ASTElement getRoot();
+    ASTRoot getRoot();
 
     ASTElement onCursor();
 
