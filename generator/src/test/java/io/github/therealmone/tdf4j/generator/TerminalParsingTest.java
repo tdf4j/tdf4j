@@ -20,7 +20,7 @@ public class TerminalParsingTest extends ParserTest {
                 }
             });
             assertNotNull(parse(parser, "ABC"));
-            assertParserFails(parser, "ACB", unexpectedToken(TestTerminal.C));
+            assertParserFails(parser, "ACB", unexpectedToken(TestTerminal.C, 1, 1));
         }
 
         {
@@ -34,7 +34,7 @@ public class TerminalParsingTest extends ParserTest {
                 }
             });
             assertNotNull(parse(parser, "ABC"));
-            assertParserFails(parser, "ACB", unexpectedToken(TestTerminal.C));
+            assertParserFails(parser, "ACB", unexpectedToken(TestTerminal.C, 1, 1));
         }
     }
 
@@ -71,7 +71,7 @@ public class TerminalParsingTest extends ParserTest {
         assertNotNull(parse(parser, "AB"));
         assertNotNull(parse(parser, "B"));
         assertParserFails(parser, "CB", unexpectedToken(TestTerminal.C));
-        assertParserFails(parser, "ACB", unexpectedToken(TestTerminal.C));
+        assertParserFails(parser, "ACB", unexpectedToken(TestTerminal.C, 1, 1));
         assertParserFails(parser, "", unexpectedEOF());
     }
 
@@ -92,7 +92,7 @@ public class TerminalParsingTest extends ParserTest {
         assertNotNull(parse(parser, "ABABC"));
         assertNotNull(parse(parser, "ABABABC"));
         assertNotNull(parse(parser, "C"));
-        assertParserFails(parser, "AC", unexpectedToken(TestTerminal.C));
+        assertParserFails(parser, "AC", unexpectedToken(TestTerminal.C, 1, 1));
         assertParserFails(parser, "BAC", unexpectedToken(TestTerminal.B));
         assertParserFails(parser, "BC", unexpectedToken(TestTerminal.B));
     }
@@ -109,7 +109,7 @@ public class TerminalParsingTest extends ParserTest {
             }
         });
         assertNotNull(parse(parser, "ABC"));
-        assertParserFails(parser, "AC", unexpectedToken(TestTerminal.C));
+        assertParserFails(parser, "AC", unexpectedToken(TestTerminal.C, 1, 1));
         assertParserFails(parser, "BC", unexpectedToken(TestTerminal.B));
         assertParserFails(parser, "B", unexpectedToken(TestTerminal.B));
         assertParserFails(parser, "C", unexpectedToken(TestTerminal.C));

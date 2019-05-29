@@ -61,7 +61,13 @@ public class ParserTest {
     }
 
     static String unexpectedToken(final TestTerminal testTerminal) {
-        return String.format("Unexpected token: Token{tag=%1$s, value=%1$s}", testTerminal.getTerminal().tag().value());
+        return unexpectedToken(testTerminal, 1, 0);
+    }
+
+    static String unexpectedToken(final TestTerminal testTerminal, final long row, final long columt) {
+        return String.format("Unexpected token: Token{tag=%1$s, value=%1$s, row=%2$d, column=%3$d}",
+                testTerminal.getTerminal().tag().value(),
+                row, columt);
     }
 
     static String unexpectedEOF() {

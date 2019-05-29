@@ -53,7 +53,7 @@ public class RepeatParsingTest extends ParserTest {
         assertNotNull(parse(parser, "ABAB"));
         assertNotNull(parse(parser, "C"));
         assertNotNull(parse(parser, "CC"));
-        assertParserFails(parser, "AA", unexpectedToken(TestTerminal.A));
+        assertParserFails(parser, "AA", unexpectedToken(TestTerminal.A, 1, 1));
         assertParserFails(parser, "A", unexpectedEOF());
         assertParserFails(parser, "", unexpectedEOF());
     }
@@ -96,7 +96,7 @@ public class RepeatParsingTest extends ParserTest {
         assertNotNull(parse(parser, "CCA"));
         assertNotNull(parse(parser, "ABCCA"));
         assertNotNull(parse(parser, "ABCA"));
-        assertParserFails(parser, "AAABCCA", unexpectedToken(TestTerminal.A));
+        assertParserFails(parser, "AAABCCA", unexpectedToken(TestTerminal.A, 1, 1));
         assertParserFails(parser, "A", unexpectedEOF());
         assertParserFails(parser, "ABA", unexpectedEOF());
         assertParserFails(parser, "BCA", unexpectedToken(TestTerminal.B));

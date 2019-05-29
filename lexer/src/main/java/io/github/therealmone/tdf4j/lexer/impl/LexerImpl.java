@@ -78,6 +78,8 @@ public class LexerImpl implements Lexer {
         final Token token = new Token.Builder()
                 .tag(terminal.tag())
                 .value(buffer.toString())
+                .row(listener.line())
+                .column(listener.column())
                 .build();
         buffer.chars().forEach(ch -> listener.listen((char) ch));
         in.replace(0, buffer.length(), "");

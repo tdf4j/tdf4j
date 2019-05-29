@@ -464,9 +464,9 @@ public class OldGrammarTest extends ParserTest {
 
     @Test
     public void Tests_StackMachineTest_errorsTest() {
-        assertParserFails(parser, "new a = hashset;$", "Unexpected token: Token{tag=HASHSET, value=hashset}");
-        assertParserFails(parser, "get(a, 1);$", "Unexpected token: Token{tag=GET, value=get}");
-        assertParserFails(parser, "while(a & b);$", "Unexpected token: Token{tag=LOP, value=&}");
+        assertParserFails(parser, "new a = hashset;$", "Unexpected token: Token{tag=HASHSET, value=hashset, row=1, column=8}");
+        assertParserFails(parser, "get(a, 1);$", "Unexpected token: Token{tag=GET, value=get, row=1, column=0}");
+        assertParserFails(parser, "while(a & b);$", "Unexpected token: Token{tag=LOP, value=&, row=1, column=8}");
         assertThrows(() -> parse(parser, "@$"), UnexpectedSymbolException.class, "Unexpected symbol: @ ( line 1, column 1 )");
     }
 

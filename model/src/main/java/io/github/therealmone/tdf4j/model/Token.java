@@ -24,6 +24,16 @@ public interface Token {
 
     String value();
 
+    @Value.Default
+    default long row() {
+        return 0;
+    }
+
+    @Value.Default
+    default long column() {
+        return 0;
+    }
+
     class Builder extends ImmutableToken.Builder {
         public Builder tag(final String tag) {
             return super.tag(new Terminal.Tag.Builder().value(tag).build());

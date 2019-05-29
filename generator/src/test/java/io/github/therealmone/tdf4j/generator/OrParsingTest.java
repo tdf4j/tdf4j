@@ -45,10 +45,10 @@ public class OrParsingTest extends ParserTest {
         assertNotNull(parse(parser, "AC"));
         assertNotNull(parse(parser, "BC"));
         assertNotNull(parse(parser, "C"));
-        assertParserFails(parser, "ABC", unexpectedToken(TestTerminal.B));
-        assertParserFails(parser, "AB", unexpectedToken(TestTerminal.B));
-        assertParserFails(parser, "BAC", unexpectedToken(TestTerminal.A));
-        assertParserFails(parser, "BA", unexpectedToken(TestTerminal.A));
+        assertParserFails(parser, "ABC", unexpectedToken(TestTerminal.B, 1, 1));
+        assertParserFails(parser, "AB", unexpectedToken(TestTerminal.B, 1, 1));
+        assertParserFails(parser, "BAC", unexpectedToken(TestTerminal.A, 1, 1));
+        assertParserFails(parser, "BA", unexpectedToken(TestTerminal.A, 1, 1));
         assertParserFails(parser, "", unexpectedEOF());
     }
 
@@ -92,7 +92,7 @@ public class OrParsingTest extends ParserTest {
         });
         assertNotNull(parse(parser, "AB"));
         assertNotNull(parse(parser, "C"));
-        assertParserFails(parser, "AC", unexpectedToken(TestTerminal.C));
+        assertParserFails(parser, "AC", unexpectedToken(TestTerminal.C, 1, 1));
         assertParserFails(parser, "B", unexpectedToken(TestTerminal.B));
         assertParserFails(parser, "", unexpectedEOF());
     }
