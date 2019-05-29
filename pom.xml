@@ -61,6 +61,7 @@
         <module>validator</module>
         <module>model</module>
         <module>utils</module>
+        <module>tdf-parser</module>
     </modules>
 
     <dependencies>
