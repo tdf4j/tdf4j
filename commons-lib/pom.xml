@@ -11,8 +11,8 @@
 
     <artifactId>commons-lib</artifactId>
 
-    <name>commons-lib</name>
+    <name>Commons-lib</name>
     <description>Common classes</description>
-    <url>https://github.com/therealmonE/tdf4j/tree/master/commons</url>
+    <url>https://github.com/therealmonE/tdf4j/tree/master/commons-lib</url>
 
 </project>
