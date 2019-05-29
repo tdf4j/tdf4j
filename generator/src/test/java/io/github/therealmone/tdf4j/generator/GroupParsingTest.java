@@ -26,7 +26,7 @@ public class GroupParsingTest extends ParserTest {
             }
         });
         assertNotNull(parse(parser, "ABC"));
-        assertParserFails(parser, "AC", unexpectedToken(TestTerminal.C));
+        assertParserFails(parser, "AC", unexpectedToken(TestTerminal.C, 1, 1));
         assertParserFails(parser, "AB", unexpectedEOF());
         assertParserFails(parser, "BC", unexpectedToken(TestTerminal.B));
         assertParserFails(parser, "C", unexpectedToken(TestTerminal.C));
@@ -77,8 +77,8 @@ public class GroupParsingTest extends ParserTest {
         assertNotNull(parse(parser, "CCA"));
         assertParserFails(parser, "A", unexpectedEOF());
         assertParserFails(parser, "B", unexpectedToken(TestTerminal.B));
-        assertParserFails(parser, "CA", unexpectedToken(TestTerminal.A));
-        assertParserFails(parser, "CB", unexpectedToken(TestTerminal.B));
+        assertParserFails(parser, "CA", unexpectedToken(TestTerminal.A, 1, 1));
+        assertParserFails(parser, "CB", unexpectedToken(TestTerminal.B, 1, 1));
     }
 
     /**

@@ -26,12 +26,12 @@ public class RepetitionParsingTest extends ParserTest {
             }
         });
         assertNotNull(parse(parser, "AABBBBBBC"));
-        assertParserFails(parser, "ABBBBBBC", unexpectedToken(TestTerminal.B));
-        assertParserFails(parser, "AAABBBBBBC", unexpectedToken(TestTerminal.A));
-        assertParserFails(parser, "BBBBBBC", unexpectedToken(TestTerminal.B));
-        assertParserFails(parser, "AABBBBBC", unexpectedToken(TestTerminal.C));
-        assertParserFails(parser, "AABBBBBBBC", unexpectedToken(TestTerminal.B));
-        assertParserFails(parser, "AAC", unexpectedToken(TestTerminal.C));
+        assertParserFails(parser, "ABBBBBBC", unexpectedToken(TestTerminal.B, 1, 1));
+        assertParserFails(parser, "AAABBBBBBC", unexpectedToken(TestTerminal.A, 1, 2));
+        assertParserFails(parser, "BBBBBBC", unexpectedToken(TestTerminal.B, 1, 0));
+        assertParserFails(parser, "AABBBBBC", unexpectedToken(TestTerminal.C, 1, 7));
+        assertParserFails(parser, "AABBBBBBBC", unexpectedToken(TestTerminal.B, 1, 8));
+        assertParserFails(parser, "AAC", unexpectedToken(TestTerminal.C, 1, 2));
         assertParserFails(parser, "", unexpectedEOF());
     }
 
@@ -57,12 +57,12 @@ public class RepetitionParsingTest extends ParserTest {
         assertNotNull(parse(parser, "AAC"));
         assertNotNull(parse(parser, "AABBC"));
         assertNotNull(parse(parser, "AABBBBC"));
-        assertParserFails(parser, "ABBBBBBC", unexpectedToken(TestTerminal.B));
-        assertParserFails(parser, "AAABBBBBBC", unexpectedToken(TestTerminal.B));
-        assertParserFails(parser, "BC", unexpectedToken(TestTerminal.C));
-        assertParserFails(parser, "BBBC", unexpectedToken(TestTerminal.C));
-        assertParserFails(parser, "BBBBBC", unexpectedToken(TestTerminal.C));
-        assertParserFails(parser, "BBBBBBBC", unexpectedToken(TestTerminal.C));
+        assertParserFails(parser, "ABBBBBBC", unexpectedToken(TestTerminal.B, 1, 1));
+        assertParserFails(parser, "AAABBBBBBC", unexpectedToken(TestTerminal.B, 1, 3));
+        assertParserFails(parser, "BC", unexpectedToken(TestTerminal.C, 1, 1));
+        assertParserFails(parser, "BBBC", unexpectedToken(TestTerminal.C, 1, 3));
+        assertParserFails(parser, "BBBBBC", unexpectedToken(TestTerminal.C, 1, 5));
+        assertParserFails(parser, "BBBBBBBC", unexpectedToken(TestTerminal.C, 1, 7));
         assertParserFails(parser, "", unexpectedEOF());
     }
 
@@ -86,12 +86,12 @@ public class RepetitionParsingTest extends ParserTest {
             }
         });
         assertNotNull(parse(parser, "AABBBBBBC"));
-        assertParserFails(parser, "ABBBBBBC", unexpectedToken(TestTerminal.B));
-        assertParserFails(parser, "AAABBBBBBC", unexpectedToken(TestTerminal.A));
-        assertParserFails(parser, "BBBBBBC", unexpectedToken(TestTerminal.B));
-        assertParserFails(parser, "AABBBBBC", unexpectedToken(TestTerminal.C));
-        assertParserFails(parser, "AABBBBBBBC", unexpectedToken(TestTerminal.B));
-        assertParserFails(parser, "AAC", unexpectedToken(TestTerminal.C));
+        assertParserFails(parser, "ABBBBBBC", unexpectedToken(TestTerminal.B, 1, 1));
+        assertParserFails(parser, "AAABBBBBBC", unexpectedToken(TestTerminal.A, 1, 2));
+        assertParserFails(parser, "BBBBBBC", unexpectedToken(TestTerminal.B, 1, 0));
+        assertParserFails(parser, "AABBBBBC", unexpectedToken(TestTerminal.C, 1, 7));
+        assertParserFails(parser, "AABBBBBBBC", unexpectedToken(TestTerminal.B, 1,8));
+        assertParserFails(parser, "AAC", unexpectedToken(TestTerminal.C, 1, 2));
         assertParserFails(parser, "", unexpectedEOF());
     }
 
@@ -119,12 +119,12 @@ public class RepetitionParsingTest extends ParserTest {
         assertNotNull(parse(parser, "BBC"));
         assertNotNull(parse(parser, "BBBBC"));
         assertNotNull(parse(parser, "BBBBBBC"));
-        assertParserFails(parser, "ABBBBBBC", unexpectedToken(TestTerminal.B));
-        assertParserFails(parser, "AAABBBBBBC", unexpectedToken(TestTerminal.A));
-        assertParserFails(parser, "AABC", unexpectedToken(TestTerminal.C));
-        assertParserFails(parser, "AABBBC", unexpectedToken(TestTerminal.C));
-        assertParserFails(parser, "AABBBBBC", unexpectedToken(TestTerminal.C));
-        assertParserFails(parser, "AABBBBBBBC", unexpectedToken(TestTerminal.B));
+        assertParserFails(parser, "ABBBBBBC", unexpectedToken(TestTerminal.B, 1, 1));
+        assertParserFails(parser, "AAABBBBBBC", unexpectedToken(TestTerminal.A, 1, 2));
+        assertParserFails(parser, "AABC", unexpectedToken(TestTerminal.C, 1, 3));
+        assertParserFails(parser, "AABBBC", unexpectedToken(TestTerminal.C, 1, 5));
+        assertParserFails(parser, "AABBBBBC", unexpectedToken(TestTerminal.C, 1, 7));
+        assertParserFails(parser, "AABBBBBBBC", unexpectedToken(TestTerminal.B, 1, 8));
         assertParserFails(parser, "", unexpectedEOF());
     }
 
@@ -165,9 +165,9 @@ public class RepetitionParsingTest extends ParserTest {
         assertParserFails(parser, "CBB", unexpectedEOF());
         assertParserFails(parser, "A", unexpectedEOF());
         assertParserFails(parser, "BBB", unexpectedEOF());
-        assertParserFails(parser, "BC", unexpectedToken(TestTerminal.C));
-        assertParserFails(parser, "BBBC", unexpectedToken(TestTerminal.C));
-        assertParserFails(parser, "BBBBBC", unexpectedToken(TestTerminal.C));
+        assertParserFails(parser, "BC", unexpectedToken(TestTerminal.C, 1, 1));
+        assertParserFails(parser, "BBBC", unexpectedToken(TestTerminal.C, 1, 3));
+        assertParserFails(parser, "BBBBBC", unexpectedToken(TestTerminal.C, 1, 5));
         assertParserFails(parser, "CB", unexpectedEOF());
         assertParserFails(parser, "CBBB", unexpectedEOF());
         assertParserFails(parser, "", unexpectedEOF());
