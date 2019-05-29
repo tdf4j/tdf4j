@@ -1,0 +1,237 @@
+lexis
+    VAR        ^[a-z]+$
+    STRING     ^\"[^\"]*\"$
+    NEW        ^new$                                       [priority: 1]
+    TYPEOF     ^typeof$                                    [priority: 1]
+    HASHSET    ^hashset$                                   [priority: 1]
+    ARRAYLIST  ^arraylist$                                 [priority: 1]
+    GET        ^get$                                       [priority: 1]
+    SIZE       ^size$                                      [priority: 1]
+    PUT        ^put$                                       [priority: 1]
+    REMOVE     ^remove$                                    [priority: 1]
+    REWRITE    ^rewrite$                                   [priority: 1]
+    PRINT      ^print$                                     [priority: 1]
+    COMMA      ^,$
+    CONCAT     ^\\+\\+$                                    [priority: 2]
+    QUOTE      ^\"$
+    DIGIT      ^-?(0|([1-9][0-9]*))$                       [priority: 1]
+    DOUBLE     ^-?((0[.][0-9]*)|([1-9][0-9]*[.][0-9]*))$
+    ASSIGN_OP  ^=$
+    OP         ^[\\+\\-\\/\\*]|(div)|(mod)$                [priority: 1]
+    DEL        ^;$                                         [pattern : MULTILINE]
+    WHILE      ^while$                                     [priority: 1]
+    IF         ^if$                                        [priority: 1]
+    ELSE       ^else$                                      [priority: 1]
+    DO         ^do$                                        [priority: 1]
+    FOR        ^for$                                       [priority: 1]
+    LOP        ^[&\\|\\^\\!]$                              [priority: 1]
+    COP        ^[<>]|(<=)|(>=)|(==)|(!=)$                  [priority: 1]
+    LB         ^\\($
+    RB         ^\\)$
+    FLB        ^\\{$
+    FRB        ^\\}$
+    $          ^\\$$
+    ws         \\s|\\n|\\r                                 [priority: 3, hidden: true]
+
+env
+    import io.github.therealmone.tdf4j.model.Token;
+    import io.github.therealmone.tdf4j.module.lexer.AbstractLexerModule;
+
+    public String test() {
+        return "";
+    }
+
+syntax
+    lang =
+            {expr}
+        ,   $
+        ;
+
+    expr =
+        |   while_loop
+        |   for_loop
+        |   if_statement
+        |   do_while_loop
+        |   print_expr
+        |   assign_expr
+        |   init_expr
+        |   put_expr
+        |   remove_expr
+        |   rewrite_expr
+        ;
+
+    while_loop =
+            WHILE
+        ,   LB
+        ,   condition
+        ,   RB
+        ,   FLB
+        ,   {expr}
+        ,   FRB
+        ;
+
+    for_loop =
+            FOR
+        ,   LB
+        ,   assign_expr_without_del
+        ,   DEL
+        ,   condition
+        ,   DEL
+        ,   assign_expr_without_del
+        ,   RB
+        ,   FLB
+        ,   {expr}
+        ,   FRB
+        ;
+
+    if_statement =
+            IF
+        ,   LB
+        ,   condition
+        ,   RB
+        ,   FLB
+        ,   {expr}
+        ,   FRB
+        ,   [else_stmt]
+        ;
+
+    else_stmt =
+            ELSE
+        ,   FLB
+        ,   {expr}
+        ,   FRB
+        ;
+
+    assign_expr =
+            VAR
+        ,   ASSIGN_OP
+        ,   value_expr
+        ,   DEL
+        ;
+
+    assign_expr_without_del =
+            VAR
+        ,   ASSIGN_OP
+        ,   value_expr
+        ;
+
+    do_while_loop =
+            DO
+        ,   FLB
+        ,   {expr}
+        ,   FRB
+        ,   WHILE
+        ,   LB
+        ,   condition
+        ,   RB
+        ;
+
+    print_expr =
+            PRINT
+        ,   LB
+        ,   print_parameters
+        ,   RB
+        ,   DEL
+        ;
+
+    print_parameters =
+            value_expr
+        ,   {CONCAT, print_parameters}
+        ;
+
+    put_expr =
+            PUT
+        ,   LB
+        ,   VAR
+        ,   COMMA
+        ,   value
+        ,   RB
+        ,   DEL
+        ;
+
+    remove_expr =
+            REMOVE
+        ,   LB
+        ,   VAR
+        ,   COMMA
+        ,   value
+        ,   RB
+        ,   DEL
+        ;
+
+    rewrite_expr =
+            REWRITE
+        ,   LB
+        ,   VAR
+        ,   COMMA
+        ,   value
+        ,   COMMA
+        ,   value_expr
+        ,   RB
+        ,   DEL
+        ;
+
+    init_expr =
+            NEW
+        ,   VAR
+        ,   [inst_expr]
+        ,   DEL
+        ;
+
+    inst_expr =
+        |   (ASSIGN_OP, value_expr)
+        |   (TYPEOF, type)
+        ;
+
+    type =
+        |   ARRAYLIST
+        |   HASHSET
+        ;
+
+    condition =
+        |   (LB, condition, RB)
+        |   compare_expr
+        ,   {LOP, condition}
+        ;
+
+    compare_expr =
+        ,   value_expr
+        ,   COP
+        ,   value_expr
+        ;
+
+    value_expr =
+        |   (LB, value_expr, RB)
+        |   value_expr_1
+        ,   {OP, value_expr}
+        ;
+
+    value_expr_1 =
+        |   value
+        |   get_expr
+        |   size_expr
+        ,   OP
+        ,   value_expr
+
+    value =
+        |   VAR,
+        |   DIGIT,
+        |   DOUBLE,
+        |   STRING
+        ;
+
+    get_expr =
+        ,   GET
+        ,   LB
+        ,   VAR
+        ,   COMMA
+        ,   value
+        ,   RB
+        ;
+
+    size_expr =
+        ,   SIZE
+        ,   LB
+        ,   VAR
+        ,   RB
+        ;
