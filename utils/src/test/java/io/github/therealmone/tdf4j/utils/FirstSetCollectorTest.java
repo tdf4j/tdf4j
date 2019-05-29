@@ -5,6 +5,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -153,6 +154,147 @@ public class FirstSetCollectorTest {
 
     }
 
+    @Test
+    public void unknown_prod_indent() {
+        final First first = firstSetCollector.collect(new ArrayList<>() {{
+            add(prod("prod1").is(
+                    nt("prod2"),
+                    t("B")
+            ).build());
+        }});
+        assertFirstContains(first, "prod1");
+    }
+
+    @Test
+    public void inline_action_as_first_element() {
+        final First first = firstSetCollector.collect(new ArrayList<>() {{
+            add(prod("prod1").is(
+                    inline("inline"),
+                    t("A")
+            ).build());
+        }});
+        assertFirstContains(first, "prod1", "A");
+    }
+
+    @Test
+    public void inline_action_as_first_element_in_group() {
+        final First first = firstSetCollector.collect(new ArrayList<>() {{
+            add(prod("prod1").is(
+                    group(
+                            inline("inline"),
+                            t("A")
+                    )
+            ).build());
+        }});
+        assertFirstContains(first, "prod1", "A");
+    }
+
+    @Test
+    public void empty_group() {
+        final First first = firstSetCollector.collect(new ArrayList<>() {{
+            add(prod("prod1").is(
+                    group()
+            ).build());
+        }});
+        assertFirstContains(first, "prod1");
+    }
+
+    @Test
+    public void recursion() {
+        final First first = firstSetCollector.collect(new ArrayList<>() {{
+            add(prod("prod1").is(
+                    nt("prod1")
+            ).build());
+        }});
+        assertFirstContains(first, "prod1");
+    }
+
+    @Test
+    public void empty_optional() {
+        final First first = firstSetCollector.collect(new ArrayList<>() {{
+            add(prod("prod1").is(
+                    optional()
+            ).build());
+        }});
+        assertFirstContains(first, "prod1");
+    }
+
+    @Test
+    public void empty_repeat() {
+        final First first = firstSetCollector.collect(new ArrayList<>() {{
+            add(prod("prod1").is(
+                    repeat()
+            ).build());
+        }});
+        assertFirstContains(first, "prod1");
+    }
+
+    @Test
+    public void repetition_element_null() {
+        final First first = firstSetCollector.collect(new ArrayList<>() {{
+            add(new Production() {
+                @Override
+                public NonTerminal identifier() {
+                    return new NonTerminal.Builder().identifier("prod1").build();
+                }
+
+                @Override
+                public List<Element> elements() {
+                    return new ArrayList<>() {{
+                        add(new Repetition() {
+                            @Override
+                            public Element element() {
+                                return null;
+                            }
+
+                            @Override
+                            public int times() {
+                                return 100;
+                            }
+                        });
+                    }};
+                }
+            });
+        }});
+        assertFirstContains(first, "prod1");
+    }
+
+    @Test
+    public void unknown_element() {
+        final First first = firstSetCollector.collect(new ArrayList<>() {{
+            add(prod("prod1").is(
+                    (Element) () -> Element.Kind.TERMINAL
+            ).build());
+        }});
+        assertFirstContains(first, "prod1");
+    }
+
+    @Test
+    public void element_kind_null() {
+        final First first = firstSetCollector.collect(new ArrayList<>() {{
+            add(prod("prod1").is(
+                    (Element) () -> null
+            ).build());
+        }});
+        assertFirstContains(first, "prod1");
+    }
+
+    @Test
+    public void first_element_return_null() {
+        assertNull(firstSetCollector.firstElement(new ArrayList<>() {{
+            group(inline("code"));
+        }}));
+    }
+
+    @Test
+    public void context_get_production_return_null() {
+        final FirstSetCollector.Context context = new FirstSetCollector.Context(new ArrayList<>() {{
+            prod("prod1").is();
+        }});
+        assertNull(context.getProduction(nt("prod2")));
+    }
+
+
     private Production.Builder prod(final String identifier) {
         return new Production.Builder().identifier(identifier);
     }
@@ -177,7 +319,7 @@ public class FirstSetCollectorTest {
         return new Or.Builder().first(first).second(second).build();
     }
 
-    private Or oneOf(Element... elements) {
+    private Or oneOf(final Element... elements) {
         if(elements.length < 2) {
             throw new RuntimeException("oneOf() accepts 2 ore more elements");
         }
@@ -207,16 +349,13 @@ public class FirstSetCollectorTest {
         return new InlineAction.Builder().code(code).build();
     }
 
-    private Except except(final Terminal.Tag ... tags) {
-        return new Except.Builder().tags(tags).build();
-    }
-
     private static void assertFirstContains(final First first, final String ident, final String ... tags) {
         final Set<String> set = first.set()
                 .get(new NonTerminal.Builder().identifier(ident).build())
                 .stream()
                 .map(Terminal.Tag::value)
                 .collect(Collectors.toSet());
+        assertEquals(tags.length, set.size());
         for(final String tag : tags) {
             assertTrue(set.contains(tag));
             set.remove(tag);

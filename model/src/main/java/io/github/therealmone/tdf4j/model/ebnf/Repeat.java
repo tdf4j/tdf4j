@@ -18,7 +18,7 @@ package io.github.therealmone.tdf4j.model.ebnf;
 import org.immutables.value.Value;
 
 @Value.Immutable
-public abstract class Repeat implements Element {
+public abstract class Repeat extends AbstractElement {
     @Override
     public Kind kind() {
         return Kind.REPEAT;

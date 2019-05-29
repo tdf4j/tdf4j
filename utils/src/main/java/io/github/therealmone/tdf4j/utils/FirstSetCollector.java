@@ -32,64 +32,59 @@ public class FirstSetCollector {
 
     private List<Terminal.Tag> firstOf(final Context context, @Nullable final Production production) {
         if(production == null) {
-            return new ArrayList<>();
+            return Collections.emptyList();
         }
         if (!context.getSet().containsKey(production.identifier())) {
             context.getSet().put(production.identifier(), new HashSet<>());
         }
         if (!production.elements().isEmpty()) {
             context.getSet().get(production.identifier()).addAll(
-                    firstOf(context, production.identifier(), firstElement(production))
+                    firstOf(context, production.identifier(), firstElement(production.elements()))
             );
         }
         return new ArrayList<>(context.getSet().get(production.identifier()));
     }
 
     private List<Terminal.Tag> firstOf(final Context context, final NonTerminal currentNT, @Nullable final Element element) {
-        if(element == null) {
-            return new ArrayList<>();
+        if(element == null || element.kind() == null) {
+            return Collections.emptyList();
         }
 
         switch (element.kind()) {
 
-            case EXCEPT:
-                return new ArrayList<>();
-
             case GROUP: {
                 return element.asGroup().elements().length == 0
-                        ? new ArrayList<>()
-                        : firstOf(context, currentNT, element.asGroup().elements()[0]);
+                        ? Collections.emptyList()
+                        : firstOf(context, currentNT, firstElement(Arrays.asList(element.asGroup().elements())));
             }
 
             case NON_TERMINAL: {
                 return element.asNonTerminal().identifier().equalsIgnoreCase(currentNT.identifier())
-                        ? new ArrayList<>()
+                        ? Collections.emptyList()
                         : firstOf(context, context.getProduction(element.asNonTerminal()));
             }
 
             case OPTIONAL: {
                 return element.asOptional().elements().length == 0
-                        ? new ArrayList<>()
-                        : firstOf(context, currentNT, element.asOptional().elements()[0]);
+                        ? Collections.emptyList()
+                        : firstOf(context, currentNT, firstElement(Arrays.asList(element.asOptional().elements())));
             }
 
             case OR: {
                 return new ArrayList<>() {{
-                    addAll(firstOf(context, currentNT, element.asOr().first()));
-                    addAll(firstOf(context, currentNT, element.asOr().second()));
+                    addAll(firstOf(context, currentNT, firstElement(Collections.singletonList(element.asOr().first()))));
+                    addAll(firstOf(context, currentNT, firstElement(Collections.singletonList(element.asOr().second()))));
                 }};
             }
 
             case REPEAT: {
                 return element.asRepeat().elements().length == 0
-                        ? new ArrayList<>()
-                        : firstOf(context, currentNT, element.asRepeat().elements()[0]);
+                        ? Collections.emptyList()
+                        : firstOf(context, currentNT, firstElement(Arrays.asList(element.asRepeat().elements())));
             }
 
             case REPETITION: {
-                return element.asRepetition().element() == null
-                        ? new ArrayList<>()
-                        : firstOf(context, currentNT, element.asRepetition().element());
+                return firstOf(context, currentNT, firstElement(Collections.singletonList(element.asRepetition().element())));
             }
 
             case TERMINAL_TAG: {
@@ -98,15 +93,14 @@ public class FirstSetCollector {
                 }};
             }
 
-
-            default: return new ArrayList<>();
+            default: return Collections.emptyList();
         }
     }
 
     @Nullable
-    private Element firstElement(final Production production) {
-        for(final Element element : production.elements()) {
-            if(element.isInlineAction()) {
+    Element firstElement(final List<Element> elements) {
+        for(final Element element : elements) {
+            if(element == null || element.isInlineAction()) {
                 continue;
             }
             return element;
@@ -114,7 +108,7 @@ public class FirstSetCollector {
         return null;
     }
 
-    private class Context {
+    static class Context {
         private final List<Production> productions;
         private final Map<NonTerminal, Set<Terminal.Tag>> set;
 

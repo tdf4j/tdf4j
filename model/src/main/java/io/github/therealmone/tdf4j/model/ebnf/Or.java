@@ -18,7 +18,7 @@ package io.github.therealmone.tdf4j.model.ebnf;
 import org.immutables.value.Value;
 
 @Value.Immutable
-public abstract class Or implements Element {
+public abstract class Or extends AbstractElement {
     @Override
     public Kind kind() {
         return Kind.OR;

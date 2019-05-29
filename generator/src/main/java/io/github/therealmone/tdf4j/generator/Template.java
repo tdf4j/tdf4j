@@ -29,7 +29,6 @@ public enum Template {
     LOGIC_REPEAT("repeat"),
     LOGIC_REPETITION("repetition"),
     LOGIC_GROUP("ele_group"),
-    LOGIC_EXCEPT("except"),
     LOGIC_INLINE_ACTION("inline_action");
 
     private static final STGroup JAVA_TEMPLATE = new STGroupFile("templates/java.stg");

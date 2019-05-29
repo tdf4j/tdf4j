@@ -269,22 +269,6 @@ public class AbstractParserModuleTest {
     }
 
     @Test
-    public void except_test() {
-        final AbstractParserModule module = new AbstractParserModule() {
-            @Override
-            public void configure() {
-                prod("prod1")
-                        .then(nt("prod2"))
-                        .then(except(t("C")));
-            }
-        }.build();
-        final Grammar grammar = module.getGrammar();
-        assertEquals(1, grammar.productions().size());
-        assertEquals("prod1", grammar.productions().get(0).identifier().identifier());
-        assertEquals("prod1 := prod2,-(C)", grammar.productions().get(0).toString());
-    }
-
-    @Test
     public void one_of_test() {
         final AbstractParserModule module = new AbstractParserModule() {
             @Override

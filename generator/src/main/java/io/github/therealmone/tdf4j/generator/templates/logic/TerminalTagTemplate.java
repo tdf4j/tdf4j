@@ -20,18 +20,19 @@ import io.github.therealmone.tdf4j.generator.Template;
 import org.immutables.value.Value;
 
 
+@SuppressWarnings("WeakerAccess")
 @Value.Immutable
-public interface TerminalTagTemplate extends CodeBlock {
+public abstract class TerminalTagTemplate implements CodeBlock {
 
-    Terminal.Tag terminalTag();
+    public abstract Terminal.Tag terminalTag();
 
     @Override
-    default String build() {
+    public String build() {
         return Template.LOGIC_TERMINAL.template()
                 .add("terminal", terminalTag().value())
                 .render();
     }
 
-    class Builder extends ImmutableTerminalTagTemplate.Builder {
+    public static class Builder extends ImmutableTerminalTagTemplate.Builder {
     }
 }

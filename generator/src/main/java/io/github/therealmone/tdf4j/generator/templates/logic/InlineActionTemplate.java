@@ -19,18 +19,19 @@ import io.github.therealmone.tdf4j.model.ebnf.InlineAction;
 import io.github.therealmone.tdf4j.generator.Template;
 import org.immutables.value.Value;
 
+@SuppressWarnings("WeakerAccess")
 @Value.Immutable
-public interface InlineActionTemplate extends CodeBlock {
+public abstract class InlineActionTemplate implements CodeBlock {
 
-    InlineAction inline();
+    public abstract InlineAction inline();
 
     @Override
-    default String build() {
+    public String build() {
         return Template.LOGIC_INLINE_ACTION.template()
                 .add("inlineAction", inline().code())
                 .render();
     }
 
-    class Builder extends ImmutableInlineActionTemplate.Builder {
+    public static class Builder extends ImmutableInlineActionTemplate.Builder {
     }
 }

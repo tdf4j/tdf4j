@@ -82,31 +82,12 @@ public interface Element {
         return (Repetition) this;
     }
 
-    default boolean isExcept() {
-        return this.kind() == Kind.EXCEPT;
-    }
-
-    default Except asExcept() {
-        return (Except) this;
-    }
-
     default boolean isInlineAction() {
         return this.kind() == Kind.INLINE_ACTION;
     }
 
     default InlineAction asInlineAction() {
         return (InlineAction) this;
-    }
-
-    default String toStringGroup(final Element ... elements) {
-        final StringBuilder builder = new StringBuilder();
-        if(elements.length > 0) {
-            for (final Element element : elements) {
-                builder.append(element.toString()).append(",");
-            }
-            builder.replace(builder.length() - 1, builder.length(), "");
-        }
-        return builder.toString();
     }
 
     enum Kind {
@@ -117,7 +98,6 @@ public interface Element {
         GROUP,
         TERMINAL,
         TERMINAL_TAG,
-        EXCEPT,
         NON_TERMINAL,
         INLINE_ACTION
     }

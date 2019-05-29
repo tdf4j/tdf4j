@@ -22,12 +22,12 @@ import org.immutables.value.Value;
 import org.stringtemplate.v4.ST;
 
 @Value.Immutable
-public interface OptionalTemplate extends CodeBlock, Prediction {
+public abstract class OptionalTemplate extends Prediction implements CodeBlock {
 
-    Optional optional();
+    public abstract Optional optional();
 
     @Override
-    default String build() {
+    public String build() {
         final ST template = Template.LOGIC_OPTIONAL.template()
                 .add("hash", Math.abs(this.hashCode()));
         for(final Element element : optional().elements()) {
@@ -42,6 +42,6 @@ public interface OptionalTemplate extends CodeBlock, Prediction {
         return template.render();
     }
 
-    class Builder extends ImmutableOptionalTemplate.Builder {
+    public static class Builder extends ImmutableOptionalTemplate.Builder {
     }
 }
