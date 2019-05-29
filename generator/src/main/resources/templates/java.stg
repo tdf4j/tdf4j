@@ -68,16 +68,6 @@ private <returnValue> <name>() {
 }
 >>
 
-except(exceptions) ::= <<
-if(stream.peek() == null ||
-    <exceptions: {exception|stream.peek().tag().value().equalsIgnoreCase("<exception>")};separator="\n|| ">
-) {
-    throw new UnexpectedTokenException(stream.peek());
-} else {
-    ast.addLeaf(stream.next());
-}
->>
-
 ele_group(codeBlocks, hash) ::= <<
 <codeBlocks: {codeBlock|<codeBlock>};separator="\n">
 >>

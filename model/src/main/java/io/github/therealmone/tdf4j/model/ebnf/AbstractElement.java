@@ -15,22 +15,17 @@
  */
 package io.github.therealmone.tdf4j.model.ebnf;
 
-import org.immutables.value.Value;
+public abstract class AbstractElement implements Element {
 
-@Value.Immutable
-public abstract class Except implements Element {
-    @Override
-    public Kind kind() {
-        return Kind.EXCEPT;
+    protected String toStringGroup(final Element ... elements) {
+        final StringBuilder builder = new StringBuilder();
+        if(elements.length > 0) {
+            for (final Element element : elements) {
+                builder.append(element.toString()).append(",");
+            }
+            builder.replace(builder.length() - 1, builder.length(), "");
+        }
+        return builder.toString();
     }
 
-    public abstract Terminal.Tag[] tags();
-
-    public static class Builder extends ImmutableExcept.Builder {
-    }
-
-    @Override
-    public String toString() {
-        return "-(" + (toStringGroup(tags())) + ")";
-    }
 }

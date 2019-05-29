@@ -20,7 +20,7 @@ import org.immutables.value.Value;
 import java.util.regex.Pattern;
 
 @Value.Immutable
-public abstract class Terminal implements Element {
+public abstract class Terminal extends AbstractElement {
     @Override
     public Kind kind() {
         return Kind.TERMINAL;

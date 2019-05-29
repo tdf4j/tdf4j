@@ -22,20 +22,21 @@ import org.stringtemplate.v4.ST;
 
 import java.util.List;
 
+@SuppressWarnings("WeakerAccess")
 @Value.Immutable
-public interface MethodTemplate extends Buildable {
+public abstract class MethodTemplate implements Buildable {
 
-    String name();
+    public abstract String name();
 
     @Value.Default
-    default String returnValue() {
+    public String returnValue() {
         return "void";
     }
 
-    List<CodeBlock> codeBlocks();
+    public abstract List<CodeBlock> codeBlocks();
 
     @Override
-    default String build() {
+    public String build() {
         final ST template = Template.METHOD.template()
                 .add("name", name())
                 .add("returnValue", returnValue());
@@ -43,6 +44,6 @@ public interface MethodTemplate extends Buildable {
         return template.render();
     }
 
-    class Builder extends ImmutableMethodTemplate.Builder {
+    public static class Builder extends ImmutableMethodTemplate.Builder {
     }
 }

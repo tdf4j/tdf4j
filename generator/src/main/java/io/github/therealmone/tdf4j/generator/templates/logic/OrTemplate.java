@@ -21,12 +21,12 @@ import org.immutables.value.Value;
 import org.stringtemplate.v4.ST;
 
 @Value.Immutable
-public interface OrTemplate extends CodeBlock, Prediction {
+public abstract class OrTemplate extends Prediction implements CodeBlock {
 
-    Or or();
+    public abstract Or or();
 
     @Override
-    default String build() {
+    public String build() {
         final ST template = Template.LOGIC_OR.template();
         final CodeBlock first = CodeBlock.fromElement(or().first());
         if(first != null) {
@@ -41,6 +41,6 @@ public interface OrTemplate extends CodeBlock, Prediction {
         return template.render();
     }
 
-    class Builder extends ImmutableOrTemplate.Builder {
+    public static class Builder extends ImmutableOrTemplate.Builder {
     }
 }

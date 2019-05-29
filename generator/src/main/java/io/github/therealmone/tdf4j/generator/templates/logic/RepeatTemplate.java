@@ -22,12 +22,12 @@ import org.immutables.value.Value;
 import org.stringtemplate.v4.ST;
 
 @Value.Immutable
-public interface RepeatTemplate extends CodeBlock, Prediction {
+public abstract class RepeatTemplate extends Prediction implements CodeBlock {
 
-    Repeat repeat();
+    public abstract Repeat repeat();
 
     @Override
-    default String build() {
+    public String build() {
         final ST template = Template.LOGIC_REPEAT.template()
                 .add("hash", Math.abs(this.hashCode()));
         for(final Element element : repeat().elements()) {
@@ -42,6 +42,6 @@ public interface RepeatTemplate extends CodeBlock, Prediction {
         return template.render();
     }
 
-    class Builder extends ImmutableRepeatTemplate.Builder {
+    public static class Builder extends ImmutableRepeatTemplate.Builder {
     }
 }

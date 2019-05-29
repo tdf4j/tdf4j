@@ -22,25 +22,26 @@ import org.stringtemplate.v4.ST;
 
 import java.util.List;
 
+@SuppressWarnings("WeakerAccess")
 @Value.Immutable
-public interface ParserTemplate extends Buildable {
+public abstract class ParserTemplate implements Buildable {
 
-    String pack();
+    public abstract String pack();
 
-    String[] imports();
+    public abstract String[] imports();
 
-    String className();
+    public abstract String className();
 
-    Environment environment();
+    public abstract Environment environment();
 
-    String initProd();
+    public abstract String initProd();
 
-    List<MethodTemplate> methods();
+    public abstract List<MethodTemplate> methods();
 
-    String interfaceToImplement();
+    public abstract String interfaceToImplement();
 
     @Override
-    default String build() {
+    public String build() {
         final ST template = Template.PARSER.template()
                 .add("package", pack())
                 .add("imports", imports())
@@ -52,6 +53,6 @@ public interface ParserTemplate extends Buildable {
         return template.render();
     }
 
-    class Builder extends ImmutableParserTemplate.Builder {
+    public static class Builder extends ImmutableParserTemplate.Builder {
     }
 }

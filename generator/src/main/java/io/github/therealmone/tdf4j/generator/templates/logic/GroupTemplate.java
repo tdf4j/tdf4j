@@ -22,12 +22,12 @@ import org.immutables.value.Value;
 import org.stringtemplate.v4.ST;
 
 @Value.Immutable
-public interface GroupTemplate extends CodeBlock {
+public abstract class GroupTemplate implements CodeBlock {
 
-    Group group();
+    public abstract Group group();
 
     @Override
-    default String build() {
+    public String build() {
         final ST template = Template.LOGIC_GROUP.template()
                 .add("hash", Math.abs(this.hashCode()));
         for(final Element element : group().elements()) {
@@ -39,6 +39,6 @@ public interface GroupTemplate extends CodeBlock {
         return template.render();
     }
 
-    class Builder extends ImmutableGroupTemplate.Builder {
+    public static class Builder extends ImmutableGroupTemplate.Builder {
     }
 }
