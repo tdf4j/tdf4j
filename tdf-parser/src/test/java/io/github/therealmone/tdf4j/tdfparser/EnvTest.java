@@ -16,11 +16,11 @@ public class EnvTest extends TdfParserTest {
         assertEquals("io.github.therealmone.tdf4j.model.Token", environment.getPackages()[0]);
         assertEquals("io.github.therealmone.tdf4j.module.lexer.AbstractLexerModule", environment.getPackages()[1]);
         assertEquals(0, environment.getDependencies().length);
-        assertEquals("\r\n" +
-                "        public String test() {\r\n" +
-                "            return \"\";\r\n" +
-                "        }\r\n" +
-                "    ", environment.getCode());
+        assertEquals("" +
+                "        public String test() {" +
+                "            return \"\";" +
+                "        }" +
+                "    ", environment.getCode().replaceAll("[\r\n]", ""));
     }
 
 }
