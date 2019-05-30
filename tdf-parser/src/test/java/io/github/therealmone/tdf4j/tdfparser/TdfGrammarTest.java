@@ -6,7 +6,6 @@ import io.github.therealmone.tdf4j.lexer.Lexer;
 import org.junit.Before;
 import org.junit.Ignore;
 
-@Ignore
 public class TdfGrammarTest extends FullGrammarTest {
 
     @Override
