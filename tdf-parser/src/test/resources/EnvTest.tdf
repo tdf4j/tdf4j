@@ -1,0 +1,15 @@
+lexis
+
+env
+    import "io.github.therealmone.tdf4j.model.Token"
+    import "io.github.therealmone.tdf4j.module.lexer.AbstractLexerModule"
+
+    code "
+        public String test() {
+            return \"\";
+        }
+    "
+
+syntax
+
+$

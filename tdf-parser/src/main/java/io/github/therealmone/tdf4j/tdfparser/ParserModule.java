@@ -21,8 +21,59 @@ public class ParserModule extends AbstractParserModule {
 
     @Override
     public void configure() {
+
+        environment()
+                .packages(
+                        "io.github.therealmone.tdf4j.module.lexer.AbstractLexerModule",
+                        "io.github.therealmone.tdf4j.module.parser.AbstractParserModule",
+                        "io.github.therealmone.tdf4j.tdfparser.constructor.*",
+                        "io.github.therealmone.tdf4j.tdfparser.processor.*"
+                )
+                .code("" +
+                        "private final Processor<String> stringProcessor = new StringProcessor();\n" +
+                        "private final Stack<TerminalConstructor> terminals = new Stack<>();\n" +
+                        "private final Stack<EnvironmentConstructor> environments = new Stack<>();\n" +
+                        "private final Stack<ProductionConstructor> productions = new Stack<>();\n" +
+                        "private AbstractLexerModule lexerModule;\n" +
+                        "private AbstractParserModule parserModule;\n" +
+                        "\n" +
+                        "@Override\n" +
+                        "public AbstractLexerModule getLexerModule() {\n" +
+                        "   return this.lexerModule;\n" +
+                        "}\n" +
+                        "\n" +
+                        "@Override\n" +
+                        "public AbstractParserModule getParserModule() {\n" +
+                        "   return this.parserModule;\n" +
+                        "}\n" +
+                        "\n" +
+                        "private String lastValue(final AST ast) {\n" +
+                        "   final String value = ast.moveCursor(ASTCursor.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value();\n" +
+                        "   ast.moveCursor(ASTCursor.Movement.TO_PARENT);\n" +
+                        "   return value;\n" +
+                        "}\n" +
+                        "\n" +
+                        "private ASTNode lastNode(final AST ast) {\n" +
+                        "   final ASTNode lastNode = ast.moveCursor(ASTCursor.Movement.TO_LAST_ADDED_NODE).onCursor().asNode();\n" +
+                        "   ast.moveCursor(ASTCursor.Movement.TO_PARENT);\n" +
+                        "   return lastNode;\n" +
+                        "}\n"
+                );
+
+
         prod("tdf_lang")
                 .is(
+                        inline(
+                                "this.lexerModule = new AbstractLexerModule() {\n" +
+                                        "   @Override\n" +
+                                        "   public void configure() {}\n" +
+                                        "};\n" +
+                                        "\n" +
+                                        "this.parserModule = new AbstractParserModule() {\n" +
+                                        "   @Override\n" +
+                                        "   public void configure() {}\n" +
+                                        "};\n"
+                        ),
                         nt("lexis"),
                         optional(nt("environment")),
                         nt("syntax"),
@@ -40,8 +91,17 @@ public class ParserModule extends AbstractParserModule {
         prod("terminal_description")
                 .is(
                         t("TERMINAL_TAG"),
+                        inline(
+                                "terminals.push(new TerminalConstructor(lexerModule.tokenize(lastValue(ast))));\n"
+                        ),
                         t("STRING"),
-                        optional(nt("terminal_parameters"))
+                        inline(
+                                "terminals.peek().setPattern(stringProcessor.process(lastValue(ast)));\n"
+                        ),
+                        optional(nt("terminal_parameters")),
+                        inline(
+                                "terminals.pop().construct();\n"
+                        )
                 );
 
         prod("terminal_parameters")
@@ -65,14 +125,20 @@ public class ParserModule extends AbstractParserModule {
                 .is(
                         t("TERMINAL_PARAMETER_PRIORITY"),
                         t("COLON"),
-                        t("INTEGER")
+                        t("INTEGER"),
+                        inline(
+                                "terminals.peek().setPriority(lastValue(ast));\n"
+                        )
                 );
 
         prod("terminal_parameter_hidden")
                 .is(
                         t("TERMINAL_PARAMETER_HIDDEN"),
                         t("COLON"),
-                        t("BOOLEAN")
+                        t("BOOLEAN"),
+                        inline(
+                                "terminals.peek().setHidden(lastValue(ast));\n"
+                        )
                 );
 
         prod("terminal_parameter_pattern_flag")
@@ -80,7 +146,6 @@ public class ParserModule extends AbstractParserModule {
                         t("TERMINAL_PARAMETER_PATTERN_FLAG"),
                         t("COLON"),
                         oneOf(
-                                t("TERMINAL_PARAMETER_PATTERN_FLAG"),
                                 t("TERMINAL_PARAMETER_PATTERN_FLAG_VALUE_UNIX_LINES"),
                                 t("TERMINAL_PARAMETER_PATTERN_FLAG_VALUE_CASE_INSENSITIVE"),
                                 t("TERMINAL_PARAMETER_PATTERN_FLAG_VALUE_COMMENTS"),
@@ -88,27 +153,43 @@ public class ParserModule extends AbstractParserModule {
                                 t("TERMINAL_PARAMETER_PATTERN_FLAG_VALUE_LITERAL"),
                                 t("TERMINAL_PARAMETER_PATTERN_FLAG_VALUE_DOTALL"),
                                 t("TERMINAL_PARAMETER_PATTERN_FLAG_VALUE_UNICODE_CASE"),
-                                t("TERMINAL_PARAMETER_PATTERN_FLAG_VALUE_CANON_EQ")
+                                t("TERMINAL_PARAMETER_PATTERN_FLAG_VALUE_CANON_EQ"),
+                                t("TERMINAL_PARAMETER_PATTERN_FLAG_VALUE_UNICODE_CHARACTER_CLASS")
+                        ),
+                        inline(
+                                "terminals.peek().setFlag(lastValue(ast));\n"
                         )
                 );
 
         prod("environment")
                 .is(
                         t("KEY_ENV"),
+                        inline(
+                                "environments.push(new EnvironmentConstructor(parserModule.environment()));\n"
+                        ),
                         repeat(nt("env_import")),
-                        optional(nt("env_code"))
+                        optional(nt("env_code")),
+                        inline(
+                                "environments.pop().construct();\n"
+                        )
                 );
 
         prod("env_import")
                 .is(
                         t("KEY_IMPORT"),
-                        t("STRING")
+                        t("STRING"),
+                        inline(
+                                "environments.peek().addPackage(stringProcessor.process(lastValue(ast)));\n"
+                        )
                 );
 
         prod("env_code")
                 .is(
                         t("KEY_CODE"),
-                        t("STRING")
+                        t("STRING"),
+                        inline(
+                                "environments.peek().setCode(stringProcessor.process(lastValue(ast)));\n"
+                        )
                 );
 
         prod("syntax")
@@ -120,17 +201,23 @@ public class ParserModule extends AbstractParserModule {
         prod("production_description")
                 .is(
                         t("NON_TERMINAL"),
+                        inline(
+                                "productions.push(new ProductionConstructor(parserModule.prod(lastValue(ast))));\n"
+                        ),
                         t("OP_ASSIGN"),
-                        optional(nt("ebnf_elements_set")),
-                        t("DELIMITER")
+                        nt("ebnf_elements_set"),
+                        inline(
+                                "productions.peek().setElements(lastNode(ast));\n"
+                        ),
+                        t("DELIMITER"),
+                        inline(
+                                "productions.pop().construct();\n"
+                        )
                 );
 
         prod("ebnf_elements_set")
                 .is(
-                        or(
-                                nt("ebnf_element"),
-                                nt("inline_action")
-                        ),
+                        nt("ebnf_element"),
                         optional(t("COMMA"), nt("ebnf_elements_set"))
                 );
 
@@ -138,13 +225,24 @@ public class ParserModule extends AbstractParserModule {
                 .is(
                         oneOf(
                                 nt("ebnf_optional"),
-                                nt("ebnf_one_of"),
+                                nt("ebnf_or"),
                                 nt("ebnf_repeat"),
                                 nt("ebnf_repetition"),
                                 nt("ebnf_group"),
-                                t("TERMINAL_TAG"),
-                                t("NON_TERMINAL")
+                                nt("ebnf_terminal"),
+                                nt("ebnf_non_terminal"),
+                                nt("ebnf_inline_action")
                         )
+                );
+
+        prod("ebnf_terminal")
+                .is(
+                        t("TERMINAL_TAG")
+                );
+
+        prod("ebnf_non_terminal")
+                .is(
+                        t("NON_TERMINAL")
                 );
 
         prod("ebnf_optional")
@@ -154,8 +252,15 @@ public class ParserModule extends AbstractParserModule {
                         t("RIGHT_SQUARE_BRACKET")
                 );
 
-        prod("ebnf_one_of")
+        prod("ebnf_or")
                 .is(
+                        repetition(
+                                group(
+                                    t("LOP_OR"),
+                                    nt("ebnf_element")
+                                ),
+                                2
+                        ),
                         repeat(
                                 t("LOP_OR"),
                                 nt("ebnf_element")
@@ -183,12 +288,11 @@ public class ParserModule extends AbstractParserModule {
                         t("RIGHT_BRACKET")
                 );
 
-        prod("inline_action")
+        prod("ebnf_inline_action")
                 .is(
                         t("LEFT_INLINE_ACTION_BRACKET"),
                         t("STRING"),
                         t("RIGHT_INLINE_ACTION_BRACKET")
                 );
     }
-
 }
