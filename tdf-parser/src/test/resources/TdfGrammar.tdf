@@ -10,7 +10,7 @@ lexis
         "[A-Z][A-Z0-9_]*"
 
     STRING
-        "\"([^\"]|(\\"))*\""
+        "\"((\\\")|[^\"])*\""
 
     LEFT_SQUARE_BRACKET
         "\["
@@ -128,7 +128,7 @@ lexis
         [priority: 1000, hidden: true]
 
     SINGLE_LINE_COMMENT
-        "//.*\n|\r|\r\n|\n\r"
+        "//.*(\n|\r|\r\n|\n\r)"
         [priority: 1000, hidden: true]
 
 env
