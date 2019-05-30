@@ -1,0 +1,22 @@
+lexis
+
+env
+
+syntax
+    terminal = A;
+
+    non_terminal = terminal;
+
+    optional = [A, non_terminal];
+
+    or = |A |non_terminal;
+
+    repeat = {A, non_terminal};
+
+    repetition = 3 * (A, non_terminal);
+
+    group = (A, non_terminal);
+
+    inline_action = <"System.out.println(\"test\");">;
+
+$

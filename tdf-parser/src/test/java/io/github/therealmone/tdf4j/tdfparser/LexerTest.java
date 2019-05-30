@@ -57,6 +57,8 @@ public class LexerTest {
         assertLexerReturns("0123",
                 token("INTEGER", "0"),
                 token("INTEGER", "123"));
+        assertLexerReturns("-100",
+                token("INTEGER", "-100"));
     }
 
     @Test

@@ -26,11 +26,11 @@ public class LexerModule extends AbstractLexerModule {
         //lexis
         tokenize("EOF").pattern("\\$");
         tokenize("KEY_LEXIS").pattern("lexis");
-        tokenize("TERMINAL_TAG").pattern("[A-Z][A-Z0-9_]+");
+        tokenize("TERMINAL_TAG").pattern("[A-Z][A-Z0-9_]*");
         tokenize("STRING").pattern("\"([^\"]|(\\\\\"))*\"");
         tokenize("LEFT_SQUARE_BRACKET").pattern("\\[");
         tokenize("RIGHT_SQUARE_BRACKET").pattern("\\]");
-        tokenize("INTEGER").pattern("0|([1-9][0-9]*)").priority(1);
+        tokenize("INTEGER").pattern("-?(0|([1-9][0-9]*))").priority(1);
         tokenize("COLON").pattern(":");
         tokenize("BOOLEAN").pattern("true|false", Pattern.CASE_INSENSITIVE).priority(1);
         tokenize("COMMA").pattern(",");
@@ -57,7 +57,7 @@ public class LexerModule extends AbstractLexerModule {
         //syntax
         tokenize("KEY_SYNTAX").pattern("syntax");
         tokenize("DELIMITER").pattern(";");
-        tokenize("NON_TERMINAL").pattern("[a-z][a-z0-9_]+").priority(-1);
+        tokenize("NON_TERMINAL").pattern("[a-z][a-z0-9_]*").priority(-1);
         tokenize("LOP_OR").pattern("\\|");
         tokenize("LEFT_FIGURE_BRACKET").pattern("\\{");
         tokenize("RIGHT_FIGURE_BRACKET").pattern("\\}");

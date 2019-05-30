@@ -19,39 +19,39 @@
 
 
 lexis
-    VAR       "[a-z]+$"
-    STRING    "\"[^\"]*\"$"
-    NEW       "new$"                                       [priority: 1]
-    TYPEOF    "typeof$"                                    [priority: 1]
-    HASHSET   "hashset$"                                   [priority: 1]
-    ARRAYLIST "arraylist$"                                 [priority: 1]
-    GET       "get$"                                       [priority: 1]
-    SIZE      "size$"                                      [priority: 1]
-    PUT       "put$"                                       [priority: 1]
-    REMOVE    "remove$"                                    [priority: 1]
-    REWRITE   "rewrite$"                                   [priority: 1]
-    PRINT     "print$"                                     [priority: 1]
-    COMMA     ",$"
-    CONCAT    "\+\+$"                                      [priority: 2]
-    QUOTE     "\"$"
-    DIGIT     "-?(0|([1-9][0-9]*))$"                       [priority: 1]
-    DOUBLE    "-?((0[.][0-9]*)|([1-9][0-9]*[.][0-9]*))$"
-    ASSIGN_OP "=$"
-    OP        "[\+\-/\*]|(div)|(mod)$"                     [priority: 1]
-    DEL       ";$"                                         [pattern : MULTILINE]
-    WHILE     "while$"                                     [priority: 1]
-    IF        "if$"                                        [priority: 1]
-    ELSE      "else$"                                      [priority: 1]
-    DO        "do$"                                        [priority: 1]
-    FOR       "for$"                                       [priority: 1]
-    LOP       "[&\|\^\!]$"                                 [priority: 1]
-    COP       "[<>]|(<=)|(>=)|(==)|(!=)$"                  [priority: 1]
-    LB        "\($"
-    RB        "\)$"
-    FLB       "\{$"
-    FRB       "\}$"
-    EOF       "\$$"
-    WS        "\s|\n|\r"                                   [priority: 3, hidden: true]
+    VAR       "[a-z]+"
+    STRING    "\"[^\"]*\""
+    NEW       "new"                                       [priority: 1]
+    TYPEOF    "typeof"                                    [priority: 1]
+    HASHSET   "hashset"                                   [priority: 1]
+    ARRAYLIST "arraylist"                                 [priority: 1]
+    GET       "get"                                       [priority: 1]
+    SIZE      "size"                                      [priority: 1]
+    PUT       "put"                                       [priority: 1]
+    REMOVE    "remove"                                    [priority: 1]
+    REWRITE   "rewrite"                                   [priority: 1]
+    PRINT     "print"                                     [priority: 1]
+    COMMA     ","
+    CONCAT    "\+\+"                                      [priority: 2]
+    QUOTE     "\""
+    DIGIT     "-?(0|([1-9][0-9]*))"                       [priority: 1]
+    DOUBLE    "-?((0[.][0-9]*)|([1-9][0-9]*[.][0-9]*))"
+    ASSIGN_OP "="
+    OP        "[\+\-/\*]|(div)|(mod)"                     [priority: 1]
+    DEL       ";"                                         [pattern : MULTILINE]
+    WHILE     "while"                                     [priority: 1]
+    IF        "if"                                        [priority: 1]
+    ELSE      "else"                                      [priority: 1]
+    DO        "do"                                        [priority: 1]
+    FOR       "for"                                       [priority: 1]
+    LOP       "[&\|\^\!]"                                 [priority: 1]
+    COP       "[<>]|(<=)|(>=)|(==)|(!=)"                  [priority: 1]
+    LB        "\("
+    RB        "\)"
+    FLB       "\{"
+    FRB       "\}"
+    EOF       "\$"
+    WS        "\s|\n|\r"                                  [priority: 3, hidden: true]
 
 env
     import "io.github.therealmone.tdf4j.model.Token"
@@ -232,14 +232,13 @@ syntax
         |   value
         |   get_expr
         |   size_expr
-        ,   OP
-        ,   value_expr
+        ,   {OP, value_expr}
         ;
 
     value =
-        |   VAR,
-        |   DIGIT,
-        |   DOUBLE,
+        |   VAR
+        |   DIGIT
+        |   DOUBLE
         |   STRING
         ;
 
