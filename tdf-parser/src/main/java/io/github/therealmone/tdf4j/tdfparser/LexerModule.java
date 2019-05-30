@@ -27,7 +27,7 @@ public class LexerModule extends AbstractLexerModule {
         tokenize("EOF").pattern("\\$");
         tokenize("KEY_LEXIS").pattern("lexis");
         tokenize("TERMINAL_TAG").pattern("[A-Z][A-Z0-9_]*");
-        tokenize("STRING").pattern("\"([^\"]|(\\\\\"))*\"");
+        tokenize("STRING").pattern("\"((\\\\\")|[^\"])*\"");
         tokenize("LEFT_SQUARE_BRACKET").pattern("\\[");
         tokenize("RIGHT_SQUARE_BRACKET").pattern("\\]");
         tokenize("INTEGER").pattern("-?(0|([1-9][0-9]*))").priority(1);
