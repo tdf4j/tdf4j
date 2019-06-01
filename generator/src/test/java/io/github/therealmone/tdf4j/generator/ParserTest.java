@@ -1,5 +1,7 @@
 package io.github.therealmone.tdf4j.generator;
 
+import io.github.therealmone.tdf4j.generator.impl.LexerGenerator;
+import io.github.therealmone.tdf4j.generator.impl.ParserGenerator;
 import io.github.therealmone.tdf4j.lexer.Lexer;
 import io.github.therealmone.tdf4j.module.lexer.AbstractLexerModule;
 import io.github.therealmone.tdf4j.module.parser.AbstractParserModule;
@@ -12,12 +14,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 public class ParserTest {
-    static ParserGenerator generator = ParserGenerator.newInstance();
     static Lexer lexer;
 
     @BeforeClass
     public static void globalSetup() {
-        lexer = LexerGenerator.newInstance().generate(new AbstractLexerModule() {
+        lexer = new LexerGenerator(new AbstractLexerModule() {
             @Override
             public void configure() {
                 for (final TestTerminal testLexeme : TestTerminal.values()) {
@@ -27,12 +28,12 @@ public class ParserTest {
                 }
                 tokenize("ws").pattern("\\s|\\n|\\r").priority(Integer.MAX_VALUE).hidden(true);
             }
-        });
+        }).generate();
     }
 
     static Parser generate(final AbstractParserModule module) {
         final long current = System.currentTimeMillis();
-        final Parser parser = generator.generate(module);
+        final Parser parser = new ParserGenerator(module).generate();
         System.out.println(parser.meta().sourceCode());
         System.out.println(module.getGrammar().toString());
         System.out.println(module.getGrammar().firstSet().toString());
@@ -43,7 +44,7 @@ public class ParserTest {
 
     static <T extends Parser> T generate(final AbstractParserModule module, final Class<T> interfaceToImplement) {
         final long current = System.currentTimeMillis();
-        final T parser = generator.generate(module, interfaceToImplement);
+        final T parser = new ParserGenerator(module).generate(interfaceToImplement);
         System.out.println(parser.meta().sourceCode());
         System.out.println(module.getGrammar().toString());
         System.out.println(module.getGrammar().firstSet().toString());

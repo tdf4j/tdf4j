@@ -36,6 +36,8 @@ public abstract class AbstractLexerModule extends BindingMapper implements Modul
         return this;
     }
 
+    protected abstract void configure();
+
     public List<Terminal> getTerminals() {
         return Collections.unmodifiableList(terminals);
     }

@@ -67,6 +67,8 @@ public abstract class AbstractParserModule extends BindingMapper implements Modu
                 : new Environment.Builder().build();
     }
 
+    protected abstract void configure();
+
     public boolean isBuilt() {
         return built;
     }

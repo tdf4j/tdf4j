@@ -1,8 +1,8 @@
 package io.github.therealmone.tdf4j.tdfparser;
 
 
-import io.github.therealmone.tdf4j.generator.LexerGenerator;
-import io.github.therealmone.tdf4j.generator.ParserGenerator;
+import io.github.therealmone.tdf4j.generator.impl.LexerGenerator;
+import io.github.therealmone.tdf4j.generator.impl.ParserGenerator;
 import io.github.therealmone.tdf4j.lexer.Lexer;
 import io.github.therealmone.tdf4j.lexer.UnexpectedSymbolException;
 import io.github.therealmone.tdf4j.model.ast.AST;
@@ -22,8 +22,8 @@ public class FullGrammarTest extends TdfParserTest {
     public void before() {
         super.tdfParser.parse(super.tdfLexer.stream(load("FullGrammarTest.tdf")));
         System.out.println(super.tdfParser.getParserModule().build().getGrammar());
-        this.lexer = LexerGenerator.newInstance().generate(super.tdfParser.getLexerModule().build());
-        this.parser = ParserGenerator.newInstance().generate(super.tdfParser.getParserModule().build());
+        this.lexer = new LexerGenerator(super.tdfParser.getLexerModule().build()).generate();
+        this.parser = new ParserGenerator(super.tdfParser.getParserModule().build()).generate();
     }
 
     @Test

@@ -1,7 +1,7 @@
 package io.github.therealmone.tdf4j.tdfparser;
 
-import io.github.therealmone.tdf4j.generator.LexerGenerator;
-import io.github.therealmone.tdf4j.generator.ParserGenerator;
+import io.github.therealmone.tdf4j.generator.impl.LexerGenerator;
+import io.github.therealmone.tdf4j.generator.impl.ParserGenerator;
 import io.github.therealmone.tdf4j.lexer.Lexer;
 
 import java.io.BufferedInputStream;
@@ -10,8 +10,8 @@ import java.io.InputStream;
 import java.io.StringWriter;
 
 class TdfParserTest {
-    final TdfParser tdfParser = ParserGenerator.newInstance().generate(new ParserModule(), TdfParser.class);
-    final Lexer tdfLexer = LexerGenerator.newInstance().generate(new LexerModule());
+    final TdfParser tdfParser = new ParserGenerator(new ParserModule()).generate(TdfParser.class);
+    final Lexer tdfLexer = new LexerGenerator(new LexerModule()).generate();
 
     @SuppressWarnings("ConstantConditions")
     String load(final String fileName) {

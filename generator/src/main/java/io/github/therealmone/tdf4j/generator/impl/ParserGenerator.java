@@ -16,12 +16,12 @@
 package io.github.therealmone.tdf4j.generator.impl;
 
 import io.github.therealmone.tdf4j.commons.Dependency;
+import io.github.therealmone.tdf4j.generator.Generator;
 import io.github.therealmone.tdf4j.model.ebnf.NonTerminal;
 import io.github.therealmone.tdf4j.model.ebnf.Production;
 import io.github.therealmone.tdf4j.module.parser.AbstractParserModule;
 import io.github.therealmone.tdf4j.utils.Predictor;
 import io.github.therealmone.tdf4j.generator.Imports;
-import io.github.therealmone.tdf4j.generator.ParserGenerator;
 import io.github.therealmone.tdf4j.generator.templates.ImmutableMethodTemplate;
 import io.github.therealmone.tdf4j.generator.templates.MethodTemplate;
 import io.github.therealmone.tdf4j.generator.templates.ParserTemplate;
@@ -35,16 +35,20 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class ParserGeneratorImpl implements ParserGenerator {
+public class ParserGenerator implements Generator<Parser> {
     private final MetaInfCollector metaInfCollector = new MetaInfCollector();
+    private final AbstractParserModule module;
 
-    @Override
-    public Parser generate(AbstractParserModule module) {
-        return process(module.build(), Parser.class);
+    public ParserGenerator(final AbstractParserModule module) {
+        this.module = module;
     }
 
     @Override
-    public <T extends Parser> T generate(AbstractParserModule module, Class<T> interfaceToImplement) {
+    public Parser generate() {
+        return process(module.build(), Parser.class);
+    }
+
+    public <T extends Parser> T generate(final Class<T> interfaceToImplement) {
         return process(module.build(), interfaceToImplement);
     }
 
