@@ -1,6 +1,6 @@
 package io.github.therealmone.tdf4j.tdfparser;
 
-import io.github.therealmone.tdf4j.generator.LexerGenerator;
+import io.github.therealmone.tdf4j.generator.impl.LexerGenerator;
 import io.github.therealmone.tdf4j.lexer.Lexer;
 import io.github.therealmone.tdf4j.model.Token;
 import org.junit.Test;
@@ -10,7 +10,7 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 public class LexerTest {
-    private final Lexer lexer = LexerGenerator.newInstance().generate(new LexerModule());
+    private final Lexer lexer = new LexerGenerator(new LexerModule()).generate();
 
     @Test
     public void eof() {

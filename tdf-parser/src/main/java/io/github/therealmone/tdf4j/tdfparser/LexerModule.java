@@ -22,7 +22,7 @@ import java.util.regex.Pattern;
 public class LexerModule extends AbstractLexerModule {
 
     @Override
-    public void configure() {
+    protected void configure() {
         //lexis
         tokenize("EOF").pattern("\\$");
         tokenize("KEY_LEXIS").pattern("lexis");

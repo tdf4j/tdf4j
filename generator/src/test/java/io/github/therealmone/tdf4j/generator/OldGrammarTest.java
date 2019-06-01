@@ -1,5 +1,6 @@
 package io.github.therealmone.tdf4j.generator;
 
+import io.github.therealmone.tdf4j.generator.impl.LexerGenerator;
 import io.github.therealmone.tdf4j.lexer.UnexpectedSymbolException;
 import io.github.therealmone.tdf4j.module.lexer.AbstractLexerModule;
 import io.github.therealmone.tdf4j.module.parser.AbstractParserModule;
@@ -15,7 +16,7 @@ public class OldGrammarTest extends ParserTest {
 
     @BeforeClass
     public static void init() {
-        lexer = LexerGenerator.newInstance().generate(new AbstractLexerModule() {
+        lexer = new LexerGenerator(new AbstractLexerModule() {
             @Override
             public void configure() {
                 tokenize("VAR").pattern("^[a-z]+$");
@@ -52,7 +53,7 @@ public class OldGrammarTest extends ParserTest {
                 tokenize("$").pattern("^\\$$");
                 tokenize("ws").pattern("\\s|\\n|\\r").priority(Integer.MAX_VALUE).hidden(true);
             }
-        });
+        }).generate();
     }
 
     private final Parser parser = generate(new AbstractParserModule() {

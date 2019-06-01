@@ -15,8 +15,6 @@
  */
 package io.github.therealmone.tdf4j.generator;
 
-import io.github.therealmone.tdf4j.commons.Module;
-
-public interface Generator<T, M extends Module> {
-    T generate(final M module);
+public interface Generator<T> {
+    T generate();
 }

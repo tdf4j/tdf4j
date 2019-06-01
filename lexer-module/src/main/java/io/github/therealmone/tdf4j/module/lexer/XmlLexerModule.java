@@ -19,15 +19,13 @@ import org.apache.commons.digester3.Digester;
 import org.apache.commons.digester3.Rule;
 import org.xml.sax.Attributes;
 
-import java.io.StringReader;
+import java.io.*;
 
 public class XmlLexerModule extends AbstractLexerModule {
-    private final String xml;
-    private final Digester digester;
+    private final Digester digester = new Digester();
+    private final Reader xml;
 
-    public XmlLexerModule(final String xml) {
-        this.xml = xml;
-        this.digester = new Digester();
+    {
         digester.addRule("terminals/terminal", new Rule() {
             @Override
             public void begin(String namespace, String name, Attributes attributes) throws Exception {
@@ -39,10 +37,22 @@ public class XmlLexerModule extends AbstractLexerModule {
         });
     }
 
+    public XmlLexerModule(final String xml) {
+        this.xml = new StringReader(xml);
+    }
+
+    public XmlLexerModule(final InputStream xml) {
+        this.xml = new InputStreamReader(xml);
+    }
+
+    public XmlLexerModule(final File xml) throws FileNotFoundException {
+        this.xml = new FileReader(xml);
+    }
+
     @Override
-    public void configure() {
+    protected void configure() {
         try {
-            digester.parse(new StringReader(xml));
+            digester.parse(xml);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

@@ -20,6 +20,8 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import java.io.*;
+
 public class JsonLexerModule extends AbstractLexerModule {
     private final JSONObject json;
 
@@ -27,9 +29,16 @@ public class JsonLexerModule extends AbstractLexerModule {
         this.json = (JSONObject) new JSONParser().parse(json);
     }
 
-    @Override
+    public JsonLexerModule(final InputStream json) throws ParseException, IOException {
+        this.json = (JSONObject) new JSONParser().parse(new InputStreamReader(json));
+    }
+
+    public JsonLexerModule(final File json) throws IOException, ParseException {
+        this.json = (JSONObject) new JSONParser().parse(new FileReader(json));
+    }
+
     @SuppressWarnings("unchecked")
-    public void configure() {
+    protected void configure() {
         final JSONArray terminals = (JSONArray) json.get("terminals");
         for(final Object o : terminals) {
             final JSONObject terminal = (JSONObject) o;
