@@ -20,10 +20,10 @@ public class FullGrammarTest extends TdfParserTest {
 
     @Before
     public void before() {
-        super.tdfParser.parse(super.tdfLexer.stream(load("FullGrammarTest.tdf")));
-        System.out.println(super.tdfParser.getParserModule().build().getGrammar());
-        this.lexer = new LexerGenerator(super.tdfParser.getLexerModule().build()).generate();
-        this.parser = new ParserGenerator(super.tdfParser.getParserModule().build()).generate();
+        final TdfParser tdfParser = generate("FullGrammarTest.tdf");
+        System.out.println(tdfParser.getParserModule().build().getGrammar());
+        this.lexer = new LexerGenerator(tdfParser.getLexerModule().build()).generate();
+        this.parser = new ParserGenerator(tdfParser.getParserModule().build()).generate();
     }
 
     @Test

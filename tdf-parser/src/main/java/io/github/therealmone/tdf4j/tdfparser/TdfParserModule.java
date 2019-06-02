@@ -17,7 +17,7 @@ package io.github.therealmone.tdf4j.tdfparser;
 
 import io.github.therealmone.tdf4j.module.parser.AbstractParserModule;
 
-public class ParserModule extends AbstractParserModule {
+public class TdfParserModule extends AbstractParserModule {
 
     @Override
     protected void configure() {

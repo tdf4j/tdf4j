@@ -10,7 +10,7 @@ public class SyntaxTest extends TdfParserTest {
 
     @Test
     public void test() {
-        System.out.println(tdfParser.parse(tdfLexer.stream(load("SyntaxTest.tdf"))));
+        final TdfParser tdfParser = generate("SyntaxTest.tdf");
         System.out.println(tdfParser.getParserModule().build().getGrammar());
         final Grammar grammar = tdfParser.getParserModule().getGrammar();
 

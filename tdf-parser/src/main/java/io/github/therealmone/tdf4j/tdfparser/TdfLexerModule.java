@@ -19,7 +19,7 @@ import io.github.therealmone.tdf4j.module.lexer.AbstractLexerModule;
 
 import java.util.regex.Pattern;
 
-public class LexerModule extends AbstractLexerModule {
+public class TdfLexerModule extends AbstractLexerModule {
 
     @Override
     protected void configure() {

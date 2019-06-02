@@ -9,7 +9,7 @@ public class EnvTest extends TdfParserTest {
 
     @Test
     public void test() {
-        tdfParser.parse(tdfLexer.stream(load("EnvTest.tdf")));
+        final TdfParser tdfParser = generate("EnvTest.tdf");
         final Environment environment = tdfParser.getParserModule().build().getEnvironment();
 
         assertEquals(2, environment.getPackages().length);

@@ -12,7 +12,7 @@ public class LexisTest extends TdfParserTest {
 
     @Test
     public void test() {
-        tdfParser.parse(tdfLexer.stream(load("LexisTest.tdf")));
+        final TdfParser tdfParser = generate("LexisTest.tdf");
         final List<Terminal> terminals = tdfParser.getLexerModule().build().getTerminals();
         System.out.println(terminals);
 
