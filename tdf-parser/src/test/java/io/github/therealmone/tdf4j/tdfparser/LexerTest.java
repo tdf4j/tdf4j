@@ -10,7 +10,7 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 public class LexerTest {
-    private final Lexer lexer = new LexerGenerator(new LexerModule()).generate();
+    private final Lexer lexer = new LexerGenerator(new TdfLexerModule()).generate();
 
     @Test
     public void eof() {

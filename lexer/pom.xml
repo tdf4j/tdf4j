@@ -13,7 +13,7 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>lexer</name>
+    <name>Lexer</name>
     <description>Lexical analyzer API</description>
     <url>https://github.com/therealmonE/tdf4j/tree/master/lexer</url>
 

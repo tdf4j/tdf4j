@@ -10,7 +10,7 @@ public class TdfGrammarTest extends FullGrammarTest {
     @Override
     @Before
     public void before() {
-        System.out.println(tdfParser.parse(tdfLexer.stream(load("TdfGrammar.tdf"))));
+        final TdfParser tdfParser = generate("TdfGrammar.tdf");
         System.out.println(tdfParser.getLexerModule().build().getTerminals());
         System.out.println(tdfParser.getParserModule().build().getGrammar());
 

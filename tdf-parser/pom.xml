@@ -12,6 +12,10 @@
   <artifactId>tdf-parser</artifactId>
   <version>1.0-SNAPSHOT</version>
 
+  <name>Tdf-parser</name>
+  <description>Tdf format files parser</description>
+  <url>https://github.com/therealmonE/tdf4j/tree/master/tdf-parser</url>
+
   <dependencies>
     <dependency>
       <groupId>io.github.therealmone.tdf4j</groupId>
