@@ -17,6 +17,7 @@ package io.github.therealmone.tdf4j.model.ast;
 
 import io.github.therealmone.tdf4j.model.Token;
 
+import javax.annotation.Nullable;
 import java.util.function.Consumer;
 
 class ASTImpl implements AST {
@@ -43,6 +44,15 @@ class ASTImpl implements AST {
     }
 
     @Override
+    @Nullable
+    public ASTNode lastNode() {
+        final ASTElement element = this.moveCursor(ASTCursor.Movement.TO_LAST_ADDED_NODE).onCursor();
+        return element != null && element.isNode()
+                ? element.asNode()
+                : null;
+    }
+
+    @Override
     public AST addLeaf(final Token token) {
         return addLeaf(ModifiableASTLeaf.create()
                 .setToken(token)
@@ -54,6 +64,15 @@ class ASTImpl implements AST {
     public AST addLeaf(final ASTLeaf leaf) {
         addChild(cursor, leaf);
         return this;
+    }
+
+    @Override
+    @Nullable
+    public ASTLeaf lastLeaf() {
+        final ASTElement element = this.moveCursor(ASTCursor.Movement.TO_LAST_ADDED_NODE).onCursor();
+        return element != null && element.isLeaf()
+                ? element.asLeaf()
+                : null;
     }
 
     @Override
