@@ -1,4 +1,4 @@
-# tdf4j [![Build Status](https://travis-ci.com/therealmonE/tdf4j.svg?branch=master)](https://travis-ci.com/therealmonE/tdf4j) ![codecov](https://codecov.io/gh/therealmonE/tdf4j/branch/master/graphs/badge.svg) ![license](https://img.shields.io/github/license/therealmone/tdf4j.svg)
+# tdf4j [![Build Status](https://travis-ci.com/therealmonE/tdf4j.svg?branch=master)](https://travis-ci.com/therealmonE/tdf4j) ![codecov](https://codecov.io/gh/therealmonE/tdf4j/branch/master/graphs/badge.svg) ![license](https://img.shields.io/github/license/therealmone/tdf4j.svg) [![Maven Central](https://img.shields.io/maven-central/v/io.github.therealmone.tdf4j/tdf4j.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.therealmone.tdf4j%22%20AND%20a:%22tdf4j%22)
 Programming languages are the way to describe process of
 computing for different devices. Modern world highly 
 depends on programming languages because almost every
@@ -21,7 +21,7 @@ Add a dependency to pom file.
 <dependency>
     <groupId>io.github.therealmone.tdf4j</groupId>
     <artifactId>generator</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0</version>
 </dependency>
 ```
 
