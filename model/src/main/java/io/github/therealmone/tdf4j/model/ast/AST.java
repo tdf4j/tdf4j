@@ -17,6 +17,7 @@ package io.github.therealmone.tdf4j.model.ast;
 
 import io.github.therealmone.tdf4j.model.Token;
 
+import javax.annotation.Nullable;
 import java.util.function.Consumer;
 
 public interface AST {
@@ -25,9 +26,15 @@ public interface AST {
 
     AST addNode(final String tag);
 
+    @Nullable
+    ASTNode lastNode();
+
     AST addLeaf(final ASTLeaf leaf);
 
     AST addLeaf(final Token token);
+
+    @Nullable
+    ASTLeaf lastLeaf();
 
     ASTRoot getRoot();
 
