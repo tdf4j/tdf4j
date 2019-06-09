@@ -3,12 +3,12 @@
   <parent>
     <artifactId>tdf4j</artifactId>
     <groupId>io.github.therealmone.tdf4j</groupId>
-    <version>1.0.0</version>
+    <version>1.0.1-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>generator</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1-SNAPSHOT</version>
 
   <name>Generator</name>
   <description>Lexer and parser generator</description>
@@ -18,17 +18,17 @@
     <dependency>
       <groupId>io.github.therealmone.tdf4j</groupId>
       <artifactId>parser</artifactId>
-      <version>1.0.0</version>
+      <version>1.0.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>io.github.therealmone.tdf4j</groupId>
       <artifactId>lexer</artifactId>
-      <version>1.0.0</version>
+      <version>1.0.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>io.github.therealmone.tdf4j</groupId>
       <artifactId>validator</artifactId>
-      <version>1.0.0</version>
+      <version>1.0.1-SNAPSHOT</version>
     </dependency>
     <!-- https://mvnrepository.com/artifact/org.antlr/stringtemplate -->
     <dependency>

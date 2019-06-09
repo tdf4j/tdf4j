@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.therealmone.tdf4j</groupId>
     <artifactId>tdf4j</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>tdf4j</name>
@@ -29,7 +29,7 @@
         <url>https://github.com/therealmonE/tdf4j</url>
         <connection>scm:git:git//github.com/therealmonE/tdf4j.git</connection>
         <developerConnection>scm:git:git@github.com:therealmonE/tdf4j.git</developerConnection>
-      <tag>tdf4j-1.0.0</tag>
+      <tag>HEAD</tag>
   </scm>
 
     <licenses>
