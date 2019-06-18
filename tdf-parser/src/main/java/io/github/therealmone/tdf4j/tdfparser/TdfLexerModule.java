@@ -67,10 +67,12 @@ public class TdfLexerModule extends AbstractLexerModule {
         tokenize("LEFT_INLINE_ACTION_BRACKET").pattern("<");
         tokenize("RIGHT_INLINE_ACTION_BRACKET").pattern(">");
         tokenize("OP_ASSIGN").pattern("=");
+        tokenize("OP_SUM").pattern("\\+");
 
         tokenize("WS").pattern("\\s|\\n|\\r").priority(Integer.MAX_VALUE).hidden(true);
         tokenize("SINGLE_LINE_COMMENT").pattern("//.*(\n|\r|\r\n|\n\r)").priority(Integer.MAX_VALUE).hidden(true);
-        //todo: multiline comments
+        tokenize("MULTI_LINE_COMMENT").pattern("/\\*[^*]*\\*+(?:[^/*][^*]*\\*+)*/", Pattern.MULTILINE + Pattern.DOTALL)
+                .priority(Integer.MAX_VALUE).hidden(true);
     }
 
 }

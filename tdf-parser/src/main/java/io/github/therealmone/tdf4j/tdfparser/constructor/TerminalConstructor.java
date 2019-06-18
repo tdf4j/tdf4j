@@ -17,13 +17,16 @@ package io.github.therealmone.tdf4j.tdfparser.constructor;
 
 import io.github.therealmone.tdf4j.model.ebnf.Terminal;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 
 public class TerminalConstructor implements Constructor {
     private final Terminal.Builder builder;
     private String pattern;
-    private String flag;
+    private List<String> flags = new ArrayList<>();
     private String hidden;
     private String priority;
 
@@ -31,19 +34,19 @@ public class TerminalConstructor implements Constructor {
         this.builder = builder;
     }
 
-    public void setPattern(String pattern) {
+    public void setPattern(final String pattern) {
         this.pattern = pattern;
     }
 
-    public void setFlag(String flag) {
-        this.flag = flag;
+    public void addFlag(final String flag) {
+        this.flags.add(flag);
     }
 
-    public void setHidden(String hidden) {
+    public void setHidden(final String hidden) {
         this.hidden = hidden;
     }
 
-    public void setPriority(String priority) {
+    public void setPriority(final String priority) {
         this.priority = priority;
     }
 
@@ -56,7 +59,7 @@ public class TerminalConstructor implements Constructor {
             builder.hidden(Boolean.parseBoolean(hidden));
         }
         if(isNotBlankOrNull(pattern)) {
-            builder.pattern(compilePattern(pattern, flag));
+            builder.pattern(compilePattern(pattern, flags));
         }
     }
 
@@ -64,31 +67,42 @@ public class TerminalConstructor implements Constructor {
         return s != null && !s.trim().equalsIgnoreCase("");
     }
 
-    private Pattern compilePattern(final String pattern, @Nullable final String flag) {
-        if(flag == null) {
+    private Pattern compilePattern(final String pattern, @Nonnull final List<String> flags) {
+        if(flags.isEmpty()) {
             return Pattern.compile(pattern);
         }
-        switch (flag) {
-            case "UNIX_LINES":
-                return Pattern.compile(pattern, Pattern.UNIX_LINES);
-            case "CASE_INSENSITIVE":
-                return Pattern.compile(pattern, Pattern.CASE_INSENSITIVE);
-            case "COMMENTS":
-                return Pattern.compile(pattern, Pattern.COMMENTS);
-            case "MULTILINE":
-                return Pattern.compile(pattern, Pattern.MULTILINE);
-            case "LITERAL":
-                return Pattern.compile(pattern, Pattern.LITERAL);
-            case "DOTALL":
-                return Pattern.compile(pattern, Pattern.DOTALL);
-            case "UNICODE_CASE":
-                return Pattern.compile(pattern, Pattern.UNICODE_CASE);
-            case "CANON_EQ":
-                return Pattern.compile(pattern, Pattern.CANON_EQ);
-            case "UNICODE_CHARACTER_CLASS":
-                return Pattern.compile(pattern, Pattern.UNICODE_CHARACTER_CLASS);
-            default:
-                return Pattern.compile(pattern);
+        int compilationFlag = 0;
+        for(final String flag : flags) {
+            switch (flag) {
+                case "UNIX_LINES":
+                    compilationFlag += Pattern.UNIX_LINES;
+                    break;
+                case "CASE_INSENSITIVE":
+                    compilationFlag += Pattern.CASE_INSENSITIVE;
+                    break;
+                case "COMMENTS":
+                    compilationFlag += Pattern.COMMENTS;
+                    break;
+                case "MULTILINE":
+                    compilationFlag += Pattern.MULTILINE;
+                    break;
+                case "LITERAL":
+                    compilationFlag += Pattern.LITERAL;
+                    break;
+                case "DOTALL":
+                    compilationFlag += Pattern.DOTALL;
+                    break;
+                case "UNICODE_CASE":
+                    compilationFlag += Pattern.UNICODE_CASE;
+                    break;
+                case "CANON_EQ":
+                    compilationFlag += Pattern.CANON_EQ;
+                    break;
+                case "UNICODE_CHARACTER_CLASS":
+                    compilationFlag += Pattern.UNICODE_CHARACTER_CLASS;
+                    break;
+            }
         }
+        return Pattern.compile(pattern, compilationFlag);
     }
 }

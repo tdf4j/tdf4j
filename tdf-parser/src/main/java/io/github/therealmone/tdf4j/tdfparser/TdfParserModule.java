@@ -145,6 +145,11 @@ public class TdfParserModule extends AbstractParserModule {
                 .is(
                         t("TERMINAL_PARAMETER_PATTERN_FLAG"),
                         t("COLON"),
+                        nt("pattern_flags")
+                );
+
+        prod("pattern_flags")
+                .is(
                         oneOf(
                                 t("TERMINAL_PARAMETER_PATTERN_FLAG_VALUE_UNIX_LINES"),
                                 t("TERMINAL_PARAMETER_PATTERN_FLAG_VALUE_CASE_INSENSITIVE"),
@@ -157,8 +162,9 @@ public class TdfParserModule extends AbstractParserModule {
                                 t("TERMINAL_PARAMETER_PATTERN_FLAG_VALUE_UNICODE_CHARACTER_CLASS")
                         ),
                         inline(
-                                "terminals.peek().setFlag(lastValue(ast));\n"
-                        )
+                                "terminals.peek().addFlag(lastValue(ast));\n"
+                        ),
+                        optional(t("OP_SUM"), nt("pattern_flags"))
                 );
 
         prod("environment")
