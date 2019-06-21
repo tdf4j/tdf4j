@@ -42,7 +42,7 @@ public class LexicalValidationTest extends ValidationTest {
 
                     @Override
                     public List<Terminal> getTerminals() {
-                        return new ArrayList<>() {{
+                        return new ArrayList<Terminal>() {{
                             add(new Terminal() {
                                 @Override
                                 public Tag tag() {
@@ -72,7 +72,7 @@ public class LexicalValidationTest extends ValidationTest {
 
                     @Override
                     public List<Terminal> getTerminals() {
-                        return new ArrayList<>() {{
+                        return new ArrayList<Terminal>() {{
                             add(new Terminal() {
                                 @Override
                                 public Tag tag() {
@@ -107,7 +107,7 @@ public class LexicalValidationTest extends ValidationTest {
 
                     @Override
                     public List<Terminal> getTerminals() {
-                        return new ArrayList<>() {{
+                        return new ArrayList<Terminal>() {{
                             add(new Terminal() {
                                 @Override
                                 public Tag tag() {
@@ -142,7 +142,7 @@ public class LexicalValidationTest extends ValidationTest {
 
                     @Override
                     public List<Terminal> getTerminals() {
-                        return new ArrayList<>() {{
+                        return new ArrayList<Terminal>() {{
                             add(new Terminal() {
                                 @Override
                                 public Tag tag() {

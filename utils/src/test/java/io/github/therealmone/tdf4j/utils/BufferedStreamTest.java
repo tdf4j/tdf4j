@@ -11,7 +11,12 @@ import static org.junit.Assert.*;
 
 @SuppressWarnings("ConstantConditions")
 public class BufferedStreamTest {
-    private final List<Integer> testData = List.of(1, 2, 3, 4);
+    private final List<Integer> testData = new ArrayList<Integer>() {{
+        add(1);
+        add(2);
+        add(3);
+        add(4);
+    }};
 
     @Test
     public void test() {

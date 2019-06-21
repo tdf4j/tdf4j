@@ -15,7 +15,7 @@ public class PredictorTest {
     @Test
     public void normal() {
         final First first = new First.Builder()
-                .set(new HashMap<>() {{
+                .set(new HashMap<NonTerminal, Set<Terminal.Tag>>() {{
                     put(nt("a"), tags("tag1", "tag2", "tag3"));
                     put(nt("b"), tags("tag2", "tag3"));
                     put(nt("c"), tags("tag3"));
@@ -76,7 +76,7 @@ public class PredictorTest {
     }
 
     private Set<Terminal.Tag> tags(final String ... tags) {
-        return new HashSet<>() {{
+        return new HashSet<Terminal.Tag>() {{
             for (final String tag : tags) {
                 add(new Terminal.Tag.Builder().value(tag).build());
             }

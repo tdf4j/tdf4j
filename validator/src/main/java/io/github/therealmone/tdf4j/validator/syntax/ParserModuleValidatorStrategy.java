@@ -20,15 +20,14 @@ import io.github.therealmone.tdf4j.validator.ValidatorException;
 import io.github.therealmone.tdf4j.validator.ValidatorRule;
 import io.github.therealmone.tdf4j.validator.ValidatorStrategy;
 
+import java.util.Collections;
 import java.util.List;
 
 public class ParserModuleValidatorStrategy implements ValidatorStrategy<AbstractParserModule> {
     private final List<ValidatorRule<AbstractParserModule>> rules;
 
     public ParserModuleValidatorStrategy() {
-        this.rules = List.of(
-
-        );
+        this.rules = Collections.emptyList();
     }
 
     @Override

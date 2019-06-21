@@ -71,7 +71,7 @@ public class FirstSetCollector {
             }
 
             case OR: {
-                return new ArrayList<>() {{
+                return new ArrayList<Terminal.Tag>() {{
                     addAll(firstOf(context, currentNT, firstElement(Collections.singletonList(element.asOr().first()))));
                     addAll(firstOf(context, currentNT, firstElement(Collections.singletonList(element.asOr().second()))));
                 }};
@@ -88,7 +88,7 @@ public class FirstSetCollector {
             }
 
             case TERMINAL_TAG: {
-                return new ArrayList<>() {{
+                return new ArrayList<Terminal.Tag>() {{
                     add(element.asTerminalTag());
                 }};
             }

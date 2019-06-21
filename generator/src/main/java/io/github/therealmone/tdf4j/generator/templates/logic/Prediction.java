@@ -43,7 +43,7 @@ public abstract class Prediction {
                         : getStartElements(firstNotInlineElement(element.asRepetition().element()));
 
             case OR:
-                return new ArrayList<>() {{
+                return new ArrayList<String>() {{
                     addAll(getStartElements(firstNotInlineElement(element.asOr().first())));
                     addAll(getStartElements(firstNotInlineElement(element.asOr().second())));
                 }};
@@ -59,10 +59,10 @@ public abstract class Prediction {
                         : getStartElements(firstNotInlineElement(element.asOptional().elements()));
 
             case TERMINAL_TAG:
-                return new ArrayList<>() {{add(element.asTerminalTag().value());}};
+                return new ArrayList<String>() {{add(element.asTerminalTag().value());}};
 
             case NON_TERMINAL:
-                return new ArrayList<>() {{add(element.asNonTerminal().identifier());}};
+                return new ArrayList<String>() {{add(element.asNonTerminal().identifier());}};
 
             default: return Collections.emptyList();
     }

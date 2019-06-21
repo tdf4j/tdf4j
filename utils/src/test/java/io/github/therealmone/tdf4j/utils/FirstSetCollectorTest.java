@@ -16,7 +16,7 @@ public class FirstSetCollectorTest {
 
     @Test
     public void nested() {
-        final First first = firstSetCollector.collect(new ArrayList<>() {{
+        final First first = firstSetCollector.collect(new ArrayList<Production>() {{
             add(prod("prod1").is(
                     inline("inline"),
                     nt("prod2"),
@@ -38,7 +38,7 @@ public class FirstSetCollectorTest {
 
     @Test
     public void nested_with_group() {
-        final First first = firstSetCollector.collect(new ArrayList<>() {{
+        final First first = firstSetCollector.collect(new ArrayList<Production>() {{
             add(prod("prod1").is(
                     inline("inline"),
                     group(nt("prod2")),
@@ -60,7 +60,7 @@ public class FirstSetCollectorTest {
 
     @Test
     public void nested_with_optional() {
-        final First first = firstSetCollector.collect(new ArrayList<>() {{
+        final First first = firstSetCollector.collect(new ArrayList<Production>() {{
             add(prod("prod1").is(
                     inline("inline"),
                     optional(nt("prod2")),
@@ -82,7 +82,7 @@ public class FirstSetCollectorTest {
 
     @Test
     public void nested_with_or() {
-        final First first = firstSetCollector.collect(new ArrayList<>() {{
+        final First first = firstSetCollector.collect(new ArrayList<Production>() {{
             add(prod("prod1").is(
                     inline("inline"),
                     or(
@@ -106,7 +106,7 @@ public class FirstSetCollectorTest {
 
     @Test
     public void nested_with_repeat() {
-        final First first = firstSetCollector.collect(new ArrayList<>() {{
+        final First first = firstSetCollector.collect(new ArrayList<Production>() {{
             add(prod("prod1").is(
                     inline("inline"),
                     repeat(nt("prod2")),
@@ -128,7 +128,7 @@ public class FirstSetCollectorTest {
 
     @Test
     public void nested_with_repetition() {
-        final First first = firstSetCollector.collect(new ArrayList<>() {{
+        final First first = firstSetCollector.collect(new ArrayList<Production>() {{
             add(prod("prod1").is(
                     inline("inline"),
                     repetition(nt("prod2"), 2),
@@ -156,7 +156,7 @@ public class FirstSetCollectorTest {
 
     @Test
     public void unknown_prod_indent() {
-        final First first = firstSetCollector.collect(new ArrayList<>() {{
+        final First first = firstSetCollector.collect(new ArrayList<Production>() {{
             add(prod("prod1").is(
                     nt("prod2"),
                     t("B")
@@ -167,7 +167,7 @@ public class FirstSetCollectorTest {
 
     @Test
     public void inline_action_as_first_element() {
-        final First first = firstSetCollector.collect(new ArrayList<>() {{
+        final First first = firstSetCollector.collect(new ArrayList<Production>() {{
             add(prod("prod1").is(
                     inline("inline"),
                     t("A")
@@ -178,7 +178,7 @@ public class FirstSetCollectorTest {
 
     @Test
     public void inline_action_as_first_element_in_group() {
-        final First first = firstSetCollector.collect(new ArrayList<>() {{
+        final First first = firstSetCollector.collect(new ArrayList<Production>() {{
             add(prod("prod1").is(
                     group(
                             inline("inline"),
@@ -191,7 +191,7 @@ public class FirstSetCollectorTest {
 
     @Test
     public void empty_group() {
-        final First first = firstSetCollector.collect(new ArrayList<>() {{
+        final First first = firstSetCollector.collect(new ArrayList<Production>() {{
             add(prod("prod1").is(
                     group()
             ).build());
@@ -201,7 +201,7 @@ public class FirstSetCollectorTest {
 
     @Test
     public void recursion() {
-        final First first = firstSetCollector.collect(new ArrayList<>() {{
+        final First first = firstSetCollector.collect(new ArrayList<Production>() {{
             add(prod("prod1").is(
                     nt("prod1")
             ).build());
@@ -211,7 +211,7 @@ public class FirstSetCollectorTest {
 
     @Test
     public void empty_optional() {
-        final First first = firstSetCollector.collect(new ArrayList<>() {{
+        final First first = firstSetCollector.collect(new ArrayList<Production>() {{
             add(prod("prod1").is(
                     optional()
             ).build());
@@ -221,7 +221,7 @@ public class FirstSetCollectorTest {
 
     @Test
     public void empty_repeat() {
-        final First first = firstSetCollector.collect(new ArrayList<>() {{
+        final First first = firstSetCollector.collect(new ArrayList<Production>() {{
             add(prod("prod1").is(
                     repeat()
             ).build());
@@ -231,7 +231,7 @@ public class FirstSetCollectorTest {
 
     @Test
     public void repetition_element_null() {
-        final First first = firstSetCollector.collect(new ArrayList<>() {{
+        final First first = firstSetCollector.collect(new ArrayList<Production>() {{
             add(new Production() {
                 @Override
                 public NonTerminal identifier() {
@@ -240,7 +240,7 @@ public class FirstSetCollectorTest {
 
                 @Override
                 public List<Element> elements() {
-                    return new ArrayList<>() {{
+                    return new ArrayList<Element>() {{
                         add(new Repetition() {
                             @Override
                             public Element element() {
@@ -261,7 +261,7 @@ public class FirstSetCollectorTest {
 
     @Test
     public void unknown_element() {
-        final First first = firstSetCollector.collect(new ArrayList<>() {{
+        final First first = firstSetCollector.collect(new ArrayList<Production>() {{
             add(prod("prod1").is(
                     (Element) () -> Element.Kind.TERMINAL
             ).build());
@@ -271,7 +271,7 @@ public class FirstSetCollectorTest {
 
     @Test
     public void element_kind_null() {
-        final First first = firstSetCollector.collect(new ArrayList<>() {{
+        final First first = firstSetCollector.collect(new ArrayList<Production>() {{
             add(prod("prod1").is(
                     (Element) () -> null
             ).build());
@@ -281,14 +281,14 @@ public class FirstSetCollectorTest {
 
     @Test
     public void first_element_return_null() {
-        assertNull(firstSetCollector.firstElement(new ArrayList<>() {{
+        assertNull(firstSetCollector.firstElement(new ArrayList<Element>() {{
             group(inline("code"));
         }}));
     }
 
     @Test
     public void context_get_production_return_null() {
-        final FirstSetCollector.Context context = new FirstSetCollector.Context(new ArrayList<>() {{
+        final FirstSetCollector.Context context = new FirstSetCollector.Context(new ArrayList<Production>() {{
             prod("prod1").is();
         }});
         assertNull(context.getProduction(nt("prod2")));

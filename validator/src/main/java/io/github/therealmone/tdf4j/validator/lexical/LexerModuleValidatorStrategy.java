@@ -26,13 +26,13 @@ public class LexerModuleValidatorStrategy implements ValidatorStrategy<AbstractL
     private final List<ValidatorRule<AbstractLexerModule>> rules;
 
     public LexerModuleValidatorStrategy() {
-        this.rules = List.of(
-                new TerminalListNotNullRule(),
-                new TerminalTagNotNullRule(),
-                new TerminalTagValueNotNull(),
-                new TerminalPatternNullRule(),
-                new TerminalCollisionRule()
-        );
+        this.rules = new ArrayList<ValidatorRule<AbstractLexerModule>>() {{
+                add(new TerminalListNotNullRule());
+                add(new TerminalTagNotNullRule());
+                add(new TerminalTagValueNotNull());
+                add(new TerminalPatternNullRule());
+                add(new TerminalCollisionRule());
+            }};
     }
 
     @Override

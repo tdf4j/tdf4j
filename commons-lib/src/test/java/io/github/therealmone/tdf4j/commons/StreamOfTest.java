@@ -9,7 +9,7 @@ public class StreamOfTest {
 
     @Test
     public void normal() {
-        final Stream<String> stream = Stream.of(new ArrayList<>() {{
+        final Stream<String> stream = Stream.of(new ArrayList<String>() {{
             add("A");
             add("B");
             add("C");
@@ -28,13 +28,13 @@ public class StreamOfTest {
 
     @Test
     public void multi_thread() {
-        final Thread thread1 = new Thread(() -> Stream.of(new ArrayList<>() {{
+        final Thread thread1 = new Thread(() -> Stream.of(new ArrayList<String>() {{
             for (int i = 0; i < 1_000_000; i++) {
                 add("String");
             }
         }}));
 
-        final Thread thread2 = new Thread(() -> Stream.of(new ArrayList<>() {{
+        final Thread thread2 = new Thread(() -> Stream.of(new ArrayList<String>() {{
             for (int i = 0; i < 1_000_000; i++) {
                 add("String");
             }

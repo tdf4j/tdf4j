@@ -38,8 +38,8 @@
     </dependency>
     <dependency>
       <groupId>org.jooq</groupId>
-      <artifactId>joor</artifactId>
-      <version>0.9.10</version>
+      <artifactId>joor-java-8</artifactId>
+      <version>0.9.11</version>
     </dependency>
   </dependencies>
 
