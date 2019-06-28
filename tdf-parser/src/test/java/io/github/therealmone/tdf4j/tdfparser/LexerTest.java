@@ -263,6 +263,18 @@ public class LexerTest {
                 token("OP_ASSIGN", "="));
     }
 
+    @Test
+    public void op_sum() {
+        assertLexerReturns("+",
+                token("OP_SUM", "+"));
+    }
+
+    @Test
+    public void multiline_comment() {
+        assertLexerReturns("/* multiline \r\n comment \n */ \n +",
+                token("OP_SUM", "+"));
+    }
+
     private void assertLexerReturns(final String input, final Token... tokens) {
         final List<Token> fromLexer = lexer.analyze(input);
         assertEquals(tokens.length, fromLexer.size());
