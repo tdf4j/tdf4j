@@ -23,14 +23,14 @@ import org.stringtemplate.v4.ST;
 @Value.Immutable
 public abstract class RepetitionTemplate implements CodeBlock {
 
-    public abstract Repetition repetition();
+    public abstract Repetition getRepetition();
 
     @Override
     public String build() {
         final ST template = Template.LOGIC_REPETITION.template()
                 .add("hash", Math.abs(this.hashCode()))
-                .add("times", repetition().times());
-        final CodeBlock codeBlock = CodeBlock.fromElement(repetition().element());
+                .add("times", getRepetition().getTimes());
+        final CodeBlock codeBlock = CodeBlock.fromElement(getRepetition().getElement());
         if(codeBlock != null) {
             template.add("codeBlocks", codeBlock.build());
         }

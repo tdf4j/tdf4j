@@ -28,7 +28,7 @@ public class EbnfGroupBuilder extends AbstractEbnfElementBuilder<Group> {
     @Override
     public Group build(final ASTNode tree) {
         return new Group.Builder()
-                .elements(getInnerElements(tree).stream().map(this::callBuilder).toArray(Element[]::new))
+                .setElements(getInnerElements(tree).stream().map(this::callBuilder).toArray(Element[]::new))
                 .build();
     }
 }

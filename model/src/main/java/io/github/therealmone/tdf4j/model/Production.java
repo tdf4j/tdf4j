@@ -13,8 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.therealmone.tdf4j.model.ebnf;
+package io.github.therealmone.tdf4j.model;
 
+import io.github.therealmone.tdf4j.model.ebnf.Element;
+import io.github.therealmone.tdf4j.model.ebnf.NonTerminal;
 import org.immutables.value.Value;
 
 import java.util.List;
@@ -22,9 +24,9 @@ import java.util.List;
 @Value.Immutable
 public abstract class Production {
 
-    public abstract NonTerminal identifier();
+    public abstract NonTerminal getIdentifier();
 
-    public abstract List<Element> elements();
+    public abstract List<Element> getElements();
 
     public static class Builder extends ImmutableProduction.Builder {
         public Builder then(final Element element) {
@@ -36,16 +38,16 @@ public abstract class Production {
         }
 
         public Builder identifier(final String identifier) {
-            return super.identifier(new NonTerminal.Builder().identifier(identifier).build());
+            return super.setIdentifier(new NonTerminal.Builder().setIdentifier(identifier).build());
         }
     }
 
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append(identifier()).append(" := ");
-        if(elements().size() > 0) {
-            for (final Element element : elements()) {
+        builder.append(getIdentifier()).append(" := ");
+        if(getElements().size() > 0) {
+            for (final Element element : getElements()) {
                 builder.append(element.toString()).append(",");
             }
         }

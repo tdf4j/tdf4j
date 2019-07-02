@@ -35,8 +35,8 @@ public class BufferedStream<T> implements Stream<T> {
     }
 
     @Override
-    public Supplier<T> generator() {
-        return stream.generator();
+    public Supplier<T> getGenerator() {
+        return stream.getGenerator();
     }
 
     @Nullable

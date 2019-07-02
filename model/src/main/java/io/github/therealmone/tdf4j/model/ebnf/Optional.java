@@ -24,13 +24,13 @@ public abstract class Optional extends AbstractElement {
         return Kind.OPTIONAL;
     }
 
-    public abstract Element[] elements();
+    public abstract Element[] getElements();
 
     public static class Builder extends ImmutableOptional.Builder {
     }
 
     @Override
     public String toString() {
-        return "[" + toStringGroup(elements()) + "]";
+        return "[" + toStringGroup(getElements()) + "]";
     }
 }

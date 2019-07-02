@@ -12,7 +12,7 @@ public class TerminalPatternNullRule implements ValidatorRule<AbstractLexerModul
     @Override
     public void visit(final AbstractLexerModule module) throws ValidatorException {
         for(final Terminal terminal : module.getTerminals()) {
-            if(terminal.pattern() == null) {
+            if(terminal.getPattern() == null) {
                 throw LEXER_TERMINAL_PATTERN_NULL;
             }
         }

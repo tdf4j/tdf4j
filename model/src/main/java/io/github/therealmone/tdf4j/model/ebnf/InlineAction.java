@@ -26,7 +26,7 @@ public abstract class InlineAction extends AbstractElement {
     }
 
     @Value.Default
-    public String code() {
+    public String getCode() {
         return "";
     }
 
@@ -35,8 +35,8 @@ public abstract class InlineAction extends AbstractElement {
 
     @Override
     public String toString() {
-        return code().trim().equalsIgnoreCase("")
+        return getCode().trim().equalsIgnoreCase("")
                 ? ""
-                : "<<\n" + code() + "\n>>";
+                : "<<\n" + getCode() + "\n>>";
     }
 }

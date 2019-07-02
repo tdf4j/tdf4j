@@ -123,7 +123,7 @@ for(int i<hash> = 0; i<hash> \< <times>; i<hash>++) {
 >>
 
 terminal_tag(terminal) ::= <<
-if(stream.peek() != null && stream.peek().tag().value().equalsIgnoreCase("<terminal>")) {
+if(stream.peek() != null && stream.peek().getTag().getValue().equalsIgnoreCase("<terminal>")) {
     ast.addLeaf(stream.next());
 } else {
     throw new UnexpectedTokenException(stream.peek());

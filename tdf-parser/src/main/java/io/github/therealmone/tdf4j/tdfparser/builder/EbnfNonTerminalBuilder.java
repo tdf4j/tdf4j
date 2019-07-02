@@ -27,7 +27,7 @@ public class EbnfNonTerminalBuilder extends AbstractEbnfElementBuilder<NonTermin
     @Override
     public NonTerminal build(final ASTNode tree) {
         return new NonTerminal.Builder()
-                .identifier(tree.children().get(0).asLeaf().token().value())
+                .setIdentifier(tree.getChildren().get(0).asLeaf().getToken().getValue())
                 .build();
     }
 

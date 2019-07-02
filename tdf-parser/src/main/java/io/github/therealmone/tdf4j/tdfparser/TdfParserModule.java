@@ -23,13 +23,13 @@ public class TdfParserModule extends AbstractParserModule {
     protected void configure() {
 
         environment()
-                .packages(
+                .setPackages(
                         "io.github.therealmone.tdf4j.module.lexer.AbstractLexerModule",
                         "io.github.therealmone.tdf4j.module.parser.AbstractParserModule",
                         "io.github.therealmone.tdf4j.tdfparser.constructor.*",
                         "io.github.therealmone.tdf4j.tdfparser.processor.*"
                 )
-                .code("" +
+                .setCode("" +
                         "private final Processor<String> stringProcessor = new StringProcessor();\n" +
                         "private final Stack<TerminalConstructor> terminals = new Stack<>();\n" +
                         "private final Stack<EnvironmentConstructor> environments = new Stack<>();\n" +
@@ -48,7 +48,7 @@ public class TdfParserModule extends AbstractParserModule {
                         "}\n" +
                         "\n" +
                         "private String lastValue(final AST ast) {\n" +
-                        "   final String value = ast.moveCursor(ASTCursor.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value();\n" +
+                        "   final String value = ast.moveCursor(ASTCursor.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().getToken().getValue();\n" +
                         "   ast.moveCursor(ASTCursor.Movement.TO_PARENT);\n" +
                         "   return value;\n" +
                         "}\n" +

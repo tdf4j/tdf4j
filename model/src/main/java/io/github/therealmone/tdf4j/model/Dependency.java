@@ -20,22 +20,14 @@ import org.immutables.value.Value;
 @Value.Immutable
 public interface Dependency<T> {
 
-    Class<? extends T> clazz();
+    Class<? extends T> getClazz();
 
-    default Class<? extends T> getClazz() {
-        return clazz();
-    }
-
-    String name();
-
-    default String getName() {
-        return name();
-    }
+    String getName();
 
     @Value.Default
     default T instance() {
         try {
-            return clazz().getDeclaredConstructor().newInstance();
+            return getClazz().getDeclaredConstructor().newInstance();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

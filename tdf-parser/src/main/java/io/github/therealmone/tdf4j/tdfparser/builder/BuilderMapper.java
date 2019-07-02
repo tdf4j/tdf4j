@@ -33,8 +33,8 @@ public class BuilderMapper implements Builder<Element>  {
     @Override
     @Nullable
     public Element build(final ASTNode tree) {
-        final ASTNode element = tree.children().get(0).asNode();
-        switch (element.tag()) {
+        final ASTNode element = tree.getChildren().get(0).asNode();
+        switch (element.getTag()) {
             case "ebnf_optional":
                 return optionalBuilder.build(element);
             case "ebnf_or":

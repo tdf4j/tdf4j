@@ -29,7 +29,7 @@ public class EbnfOptionalBuilder extends AbstractEbnfElementBuilder<Optional> {
     @Override
     public Optional build(final ASTNode tree) {
         return new Optional.Builder()
-                .elements(getInnerElements(tree).stream().map(this::callBuilder).toArray(Element[]::new))
+                .setElements(getInnerElements(tree).stream().map(this::callBuilder).toArray(Element[]::new))
                 .build();
     }
 

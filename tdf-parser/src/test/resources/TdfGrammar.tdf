@@ -183,7 +183,7 @@ env
         }
 
         private String lastValue(final AST ast) {
-            final String value = ast.moveCursor(ASTCursor.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value();
+            final String value = ast.moveCursor(ASTCursor.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().getToken().getValue();
             ast.moveCursor(ASTCursor.Movement.TO_PARENT);
             return value;
         }

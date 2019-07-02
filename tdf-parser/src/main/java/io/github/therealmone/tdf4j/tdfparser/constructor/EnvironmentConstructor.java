@@ -31,9 +31,9 @@ public class EnvironmentConstructor implements Constructor {
 
     @Override
     public void construct() {
-        builder.packages(packages.toArray(new String[]{}));
+        builder.setPackages(packages.toArray(new String[]{}));
         if(code != null && !code.trim().equalsIgnoreCase("")) {
-            builder.code(code);
+            builder.setCode(code);
         }
     }
 

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.therealmone.tdf4j.model.ebnf;
+package io.github.therealmone.tdf4j.model;
 
 import org.immutables.value.Value;
 
@@ -22,21 +22,22 @@ import java.util.List;
 
 @Value.Immutable
 public abstract class Grammar {
-    public abstract List<Production> productions();
+
+    public abstract List<Production> getProductions();
 
     @Value.Default
     @Nullable
-    public String initProduction() {
-        if(productions().isEmpty()) {
+    public String getAxiom() {
+        if(getProductions().isEmpty()) {
             return null;
         } else {
-            return productions().get(0).identifier().toString();
+            return getProductions().get(0).getIdentifier().toString();
         }
     }
 
-    public abstract First firstSet();
+    public abstract First getFirstSet();
 
-    public abstract Follow followSet();
+    public abstract Follow getFollowSet();
 
     public static class Builder extends ImmutableGrammar.Builder {
     }
@@ -44,7 +45,7 @@ public abstract class Grammar {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        for(final Production production: productions()) {
+        for(final Production production: getProductions()) {
             builder.append(production.toString()).append("\n");
         }
         return builder.toString();

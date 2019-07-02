@@ -15,8 +15,8 @@
  */
 package io.github.therealmone.tdf4j.utils;
 
-import io.github.therealmone.tdf4j.model.ebnf.Follow;
-import io.github.therealmone.tdf4j.model.ebnf.Production;
+import io.github.therealmone.tdf4j.model.Follow;
+import io.github.therealmone.tdf4j.model.Production;
 
 import java.util.List;
 

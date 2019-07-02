@@ -23,12 +23,12 @@ import org.immutables.value.Value;
 @Value.Immutable
 public abstract class NonTerminalTemplate implements CodeBlock {
 
-    public abstract NonTerminal nonTerminal();
+    public abstract NonTerminal getNonTerminal();
 
     @Override
     public String build() {
         return Template.LOGIC_NON_TERMINAL.template()
-                .add("nonTerminal", nonTerminal().identifier())
+                .add("nonTerminal", getNonTerminal().getIdentifier())
                 .render();
     }
 

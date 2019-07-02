@@ -24,15 +24,15 @@ public abstract class Or extends AbstractElement {
         return Kind.OR;
     }
 
-    public abstract Element first();
+    public abstract Element getFirst();
 
-    public abstract Element second();
+    public abstract Element getSecond();
 
     public static class Builder extends ImmutableOr.Builder {
     }
 
     @Override
     public String toString() {
-        return first().toString() + "|" + second().toString();
+        return getFirst().toString() + "|" + getSecond().toString();
     }
 }

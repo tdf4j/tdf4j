@@ -1,5 +1,7 @@
 package io.github.therealmone.tdf4j.utils;
 
+import io.github.therealmone.tdf4j.model.First;
+import io.github.therealmone.tdf4j.model.Production;
 import io.github.therealmone.tdf4j.model.ebnf.*;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -234,21 +236,21 @@ public class FirstSetCollectorTest {
         final First first = firstSetCollector.collect(new ArrayList<>() {{
             add(new Production() {
                 @Override
-                public NonTerminal identifier() {
-                    return new NonTerminal.Builder().identifier("prod1").build();
+                public NonTerminal getIdentifier() {
+                    return new NonTerminal.Builder().setIdentifier("prod1").build();
                 }
 
                 @Override
-                public List<Element> elements() {
+                public List<Element> getElements() {
                     return new ArrayList<>() {{
                         add(new Repetition() {
                             @Override
-                            public Element element() {
+                            public Element getElement() {
                                 return null;
                             }
 
                             @Override
-                            public int times() {
+                            public int getTimes() {
                                 return 100;
                             }
                         });
@@ -300,23 +302,23 @@ public class FirstSetCollectorTest {
     }
 
     private Optional optional(final Element... elements) {
-        return new Optional.Builder().elements(elements).build();
+        return new Optional.Builder().setElements(elements).build();
     }
 
     private Group group(final Element ... elements) {
-        return new Group.Builder().elements(elements).build();
+        return new Group.Builder().setElements(elements).build();
     }
 
     private Repeat repeat(final Element ... elements) {
-        return new Repeat.Builder().elements(elements).build();
+        return new Repeat.Builder().setElements(elements).build();
     }
 
     private Repetition repetition(final Element element, final int times) {
-        return new Repetition.Builder().element(element).times(times).build();
+        return new Repetition.Builder().setElement(element).setTimes(times).build();
     }
 
     private Or or(final Element first, final Element second) {
-        return new Or.Builder().first(first).second(second).build();
+        return new Or.Builder().setFirst(first).setSecond(second).build();
     }
 
     private Or oneOf(final Element... elements) {
@@ -325,20 +327,20 @@ public class FirstSetCollectorTest {
         }
 
         if(elements.length == 2) {
-            return new Or.Builder().first(elements[0]).second(elements[1]).build();
+            return new Or.Builder().setFirst(elements[0]).setSecond(elements[1]).build();
         } else {
             final Element[] toRecursion = new Element[elements.length - 1];
             System.arraycopy(elements, 1, toRecursion, 0, elements.length - 1);
-            return new Or.Builder().first(elements[0]).second(oneOf(toRecursion)).build();
+            return new Or.Builder().setFirst(elements[0]).setSecond(oneOf(toRecursion)).build();
         }
     }
 
     private Terminal.Tag t(final String tag) {
-        return new Terminal.Tag.Builder().value(tag).build();
+        return new Terminal.Tag.Builder().setValue(tag).build();
     }
 
     private NonTerminal nt(final String identifier) {
-        return new NonTerminal.Builder().identifier(identifier).build();
+        return new NonTerminal.Builder().setIdentifier(identifier).build();
     }
 
     public InlineAction inline(final String code) {
@@ -346,14 +348,14 @@ public class FirstSetCollectorTest {
         if(code == null || code.trim().equalsIgnoreCase("")) {
             throw new IllegalStateException("Code can't be blank or null");
         }
-        return new InlineAction.Builder().code(code).build();
+        return new InlineAction.Builder().setCode(code).build();
     }
 
     private static void assertFirstContains(final First first, final String ident, final String ... tags) {
-        final Set<String> set = first.set()
-                .get(new NonTerminal.Builder().identifier(ident).build())
+        final Set<String> set = first.getSet()
+                .get(new NonTerminal.Builder().setIdentifier(ident).build())
                 .stream()
-                .map(Terminal.Tag::value)
+                .map(Terminal.Tag::getValue)
                 .collect(Collectors.toSet());
         assertEquals(tags.length, set.size());
         for(final String tag : tags) {

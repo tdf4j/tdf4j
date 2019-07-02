@@ -28,7 +28,7 @@ public class EbnfRepeatBuilder extends AbstractEbnfElementBuilder<Repeat> {
     @Override
     public Repeat build(final ASTNode tree) {
         return new Repeat.Builder()
-                .elements(getInnerElements(tree).stream().map(this::callBuilder).toArray(Element[]::new))
+                .setElements(getInnerElements(tree).stream().map(this::callBuilder).toArray(Element[]::new))
                 .build();
     }
 }

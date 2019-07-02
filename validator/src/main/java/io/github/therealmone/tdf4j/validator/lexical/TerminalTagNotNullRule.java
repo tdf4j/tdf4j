@@ -12,7 +12,7 @@ public class TerminalTagNotNullRule implements ValidatorRule<AbstractLexerModule
     @Override
     public void visit(final AbstractLexerModule module) throws ValidatorException {
         for(final Terminal terminal : module.getTerminals()) {
-            if(terminal.tag() == null) {
+            if(terminal.getTag() == null) {
                 throw LEXER_TERMINAL_TAG_NULL;
             }
         }

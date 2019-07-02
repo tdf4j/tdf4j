@@ -14,14 +14,6 @@
  * limitations under the License.
  */
 @ParametersAreNonnullByDefault
-@Value.Style(
-        strictBuilder = true,
-        passAnnotations = {Nullable.class, Nonnull.class}
-)
+@Tdf4jStyle
 package io.github.therealmone.tdf4j.model;
-
-import org.immutables.value.Value;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;

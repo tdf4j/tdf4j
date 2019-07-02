@@ -23,19 +23,19 @@ import org.stringtemplate.v4.ST;
 @Value.Immutable
 public abstract class OrTemplate extends Prediction implements CodeBlock {
 
-    public abstract Or or();
+    public abstract Or getOr();
 
     @Override
     public String build() {
         final ST template = Template.LOGIC_OR.template();
-        final CodeBlock first = CodeBlock.fromElement(or().first());
+        final CodeBlock first = CodeBlock.fromElement(getOr().getFirst());
         if(first != null) {
-            template.add("firstStartElements", getStartElements(or().first()));
+            template.add("firstStartElements", getStartElements(getOr().getFirst()));
             template.add("firstCodeBlocks", first.build());
         }
-        final CodeBlock second = CodeBlock.fromElement(or().second());
+        final CodeBlock second = CodeBlock.fromElement(getOr().getSecond());
         if(second != null) {
-            template.add("secondStartElements", getStartElements(or().second()));
+            template.add("secondStartElements", getStartElements(getOr().getSecond()));
             template.add("secondCodeBlocks", second.build());
         }
         return template.render();

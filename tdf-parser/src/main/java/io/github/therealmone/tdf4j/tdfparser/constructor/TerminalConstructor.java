@@ -59,7 +59,7 @@ public class TerminalConstructor implements Constructor {
             builder.hidden(Boolean.parseBoolean(hidden));
         }
         if(isNotBlankOrNull(pattern)) {
-            builder.pattern(compilePattern(pattern, flags));
+            builder.setPattern(compilePattern(pattern, flags));
         }
     }
 

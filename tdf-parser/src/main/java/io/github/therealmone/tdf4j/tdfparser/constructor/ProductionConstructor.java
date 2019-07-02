@@ -18,7 +18,7 @@ package io.github.therealmone.tdf4j.tdfparser.constructor;
 import io.github.therealmone.tdf4j.model.ast.ASTElement;
 import io.github.therealmone.tdf4j.model.ast.ASTNode;
 import io.github.therealmone.tdf4j.model.ebnf.Element;
-import io.github.therealmone.tdf4j.model.ebnf.Production;
+import io.github.therealmone.tdf4j.model.Production;
 import io.github.therealmone.tdf4j.tdfparser.builder.BuilderMapper;
 
 import java.util.ArrayList;
@@ -46,13 +46,13 @@ public class ProductionConstructor implements Constructor {
 
     private List<ASTNode> collectElements(final ASTNode elementSet) {
         final List<ASTNode> elements = new ArrayList<>();
-        for(final ASTElement child : elementSet.children()) {
+        for(final ASTElement child : elementSet.getChildren()) {
             if(!child.isNode()) {
                 continue;
             }
-            if(child.asNode().tag().equalsIgnoreCase("ebnf_element")) {
+            if(child.asNode().getTag().equalsIgnoreCase("ebnf_element")) {
                 elements.add(child.asNode());
-            } else if(child.asNode().tag().equalsIgnoreCase("ebnf_elements_set")) {
+            } else if(child.asNode().getTag().equalsIgnoreCase("ebnf_elements_set")) {
                 elements.addAll(collectElements(child.asNode()));
             }
         }

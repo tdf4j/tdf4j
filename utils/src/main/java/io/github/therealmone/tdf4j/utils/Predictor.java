@@ -16,8 +16,8 @@
 package io.github.therealmone.tdf4j.utils;
 
 import io.github.therealmone.tdf4j.model.Token;
-import io.github.therealmone.tdf4j.model.ebnf.First;
-import io.github.therealmone.tdf4j.model.ebnf.Follow;
+import io.github.therealmone.tdf4j.model.First;
+import io.github.therealmone.tdf4j.model.Follow;
 import io.github.therealmone.tdf4j.model.ebnf.Terminal;
 
 import java.util.ArrayList;
@@ -40,16 +40,16 @@ public class Predictor {
         if(token == null) {
             return new ArrayList<>();
         }
-        if(!cache.containsKey(token.tag())) {
+        if(!cache.containsKey(token.getTag())) {
             final List<String> predictions = new ArrayList<>();
-            first.set().forEach((ident, set) -> {
-                if(set.contains(token.tag())) {
-                    predictions.add(ident.identifier());
+            first.getSet().forEach((ident, set) -> {
+                if(set.contains(token.getTag())) {
+                    predictions.add(ident.getIdentifier());
                 }
             });
-            cache.put(token.tag(), predictions);
-            predictions.add(token.tag().value());
+            cache.put(token.getTag(), predictions);
+            predictions.add(token.getTag().getValue());
         }
-        return cache.get(token.tag());
+        return cache.get(token.getTag());
     }
 }

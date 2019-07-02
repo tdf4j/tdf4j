@@ -21,30 +21,18 @@ import org.immutables.value.Value;
 public interface Environment {
 
     @Value.Default
-    default String[] packages() {
+    default String[] getPackages() {
         return new String[]{};
     }
 
-    default String[] getPackages() {
-        return packages();
-    }
-
     @Value.Default
-    default Dependency[] dependencies() {
+    default Dependency[] getDependencies() {
         return new Dependency[]{};
     }
 
-    default Dependency[] getDependencies() {
-        return dependencies();
-    }
-
     @Value.Default
-    default String code() {
-        return "";
-    }
-
     default String getCode() {
-        return code();
+        return "";
     }
 
     class Builder extends ImmutableEnvironment.Builder {

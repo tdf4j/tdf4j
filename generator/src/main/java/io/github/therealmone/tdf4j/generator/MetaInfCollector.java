@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.therealmone.tdf4j.generator.utils;
+package io.github.therealmone.tdf4j.generator;
 
 import io.github.therealmone.tdf4j.model.Dependency;
 import io.github.therealmone.tdf4j.generator.templates.ParserTemplate;
@@ -26,10 +26,10 @@ public class MetaInfCollector {
 
     public MetaInf collect(ParserTemplate parserTemplate) {
         final MetaInf.Builder builder = new MetaInf.Builder()
-                .pack(parserTemplate.pack())
-                .className(parserTemplate.className())
+                .pack(parserTemplate.getPackage())
+                .className(parserTemplate.getClassName())
                 .sourceCode(parserTemplate.build())
-                .envImports(parserTemplate.environment().packages())
+                .envImports(parserTemplate.getEnvironment().getPackages())
                 .dependencies(collectDependencies(parserTemplate))
                 .imports(collectImports(parserTemplate));
 
@@ -38,16 +38,16 @@ public class MetaInfCollector {
 
     private String[] collectImports(final ParserTemplate parserTemplate) {
         final List<String> imports = new ArrayList<>();
-        for (String imp :parserTemplate.imports()){
+        for (String imp :parserTemplate.getImports()){
             imports.add(imp.replaceAll(";|\n|;\n|\r|;\r", ""));
         }
         return imports.toArray(new String[]{});
     }
 
     private String[] collectDependencies(final ParserTemplate parserTemplate) {
-        final String[] dependencies = new String[parserTemplate.environment().dependencies().length];
-        for (int i = 0; i < parserTemplate.environment().dependencies().length; i++) {
-            final Dependency dependency = parserTemplate.environment().dependencies()[i];
+        final String[] dependencies = new String[parserTemplate.getEnvironment().getDependencies().length];
+        for (int i = 0; i < parserTemplate.getEnvironment().getDependencies().length; i++) {
+            final Dependency dependency = parserTemplate.getEnvironment().getDependencies()[i];
             dependencies[i] = dependency.getClazz().getCanonicalName();
         }
         return dependencies;

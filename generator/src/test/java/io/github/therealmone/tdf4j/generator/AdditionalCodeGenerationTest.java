@@ -17,7 +17,7 @@ public class AdditionalCodeGenerationTest extends ParserTest {
             @Override
             public void configure() {
                 environment()
-                        .code(
+                        .setCode(
                                 "private void sayHello() {" +
                                     "System.out.println(\"Hello\");" +
                                 "}"
@@ -41,12 +41,12 @@ public class AdditionalCodeGenerationTest extends ParserTest {
             @Override
             public void configure() {
                 environment()
-                        .code(
+                        .setCode(
                                 "private void test() {" +
                                         "list.add(\"testvalue\");" +
                                 "}"
                         )
-                        .dependencies(
+                        .setDependencies(
                                 dependency(List.class, "list", test)
                         );
                 prod("prod1")

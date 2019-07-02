@@ -44,7 +44,7 @@ public class MetaInformationTest extends ParserTest {
             @Override
             public void configure() {
                 environment()
-                        .packages(
+                        .setPackages(
                                 "java.lang.*",
                                 "java.util.*"
                         );
@@ -63,7 +63,7 @@ public class MetaInformationTest extends ParserTest {
             @Override
             public void configure() {
                 environment()
-                        .dependencies(
+                        .setDependencies(
                                 dependency(FirstSetCollector.class, "firstSetCollector", new FirstSetCollector()),
                                 dependency(FollowSetCollector.class, "followSetCollector")
                         );

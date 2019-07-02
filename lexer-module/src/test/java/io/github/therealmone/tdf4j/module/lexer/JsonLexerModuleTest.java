@@ -18,18 +18,18 @@ public class JsonLexerModuleTest {
                 "}").build();
         assertEquals(3, module.getTerminals().size());
         {
-            assertEquals("tag1", module.getTerminals().get(0).tag().value());
-            assertEquals("pattern1", module.getTerminals().get(0).pattern().pattern());
+            assertEquals("tag1", module.getTerminals().get(0).getTag().getValue());
+            assertEquals("pattern1", module.getTerminals().get(0).getPattern().pattern());
             assertEquals(1, module.getTerminals().get(0).priority());
         }
         {
-            assertEquals("tag2", module.getTerminals().get(1).tag().value());
-            assertEquals("pattern2", module.getTerminals().get(1).pattern().pattern());
+            assertEquals("tag2", module.getTerminals().get(1).getTag().getValue());
+            assertEquals("pattern2", module.getTerminals().get(1).getPattern().pattern());
             assertEquals(0, module.getTerminals().get(1).priority());
         }
         {
-            assertEquals("tag3", module.getTerminals().get(2).tag().value());
-            assertEquals("pattern3", module.getTerminals().get(2).pattern().pattern());
+            assertEquals("tag3", module.getTerminals().get(2).getTag().getValue());
+            assertEquals("pattern3", module.getTerminals().get(2).getPattern().pattern());
             assertEquals(10000, module.getTerminals().get(2).priority());
         }
     }

@@ -18,7 +18,7 @@ public class EnvironmentGenerationTest extends ParserTest {
             @Override
             public void configure() {
                 environment()
-                        .packages(
+                        .setPackages(
                                 "java.lang.*",
                                 "io.github.therealmone.tdf4j.parser.Parser"
                         );
@@ -39,7 +39,7 @@ public class EnvironmentGenerationTest extends ParserTest {
             @Override
             public void configure() {
                 environment()
-                        .dependencies(
+                        .setDependencies(
                                 dependency(FirstSetCollector.class, "firstSetCollector", new FirstSetCollector()),
                                 dependency(FollowSetCollector.class, "followSetCollector")
                         );
@@ -60,7 +60,7 @@ public class EnvironmentGenerationTest extends ParserTest {
             @Override
             public void configure() {
                 environment()
-                        .dependencies(
+                        .setDependencies(
                                 dependency(Digester.class, "digester")
                         );
                 prod("prod1")
@@ -79,10 +79,10 @@ public class EnvironmentGenerationTest extends ParserTest {
             @Override
             public void configure() {
                 environment()
-                        .packages(
+                        .setPackages(
                                 "org.apache.commons.digester3.Digester"
                         )
-                        .dependencies(
+                        .setDependencies(
                                 dependency(Digester.class, "digester")
                         );
                 prod("prod1")

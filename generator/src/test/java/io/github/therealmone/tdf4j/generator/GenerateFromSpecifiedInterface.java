@@ -16,7 +16,7 @@ public class GenerateFromSpecifiedInterface extends ParserTest {
         final TestInterface parser = generate(new AbstractParserModule() {
             @Override
             public void configure() {
-                environment().code(
+                environment().setCode(
                         "@Override\n" +
                                 "public String getTestString() {\n" +
                                 "   return \"TestValue\";\n" +
@@ -39,7 +39,7 @@ public class GenerateFromSpecifiedInterface extends ParserTest {
         generate(new AbstractParserModule() {
             @Override
             public void configure() {
-                environment().code(
+                environment().setCode(
                         "@Override\n" +
                                 "public String getTestString() {\n" +
                                 "   return \"TestValue\";\n" +

@@ -29,7 +29,7 @@ public class EbnfInlineActionBuilder extends  AbstractEbnfElementBuilder<InlineA
     @Override
     public InlineAction build(final ASTNode tree) {
         return new InlineAction.Builder()
-                .code(stringProcessor.process(tree.children().get(1).asLeaf().token().value()))
+                .setCode(stringProcessor.process(tree.getChildren().get(1).asLeaf().getToken().getValue()))
                 .build();
     }
 

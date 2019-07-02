@@ -26,21 +26,21 @@ import java.util.List;
 @Value.Immutable
 public abstract class MethodTemplate implements Buildable {
 
-    public abstract String name();
+    public abstract String getName();
 
     @Value.Default
-    public String returnValue() {
+    public String getReturnValue() {
         return "void";
     }
 
-    public abstract List<CodeBlock> codeBlocks();
+    public abstract List<CodeBlock> getCodeBlocks();
 
     @Override
     public String build() {
         final ST template = Template.METHOD.template()
-                .add("name", name())
-                .add("returnValue", returnValue());
-        codeBlocks().forEach(codeBlock -> template.add("codeBlocks", codeBlock.build()));
+                .add("name", getName())
+                .add("returnValue", getReturnValue());
+        getCodeBlocks().forEach(codeBlock -> template.add("codeBlocks", codeBlock.build()));
         return template.render();
     }
 

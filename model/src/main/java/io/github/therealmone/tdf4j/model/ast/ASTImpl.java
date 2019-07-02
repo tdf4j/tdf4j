@@ -89,9 +89,9 @@ class ASTImpl implements AST {
 
     private void addChild(final ASTCursor cursor, final ASTElement element) {
         if(cursor.isNode()) {
-            cursor.asNode().children().add(element);
+            cursor.asNode().getChildren().add(element);
         } else if(cursor.isRoot()) {
-            cursor.asRoot().children().add(element);
+            cursor.asRoot().getChildren().add(element);
         }
     }
 

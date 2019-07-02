@@ -26,9 +26,9 @@ public abstract class Terminal extends AbstractElement {
         return Kind.TERMINAL;
     }
 
-    public abstract Tag tag();
+    public abstract Tag getTag();
 
-    public abstract Pattern pattern();
+    public abstract Pattern getPattern();
 
     @Value.Default
     public long priority() {
@@ -42,24 +42,32 @@ public abstract class Terminal extends AbstractElement {
 
     public static class Builder extends ImmutableTerminal.Builder {
         public Terminal.Builder pattern(final String pattern) {
-            super.pattern(Pattern.compile(pattern));
+            super.setPattern(Pattern.compile(pattern));
             return this;
         }
 
         public Terminal.Builder pattern(final String pattern, final int flags) {
-            super.pattern(Pattern.compile(pattern, flags));
+            super.setPattern(Pattern.compile(pattern, flags));
             return this;
         }
 
         public Terminal.Builder tag(final String tag) {
-            super.tag(new Tag.Builder().value(tag).build());
+            super.setTag(new Tag.Builder().setValue(tag).build());
             return this;
+        }
+
+        public Terminal.Builder priority(final long priority) {
+            return super.setPriority(priority);
+        }
+
+        public Terminal.Builder hidden(final boolean hidden) {
+            return super.setHidden(hidden);
         }
     }
 
     @Override
     public String toString() {
-        return pattern() != null ? tag() + " : " + pattern() : tag().toString();
+        return getPattern() != null ? getTag() + " : " + getPattern() : getTag().toString();
     }
 
     @Value.Immutable
@@ -69,7 +77,7 @@ public abstract class Terminal extends AbstractElement {
             return Kind.TERMINAL_TAG;
         }
 
-        public abstract String value();
+        public abstract String getValue();
 
         public static class Builder extends ImmutableTag.Builder {
 
@@ -77,7 +85,7 @@ public abstract class Terminal extends AbstractElement {
 
         @Override
         public String toString() {
-            return value();
+            return getValue();
         }
     }
 }

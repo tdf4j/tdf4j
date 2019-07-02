@@ -28,17 +28,17 @@ public abstract class ASTNode implements ASTElement {
         return ASTKind.NODE;
     }
 
-    public abstract ASTElement parent();
+    public abstract ASTElement getParent();
 
-    public abstract List<ASTElement> children();
+    public abstract List<ASTElement> getChildren();
 
-    public abstract String tag();
+    public abstract String getTag();
 
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append(tag());
-        for(final ASTElement child : children()) {
+        builder.append(getTag());
+        for(final ASTElement child : getChildren()) {
             builder.append("\n")
                     .append(collectColumns())
                     .append("|--")
@@ -51,21 +51,21 @@ public abstract class ASTNode implements ASTElement {
         final StringBuilder builder = new StringBuilder();
         ASTElement current = this;
         while(!current.isRoot()) {
-            builder.append(isLat(current) ? "\t " : "\t|");
+            builder.append(isLast(current) ? "\t " : "\t|");
             current = current.isLeaf()
-                    ? current.asLeaf().parent()
-                    : current.asNode().parent();
+                    ? current.asLeaf().getParent()
+                    : current.asNode().getParent();
         }
         return builder.reverse().toString();
     }
 
-    private boolean isLat(final ASTElement element) {
+    private boolean isLast(final ASTElement element) {
         final ASTElement parent = element.isNode()
-                ? element.asNode().parent()
-                : element.asLeaf().parent();
+                ? element.asNode().getParent()
+                : element.asLeaf().getParent();
         final List<ASTElement> neighbours = parent.isRoot()
-                ? parent.asRoot().children()
-                : parent.asNode().children();
+                ? parent.asRoot().getChildren()
+                : parent.asNode().getChildren();
         final int index = indexOf(neighbours, element);
         return index != -1 && index == neighbours.size() - 1;
     }

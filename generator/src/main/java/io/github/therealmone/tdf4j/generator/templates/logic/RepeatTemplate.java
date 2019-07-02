@@ -24,20 +24,20 @@ import org.stringtemplate.v4.ST;
 @Value.Immutable
 public abstract class RepeatTemplate extends Prediction implements CodeBlock {
 
-    public abstract Repeat repeat();
+    public abstract Repeat getRepeat();
 
     @Override
     public String build() {
         final ST template = Template.LOGIC_REPEAT.template()
                 .add("hash", Math.abs(this.hashCode()));
-        for(final Element element : repeat().elements()) {
+        for(final Element element : getRepeat().getElements()) {
             final CodeBlock codeBlock = CodeBlock.fromElement(element);
             if (codeBlock != null) {
                 template.add("codeBlocks", codeBlock.build());
             }
         }
-        if(repeat().elements().length != 0) {
-            template.add("firstElements", getStartElements(repeat().elements()[0]));
+        if(getRepeat().getElements().length != 0) {
+            template.add("firstElements", getStartElements(getRepeat().getElements()[0]));
         }
         return template.render();
     }

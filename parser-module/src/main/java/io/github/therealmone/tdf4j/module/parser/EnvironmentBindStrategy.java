@@ -34,8 +34,8 @@ public class EnvironmentBindStrategy implements BindStrategy.WithoutArgs<Environ
     public Environment build() {
         if(environment == null) {
             environment = new Environment.Builder()
-                    .packages()
-                    .dependencies();
+                    .setPackages()
+                    .setDependencies();
         }
         return environment.build();
     }

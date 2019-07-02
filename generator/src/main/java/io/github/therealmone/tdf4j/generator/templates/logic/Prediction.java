@@ -33,36 +33,36 @@ public abstract class Prediction {
 
         switch (element.kind()) {
             case REPEAT:
-                return element.asRepeat().elements().length == 0
+                return element.asRepeat().getElements().length == 0
                         ? Collections.emptyList()
-                        : getStartElements(firstNotInlineElement(element.asRepeat().elements()));
+                        : getStartElements(firstNotInlineElement(element.asRepeat().getElements()));
 
             case REPETITION:
-                return element.asRepetition().element() == null
+                return element.asRepetition().getElement() == null
                         ? Collections.emptyList()
-                        : getStartElements(firstNotInlineElement(element.asRepetition().element()));
+                        : getStartElements(firstNotInlineElement(element.asRepetition().getElement()));
 
             case OR:
                 return new ArrayList<>() {{
-                    addAll(getStartElements(firstNotInlineElement(element.asOr().first())));
-                    addAll(getStartElements(firstNotInlineElement(element.asOr().second())));
+                    addAll(getStartElements(firstNotInlineElement(element.asOr().getFirst())));
+                    addAll(getStartElements(firstNotInlineElement(element.asOr().getSecond())));
                 }};
 
             case GROUP:
-                return element.asGroup().elements().length == 0
+                return element.asGroup().getElements().length == 0
                         ? Collections.emptyList()
-                        : getStartElements(firstNotInlineElement(element.asGroup().elements()));
+                        : getStartElements(firstNotInlineElement(element.asGroup().getElements()));
 
             case OPTIONAL:
-                return element.asOptional().elements().length == 0
+                return element.asOptional().getElements().length == 0
                         ? Collections.emptyList()
-                        : getStartElements(firstNotInlineElement(element.asOptional().elements()));
+                        : getStartElements(firstNotInlineElement(element.asOptional().getElements()));
 
             case TERMINAL_TAG:
-                return new ArrayList<>() {{add(element.asTerminalTag().value());}};
+                return new ArrayList<>() {{add(element.asTerminalTag().getValue());}};
 
             case NON_TERMINAL:
-                return new ArrayList<>() {{add(element.asNonTerminal().identifier());}};
+                return new ArrayList<>() {{add(element.asNonTerminal().getIdentifier());}};
 
             default: return Collections.emptyList();
     }

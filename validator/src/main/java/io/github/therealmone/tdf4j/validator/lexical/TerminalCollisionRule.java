@@ -16,10 +16,10 @@ public class TerminalCollisionRule implements ValidatorRule<AbstractLexerModule>
     public void visit(final AbstractLexerModule module) throws ValidatorException {
         final Set<String> tags = new HashSet<>();
         for(final Terminal terminal : module.getTerminals()) {
-            if(tags.contains(terminal.tag().value())) {
+            if(tags.contains(terminal.getTag().getValue())) {
                 throw LEXER_TERMINAL_COLLISION;
             }
-            tags.add(terminal.tag().value());
+            tags.add(terminal.getTag().getValue());
         }
     }
 

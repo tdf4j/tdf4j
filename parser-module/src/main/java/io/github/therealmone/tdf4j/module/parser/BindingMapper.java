@@ -17,6 +17,7 @@ package io.github.therealmone.tdf4j.module.parser;
 
 import io.github.therealmone.tdf4j.model.Dependency;
 import io.github.therealmone.tdf4j.model.Environment;
+import io.github.therealmone.tdf4j.model.Production;
 import io.github.therealmone.tdf4j.model.ebnf.*;
 
 public abstract class BindingMapper implements BindMethods {
@@ -39,37 +40,37 @@ public abstract class BindingMapper implements BindMethods {
 
     @Override
     public <T> Dependency<T> dependency(final Class<T> clazz, final String name, final T instance) {
-        return new Dependency.Builder<T>().clazz(clazz).name(name).instance(instance).build();
+        return new Dependency.Builder<T>().setClazz(clazz).setName(name).setInstance(instance).build();
     }
 
     @Override
     public <T> Dependency<T> dependency(final Class<T> clazz, final String name) {
-        return new Dependency.Builder<T>().clazz(clazz).name(name).build();
+        return new Dependency.Builder<T>().setClazz(clazz).setName(name).build();
     }
 
     @Override
     public Optional optional(final Element ... elements) {
-        return new Optional.Builder().elements(elements).build();
+        return new Optional.Builder().setElements(elements).build();
     }
 
     @Override
     public Group group(final Element ... elements) {
-        return new Group.Builder().elements(elements).build();
+        return new Group.Builder().setElements(elements).build();
     }
 
     @Override
     public Repeat repeat(final Element ... elements) {
-        return new Repeat.Builder().elements(elements).build();
+        return new Repeat.Builder().setElements(elements).build();
     }
 
     @Override
     public Repetition repetition(final Element element, final int times) {
-        return new Repetition.Builder().element(element).times(times).build();
+        return new Repetition.Builder().setElement(element).setTimes(times).build();
     }
 
     @Override
     public Or or(final Element first, final Element second) {
-        return new Or.Builder().first(first).second(second).build();
+        return new Or.Builder().setFirst(first).setSecond(second).build();
     }
 
     @Override
@@ -79,22 +80,22 @@ public abstract class BindingMapper implements BindMethods {
         }
 
         if(elements.length == 2) {
-            return new Or.Builder().first(elements[0]).second(elements[1]).build();
+            return new Or.Builder().setFirst(elements[0]).setSecond(elements[1]).build();
         } else {
             final Element[] toRecursion = new Element[elements.length - 1];
             System.arraycopy(elements, 1, toRecursion, 0, elements.length - 1);
-            return new Or.Builder().first(elements[0]).second(oneOf(toRecursion)).build();
+            return new Or.Builder().setFirst(elements[0]).setSecond(oneOf(toRecursion)).build();
         }
     }
 
     @Override
     public Terminal.Tag t(final String tag) {
-        return new Terminal.Tag.Builder().value(tag).build();
+        return new Terminal.Tag.Builder().setValue(tag).build();
     }
 
     @Override
     public NonTerminal nt(final String identifier) {
-        return new NonTerminal.Builder().identifier(identifier).build();
+        return new NonTerminal.Builder().setIdentifier(identifier).build();
     }
 
     @Override
@@ -108,6 +109,6 @@ public abstract class BindingMapper implements BindMethods {
         if(code == null || code.trim().equalsIgnoreCase("")) {
             throw new IllegalStateException("Code can't be blank or null");
         }
-        return new InlineAction.Builder().code(code).build();
+        return new InlineAction.Builder().setCode(code).build();
     }
 }

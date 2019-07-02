@@ -24,15 +24,15 @@ public abstract class Repetition extends AbstractElement {
         return Kind.REPETITION;
     }
 
-    public abstract Element element();
+    public abstract Element getElement();
 
-    public abstract int times();
+    public abstract int getTimes();
 
     public static class Builder extends ImmutableRepetition.Builder {
     }
 
     @Override
     public String toString() {
-        return times() + "*" + element();
+        return getTimes() + "*" + getElement();
     }
 }

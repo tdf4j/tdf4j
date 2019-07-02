@@ -15,7 +15,7 @@ public class BufferedStreamTest {
     @Test
     public void test() {
         final List<Integer> list = new ArrayList<>(testData);
-        final BufferedStream<Integer> bufferedStream = new BufferedStream<>(new Stream.Builder<Integer>().generator(() -> {
+        final BufferedStream<Integer> bufferedStream = new BufferedStream<>(new Stream.Builder<Integer>().setGenerator(() -> {
             if(!list.isEmpty()) {
                 final Integer value = list.get(0);
                 list.remove(0);

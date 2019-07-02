@@ -24,12 +24,12 @@ import org.immutables.value.Value;
 @Value.Immutable
 public abstract class TerminalTagTemplate implements CodeBlock {
 
-    public abstract Terminal.Tag terminalTag();
+    public abstract Terminal.Tag getTerminalTag();
 
     @Override
     public String build() {
         return Template.LOGIC_TERMINAL.template()
-                .add("terminal", terminalTag().value())
+                .add("terminal", getTerminalTag().getValue())
                 .render();
     }
 

@@ -27,12 +27,12 @@ public abstract class ASTLeaf implements ASTElement{
         return ASTKind.LEAF;
     }
 
-    public abstract ASTElement parent();
+    public abstract ASTElement getParent();
 
-    public abstract Token token();
+    public abstract Token getToken();
 
     @Override
     public String toString() {
-        return token().toString();
+        return getToken().toString();
     }
 }

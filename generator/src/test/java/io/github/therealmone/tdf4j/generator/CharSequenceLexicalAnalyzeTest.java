@@ -28,20 +28,20 @@ public class CharSequenceLexicalAnalyzeTest {
         {
             final List<Token> tokens = lexer.analyze("ABC");
             assertEquals(3, tokens.size());
-            assertEquals("A", tokens.get(0).tag().value());
-            assertEquals("A", tokens.get(0).value());
-            assertEquals("B", tokens.get(1).tag().value());
-            assertEquals("B", tokens.get(1).value());
-            assertEquals("C", tokens.get(2).tag().value());
-            assertEquals("C", tokens.get(2).value());
+            assertEquals("A", tokens.get(0).getTag().getValue());
+            assertEquals("A", tokens.get(0).getValue());
+            assertEquals("B", tokens.get(1).getTag().getValue());
+            assertEquals("B", tokens.get(1).getValue());
+            assertEquals("C", tokens.get(2).getTag().getValue());
+            assertEquals("C", tokens.get(2).getValue());
         }
 
         //stream
         {
             final Stream<Token> tokens = lexer.stream("ABC");
-            assertEquals("A", tokens.next().value());
-            assertEquals("B", tokens.next().value());
-            assertEquals("C", tokens.next().value());
+            assertEquals("A", tokens.next().getValue());
+            assertEquals("B", tokens.next().getValue());
+            assertEquals("C", tokens.next().getValue());
         }
     }
 
@@ -51,20 +51,20 @@ public class CharSequenceLexicalAnalyzeTest {
         {
             final List<Token> tokens = lexer.analyze(new StringBuilder("ABC"));
             assertEquals(3, tokens.size());
-            assertEquals("A", tokens.get(0).tag().value());
-            assertEquals("A", tokens.get(0).value());
-            assertEquals("B", tokens.get(1).tag().value());
-            assertEquals("B", tokens.get(1).value());
-            assertEquals("C", tokens.get(2).tag().value());
-            assertEquals("C", tokens.get(2).value());
+            assertEquals("A", tokens.get(0).getTag().getValue());
+            assertEquals("A", tokens.get(0).getValue());
+            assertEquals("B", tokens.get(1).getTag().getValue());
+            assertEquals("B", tokens.get(1).getValue());
+            assertEquals("C", tokens.get(2).getTag().getValue());
+            assertEquals("C", tokens.get(2).getValue());
         }
 
         //stream
         {
             final Stream<Token> tokens = lexer.stream(new StringBuilder("ABC"));
-            assertEquals("A", tokens.next().value());
-            assertEquals("B", tokens.next().value());
-            assertEquals("C", tokens.next().value());
+            assertEquals("A", tokens.next().getValue());
+            assertEquals("B", tokens.next().getValue());
+            assertEquals("C", tokens.next().getValue());
         }
     }
 
@@ -74,20 +74,20 @@ public class CharSequenceLexicalAnalyzeTest {
         {
             final List<Token> tokens = lexer.analyze(new StringBuffer("ABC"));
             assertEquals(3, tokens.size());
-            assertEquals("A", tokens.get(0).tag().value());
-            assertEquals("A", tokens.get(0).value());
-            assertEquals("B", tokens.get(1).tag().value());
-            assertEquals("B", tokens.get(1).value());
-            assertEquals("C", tokens.get(2).tag().value());
-            assertEquals("C", tokens.get(2).value());
+            assertEquals("A", tokens.get(0).getTag().getValue());
+            assertEquals("A", tokens.get(0).getValue());
+            assertEquals("B", tokens.get(1).getTag().getValue());
+            assertEquals("B", tokens.get(1).getValue());
+            assertEquals("C", tokens.get(2).getTag().getValue());
+            assertEquals("C", tokens.get(2).getValue());
         }
 
         //stream
         {
             final Stream<Token> tokens = lexer.stream(new StringBuffer("ABC"));
-            assertEquals("A", tokens.next().value());
-            assertEquals("B", tokens.next().value());
-            assertEquals("C", tokens.next().value());
+            assertEquals("A", tokens.next().getValue());
+            assertEquals("B", tokens.next().getValue());
+            assertEquals("C", tokens.next().getValue());
         }
     }
 

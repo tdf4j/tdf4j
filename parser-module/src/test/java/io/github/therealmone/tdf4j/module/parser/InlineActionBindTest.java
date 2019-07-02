@@ -17,8 +17,8 @@ public class InlineActionBindTest {
                         );
             }
         }.build();
-        assertEquals("System.out.println(\"inline action\")", module.getGrammar().productions().get(0).elements().get(0).asInlineAction().code());
-        assertEquals("prod1 := <<\nSystem.out.println(\"inline action\")\n>>", module.getGrammar().productions().get(0).toString());
+        assertEquals("System.out.println(\"inline action\")", module.getGrammar().getProductions().get(0).getElements().get(0).asInlineAction().getCode());
+        assertEquals("prod1 := <<\nSystem.out.println(\"inline action\")\n>>", module.getGrammar().getProductions().get(0).toString());
     }
 
     @Test(expected = IllegalStateException.class)

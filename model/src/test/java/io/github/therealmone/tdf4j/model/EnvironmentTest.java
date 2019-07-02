@@ -9,18 +9,18 @@ public class EnvironmentTest {
     @Test
     public void full() {
         final Environment environment = new Environment.Builder()
-                .packages("pack1", "pack2")
-                .dependencies(new Dependency.Builder<TestDependency>()
-                        .clazz(TestDependency.class)
-                        .name("test")
+                .setPackages("pack1", "pack2")
+                .setDependencies(new Dependency.Builder<TestDependency>()
+                        .setClazz(TestDependency.class)
+                        .setName("test")
                         .build()
                 )
-                .code("code")
+                .setCode("code")
                 .build();
         assertEquals("pack1", environment.getPackages()[0]);
         assertEquals("pack2", environment.getPackages()[1]);
-        assertEquals(TestDependency.class, environment.getDependencies()[0].clazz());
-        assertEquals("test", environment.getDependencies()[0].name());
+        assertEquals(TestDependency.class, environment.getDependencies()[0].getClazz());
+        assertEquals("test", environment.getDependencies()[0].getName());
         assertEquals(TestDependency.class, environment.getDependencies()[0].instance().getClass());
         assertEquals("code", environment.getCode());
     }

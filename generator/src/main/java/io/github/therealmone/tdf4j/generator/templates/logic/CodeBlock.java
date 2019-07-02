@@ -26,21 +26,21 @@ public interface CodeBlock extends Buildable {
     static CodeBlock fromElement(final Element element) {
         switch (element.kind()) {
             case TERMINAL_TAG:
-                return new TerminalTagTemplate.Builder().terminalTag(element.asTerminalTag()).build();
+                return new TerminalTagTemplate.Builder().setTerminalTag(element.asTerminalTag()).build();
             case NON_TERMINAL:
-                return new NonTerminalTemplate.Builder().nonTerminal(element.asNonTerminal()).build();
+                return new NonTerminalTemplate.Builder().setNonTerminal(element.asNonTerminal()).build();
             case OPTIONAL:
-                return new OptionalTemplate.Builder().optional(element.asOptional()).build();
+                return new OptionalTemplate.Builder().setOptional(element.asOptional()).build();
             case OR:
-                return new OrTemplate.Builder().or(element.asOr()).build();
+                return new OrTemplate.Builder().setOr(element.asOr()).build();
             case REPEAT:
-                return new RepeatTemplate.Builder().repeat(element.asRepeat()).build();
+                return new RepeatTemplate.Builder().setRepeat(element.asRepeat()).build();
             case REPETITION:
-                return new RepetitionTemplate.Builder().repetition(element.asRepetition()).build();
+                return new RepetitionTemplate.Builder().setRepetition(element.asRepetition()).build();
             case GROUP:
-                return new GroupTemplate.Builder().group(element.asGroup()).build();
+                return new GroupTemplate.Builder().setGroup(element.asGroup()).build();
             case INLINE_ACTION:
-                return new InlineActionTemplate.Builder().inline(element.asInlineAction()).build();
+                return new InlineActionTemplate.Builder().setInlineAction(element.asInlineAction()).build();
             default:
                 return null;
         }

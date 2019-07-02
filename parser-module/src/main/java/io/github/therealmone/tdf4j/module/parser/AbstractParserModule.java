@@ -17,10 +17,10 @@ package io.github.therealmone.tdf4j.module.parser;
 
 import io.github.therealmone.tdf4j.model.Environment;
 import io.github.therealmone.tdf4j.model.Module;
-import io.github.therealmone.tdf4j.model.ebnf.First;
-import io.github.therealmone.tdf4j.model.ebnf.Follow;
-import io.github.therealmone.tdf4j.model.ebnf.Grammar;
-import io.github.therealmone.tdf4j.model.ebnf.Production;
+import io.github.therealmone.tdf4j.model.First;
+import io.github.therealmone.tdf4j.model.Follow;
+import io.github.therealmone.tdf4j.model.Grammar;
+import io.github.therealmone.tdf4j.model.Production;
 import io.github.therealmone.tdf4j.utils.FirstSetCollector;
 import io.github.therealmone.tdf4j.utils.FollowSetCollector;
 
@@ -41,9 +41,9 @@ public abstract class AbstractParserModule extends BindingMapper implements Modu
             this.environment = environmentBindStrategy.build();
             this.grammar = new Grammar.Builder()
                     .addAllProductions(productions)
-                    .initProduction(initProduction)
-                    .firstSet(firstSetCollector.collect(productions))
-                    .followSet(followSetCollector.collect(productions))
+                    .setAxiom(initProduction)
+                    .setFirstSet(firstSetCollector.collect(productions))
+                    .setFollowSet(followSetCollector.collect(productions))
                     .build();
             built = true;
         }
@@ -55,8 +55,8 @@ public abstract class AbstractParserModule extends BindingMapper implements Modu
         return grammar != null
                 ? grammar
                 : new Grammar.Builder()
-                    .firstSet(new First.Builder().build())
-                    .followSet(new Follow.Builder().build())
+                    .setFirstSet(new First.Builder().build())
+                    .setFollowSet(new Follow.Builder().build())
                     .build();
     }
 

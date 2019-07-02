@@ -31,13 +31,13 @@ abstract class AbstractEbnfElementBuilder<T> implements Builder<T> {
 
     List<ASTNode> getInnerElements(final ASTNode element) {
         final List<ASTNode> elements = new ArrayList<>();
-        for(final ASTElement child : element.children()) {
+        for(final ASTElement child : element.getChildren()) {
             if(!child.isNode()) {
                 continue;
             }
-            if(child.asNode().tag().equalsIgnoreCase("ebnf_element")) {
+            if(child.asNode().getTag().equalsIgnoreCase("ebnf_element")) {
                 elements.add(child.asNode());
-            } else if(child.asNode().tag().equalsIgnoreCase("ebnf_elements_set")) {
+            } else if(child.asNode().getTag().equalsIgnoreCase("ebnf_elements_set")) {
                 elements.addAll(getInnerElements(child.asNode()));
             }
         }

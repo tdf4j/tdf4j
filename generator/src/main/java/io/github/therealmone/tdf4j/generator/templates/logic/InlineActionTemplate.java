@@ -23,12 +23,12 @@ import org.immutables.value.Value;
 @Value.Immutable
 public abstract class InlineActionTemplate implements CodeBlock {
 
-    public abstract InlineAction inline();
+    public abstract InlineAction getInlineAction();
 
     @Override
     public String build() {
         return Template.LOGIC_INLINE_ACTION.template()
-                .add("inlineAction", inline().code())
+                .add("inlineAction", getInlineAction().getCode())
                 .render();
     }
 

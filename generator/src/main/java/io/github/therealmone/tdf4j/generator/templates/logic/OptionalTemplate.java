@@ -24,20 +24,20 @@ import org.stringtemplate.v4.ST;
 @Value.Immutable
 public abstract class OptionalTemplate extends Prediction implements CodeBlock {
 
-    public abstract Optional optional();
+    public abstract Optional getOptional();
 
     @Override
     public String build() {
         final ST template = Template.LOGIC_OPTIONAL.template()
                 .add("hash", Math.abs(this.hashCode()));
-        for(final Element element : optional().elements()) {
+        for(final Element element : getOptional().getElements()) {
             final CodeBlock codeBlock = CodeBlock.fromElement(element);
             if(codeBlock != null) {
                 template.add("codeBlocks", codeBlock.build());
             }
         }
-        if(optional().elements().length != 0) {
-            template.add("firstElements", getStartElements(optional().elements()[0]));
+        if(getOptional().getElements().length != 0) {
+            template.add("firstElements", getStartElements(getOptional().getElements()[0]));
         }
         return template.render();
     }

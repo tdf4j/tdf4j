@@ -24,13 +24,13 @@ import org.stringtemplate.v4.ST;
 @Value.Immutable
 public abstract class GroupTemplate implements CodeBlock {
 
-    public abstract Group group();
+    public abstract Group getGroup();
 
     @Override
     public String build() {
         final ST template = Template.LOGIC_GROUP.template()
                 .add("hash", Math.abs(this.hashCode()));
-        for(final Element element : group().elements()) {
+        for(final Element element : getGroup().getElements()) {
             final CodeBlock codeBlock = CodeBlock.fromElement(element);
             if(codeBlock != null) {
                 template.add("codeBlocks", codeBlock.build());

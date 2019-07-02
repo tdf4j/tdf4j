@@ -22,8 +22,8 @@ public class ParserTest {
             @Override
             public void configure() {
                 for (final TestTerminal testLexeme : TestTerminal.values()) {
-                    tokenize(testLexeme.getTerminal().tag().value())
-                            .pattern(testLexeme.getTerminal().pattern().pattern())
+                    tokenize(testLexeme.getTerminal().getTag().getValue())
+                            .pattern(testLexeme.getTerminal().getPattern().pattern())
                             .priority(testLexeme.getTerminal().priority());
                 }
                 tokenize("ws").pattern("\\s|\\n|\\r").priority(Integer.MAX_VALUE).hidden(true);
@@ -36,8 +36,8 @@ public class ParserTest {
         final Parser parser = new ParserGenerator(module).generate();
         System.out.println(parser.meta().sourceCode());
         System.out.println(module.getGrammar().toString());
-        System.out.println(module.getGrammar().firstSet().toString());
-        System.out.println(module.getGrammar().followSet().toString());
+        System.out.println(module.getGrammar().getFirstSet().toString());
+        System.out.println(module.getGrammar().getFollowSet().toString());
         System.out.println("Compilation time: " + (System.currentTimeMillis() - current));
         return parser;
     }
@@ -47,8 +47,8 @@ public class ParserTest {
         final T parser = new ParserGenerator(module).generate(interfaceToImplement);
         System.out.println(parser.meta().sourceCode());
         System.out.println(module.getGrammar().toString());
-        System.out.println(module.getGrammar().firstSet().toString());
-        System.out.println(module.getGrammar().followSet().toString());
+        System.out.println(module.getGrammar().getFirstSet().toString());
+        System.out.println(module.getGrammar().getFollowSet().toString());
         System.out.println("Compilation time: " + (System.currentTimeMillis() - current));
         return parser;
     }
@@ -67,7 +67,7 @@ public class ParserTest {
 
     static String unexpectedToken(final TestTerminal testTerminal, final long row, final long columt) {
         return String.format("Unexpected token: Token{tag=%1$s, value=%1$s, row=%2$d, column=%3$d}",
-                testTerminal.getTerminal().tag().value(),
+                testTerminal.getTerminal().getTag().getValue(),
                 row, columt);
     }
 

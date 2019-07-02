@@ -10,9 +10,9 @@ public class DependencyTest {
     public void full() {
         final TestDependency testDependency = new TestDependency();
         final Dependency<TestDependency> dependency = new Dependency.Builder<TestDependency>()
-                .clazz(TestDependency.class)
-                .name("test")
-                .instance(testDependency)
+                .setClazz(TestDependency.class)
+                .setName("test")
+                .setInstance(testDependency)
                 .build();
         assertEquals(TestDependency.class, dependency.getClazz());
         assertEquals("test", dependency.getName());
@@ -22,11 +22,11 @@ public class DependencyTest {
     @Test
     public void without_instance() {
         final Dependency<TestDependency> dependency = new Dependency.Builder<TestDependency>()
-                .clazz(TestDependency.class)
-                .name("test")
+                .setClazz(TestDependency.class)
+                .setName("test")
                 .build();
-        assertEquals(TestDependency.class, dependency.clazz());
-        assertEquals("test", dependency.name());
+        assertEquals(TestDependency.class, dependency.getClazz());
+        assertEquals("test", dependency.getName());
         assertEquals(TestDependency.class, dependency.instance().getClass());
     }
 
@@ -34,8 +34,8 @@ public class DependencyTest {
     public void without_instance_and_default_constructor() {
         try {
             new Dependency.Builder<TestDependencyWithoutDefaultConstructor>()
-                    .clazz(TestDependencyWithoutDefaultConstructor.class)
-                    .name("test")
+                    .setClazz(TestDependencyWithoutDefaultConstructor.class)
+                    .setName("test")
                     .build();
             fail("Excepted exception");
         } catch (RuntimeException e) {

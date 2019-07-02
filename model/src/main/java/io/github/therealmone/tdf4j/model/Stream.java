@@ -24,11 +24,12 @@ import java.util.function.Supplier;
 
 @Value.Immutable
 public interface Stream<T> {
-    Supplier<T> generator();
+
+    Supplier<T> getGenerator();
 
     @Nullable
     default T next() {
-        return generator().get();
+        return getGenerator().get();
     }
 
     default void forEach(final Consumer<? super T> action) {
@@ -52,7 +53,7 @@ public interface Stream<T> {
         }
         final Cursor cursor = new Cursor();
         return new Stream.Builder<T>()
-                .generator(() -> {
+                .setGenerator(() -> {
                     if(list.size() > cursor.getValue()) {
                         cursor.increase();
                         return list.get(cursor.getValue() - 1);

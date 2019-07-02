@@ -26,30 +26,30 @@ import java.util.List;
 @Value.Immutable
 public abstract class ParserTemplate implements Buildable {
 
-    public abstract String pack();
+    public abstract String getPackage();
 
-    public abstract String[] imports();
+    public abstract String[] getImports();
 
-    public abstract String className();
+    public abstract String getClassName();
 
-    public abstract Environment environment();
+    public abstract Environment getEnvironment();
 
-    public abstract String initProd();
+    public abstract String getAxiom();
 
-    public abstract List<MethodTemplate> methods();
+    public abstract List<MethodTemplate> getMethods();
 
-    public abstract String interfaceToImplement();
+    public abstract String getInterface();
 
     @Override
     public String build() {
         final ST template = Template.PARSER.template()
-                .add("package", pack())
-                .add("imports", imports())
-                .add("className", className())
-                .add("environment", environment())
-                .add("initProd", initProd())
-                .add("interface", interfaceToImplement());
-        methods().forEach(method -> template.add("methods", method.build()));
+                .add("package", getPackage())
+                .add("imports", getImports())
+                .add("className", getClassName())
+                .add("environment", getEnvironment())
+                .add("initProd", getAxiom())
+                .add("interface", getInterface());
+        getMethods().forEach(method -> template.add("methods", method.build()));
         return template.render();
     }
 

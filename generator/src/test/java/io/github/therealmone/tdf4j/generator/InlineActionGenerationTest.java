@@ -36,7 +36,7 @@ public class InlineActionGenerationTest extends ParserTest {
             @Override
             public void configure() {
                 environment()
-                        .dependencies(
+                        .setDependencies(
                                 dependency(List.class, "list", test),
                                 dependency(HashMap.class, "hashmap")
                         );
@@ -67,7 +67,7 @@ public class InlineActionGenerationTest extends ParserTest {
             @Override
             public void configure() {
                 environment()
-                        .dependencies(
+                        .setDependencies(
                                 dependency(List.class, "list", test),
                                 dependency(HashMap.class, "hashmap")
                         );
@@ -76,9 +76,9 @@ public class InlineActionGenerationTest extends ParserTest {
                                 t("A"),
                                 t("B"),
                                 inline(
-                                        "assert ast.onCursor().asRoot().children().size() == 2;\n" +
-                                                "list.add(ast.onCursor().asRoot().children().get(0).asLeaf().token().value());\n" +
-                                                "hashmap.put(\"key\", ast.onCursor().asRoot().children().get(1).asLeaf().token().value());\n" +
+                                        "assert ast.onCursor().asRoot().getChildren().size() == 2;\n" +
+                                                "list.add(ast.onCursor().asRoot().getChildren().get(0).asLeaf().getToken().getValue());\n" +
+                                                "hashmap.put(\"key\", ast.onCursor().asRoot().getChildren().get(1).asLeaf().getToken().getValue());\n" +
                                                 "list.add(hashmap.get(\"key\"));\n" +
                                                 "System.out.println(\"inline action done\");"
                                 ),
@@ -100,7 +100,7 @@ public class InlineActionGenerationTest extends ParserTest {
             @Override
             public void configure() {
                 environment()
-                        .dependencies(
+                        .setDependencies(
                                 dependency(List.class, "list", test),
                                 dependency(HashMap.class, "hashmap")
                         );

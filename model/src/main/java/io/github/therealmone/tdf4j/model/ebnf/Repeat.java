@@ -24,13 +24,13 @@ public abstract class Repeat extends AbstractElement {
         return Kind.REPEAT;
     }
 
-    public abstract Element[] elements();
+    public abstract Element[] getElements();
 
     public static class Builder extends ImmutableRepeat.Builder {
     }
 
     @Override
     public String toString() {
-        return "{" + toStringGroup(elements()) + "}";
+        return "{" + toStringGroup(getElements()) + "}";
     }
 }

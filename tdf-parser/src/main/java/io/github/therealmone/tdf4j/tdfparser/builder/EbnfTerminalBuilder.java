@@ -27,7 +27,7 @@ public class EbnfTerminalBuilder extends AbstractEbnfElementBuilder<Terminal.Tag
     @Override
     public Terminal.Tag build(final ASTNode tree) {
         return new Terminal.Tag.Builder()
-                .value(tree.children().get(0).asLeaf().token().value())
+                .setValue(tree.getChildren().get(0).asLeaf().getToken().getValue())
                 .build();
     }
 

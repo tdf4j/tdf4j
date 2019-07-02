@@ -1,7 +1,7 @@
 package io.github.therealmone.tdf4j.module.parser;
 
-import io.github.therealmone.tdf4j.model.ebnf.Grammar;
-import io.github.therealmone.tdf4j.model.ebnf.Production;
+import io.github.therealmone.tdf4j.model.Grammar;
+import io.github.therealmone.tdf4j.model.Production;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -21,19 +21,19 @@ public class AbstractParserModuleTest {
             }
         }.build();
         final Grammar grammar = module.getGrammar();
-        assertEquals(2, grammar.productions().size());
-        assertEquals("prod1", grammar.initProduction());
+        assertEquals(2, grammar.getProductions().size());
+        assertEquals("prod1", grammar.getAxiom());
         {
-            assertEquals("prod2", grammar.productions().get(0).identifier().identifier());
-            assertEquals(2, grammar.productions().get(0).elements().size());
-            assertEquals("ele1", grammar.productions().get(0).elements().get(0).asNonTerminal().identifier());
-            assertEquals("ele2", grammar.productions().get(0).elements().get(1).asNonTerminal().identifier());
+            assertEquals("prod2", grammar.getProductions().get(0).getIdentifier().getIdentifier());
+            assertEquals(2, grammar.getProductions().get(0).getElements().size());
+            assertEquals("ele1", grammar.getProductions().get(0).getElements().get(0).asNonTerminal().getIdentifier());
+            assertEquals("ele2", grammar.getProductions().get(0).getElements().get(1).asNonTerminal().getIdentifier());
         }
         {
-            assertEquals("prod1", grammar.productions().get(1).identifier().identifier());
-            assertEquals(2, grammar.productions().get(1).elements().size());
-            assertEquals("ele1", grammar.productions().get(1).elements().get(0).asTerminalTag().value());
-            assertEquals("ele2", grammar.productions().get(1).elements().get(1).asTerminalTag().value());
+            assertEquals("prod1", grammar.getProductions().get(1).getIdentifier().getIdentifier());
+            assertEquals(2, grammar.getProductions().get(1).getElements().size());
+            assertEquals("ele1", grammar.getProductions().get(1).getElements().get(0).asTerminalTag().getValue());
+            assertEquals("ele2", grammar.getProductions().get(1).getElements().get(1).asTerminalTag().getValue());
         }
     }
 
@@ -44,7 +44,7 @@ public class AbstractParserModuleTest {
             public void configure() {
             }
         }.build();
-        assertEquals(0, module.getGrammar().productions().size());
+        assertEquals(0, module.getGrammar().getProductions().size());
     }
 
     @Test(expected = RuntimeException.class)
@@ -92,48 +92,48 @@ public class AbstractParserModuleTest {
         }.build();
 
         final Grammar grammar = module.getGrammar();
-        assertEquals(1, grammar.productions().size());
-        assertEquals("prod1", grammar.initProduction());
-        final Production production = grammar.productions().get(0);
-        assertEquals("prod1", production.identifier().identifier());
+        assertEquals(1, grammar.getProductions().size());
+        assertEquals("prod1", grammar.getAxiom());
+        final Production production = grammar.getProductions().get(0);
+        assertEquals("prod1", production.getIdentifier().getIdentifier());
 
         //.then(optional(name("name1"), name("name2"), name("name3")))
         {
-            assertTrue(production.elements().get(0).isOptional());
-            assertEquals(3, production.elements().get(0).asOptional().elements().length);
-            assertTrue(production.elements().get(0).asOptional().elements()[0].isTerminalTag());
-            assertTrue(production.elements().get(0).asOptional().elements()[1].isTerminalTag());
-            assertTrue(production.elements().get(0).asOptional().elements()[2].isTerminalTag());
-            assertEquals("name1", production.elements().get(0).asOptional().elements()[0].asTerminalTag().value());
-            assertEquals("name2", production.elements().get(0).asOptional().elements()[1].asTerminalTag().value());
-            assertEquals("name3", production.elements().get(0).asOptional().elements()[2].asTerminalTag().value());
+            assertTrue(production.getElements().get(0).isOptional());
+            assertEquals(3, production.getElements().get(0).asOptional().getElements().length);
+            assertTrue(production.getElements().get(0).asOptional().getElements()[0].isTerminalTag());
+            assertTrue(production.getElements().get(0).asOptional().getElements()[1].isTerminalTag());
+            assertTrue(production.getElements().get(0).asOptional().getElements()[2].isTerminalTag());
+            assertEquals("name1", production.getElements().get(0).asOptional().getElements()[0].asTerminalTag().getValue());
+            assertEquals("name2", production.getElements().get(0).asOptional().getElements()[1].asTerminalTag().getValue());
+            assertEquals("name3", production.getElements().get(0).asOptional().getElements()[2].asTerminalTag().getValue());
         }
 
         //.then(optional())
         {
-            assertTrue(production.elements().get(1).isOptional());
-            assertEquals(0, production.elements().get(1).asOptional().elements().length);
+            assertTrue(production.getElements().get(1).isOptional());
+            assertEquals(0, production.getElements().get(1).asOptional().getElements().length);
         }
 
         //.then(optional(or(name("name4"), name("name5"))))
         {
-            assertTrue(production.elements().get(2).isOptional());
-            assertEquals(1, production.elements().get(2).asOptional().elements().length);
-            assertTrue(production.elements().get(2).asOptional().elements()[0].isOr());
-            assertTrue(production.elements().get(2).asOptional().elements()[0].asOr().first().isNonTerminal());
-            assertTrue(production.elements().get(2).asOptional().elements()[0].asOr().second().isNonTerminal());
-            assertEquals("name4", production.elements().get(2).asOptional().elements()[0].asOr().first().asNonTerminal().identifier());
-            assertEquals("name5", production.elements().get(2).asOptional().elements()[0].asOr().second().asNonTerminal().identifier());
+            assertTrue(production.getElements().get(2).isOptional());
+            assertEquals(1, production.getElements().get(2).asOptional().getElements().length);
+            assertTrue(production.getElements().get(2).asOptional().getElements()[0].isOr());
+            assertTrue(production.getElements().get(2).asOptional().getElements()[0].asOr().getFirst().isNonTerminal());
+            assertTrue(production.getElements().get(2).asOptional().getElements()[0].asOr().getSecond().isNonTerminal());
+            assertEquals("name4", production.getElements().get(2).asOptional().getElements()[0].asOr().getFirst().asNonTerminal().getIdentifier());
+            assertEquals("name5", production.getElements().get(2).asOptional().getElements()[0].asOr().getSecond().asNonTerminal().getIdentifier());
         }
 
         //.then(optional(optional(), name("name6")));
         {
-            assertTrue(production.elements().get(3).isOptional());
-            assertEquals(2, production.elements().get(3).asOptional().elements().length);
-            assertTrue(production.elements().get(3).asOptional().elements()[0].isOptional());
-            assertEquals(0, production.elements().get(3).asOptional().elements()[0].asOptional().elements().length);
-            assertTrue(production.elements().get(3).asOptional().elements()[1].isTerminalTag());
-            assertEquals("name6", production.elements().get(3).asOptional().elements()[1].asTerminalTag().value());
+            assertTrue(production.getElements().get(3).isOptional());
+            assertEquals(2, production.getElements().get(3).asOptional().getElements().length);
+            assertTrue(production.getElements().get(3).asOptional().getElements()[0].isOptional());
+            assertEquals(0, production.getElements().get(3).asOptional().getElements()[0].asOptional().getElements().length);
+            assertTrue(production.getElements().get(3).asOptional().getElements()[1].isTerminalTag());
+            assertEquals("name6", production.getElements().get(3).asOptional().getElements()[1].asTerminalTag().getValue());
         }
 
         //toString()
@@ -162,9 +162,9 @@ public class AbstractParserModuleTest {
         }.build();
 
         final Grammar grammar = module.getGrammar();
-        assertEquals(1, grammar.productions().size());
-        assertEquals("prod1", grammar.initProduction());
-        assertEquals("prod1 := {name1,name2,name3},{},{name4|name5|name6},{{},[]}", grammar.productions().get(0).toString());
+        assertEquals(1, grammar.getProductions().size());
+        assertEquals("prod1", grammar.getAxiom());
+        assertEquals("prod1 := {name1,name2,name3},{},{name4|name5|name6},{{},[]}", grammar.getProductions().get(0).toString());
     }
 
     @Test
@@ -181,9 +181,9 @@ public class AbstractParserModuleTest {
             }
         }.build();
         final Grammar grammar = module.getGrammar();
-        assertEquals(1, grammar.productions().size());
-        assertEquals("prod1", grammar.initProduction());
-        assertEquals("prod1 := 5*A,1000000*0*A,2*(A,B),3*[A,B],4*{A,B}", grammar.productions().get(0).toString());
+        assertEquals(1, grammar.getProductions().size());
+        assertEquals("prod1", grammar.getAxiom());
+        assertEquals("prod1 := 5*A,1000000*0*A,2*(A,B),3*[A,B],4*{A,B}", grammar.getProductions().get(0).toString());
     }
 
     @Test
@@ -199,9 +199,9 @@ public class AbstractParserModuleTest {
             }
         }.build();
         final Grammar grammar = module.getGrammar();
-        assertEquals(1, grammar.productions().size());
-        assertEquals("prod1", grammar.initProduction());
-        assertEquals("prod1 := (name1,name2)|name3,(),([name4],name5,name6),([]|{},())", grammar.productions().get(0).toString());
+        assertEquals(1, grammar.getProductions().size());
+        assertEquals("prod1", grammar.getAxiom());
+        assertEquals("prod1 := (name1,name2)|name3,(),([name4],name5,name6),([]|{},())", grammar.getProductions().get(0).toString());
     }
 
     @Test
@@ -223,9 +223,9 @@ public class AbstractParserModuleTest {
             }
         }.build();
         final Grammar grammar = module.getGrammar();
-        assertEquals(1, grammar.productions().size());
-        assertEquals("prod1", grammar.initProduction());
-        assertEquals("prod1 := name1|name2|name3|(name4,name5)", grammar.productions().get(0).toString());
+        assertEquals(1, grammar.getProductions().size());
+        assertEquals("prod1", grammar.getAxiom());
+        assertEquals("prod1 := name1|name2|name3|(name4,name5)", grammar.getProductions().get(0).toString());
     }
 
     @Test
@@ -237,7 +237,7 @@ public class AbstractParserModuleTest {
                 public void configure() {
                 }
             }.build();
-            assertNull(module.getGrammar().initProduction());
+            assertNull(module.getGrammar().getAxiom());
         }
 
         //if init prod was not specified - first prod
@@ -250,7 +250,7 @@ public class AbstractParserModuleTest {
                     prod("prod3");
                 }
             }.build();
-            assertEquals("prod1", module.getGrammar().initProduction());
+            assertEquals("prod1", module.getGrammar().getAxiom());
         }
 
         //specified
@@ -264,7 +264,7 @@ public class AbstractParserModuleTest {
                     initProd("prod3");
                 }
             }.build();
-            assertEquals("prod3", module.getGrammar().initProduction());
+            assertEquals("prod3", module.getGrammar().getAxiom());
         }
     }
 
@@ -279,8 +279,8 @@ public class AbstractParserModuleTest {
             }
         }.build();
         final Grammar grammar = module.getGrammar();
-        assertEquals(1, grammar.productions().size());
-        assertEquals("prod1", grammar.initProduction());
-        assertEquals("prod1 := A|B|C,[C]|A", grammar.productions().get(0).toString());
+        assertEquals(1, grammar.getProductions().size());
+        assertEquals("prod1", grammar.getAxiom());
+        assertEquals("prod1 := A|B|C,[C]|A", grammar.getProductions().get(0).toString());
     }
 }

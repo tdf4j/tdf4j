@@ -17,6 +17,7 @@ package io.github.therealmone.tdf4j.module.parser;
 
 import io.github.therealmone.tdf4j.model.Dependency;
 import io.github.therealmone.tdf4j.model.Environment;
+import io.github.therealmone.tdf4j.model.Production;
 import io.github.therealmone.tdf4j.model.ebnf.*;
 
 public interface BindMethods {

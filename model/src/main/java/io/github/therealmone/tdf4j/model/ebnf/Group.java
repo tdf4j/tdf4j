@@ -24,13 +24,13 @@ public abstract class Group extends AbstractElement {
         return Kind.GROUP;
     }
 
-    public abstract Element[] elements();
+    public abstract Element[] getElements();
 
     public static class Builder extends ImmutableGroup.Builder {
     }
 
     @Override
     public String toString() {
-        return "(" + toStringGroup(elements()) + ")";
+        return "(" + toStringGroup(getElements()) + ")";
     }
 }
