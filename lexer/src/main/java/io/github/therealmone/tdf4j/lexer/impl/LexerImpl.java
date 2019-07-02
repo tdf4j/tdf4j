@@ -40,7 +40,7 @@ public class LexerImpl implements Lexer {
 
     @Override
     @Nonnull
-    public List<Token> analyze(final String input) {
+    public List<Token> analyze(final CharSequence input) {
         final List<Token> tokens = new ArrayList<>();
         final Stream<Token> stream = stream(input);
         stream.forEach(tokens::add);
@@ -49,7 +49,7 @@ public class LexerImpl implements Lexer {
 
     @Nonnull
     @Override
-    public Stream<Token> stream(final String input) {
+    public Stream<Token> stream(final CharSequence input) {
         listener.reset();
         final StringBuilder in = new StringBuilder(input);
         return new Stream.Builder<Token>().generator(() -> nextToken(in)).build();

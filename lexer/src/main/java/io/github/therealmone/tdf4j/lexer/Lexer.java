@@ -22,9 +22,11 @@ import javax.annotation.Nonnull;
 import java.util.List;
 
 public interface Lexer {
-    @Nonnull
-    List<Token> analyze(final String input);
 
     @Nonnull
-    Stream<Token> stream(final String input);
+    List<Token> analyze(final CharSequence input);
+
+    @Nonnull
+    Stream<Token> stream(final CharSequence input);
+
 }
