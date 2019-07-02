@@ -15,8 +15,8 @@
  */
 package io.github.therealmone.tdf4j.module.parser;
 
-import io.github.therealmone.tdf4j.commons.Environment;
-import io.github.therealmone.tdf4j.commons.Module;
+import io.github.therealmone.tdf4j.model.Environment;
+import io.github.therealmone.tdf4j.model.Module;
 import io.github.therealmone.tdf4j.model.ebnf.First;
 import io.github.therealmone.tdf4j.model.ebnf.Follow;
 import io.github.therealmone.tdf4j.model.ebnf.Grammar;

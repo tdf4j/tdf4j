@@ -13,16 +13,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.therealmone.tdf4j.commons;
+package io.github.therealmone.tdf4j.model;
 
-public interface BindStrategy<K, B, R> {
-    B bind(K key);
+import org.immutables.value.Value;
 
-    R build();
+@Value.Immutable
+public interface Dependency<T> {
 
-    interface WithoutArgs<B, R> {
-        B bind();
+    Class<? extends T> clazz();
 
-        R build();
+    default Class<? extends T> getClazz() {
+        return clazz();
+    }
+
+    String name();
+
+    default String getName() {
+        return name();
+    }
+
+    @Value.Default
+    default T instance() {
+        try {
+            return clazz().getDeclaredConstructor().newInstance();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    class Builder<T> extends ImmutableDependency.Builder<T> {
     }
 }

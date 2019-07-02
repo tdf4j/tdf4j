@@ -15,7 +15,7 @@
  */
 package io.github.therealmone.tdf4j.tdfparser.constructor;
 
-import io.github.therealmone.tdf4j.commons.Environment;
+import io.github.therealmone.tdf4j.model.Environment;
 
 import java.util.ArrayList;
 import java.util.List;

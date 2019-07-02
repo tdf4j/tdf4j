@@ -15,7 +15,7 @@
  */
 package io.github.therealmone.tdf4j.parser;
 
-import io.github.therealmone.tdf4j.commons.Stream;
+import io.github.therealmone.tdf4j.model.Stream;
 import io.github.therealmone.tdf4j.model.Token;
 import io.github.therealmone.tdf4j.model.ast.AST;
 

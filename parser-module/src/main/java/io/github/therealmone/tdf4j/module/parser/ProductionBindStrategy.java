@@ -15,7 +15,7 @@
  */
 package io.github.therealmone.tdf4j.module.parser;
 
-import io.github.therealmone.tdf4j.commons.BindStrategy;
+import io.github.therealmone.tdf4j.model.BindStrategy;
 import io.github.therealmone.tdf4j.model.ebnf.ImmutableProduction;
 import io.github.therealmone.tdf4j.model.ebnf.Production;
 

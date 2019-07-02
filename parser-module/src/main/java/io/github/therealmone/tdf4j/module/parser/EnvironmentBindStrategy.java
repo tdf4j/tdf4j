@@ -15,8 +15,8 @@
  */
 package io.github.therealmone.tdf4j.module.parser;
 
-import io.github.therealmone.tdf4j.commons.BindStrategy;
-import io.github.therealmone.tdf4j.commons.Environment;
+import io.github.therealmone.tdf4j.model.BindStrategy;
+import io.github.therealmone.tdf4j.model.Environment;
 
 public class EnvironmentBindStrategy implements BindStrategy.WithoutArgs<Environment.Builder, Environment> {
     private Environment.Builder environment;

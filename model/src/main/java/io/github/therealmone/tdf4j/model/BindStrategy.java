@@ -13,7 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.therealmone.tdf4j.commons;
+package io.github.therealmone.tdf4j.model;
 
-public interface Module {
+public interface BindStrategy<K, B, R> {
+    B bind(K key);
+
+    R build();
+
+    interface WithoutArgs<B, R> {
+        B bind();
+
+        R build();
+    }
 }

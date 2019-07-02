@@ -14,12 +14,4 @@
   <description>Tdf4j model</description>
   <url>https://github.com/therealmonE/tdf4j/tree/master/model</url>
 
-  <dependencies>
-    <dependency>
-      <groupId>io.github.therealmone.tdf4j</groupId>
-      <artifactId>commons-lib</artifactId>
-      <version>1.0.1-SNAPSHOT</version>
-    </dependency>
-  </dependencies>
-
 </project>

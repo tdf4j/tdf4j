@@ -15,7 +15,7 @@
  */
 package io.github.therealmone.tdf4j.generator.templates;
 
-import io.github.therealmone.tdf4j.commons.Environment;
+import io.github.therealmone.tdf4j.model.Environment;
 import io.github.therealmone.tdf4j.generator.Template;
 import org.immutables.value.Value;
 import org.stringtemplate.v4.ST;

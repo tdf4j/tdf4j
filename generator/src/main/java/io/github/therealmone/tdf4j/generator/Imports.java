@@ -20,7 +20,6 @@ public enum Imports {
     MODEL("io.github.therealmone.tdf4j.model.*"),
     MODEL_AST("io.github.therealmone.tdf4j.model.ast.*"),
     MODEL_EBNF("io.github.therealmone.tdf4j.model.ebnf.*"),
-    COMMONS("io.github.therealmone.tdf4j.commons.*"),
     UTILS("io.github.therealmone.tdf4j.utils.*"),
     JAVA_UTIL("java.util.*");
 

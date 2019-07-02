@@ -16,7 +16,7 @@
 package io.github.therealmone.tdf4j.module.lexer;
 
 import io.github.therealmone.tdf4j.model.ebnf.Terminal;
-import io.github.therealmone.tdf4j.commons.BindStrategy;
+import io.github.therealmone.tdf4j.model.BindStrategy;
 
 import java.util.List;
 
