@@ -15,7 +15,7 @@
  */
 package io.github.therealmone.tdf4j.module.lexer;
 
-import io.github.therealmone.tdf4j.commons.Module;
+import io.github.therealmone.tdf4j.model.Module;
 import io.github.therealmone.tdf4j.model.ebnf.Terminal;
 import java.util.*;
 

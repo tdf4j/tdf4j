@@ -1,4 +1,4 @@
-package io.github.therealmone.tdf4j.commons;
+package io.github.therealmone.tdf4j.model;
 
 import org.junit.Test;
 

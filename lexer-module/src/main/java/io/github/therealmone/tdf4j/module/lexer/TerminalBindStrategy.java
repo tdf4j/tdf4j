@@ -15,7 +15,7 @@
  */
 package io.github.therealmone.tdf4j.module.lexer;
 
-import io.github.therealmone.tdf4j.commons.BindStrategy;
+import io.github.therealmone.tdf4j.model.BindStrategy;
 import io.github.therealmone.tdf4j.model.ebnf.ImmutableTerminal;
 import io.github.therealmone.tdf4j.model.ebnf.Terminal;
 

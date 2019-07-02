@@ -13,10 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.therealmone.tdf4j.commons;
+@ParametersAreNonnullByDefault
+@Value.Style(
+        strictBuilder = true,
+        passAnnotations = {Nullable.class, Nonnull.class}
+)
+package io.github.therealmone.tdf4j.model;
 
-public interface Revertable {
-    void revert(final Anchor anchor);
+import org.immutables.value.Value;
 
-    Anchor setAnchor();
-}
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;

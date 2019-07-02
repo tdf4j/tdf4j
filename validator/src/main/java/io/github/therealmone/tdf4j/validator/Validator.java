@@ -15,7 +15,7 @@
  */
 package io.github.therealmone.tdf4j.validator;
 
-import io.github.therealmone.tdf4j.commons.Module;
+import io.github.therealmone.tdf4j.model.Module;
 import io.github.therealmone.tdf4j.module.lexer.AbstractLexerModule;
 import io.github.therealmone.tdf4j.module.parser.AbstractParserModule;
 import io.github.therealmone.tdf4j.validator.impl.ValidatorImpl;

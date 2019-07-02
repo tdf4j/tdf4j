@@ -1,4 +1,4 @@
-package io.github.therealmone.tdf4j.commons;
+package io.github.therealmone.tdf4j.model;
 
 import org.junit.Test;
 
@@ -40,7 +40,7 @@ public class DependencyTest {
             fail("Excepted exception");
         } catch (RuntimeException e) {
             assertEquals(NoSuchMethodException.class, e.getCause().getClass());
-            assertEquals("io.github.therealmone.tdf4j.commons.DependencyTest$TestDependencyWithoutDefaultConstructor.<init>()", e.getCause().getMessage());
+            assertEquals("io.github.therealmone.tdf4j.model.DependencyTest$TestDependencyWithoutDefaultConstructor.<init>()", e.getCause().getMessage());
         }
     }
 

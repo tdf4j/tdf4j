@@ -1,6 +1,6 @@
 package io.github.therealmone.tdf4j.validator;
 
-import io.github.therealmone.tdf4j.commons.Module;
+import io.github.therealmone.tdf4j.model.Module;
 
 import static org.junit.Assert.*;
 

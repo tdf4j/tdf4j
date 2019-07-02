@@ -15,7 +15,7 @@
  */
 package io.github.therealmone.tdf4j.generator.utils;
 
-import io.github.therealmone.tdf4j.commons.Dependency;
+import io.github.therealmone.tdf4j.model.Dependency;
 import io.github.therealmone.tdf4j.generator.templates.ParserTemplate;
 import io.github.therealmone.tdf4j.parser.MetaInf;
 

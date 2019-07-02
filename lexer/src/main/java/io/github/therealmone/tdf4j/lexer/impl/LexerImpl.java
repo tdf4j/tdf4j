@@ -15,7 +15,7 @@
  */
 package io.github.therealmone.tdf4j.lexer.impl;
 
-import io.github.therealmone.tdf4j.commons.Stream;
+import io.github.therealmone.tdf4j.model.Stream;
 import io.github.therealmone.tdf4j.model.ebnf.Terminal;
 import io.github.therealmone.tdf4j.model.Token;
 import io.github.therealmone.tdf4j.lexer.SymbolListener;

@@ -15,7 +15,7 @@
  */
 package io.github.therealmone.tdf4j.generator.impl;
 
-import io.github.therealmone.tdf4j.commons.Dependency;
+import io.github.therealmone.tdf4j.model.Dependency;
 import io.github.therealmone.tdf4j.generator.Generator;
 import io.github.therealmone.tdf4j.model.ebnf.NonTerminal;
 import io.github.therealmone.tdf4j.model.ebnf.Production;
