@@ -275,6 +275,12 @@ public class LexerTest {
                 token("OP_SUM", "+"));
     }
 
+    @Test
+    public void lambda() {
+        assertLexerReturns("->",
+                token("LAMBDA", "->"));
+    }
+
     private void assertLexerReturns(final String input, final Token... tokens) {
         final List<Token> fromLexer = lexer.analyze(input);
         assertEquals(tokens.length, fromLexer.size());

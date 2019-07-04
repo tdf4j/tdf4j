@@ -222,10 +222,8 @@ syntax
 
 
     terminal_description =
-            TERMINAL_TAG
-        ,   <"terminals.push(new TerminalConstructor(lexerModule.tokenize(lastValue(ast))));">
-        ,   STRING
-        ,   <"terminals.peek().setPattern(stringProcessor.process(lastValue(ast)));">
+            TERMINAL_TAG -> "terminals.push(new TerminalConstructor(lexerModule.tokenize(token.getValue())));"
+        ,   STRING -> "terminals.peek().setPattern(stringProcessor.process(token.getValue()));"
         ,   [terminal_parameters]
         ,   <"terminals.pop().construct();">
         ;
@@ -246,15 +244,13 @@ syntax
     terminal_parameter_priority =
             TERMINAL_PARAMETER_PRIORITY
         ,   COLON
-        ,   INTEGER
-        ,   <"terminals.peek().setPriority(lastValue(ast));">
+        ,   INTEGER -> "terminals.peek().setPriority(token.getValue());"
         ;
 
     terminal_parameter_hidden =
             TERMINAL_PARAMETER_HIDDEN
         ,   COLON
-        ,   BOOLEAN
-        ,   <"terminals.peek().setHidden(lastValue(ast));">
+        ,   BOOLEAN -> "terminals.peek().setHidden(token.getValue());"
         ;
 
     terminal_parameter_pattern_flag =
@@ -287,14 +283,12 @@ syntax
 
     env_import =
             KEY_IMPORT
-        ,   STRING
-        ,   <"environments.peek().addPackage(stringProcessor.process(lastValue(ast)));">
+        ,   STRING -> "environments.peek().addPackage(stringProcessor.process(token.getValue()));"
         ;
 
     env_code =
             KEY_CODE
-        ,   STRING
-        ,   <"environments.peek().setCode(stringProcessor.process(lastValue(ast)));">
+        ,   STRING -> "environments.peek().setCode(stringProcessor.process(token.getValue()));"
         ;
 
     syntax_prod =
@@ -303,8 +297,7 @@ syntax
         ;
 
     production_description =
-            NON_TERMINAL
-        ,   <"productions.push(new ProductionConstructor(parserModule.prod(lastValue(ast))));">
+            NON_TERMINAL -> "productions.push(new ProductionConstructor(parserModule.prod(token.getValue())));"
         ,   OP_ASSIGN
         ,   ebnf_elements_set
         ,   <"productions.peek().setElements(lastNode(ast));">
@@ -330,6 +323,7 @@ syntax
 
     ebnf_terminal =
             TERMINAL_TAG
+        ,   [LAMBDA, STRING]
         ;
 
     ebnf_non_terminal =

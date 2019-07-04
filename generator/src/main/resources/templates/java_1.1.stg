@@ -117,6 +117,12 @@ for(int i<repetition.hash> = 0; i<repetition.hash> \< <repetition.times>; i<repe
 terminal_tag(terminal_tag) ::= <<
 if(stream.peek() != null && stream.peek().getTag().getValue().equalsIgnoreCase("<terminal_tag.value>")) {
     ast.addLeaf(stream.next());
+    <if(terminal_tag.tokenAction)>
+    ((Consumer\<Token>) token -> {
+        <terminal_tag.tokenAction>
+    }).accept(ast.moveCursor(ASTCursor.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().getToken());
+    ast.moveCursor(ASTCursor.Movement.TO_PARENT);
+    <endif>
 } else {
     throw new UnexpectedTokenException(stream.peek());
 }

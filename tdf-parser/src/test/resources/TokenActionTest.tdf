@@ -1,0 +1,15 @@
+lexis
+
+    A "A"
+    B "B"
+    C "C"
+
+syntax
+
+    prod1 =
+            A -> "TokenActionTest.tokens.add(token.getValue());"
+        ,   B
+        ,   C -> "TokenActionTest.tokens.add(token.getValue());"
+        ;
+
+$

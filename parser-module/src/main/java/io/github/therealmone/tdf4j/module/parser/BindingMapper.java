@@ -94,6 +94,11 @@ public abstract class BindingMapper implements BindMethods {
     }
 
     @Override
+    public Terminal.Tag t(final String tag, final String tokenAction) {
+        return new Terminal.Tag.Builder().setValue(tag).setTokenAction(tokenAction).build();
+    }
+
+    @Override
     public NonTerminal nt(final String identifier) {
         return new NonTerminal.Builder().setValue(identifier).build();
     }

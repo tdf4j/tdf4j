@@ -68,6 +68,7 @@ public class TdfLexerModule extends AbstractLexerModule {
         tokenize("RIGHT_INLINE_ACTION_BRACKET").pattern(">");
         tokenize("OP_ASSIGN").pattern("=");
         tokenize("OP_SUM").pattern("\\+");
+        tokenize("LAMBDA").pattern("->");
 
         tokenize("WS").pattern("\\s|\\n|\\r").priority(Integer.MAX_VALUE).hidden(true);
         tokenize("SINGLE_LINE_COMMENT").pattern("//.*(\n|\r|\r\n|\n\r)").priority(Integer.MAX_VALUE).hidden(true);

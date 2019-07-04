@@ -45,6 +45,8 @@ public interface BindMethods {
 
     Terminal.Tag t(final String tag);
 
+    Terminal.Tag t(final String tag, final String tokenAction);
+
     NonTerminal nt(final String identifier);
 
     InlineAction inline(final String code);

@@ -14,6 +14,8 @@ public class TerminalAdaptor implements ModelAdaptor {
         switch (propertyName) {
             case "value":
                 return terminal.getValue();
+            case "tokenAction":
+                return terminal.getTokenAction();
             default:
                 return null;
         }

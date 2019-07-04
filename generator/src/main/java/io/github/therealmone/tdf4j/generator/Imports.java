@@ -21,7 +21,8 @@ public enum Imports {
     MODEL_AST("io.github.therealmone.tdf4j.model.ast.*"),
     MODEL_EBNF("io.github.therealmone.tdf4j.model.ebnf.*"),
     UTILS("io.github.therealmone.tdf4j.utils.*"),
-    JAVA_UTIL("java.util.*");
+    JAVA_UTIL("java.util.*"),
+    JAVA_UTIL_FUNCTION("java.util.function.*");
 
     private final String value;
 

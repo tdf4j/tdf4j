@@ -90,14 +90,8 @@ public class TdfParserModule extends AbstractParserModule {
 
         prod("terminal_description")
                 .is(
-                        t("TERMINAL_TAG"),
-                        inline(
-                                "terminals.push(new TerminalConstructor(lexerModule.tokenize(lastValue(ast))));\n"
-                        ),
-                        t("STRING"),
-                        inline(
-                                "terminals.peek().setPattern(stringProcessor.process(lastValue(ast)));\n"
-                        ),
+                        t("TERMINAL_TAG", "terminals.push(new TerminalConstructor(lexerModule.tokenize(token.getValue())));"),
+                        t("STRING", "terminals.peek().setPattern(stringProcessor.process(token.getValue()));"),
                         optional(nt("terminal_parameters")),
                         inline(
                                 "terminals.pop().construct();\n"
@@ -125,20 +119,14 @@ public class TdfParserModule extends AbstractParserModule {
                 .is(
                         t("TERMINAL_PARAMETER_PRIORITY"),
                         t("COLON"),
-                        t("INTEGER"),
-                        inline(
-                                "terminals.peek().setPriority(lastValue(ast));\n"
-                        )
+                        t("INTEGER", "terminals.peek().setPriority(token.getValue());")
                 );
 
         prod("terminal_parameter_hidden")
                 .is(
                         t("TERMINAL_PARAMETER_HIDDEN"),
                         t("COLON"),
-                        t("BOOLEAN"),
-                        inline(
-                                "terminals.peek().setHidden(lastValue(ast));\n"
-                        )
+                        t("BOOLEAN", "terminals.peek().setHidden(token.getValue());")
                 );
 
         prod("terminal_parameter_pattern_flag")
@@ -183,19 +171,13 @@ public class TdfParserModule extends AbstractParserModule {
         prod("env_import")
                 .is(
                         t("KEY_IMPORT"),
-                        t("STRING"),
-                        inline(
-                                "environments.peek().addPackage(stringProcessor.process(lastValue(ast)));\n"
-                        )
+                        t("STRING", "environments.peek().addPackage(stringProcessor.process(token.getValue()));")
                 );
 
         prod("env_code")
                 .is(
                         t("KEY_CODE"),
-                        t("STRING"),
-                        inline(
-                                "environments.peek().setCode(stringProcessor.process(lastValue(ast)));\n"
-                        )
+                        t("STRING", "environments.peek().setCode(stringProcessor.process(token.getValue()));\n")
                 );
 
         prod("syntax")
@@ -206,10 +188,7 @@ public class TdfParserModule extends AbstractParserModule {
 
         prod("production_description")
                 .is(
-                        t("NON_TERMINAL"),
-                        inline(
-                                "productions.push(new ProductionConstructor(parserModule.prod(lastValue(ast))));\n"
-                        ),
+                        t("NON_TERMINAL", "productions.push(new ProductionConstructor(parserModule.prod(token.getValue())));"),
                         t("OP_ASSIGN"),
                         nt("ebnf_elements_set"),
                         inline(
@@ -243,7 +222,8 @@ public class TdfParserModule extends AbstractParserModule {
 
         prod("ebnf_terminal")
                 .is(
-                        t("TERMINAL_TAG")
+                        t("TERMINAL_TAG"),
+                        optional(t("LAMBDA"), t("STRING"))
                 );
 
         prod("ebnf_non_terminal")

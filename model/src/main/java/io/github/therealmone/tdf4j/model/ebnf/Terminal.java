@@ -17,6 +17,7 @@ package io.github.therealmone.tdf4j.model.ebnf;
 
 import org.immutables.value.Value;
 
+import javax.annotation.Nullable;
 import java.util.regex.Pattern;
 
 @Value.Immutable
@@ -78,6 +79,13 @@ public abstract class Terminal extends AbstractElement {
         }
 
         public abstract String getValue();
+
+        @Nullable
+        @Value.Auxiliary
+        @Value.Default
+        public String getTokenAction() {
+            return null;
+        }
 
         public static class Builder extends ImmutableTag.Builder {
 
