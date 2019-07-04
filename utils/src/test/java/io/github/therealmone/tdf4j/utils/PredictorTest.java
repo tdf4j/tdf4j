@@ -72,7 +72,7 @@ public class PredictorTest {
     }
 
     private NonTerminal nt(final String ident) {
-        return new NonTerminal.Builder().setIdentifier(ident).build();
+        return new NonTerminal.Builder().setValue(ident).build();
     }
 
     private Set<Terminal.Tag> tags(final String ... tags) {

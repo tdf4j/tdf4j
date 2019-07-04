@@ -237,7 +237,7 @@ public class FirstSetCollectorTest {
             add(new Production() {
                 @Override
                 public NonTerminal getIdentifier() {
-                    return new NonTerminal.Builder().setIdentifier("prod1").build();
+                    return new NonTerminal.Builder().setValue("prod1").build();
                 }
 
                 @Override
@@ -340,7 +340,7 @@ public class FirstSetCollectorTest {
     }
 
     private NonTerminal nt(final String identifier) {
-        return new NonTerminal.Builder().setIdentifier(identifier).build();
+        return new NonTerminal.Builder().setValue(identifier).build();
     }
 
     public InlineAction inline(final String code) {
@@ -353,7 +353,7 @@ public class FirstSetCollectorTest {
 
     private static void assertFirstContains(final First first, final String ident, final String ... tags) {
         final Set<String> set = first.getSet()
-                .get(new NonTerminal.Builder().setIdentifier(ident).build())
+                .get(new NonTerminal.Builder().setValue(ident).build())
                 .stream()
                 .map(Terminal.Tag::getValue)
                 .collect(Collectors.toSet());

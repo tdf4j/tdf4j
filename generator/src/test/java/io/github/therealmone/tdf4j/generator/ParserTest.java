@@ -34,7 +34,7 @@ public class ParserTest {
     static Parser generate(final AbstractParserModule module) {
         final long current = System.currentTimeMillis();
         final Parser parser = new ParserGenerator(module).generate();
-        System.out.println(parser.meta().sourceCode());
+        System.out.println(parser.meta().getSourceCode());
         System.out.println(module.getGrammar().toString());
         System.out.println(module.getGrammar().getFirstSet().toString());
         System.out.println(module.getGrammar().getFollowSet().toString());
@@ -45,7 +45,7 @@ public class ParserTest {
     static <T extends Parser> T generate(final AbstractParserModule module, final Class<T> interfaceToImplement) {
         final long current = System.currentTimeMillis();
         final T parser = new ParserGenerator(module).generate(interfaceToImplement);
-        System.out.println(parser.meta().sourceCode());
+        System.out.println(parser.meta().getSourceCode());
         System.out.println(module.getGrammar().toString());
         System.out.println(module.getGrammar().getFirstSet().toString());
         System.out.println(module.getGrammar().getFollowSet().toString());

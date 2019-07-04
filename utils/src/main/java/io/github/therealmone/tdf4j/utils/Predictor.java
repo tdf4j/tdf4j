@@ -44,7 +44,7 @@ public class Predictor {
             final List<String> predictions = new ArrayList<>();
             first.getSet().forEach((ident, set) -> {
                 if(set.contains(token.getTag())) {
-                    predictions.add(ident.getIdentifier());
+                    predictions.add(ident.getValue());
                 }
             });
             cache.put(token.getTag(), predictions);

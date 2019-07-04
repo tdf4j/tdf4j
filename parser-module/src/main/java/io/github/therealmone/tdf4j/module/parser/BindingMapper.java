@@ -95,11 +95,11 @@ public abstract class BindingMapper implements BindMethods {
 
     @Override
     public NonTerminal nt(final String identifier) {
-        return new NonTerminal.Builder().setIdentifier(identifier).build();
+        return new NonTerminal.Builder().setValue(identifier).build();
     }
 
     @Override
-    public void initProd(final String identifier) {
+    public void axiom(final String identifier) {
         this.initProduction = identifier;
     }
 

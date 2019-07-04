@@ -38,7 +38,7 @@ public abstract class Production {
         }
 
         public Builder identifier(final String identifier) {
-            return super.setIdentifier(new NonTerminal.Builder().setIdentifier(identifier).build());
+            return super.setIdentifier(new NonTerminal.Builder().setValue(identifier).build());
         }
     }
 

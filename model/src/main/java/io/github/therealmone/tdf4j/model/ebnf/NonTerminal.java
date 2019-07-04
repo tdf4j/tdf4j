@@ -24,13 +24,13 @@ public abstract class NonTerminal extends AbstractElement {
         return Kind.NON_TERMINAL;
     }
 
-    public abstract String getIdentifier();
+    public abstract String getValue();
 
     public static class Builder extends ImmutableNonTerminal.Builder {
     }
 
     @Override
     public String toString() {
-        return getIdentifier();
+        return getValue();
     }
 }

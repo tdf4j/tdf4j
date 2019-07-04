@@ -26,12 +26,12 @@ public class MetaInfCollector {
 
     public MetaInf collect(ParserTemplate parserTemplate) {
         final MetaInf.Builder builder = new MetaInf.Builder()
-                .pack(parserTemplate.getPackage())
-                .className(parserTemplate.getClassName())
-                .sourceCode(parserTemplate.build())
-                .envImports(parserTemplate.getEnvironment().getPackages())
-                .dependencies(collectDependencies(parserTemplate))
-                .imports(collectImports(parserTemplate));
+                .setPackage(parserTemplate.getPackage())
+                .setClassName(parserTemplate.getClassName())
+                .setSourceCode(parserTemplate.build())
+                .setEnvironmentImports(parserTemplate.getEnvironment().getPackages())
+                .setDependencies(collectDependencies(parserTemplate))
+                .setImports(collectImports(parserTemplate));
 
         return builder.build();
     }

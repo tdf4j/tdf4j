@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.therealmone.tdf4j.generator.templates.logic;
+package io.github.therealmone.tdf4j.generator.templates.adaptor;
 
 import io.github.therealmone.tdf4j.model.ebnf.Element;
 
@@ -62,7 +62,7 @@ public abstract class Prediction {
                 return new ArrayList<>() {{add(element.asTerminalTag().getValue());}};
 
             case NON_TERMINAL:
-                return new ArrayList<>() {{add(element.asNonTerminal().getIdentifier());}};
+                return new ArrayList<>() {{add(element.asNonTerminal().getValue());}};
 
             default: return Collections.emptyList();
     }

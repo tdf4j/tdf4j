@@ -24,13 +24,13 @@ public class AbstractParserModuleTest {
         assertEquals(2, grammar.getProductions().size());
         assertEquals("prod1", grammar.getAxiom());
         {
-            assertEquals("prod2", grammar.getProductions().get(0).getIdentifier().getIdentifier());
+            assertEquals("prod2", grammar.getProductions().get(0).getIdentifier().getValue());
             assertEquals(2, grammar.getProductions().get(0).getElements().size());
-            assertEquals("ele1", grammar.getProductions().get(0).getElements().get(0).asNonTerminal().getIdentifier());
-            assertEquals("ele2", grammar.getProductions().get(0).getElements().get(1).asNonTerminal().getIdentifier());
+            assertEquals("ele1", grammar.getProductions().get(0).getElements().get(0).asNonTerminal().getValue());
+            assertEquals("ele2", grammar.getProductions().get(0).getElements().get(1).asNonTerminal().getValue());
         }
         {
-            assertEquals("prod1", grammar.getProductions().get(1).getIdentifier().getIdentifier());
+            assertEquals("prod1", grammar.getProductions().get(1).getIdentifier().getValue());
             assertEquals(2, grammar.getProductions().get(1).getElements().size());
             assertEquals("ele1", grammar.getProductions().get(1).getElements().get(0).asTerminalTag().getValue());
             assertEquals("ele2", grammar.getProductions().get(1).getElements().get(1).asTerminalTag().getValue());
@@ -95,7 +95,7 @@ public class AbstractParserModuleTest {
         assertEquals(1, grammar.getProductions().size());
         assertEquals("prod1", grammar.getAxiom());
         final Production production = grammar.getProductions().get(0);
-        assertEquals("prod1", production.getIdentifier().getIdentifier());
+        assertEquals("prod1", production.getIdentifier().getValue());
 
         //.then(optional(name("name1"), name("name2"), name("name3")))
         {
@@ -122,8 +122,8 @@ public class AbstractParserModuleTest {
             assertTrue(production.getElements().get(2).asOptional().getElements()[0].isOr());
             assertTrue(production.getElements().get(2).asOptional().getElements()[0].asOr().getFirst().isNonTerminal());
             assertTrue(production.getElements().get(2).asOptional().getElements()[0].asOr().getSecond().isNonTerminal());
-            assertEquals("name4", production.getElements().get(2).asOptional().getElements()[0].asOr().getFirst().asNonTerminal().getIdentifier());
-            assertEquals("name5", production.getElements().get(2).asOptional().getElements()[0].asOr().getSecond().asNonTerminal().getIdentifier());
+            assertEquals("name4", production.getElements().get(2).asOptional().getElements()[0].asOr().getFirst().asNonTerminal().getValue());
+            assertEquals("name5", production.getElements().get(2).asOptional().getElements()[0].asOr().getSecond().asNonTerminal().getValue());
         }
 
         //.then(optional(optional(), name("name6")));
@@ -261,7 +261,7 @@ public class AbstractParserModuleTest {
                     prod("prod1");
                     prod("prod2");
                     prod("prod3");
-                    initProd("prod3");
+                    axiom("prod3");
                 }
             }.build();
             assertEquals("prod3", module.getGrammar().getAxiom());

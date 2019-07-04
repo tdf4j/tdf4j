@@ -15,35 +15,32 @@
  */
 package io.github.therealmone.tdf4j.generator;
 
-import org.stringtemplate.v4.ST;
+import io.github.therealmone.tdf4j.generator.templates.ElementRenderer;
+import io.github.therealmone.tdf4j.generator.templates.adaptor.*;
+import io.github.therealmone.tdf4j.model.ebnf.*;
 import org.stringtemplate.v4.STGroup;
 import org.stringtemplate.v4.STGroupFile;
 
 public enum Template {
-    PARSER("parser"),
-    METHOD("method"),
-    LOGIC_TERMINAL("terminal_tag"),
-    LOGIC_NON_TERMINAL("non_terminal"),
-    LOGIC_OPTIONAL("optional"),
-    LOGIC_OR("or"),
-    LOGIC_REPEAT("repeat"),
-    LOGIC_REPETITION("repetition"),
-    LOGIC_GROUP("ele_group"),
-    LOGIC_INLINE_ACTION("inline_action");
+    JAVA(new STGroupFile("templates/java_1.1.stg"));
 
-    private static final STGroup JAVA_TEMPLATE = new STGroupFile("templates/java.stg");
+    private final STGroup stGroup;
 
-    static {
-        JAVA_TEMPLATE.load();
+    Template(final STGroup stGroup) {
+        this.stGroup = stGroup;
+        stGroup.load();
+        stGroup.registerModelAdaptor(Optional.class, new OptionalAdaptor());
+        stGroup.registerModelAdaptor(Or.class, new OrAdaptor());
+        stGroup.registerModelAdaptor(Repeat.class, new RepeatAdaptor());
+        stGroup.registerModelAdaptor(Repetition.class, new RepetitionAdaptor());
+        stGroup.registerModelAdaptor(NonTerminal.class, new NonTerminalAdaptor());
+        stGroup.registerModelAdaptor(Terminal.Tag.class, new TerminalAdaptor());
+        stGroup.registerModelAdaptor(Group.class, new GroupAdaptor());
+        stGroup.registerModelAdaptor(InlineAction.class, new InlineActionAdaptor());
+        stGroup.registerRenderer(Element.class, new ElementRenderer());
     }
 
-    private final String template;
-
-    Template(final String template) {
-        this.template = template;
-    }
-
-    public ST template() {
-        return JAVA_TEMPLATE.getInstanceOf(template);
+    public STGroup template() {
+        return stGroup;
     }
 }

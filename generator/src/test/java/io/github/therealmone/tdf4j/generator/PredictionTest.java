@@ -254,7 +254,7 @@ public class PredictionTest {
 
     @Test
     public void non_terminal() {
-        assertEquals("prod1", prediction.getStartElements(new NonTerminal.Builder().setIdentifier("prod1").build()).get(0));
+        assertEquals("prod1", prediction.getStartElements(new NonTerminal.Builder().setValue("prod1").build()).get(0));
     }
 
     @Test
@@ -277,7 +277,7 @@ public class PredictionTest {
         assertNull(prediction.firstNotInlineElement(new InlineAction.Builder().setCode("code").build()));
     }
 
-    private class Prediction extends io.github.therealmone.tdf4j.generator.templates.logic.Prediction {
+    private class Prediction extends io.github.therealmone.tdf4j.generator.templates.adaptor.Prediction {
         @Nonnull
         @Override
         protected List<String> getStartElements(@Nullable final Element element) {

@@ -21,7 +21,7 @@ import io.github.therealmone.tdf4j.model.Production;
 import io.github.therealmone.tdf4j.model.ebnf.*;
 
 public interface BindMethods {
-    void initProd(final String identifier);
+    void axiom(final String identifier);
 
     Production.Builder prod(final String identifier);
 

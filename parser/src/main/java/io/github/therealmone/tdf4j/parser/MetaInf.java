@@ -19,17 +19,17 @@ import org.immutables.value.Value;
 
 @Value.Immutable
 public interface MetaInf {
-    String pack();
+    String getPackage();
 
-    String[] imports();
+    String[] getImports();
 
-    String[] envImports();
+    String[] getEnvironmentImports();
 
-    String[] dependencies();
+    String[] getDependencies();
 
-    String className();
+    String getClassName();
 
-    String sourceCode();
+    String getSourceCode();
 
     class Builder extends ImmutableMetaInf.Builder {
     }

@@ -17,23 +17,15 @@ package io.github.therealmone.tdf4j.generator.impl;
 
 import io.github.therealmone.tdf4j.model.Dependency;
 import io.github.therealmone.tdf4j.generator.Generator;
-import io.github.therealmone.tdf4j.model.ebnf.NonTerminal;
-import io.github.therealmone.tdf4j.model.Production;
 import io.github.therealmone.tdf4j.module.parser.AbstractParserModule;
 import io.github.therealmone.tdf4j.utils.Predictor;
 import io.github.therealmone.tdf4j.generator.Imports;
-import io.github.therealmone.tdf4j.generator.templates.ImmutableMethodTemplate;
-import io.github.therealmone.tdf4j.generator.templates.MethodTemplate;
 import io.github.therealmone.tdf4j.generator.templates.ParserTemplate;
-import io.github.therealmone.tdf4j.generator.templates.logic.CodeBlock;
 import io.github.therealmone.tdf4j.generator.MetaInfCollector;
 import io.github.therealmone.tdf4j.parser.MetaInf;
 import io.github.therealmone.tdf4j.parser.Parser;
 import org.joor.Reflect;
 
-import java.util.*;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 public class ParserGenerator implements Generator<Parser> {
     private final MetaInfCollector metaInfCollector = new MetaInfCollector();
@@ -80,29 +72,8 @@ public class ParserGenerator implements Generator<Parser> {
             throw new RuntimeException("Initial production is null");
         }
         //noinspection ConstantConditions
-        parserBuilder.setAxiom(module.getGrammar().getAxiom());
-        parserBuilder.addAllMethods(collectMethods(module.getGrammar().getProductions()));
+        parserBuilder.setGrammar(module.getGrammar());
         return parserBuilder.build();
-    }
-
-    private List<MethodTemplate> collectMethods(final List<Production> productions) {
-        final Map<NonTerminal, MethodTemplate.Builder> declaredMethods = new HashMap<>();
-        for (final Production production : productions) {
-            if(!declaredMethods.containsKey(production.getIdentifier())) {
-                declaredMethods.put(production.getIdentifier(), new MethodTemplate.Builder()
-                        .setName(production.getIdentifier().getIdentifier())
-                );
-            }
-
-            final MethodTemplate.Builder builder = declaredMethods.get(production.getIdentifier());
-            production.getElements().forEach(element -> {
-                final CodeBlock codeBlock = CodeBlock.fromElement(element);
-                if(codeBlock != null) {
-                    builder.addCodeBlocks(codeBlock);
-                }
-            });
-        }
-        return declaredMethods.values().stream().map((Function<MethodTemplate.Builder, MethodTemplate>) ImmutableMethodTemplate.Builder::build).collect(Collectors.toList());
     }
 
     private Object[] args(final MetaInf meta, final Predictor predictor, final Dependency[] dependencies) {

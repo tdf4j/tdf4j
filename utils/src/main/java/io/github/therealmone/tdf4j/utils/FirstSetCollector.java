@@ -61,7 +61,7 @@ public class FirstSetCollector {
             }
 
             case NON_TERMINAL: {
-                return element.asNonTerminal().getIdentifier().equalsIgnoreCase(currentNT.getIdentifier())
+                return element.asNonTerminal().getValue().equalsIgnoreCase(currentNT.getValue())
                         ? Collections.emptyList()
                         : firstOf(context, context.getProduction(element.asNonTerminal()));
             }

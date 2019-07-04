@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 @ParametersAreNonnullByDefault
+@Tdf4jStyle
 package io.github.therealmone.tdf4j.parser;
 
+import io.github.therealmone.tdf4j.model.Tdf4jStyle;
 import javax.annotation.ParametersAreNonnullByDefault;

@@ -17,10 +17,10 @@ package io.github.therealmone.tdf4j.generator.templates;
 
 import io.github.therealmone.tdf4j.model.Environment;
 import io.github.therealmone.tdf4j.generator.Template;
+import io.github.therealmone.tdf4j.model.Grammar;
 import org.immutables.value.Value;
 import org.stringtemplate.v4.ST;
 
-import java.util.List;
 
 @SuppressWarnings("WeakerAccess")
 @Value.Immutable
@@ -34,22 +34,14 @@ public abstract class ParserTemplate implements Buildable {
 
     public abstract Environment getEnvironment();
 
-    public abstract String getAxiom();
-
-    public abstract List<MethodTemplate> getMethods();
+    public abstract Grammar getGrammar();
 
     public abstract String getInterface();
 
     @Override
     public String build() {
-        final ST template = Template.PARSER.template()
-                .add("package", getPackage())
-                .add("imports", getImports())
-                .add("className", getClassName())
-                .add("environment", getEnvironment())
-                .add("initProd", getAxiom())
-                .add("interface", getInterface());
-        getMethods().forEach(method -> template.add("methods", method.build()));
+        final ST template = Template.JAVA.template().getInstanceOf("parser")
+                .add("parserTemplate", this);
         return template.render();
     }
 
