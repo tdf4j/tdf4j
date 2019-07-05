@@ -197,9 +197,9 @@ public class FullGrammarTest extends TdfParserTest {
 
     @Test
     public void Tests_StackMachineTest_errorsTest() {
-        assertParserFails("new a = hashset;$", "Unexpected token: Token{tag=HASHSET, value=hashset, row=1, column=8}");
-        assertParserFails("get(a, 1);$", "Unexpected token: Token{tag=GET, value=get, row=1, column=0}");
-        assertParserFails("while(a & b);$", "Unexpected token: Token{tag=LOP, value=&, row=1, column=8}");
+        assertParserFails("new a = hashset;$", "Unexpected token: Token{tag=HASHSET, value=hashset, row=1, column=8}. Expected: [LB, value_expr_1]");
+        assertParserFails("get(a, 1);$", "Unexpected token: Token{tag=GET, value=get, row=1, column=0}. Expected: [EOF]");
+        assertParserFails("while(a & b);$", "Unexpected token: Token{tag=LOP, value=&, row=1, column=8}. Expected: [COP]");
         assertThrows(() -> parse("@$"), UnexpectedSymbolException.class, "Unexpected symbol: @ ( line 1, column 1 )");
     }
 

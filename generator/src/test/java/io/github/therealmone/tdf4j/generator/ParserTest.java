@@ -10,6 +10,8 @@ import io.github.therealmone.tdf4j.parser.UnexpectedTokenException;
 import io.github.therealmone.tdf4j.model.ast.AST;
 import org.junit.BeforeClass;
 
+import java.util.Arrays;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
@@ -65,14 +67,28 @@ public class ParserTest {
         return unexpectedToken(testTerminal, 1, 0);
     }
 
+    static String unexpectedToken(final TestTerminal testTerminal, final String... expected) {
+        return unexpectedToken(testTerminal, 1, 0, expected);
+    }
+
     static String unexpectedToken(final TestTerminal testTerminal, final long row, final long columt) {
         return String.format("Unexpected token: Token{tag=%1$s, value=%1$s, row=%2$d, column=%3$d}",
                 testTerminal.getTerminal().getTag().getValue(),
                 row, columt);
     }
 
+    static String unexpectedToken(final TestTerminal testTerminal, final long row, final long columt, final String... expected) {
+        return String.format("Unexpected token: Token{tag=%1$s, value=%1$s, row=%2$d, column=%3$d}. Expected: " + Arrays.asList(expected),
+                testTerminal.getTerminal().getTag().getValue(),
+                row, columt);
+    }
+
     static String unexpectedEOF() {
-        return "Unexpected token: null";
+        return "Unexpected end of file";
+    }
+
+    static String unexpectedEOF(final String... expected) {
+        return "Unexpected end of file. Expected: " + Arrays.asList(expected);
     }
 
     static void assertParserFails(final Parser parser, final String input, final String message) {

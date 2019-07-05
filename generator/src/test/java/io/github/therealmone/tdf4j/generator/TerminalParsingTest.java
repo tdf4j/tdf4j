@@ -20,7 +20,7 @@ public class TerminalParsingTest extends ParserTest {
                 }
             });
             assertNotNull(parse(parser, "ABC"));
-            assertParserFails(parser, "ACB", unexpectedToken(TestTerminal.C, 1, 1));
+            assertParserFails(parser, "ACB", unexpectedToken(TestTerminal.C, 1, 1, "B"));
         }
 
         {
@@ -34,7 +34,7 @@ public class TerminalParsingTest extends ParserTest {
                 }
             });
             assertNotNull(parse(parser, "ABC"));
-            assertParserFails(parser, "ACB", unexpectedToken(TestTerminal.C, 1, 1));
+            assertParserFails(parser, "ACB", unexpectedToken(TestTerminal.C, 1, 1, "B"));
         }
     }
 
@@ -51,8 +51,8 @@ public class TerminalParsingTest extends ParserTest {
         });
         assertNotNull(parse(parser, "AC"));
         assertNotNull(parse(parser, "BC"));
-        assertParserFails(parser, "CA", unexpectedToken(TestTerminal.C));
-        assertParserFails(parser, "CB", unexpectedToken(TestTerminal.C));
+        assertParserFails(parser, "CA", unexpectedToken(TestTerminal.C, "A", "B"));
+        assertParserFails(parser, "CB", unexpectedToken(TestTerminal.C, "A", "B"));
     }
 
     /**
@@ -70,9 +70,9 @@ public class TerminalParsingTest extends ParserTest {
         assertNotNull(parse(parser, "BC"));
         assertNotNull(parse(parser, "AB"));
         assertNotNull(parse(parser, "B"));
-        assertParserFails(parser, "CB", unexpectedToken(TestTerminal.C));
-        assertParserFails(parser, "ACB", unexpectedToken(TestTerminal.C, 1, 1));
-        assertParserFails(parser, "", unexpectedEOF());
+        assertParserFails(parser, "CB", unexpectedToken(TestTerminal.C, "B"));
+        assertParserFails(parser, "ACB", unexpectedToken(TestTerminal.C, 1, 1, "B"));
+        assertParserFails(parser, "", unexpectedEOF("B"));
     }
 
     /**
@@ -92,9 +92,9 @@ public class TerminalParsingTest extends ParserTest {
         assertNotNull(parse(parser, "ABABC"));
         assertNotNull(parse(parser, "ABABABC"));
         assertNotNull(parse(parser, "C"));
-        assertParserFails(parser, "AC", unexpectedToken(TestTerminal.C, 1, 1));
-        assertParserFails(parser, "BAC", unexpectedToken(TestTerminal.B));
-        assertParserFails(parser, "BC", unexpectedToken(TestTerminal.B));
+        assertParserFails(parser, "AC", unexpectedToken(TestTerminal.C, 1, 1, "B"));
+        assertParserFails(parser, "BAC", unexpectedToken(TestTerminal.B, "C"));
+        assertParserFails(parser, "BC", unexpectedToken(TestTerminal.B, "C"));
     }
 
     /**
@@ -109,9 +109,9 @@ public class TerminalParsingTest extends ParserTest {
             }
         });
         assertNotNull(parse(parser, "ABC"));
-        assertParserFails(parser, "AC", unexpectedToken(TestTerminal.C, 1, 1));
-        assertParserFails(parser, "BC", unexpectedToken(TestTerminal.B));
-        assertParserFails(parser, "B", unexpectedToken(TestTerminal.B));
-        assertParserFails(parser, "C", unexpectedToken(TestTerminal.C));
+        assertParserFails(parser, "AC", unexpectedToken(TestTerminal.C, 1, 1, "B"));
+        assertParserFails(parser, "BC", unexpectedToken(TestTerminal.B, "A"));
+        assertParserFails(parser, "B", unexpectedToken(TestTerminal.B, "A"));
+        assertParserFails(parser, "C", unexpectedToken(TestTerminal.C, "A"));
     }
 }

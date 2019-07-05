@@ -99,7 +99,7 @@ if(stream.peek() != null && (
 )) {
     <or.second>
 } else {
-    throw new UnexpectedTokenException(stream.peek());
+    throw new UnexpectedTokenException(stream.peek(), <or.firstStart: {startElement|"<startElement>"}; separator=" , "> , <or.secondStart: {startElement|"<startElement>"}; separator=" , ">);
 }
 >>
 
@@ -129,7 +129,7 @@ if(stream.peek() != null && stream.peek().getTag().getValue().equalsIgnoreCase("
     ast.moveCursor(ASTCursor.Movement.TO_PARENT);
     <endif>
 } else {
-    throw new UnexpectedTokenException(stream.peek());
+    throw new UnexpectedTokenException(stream.peek(), "<terminal_tag.value>");
 }
 >>
 
