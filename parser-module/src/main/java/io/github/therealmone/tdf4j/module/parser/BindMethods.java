@@ -49,5 +49,7 @@ public interface BindMethods {
 
     NonTerminal nt(final String identifier);
 
+    NonTerminal nt(final String identifier, final String nodeAction);
+
     InlineAction inline(final String code);
 }

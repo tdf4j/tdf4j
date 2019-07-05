@@ -32,8 +32,8 @@ public class EbnfTerminalBuilder extends AbstractEbnfElementBuilder<Terminal.Tag
                 .setValue(tree.getChildren().get(0).asLeaf().getToken().getValue())
                 .setTokenAction(tree.getChildren().size() > 1
                         ? stringProcessor.process(tree.getChildren().get(2).asLeaf().getToken().getValue())
-                        : null)
-                .build();
+                        : null
+                ).build();
     }
 
 }

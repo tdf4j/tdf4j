@@ -1,0 +1,19 @@
+lexis
+
+    A "A"
+    B "B"
+    C "C"
+
+syntax
+
+    prod1 =
+            a -> "NodeActionTest.nodes.add(node.getTag());"
+        ,   b
+        ,   c -> "NodeActionTest.nodes.add(node.getTag());"
+        ;
+
+    a = A;
+    b = B;
+    c = C;
+
+$

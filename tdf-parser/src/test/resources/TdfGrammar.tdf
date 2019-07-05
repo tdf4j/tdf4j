@@ -299,8 +299,7 @@ syntax
     production_description =
             NON_TERMINAL -> "productions.push(new ProductionConstructor(parserModule.prod(token.getValue())));"
         ,   OP_ASSIGN
-        ,   ebnf_elements_set
-        ,   <"productions.peek().setElements(lastNode(ast));">
+        ,   ebnf_elements_set -> "productions.peek().setElements(node);"
         ,   DELIMITER
         ,   <"productions.pop().construct();">
         ;
@@ -328,6 +327,7 @@ syntax
 
     ebnf_non_terminal =
             NON_TERMINAL
+        ,   [LAMBDA, STRING]
         ;
 
     ebnf_optional =

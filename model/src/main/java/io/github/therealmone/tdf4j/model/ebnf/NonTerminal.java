@@ -17,6 +17,8 @@ package io.github.therealmone.tdf4j.model.ebnf;
 
 import org.immutables.value.Value;
 
+import javax.annotation.Nullable;
+
 @Value.Immutable
 public abstract class NonTerminal extends AbstractElement {
     @Override
@@ -25,6 +27,13 @@ public abstract class NonTerminal extends AbstractElement {
     }
 
     public abstract String getValue();
+
+    @Nullable
+    @Value.Default
+    @Value.Auxiliary
+    public String getNodeAction() {
+        return null;
+    }
 
     public static class Builder extends ImmutableNonTerminal.Builder {
     }

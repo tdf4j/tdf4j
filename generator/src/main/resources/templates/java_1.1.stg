@@ -75,6 +75,11 @@ ele_group(ele_group) ::= <<
 non_terminal(non_terminal) ::= <<
 ast.addNode("<non_terminal.value>").moveCursor(ASTCursor.Movement.TO_LAST_ADDED_NODE);
 <non_terminal.value>();
+<if(non_terminal.nodeAction)>
+((Consumer\<ASTNode>) node -> {
+    <non_terminal.nodeAction>
+}).accept(ast.onCursor().asNode());
+<endif>
 ast.moveCursor(ASTCursor.Movement.TO_PARENT);
 >>
 

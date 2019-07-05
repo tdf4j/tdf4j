@@ -29,6 +29,8 @@ public class NonTerminalAdaptor implements ModelAdaptor {
         switch (propertyName) {
             case "value":
                 return nonTerminal.getValue();
+            case "nodeAction":
+                return nonTerminal.getNodeAction();
             default:
                 return null;
         }

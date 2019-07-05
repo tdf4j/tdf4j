@@ -17,8 +17,10 @@ package io.github.therealmone.tdf4j.tdfparser.builder;
 
 import io.github.therealmone.tdf4j.model.ast.ASTNode;
 import io.github.therealmone.tdf4j.model.ebnf.NonTerminal;
+import io.github.therealmone.tdf4j.tdfparser.processor.StringProcessor;
 
 public class EbnfNonTerminalBuilder extends AbstractEbnfElementBuilder<NonTerminal> {
+    private final StringProcessor stringProcessor = new StringProcessor();
 
     EbnfNonTerminalBuilder(BuilderMapper mapper) {
         super(mapper);
@@ -28,7 +30,10 @@ public class EbnfNonTerminalBuilder extends AbstractEbnfElementBuilder<NonTermin
     public NonTerminal build(final ASTNode tree) {
         return new NonTerminal.Builder()
                 .setValue(tree.getChildren().get(0).asLeaf().getToken().getValue())
-                .build();
+                .setNodeAction(tree.getChildren().size() > 1
+                        ? stringProcessor.process(tree.getChildren().get(2).asLeaf().getToken().getValue())
+                        : null
+                ).build();
     }
 
 }

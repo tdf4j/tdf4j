@@ -44,4 +44,9 @@ public @interface SyntaxHighlight {
     @Language(value = "java", prefix = "public class Clazz { public void method() { ((Consumer<Token>) token -> {", suffix = "})}}")
     @interface TokenAction {}
 
+    @Retention(RetentionPolicy.CLASS)
+    @Target({ElementType.METHOD, ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE})
+    @Language(value = "java", prefix = "public class Clazz { public void method() { ((Consumer<ASTNode>) node -> {", suffix = "})}}")
+    @interface NodeAction {}
+
 }

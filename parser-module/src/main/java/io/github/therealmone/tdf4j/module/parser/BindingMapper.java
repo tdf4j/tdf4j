@@ -105,6 +105,11 @@ public abstract class BindingMapper implements BindMethods {
     }
 
     @Override
+    public NonTerminal nt(final String identifier, @SyntaxHighlight.NodeAction final String nodeAction) {
+        return new NonTerminal.Builder().setValue(identifier).setNodeAction(nodeAction).build();
+    }
+
+    @Override
     public void axiom(final String identifier) {
         this.initProduction = identifier;
     }

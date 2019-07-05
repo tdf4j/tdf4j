@@ -191,10 +191,7 @@ public class TdfParserModule extends AbstractParserModule {
                 .is(
                         t("NON_TERMINAL", "productions.push(new ProductionConstructor(parserModule.prod(token.getValue())));"),
                         t("OP_ASSIGN"),
-                        nt("ebnf_elements_set"),
-                        inline(
-                                "productions.peek().setElements(lastNode(ast));\n"
-                        ),
+                        nt("ebnf_elements_set", "productions.peek().setElements(node);"),
                         t("DELIMITER"),
                         inline(
                                 "productions.pop().construct();\n"
@@ -229,7 +226,8 @@ public class TdfParserModule extends AbstractParserModule {
 
         prod("ebnf_non_terminal")
                 .is(
-                        t("NON_TERMINAL")
+                        t("NON_TERMINAL"),
+                        optional(t("LAMBDA"), t("STRING"))
                 );
 
         prod("ebnf_optional")
