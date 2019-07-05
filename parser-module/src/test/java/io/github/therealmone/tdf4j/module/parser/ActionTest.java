@@ -26,7 +26,7 @@ public class ActionTest {
             @Override
             protected void configure() {
                 final NonTerminal nonTerminal = nt("A", "System.out.println(node);");
-                assertEquals("A", nonTerminal.getValue());
+                assertEquals("a", nonTerminal.getValue());
                 assertEquals("System.out.println(node);", nonTerminal.getNodeAction());
             }
         }.build();

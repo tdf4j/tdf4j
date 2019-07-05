@@ -87,6 +87,20 @@ public abstract class Terminal extends AbstractElement {
             return null;
         }
 
+        @Value.Check
+        Terminal.Tag normalize() {
+            final char[] value = getValue().toCharArray();
+            for(final char ch : value) {
+                if(Character.isLetter(ch) && !Character.isUpperCase(ch)) {
+                    return new Terminal.Tag.Builder()
+                            .setValue(getValue().toUpperCase())
+                            .setTokenAction(getTokenAction())
+                            .build();
+                }
+            }
+            return this;
+        }
+
         public static class Builder extends ImmutableTag.Builder {
 
         }

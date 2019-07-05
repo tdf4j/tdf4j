@@ -35,6 +35,20 @@ public abstract class NonTerminal extends AbstractElement {
         return null;
     }
 
+    @Value.Check
+    NonTerminal normalize() {
+        final char[] value = getValue().toCharArray();
+        for(final char ch : value) {
+            if(Character.isLetter(ch) && !Character.isLowerCase(ch)) {
+                return new NonTerminal.Builder()
+                        .setValue(getValue().toLowerCase())
+                        .setNodeAction(getNodeAction())
+                        .build();
+            }
+        }
+        return this;
+    }
+
     public static class Builder extends ImmutableNonTerminal.Builder {
     }
 

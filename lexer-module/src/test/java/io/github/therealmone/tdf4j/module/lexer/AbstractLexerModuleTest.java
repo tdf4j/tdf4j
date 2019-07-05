@@ -95,7 +95,7 @@ public class AbstractLexerModuleTest {
             }
         }.build();
         assertEquals(1, config.getTerminals().size());
-        assertEquals("token", config.getTerminals().get(0).getTag().getValue());
+        assertEquals("TOKEN", config.getTerminals().get(0).getTag().getValue());
         assertEquals("pattern", config.getTerminals().get(0).getPattern().pattern());
         assertEquals(100, config.getTerminals().get(0).priority());
     }

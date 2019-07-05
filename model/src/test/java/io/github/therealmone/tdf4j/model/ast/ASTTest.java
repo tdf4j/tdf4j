@@ -41,7 +41,7 @@ public class ASTTest {
         {
             final ASTElement child = ast.onCursor().asRoot().getChildren().get(2);
             assertTrue(child.isLeaf());
-            assertEquals("leaf1", child.asLeaf().getToken().getTag().getValue());
+            assertEquals("LEAF1", child.asLeaf().getToken().getTag().getValue());
             assertEquals("leaf1", child.asLeaf().getToken().getValue());
             assertEquals(ast.onCursor(), child.asLeaf().getParent());
         }
@@ -50,7 +50,7 @@ public class ASTTest {
         {
             final ASTElement child = ast.onCursor().asRoot().getChildren().get(3);
             assertTrue(child.isLeaf());
-            assertEquals("leaf2", child.asLeaf().getToken().getTag().getValue());
+            assertEquals("LEAF2", child.asLeaf().getToken().getTag().getValue());
             assertEquals("leaf2", child.asLeaf().getToken().getValue());
             assertEquals(ast.onCursor(), child.asLeaf().getParent());
         }
@@ -93,7 +93,7 @@ public class ASTTest {
         {
             ast.moveCursor(cursor -> cursor.setValue(cursor.asRoot().getChildren().get(0)));
             assertTrue(ast.onCursor().isLeaf());
-            assertEquals("leaf1", ast.onCursor().asLeaf().getToken().getTag().getValue());
+            assertEquals("LEAF1", ast.onCursor().asLeaf().getToken().getTag().getValue());
             assertEquals("leaf1", ast.onCursor().asLeaf().getToken().getValue());
             ast.moveCursor(ASTCursor.Movement.TO_PARENT);
             assertTrue(ast.onCursor().isRoot());
@@ -104,7 +104,7 @@ public class ASTTest {
         {
             ast.moveCursor(cursor -> cursor.setValue(cursor.asRoot().getChildren().get(1)));
             assertTrue(ast.onCursor().isLeaf());
-            assertEquals("leaf2", ast.onCursor().asLeaf().getToken().getTag().getValue());
+            assertEquals("LEAF2", ast.onCursor().asLeaf().getToken().getTag().getValue());
             assertEquals("leaf2", ast.onCursor().asLeaf().getToken().getValue());
             ast.moveCursor(ASTCursor.Movement.TO_PARENT);
             assertTrue(ast.onCursor().isRoot());

@@ -32,8 +32,8 @@ public class AbstractParserModuleTest {
         {
             assertEquals("prod1", grammar.getProductions().get(1).getIdentifier().getValue());
             assertEquals(2, grammar.getProductions().get(1).getElements().size());
-            assertEquals("ele1", grammar.getProductions().get(1).getElements().get(0).asTerminalTag().getValue());
-            assertEquals("ele2", grammar.getProductions().get(1).getElements().get(1).asTerminalTag().getValue());
+            assertEquals("ELE1", grammar.getProductions().get(1).getElements().get(0).asTerminalTag().getValue());
+            assertEquals("ELE2", grammar.getProductions().get(1).getElements().get(1).asTerminalTag().getValue());
         }
     }
 
@@ -104,9 +104,9 @@ public class AbstractParserModuleTest {
             assertTrue(production.getElements().get(0).asOptional().getElements()[0].isTerminalTag());
             assertTrue(production.getElements().get(0).asOptional().getElements()[1].isTerminalTag());
             assertTrue(production.getElements().get(0).asOptional().getElements()[2].isTerminalTag());
-            assertEquals("name1", production.getElements().get(0).asOptional().getElements()[0].asTerminalTag().getValue());
-            assertEquals("name2", production.getElements().get(0).asOptional().getElements()[1].asTerminalTag().getValue());
-            assertEquals("name3", production.getElements().get(0).asOptional().getElements()[2].asTerminalTag().getValue());
+            assertEquals("NAME1", production.getElements().get(0).asOptional().getElements()[0].asTerminalTag().getValue());
+            assertEquals("NAME2", production.getElements().get(0).asOptional().getElements()[1].asTerminalTag().getValue());
+            assertEquals("NAME3", production.getElements().get(0).asOptional().getElements()[2].asTerminalTag().getValue());
         }
 
         //.then(optional())
@@ -133,12 +133,12 @@ public class AbstractParserModuleTest {
             assertTrue(production.getElements().get(3).asOptional().getElements()[0].isOptional());
             assertEquals(0, production.getElements().get(3).asOptional().getElements()[0].asOptional().getElements().length);
             assertTrue(production.getElements().get(3).asOptional().getElements()[1].isTerminalTag());
-            assertEquals("name6", production.getElements().get(3).asOptional().getElements()[1].asTerminalTag().getValue());
+            assertEquals("NAME6", production.getElements().get(3).asOptional().getElements()[1].asTerminalTag().getValue());
         }
 
         //toString()
         {
-            assertEquals("prod1 := [name1,name2,name3],[],[name4|name5],[[],name6]", production.toString());
+            assertEquals("prod1 := [NAME1,NAME2,NAME3],[],[name4|name5],[[],NAME6]", production.toString());
         }
     }
 
@@ -164,7 +164,7 @@ public class AbstractParserModuleTest {
         final Grammar grammar = module.getGrammar();
         assertEquals(1, grammar.getProductions().size());
         assertEquals("prod1", grammar.getAxiom());
-        assertEquals("prod1 := {name1,name2,name3},{},{name4|name5|name6},{{},[]}", grammar.getProductions().get(0).toString());
+        assertEquals("prod1 := {NAME1,NAME2,NAME3},{},{NAME4|NAME5|NAME6},{{},[]}", grammar.getProductions().get(0).toString());
     }
 
     @Test
@@ -201,7 +201,7 @@ public class AbstractParserModuleTest {
         final Grammar grammar = module.getGrammar();
         assertEquals(1, grammar.getProductions().size());
         assertEquals("prod1", grammar.getAxiom());
-        assertEquals("prod1 := (name1,name2)|name3,(),([name4],name5,name6),([]|{},())", grammar.getProductions().get(0).toString());
+        assertEquals("prod1 := (NAME1,NAME2)|NAME3,(),([NAME4],NAME5,NAME6),([]|{},())", grammar.getProductions().get(0).toString());
     }
 
     @Test
@@ -225,7 +225,7 @@ public class AbstractParserModuleTest {
         final Grammar grammar = module.getGrammar();
         assertEquals(1, grammar.getProductions().size());
         assertEquals("prod1", grammar.getAxiom());
-        assertEquals("prod1 := name1|name2|name3|(name4,name5)", grammar.getProductions().get(0).toString());
+        assertEquals("prod1 := NAME1|NAME2|NAME3|(NAME4,NAME5)", grammar.getProductions().get(0).toString());
     }
 
     @Test

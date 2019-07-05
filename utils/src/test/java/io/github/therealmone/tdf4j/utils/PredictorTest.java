@@ -26,7 +26,7 @@ public class PredictorTest {
             final List<String> predictions = predictor.predict(token("tag1", "tag1"));
             assertEquals(2, predictions.size());
             assertEquals("a", predictions.get(0));
-            assertEquals("tag1", predictions.get(1));
+            assertEquals("TAG1", predictions.get(1));
         }
         //tag2
         {
@@ -34,7 +34,7 @@ public class PredictorTest {
             assertEquals(3, predictions.size());
             assertEquals("a", predictions.get(0));
             assertEquals("b", predictions.get(1));
-            assertEquals("tag2", predictions.get(2));
+            assertEquals("TAG2", predictions.get(2));
         }
         //tag3
         {
@@ -43,7 +43,7 @@ public class PredictorTest {
             assertEquals("a", predictions.get(0));
             assertEquals("b", predictions.get(1));
             assertEquals("c", predictions.get(2));
-            assertEquals("tag3", predictions.get(3));
+            assertEquals("TAG3", predictions.get(3));
         }
         //check cache
         {
