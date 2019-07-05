@@ -23,13 +23,14 @@ public class TdfParserModule extends AbstractParserModule {
     protected void configure() {
 
         environment()
-                .setPackages(
+                .packages(
                         "io.github.therealmone.tdf4j.module.lexer.AbstractLexerModule",
                         "io.github.therealmone.tdf4j.module.parser.AbstractParserModule",
                         "io.github.therealmone.tdf4j.tdfparser.constructor.*",
                         "io.github.therealmone.tdf4j.tdfparser.processor.*"
                 )
-                .setCode("" +
+                .code(
+                        "" +
                         "private final Processor<String> stringProcessor = new StringProcessor();\n" +
                         "private final Stack<TerminalConstructor> terminals = new Stack<>();\n" +
                         "private final Stack<EnvironmentConstructor> environments = new Stack<>();\n" +

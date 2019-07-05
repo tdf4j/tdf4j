@@ -36,5 +36,12 @@ public interface Environment {
     }
 
     class Builder extends ImmutableEnvironment.Builder {
+        public Builder packages(@SyntaxHighlight.EnvironmentImports final String... packages) {
+            return super.setPackages(packages);
+        }
+
+        public Builder code(@SyntaxHighlight.EnvironmentCode final String code) {
+            return super.setCode(code);
+        }
     }
 }

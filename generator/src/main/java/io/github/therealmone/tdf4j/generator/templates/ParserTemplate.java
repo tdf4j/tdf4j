@@ -21,8 +21,6 @@ import io.github.therealmone.tdf4j.model.Grammar;
 import org.immutables.value.Value;
 import org.stringtemplate.v4.ST;
 
-
-@SuppressWarnings("WeakerAccess")
 @Value.Immutable
 public abstract class ParserTemplate implements Buildable {
 

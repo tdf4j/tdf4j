@@ -18,6 +18,7 @@ package io.github.therealmone.tdf4j.module.parser;
 import io.github.therealmone.tdf4j.model.Dependency;
 import io.github.therealmone.tdf4j.model.Environment;
 import io.github.therealmone.tdf4j.model.Production;
+import io.github.therealmone.tdf4j.model.SyntaxHighlight;
 import io.github.therealmone.tdf4j.model.ebnf.*;
 
 public abstract class BindingMapper implements BindMethods {
@@ -94,7 +95,7 @@ public abstract class BindingMapper implements BindMethods {
     }
 
     @Override
-    public Terminal.Tag t(final String tag, final String tokenAction) {
+    public Terminal.Tag t(final String tag, @SyntaxHighlight.TokenAction final String tokenAction) {
         return new Terminal.Tag.Builder().setValue(tag).setTokenAction(tokenAction).build();
     }
 
@@ -109,7 +110,7 @@ public abstract class BindingMapper implements BindMethods {
     }
 
     @Override
-    public InlineAction inline(final String code) {
+    public InlineAction inline(@SyntaxHighlight.InlineAction final String code) {
         //noinspection ConstantConditions
         if(code == null || code.trim().equalsIgnoreCase("")) {
             throw new IllegalStateException("Code can't be blank or null");
