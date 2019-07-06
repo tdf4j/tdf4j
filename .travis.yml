@@ -1,5 +1,6 @@
 language: java
-jdk: openjdk9
+jdk:
+  - openjdk12
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)

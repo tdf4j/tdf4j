@@ -9,7 +9,7 @@ import static org.junit.Assert.*;
 public class OrParsingTest extends ParserTest {
 
     /**
-     * prod1 :+ A | B | C
+     * prod1 := A | B | C
      */
     @Test
     public void nested() {
@@ -26,7 +26,7 @@ public class OrParsingTest extends ParserTest {
         assertNotNull(parse(parser, "A"));
         assertNotNull(parse(parser, "B"));
         assertNotNull(parse(parser, "C"));
-        assertParserFails(parser, "", unexpectedEOF());
+        assertParserFails(parser, "", unexpectedEOF("A", "B", "C"));
     }
 
     /**
@@ -45,11 +45,11 @@ public class OrParsingTest extends ParserTest {
         assertNotNull(parse(parser, "AC"));
         assertNotNull(parse(parser, "BC"));
         assertNotNull(parse(parser, "C"));
-        assertParserFails(parser, "ABC", unexpectedToken(TestTerminal.B, 1, 1));
-        assertParserFails(parser, "AB", unexpectedToken(TestTerminal.B, 1, 1));
-        assertParserFails(parser, "BAC", unexpectedToken(TestTerminal.A, 1, 1));
-        assertParserFails(parser, "BA", unexpectedToken(TestTerminal.A, 1, 1));
-        assertParserFails(parser, "", unexpectedEOF());
+        assertParserFails(parser, "ABC", unexpectedToken(TestTerminal.B, 1, 1, "C"));
+        assertParserFails(parser, "AB", unexpectedToken(TestTerminal.B, 1, 1, "C"));
+        assertParserFails(parser, "BAC", unexpectedToken(TestTerminal.A, 1, 1, "C"));
+        assertParserFails(parser, "BA", unexpectedToken(TestTerminal.A, 1, 1, "C"));
+        assertParserFails(parser, "", unexpectedEOF("C"));
     }
 
     /**
@@ -72,7 +72,7 @@ public class OrParsingTest extends ParserTest {
         assertNotNull(parse(parser, "BBBC"));
         assertNotNull(parse(parser, "AABBC"));
         assertNotNull(parse(parser, "C"));
-        assertParserFails(parser, "", unexpectedEOF());
+        assertParserFails(parser, "", unexpectedEOF("C"));
     }
 
     /**
@@ -92,8 +92,8 @@ public class OrParsingTest extends ParserTest {
         });
         assertNotNull(parse(parser, "AB"));
         assertNotNull(parse(parser, "C"));
-        assertParserFails(parser, "AC", unexpectedToken(TestTerminal.C, 1, 1));
-        assertParserFails(parser, "B", unexpectedToken(TestTerminal.B));
-        assertParserFails(parser, "", unexpectedEOF());
+        assertParserFails(parser, "AC", unexpectedToken(TestTerminal.C, 1, 1, "B"));
+        assertParserFails(parser, "B", unexpectedToken(TestTerminal.B, "A", "C"));
+        assertParserFails(parser, "", unexpectedEOF("A", "C"));
     }
 }

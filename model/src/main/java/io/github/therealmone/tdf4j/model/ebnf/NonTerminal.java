@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Roman Fatnev
+ * Copyright (c) 2019 Roman Fatnev
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,8 @@ package io.github.therealmone.tdf4j.model.ebnf;
 
 import org.immutables.value.Value;
 
+import javax.annotation.Nullable;
+
 @Value.Immutable
 public abstract class NonTerminal extends AbstractElement {
     @Override
@@ -24,13 +26,34 @@ public abstract class NonTerminal extends AbstractElement {
         return Kind.NON_TERMINAL;
     }
 
-    public abstract String identifier();
+    public abstract String getValue();
+
+    @Nullable
+    @Value.Default
+    @Value.Auxiliary
+    public String getNodeAction() {
+        return null;
+    }
+
+    @Value.Check
+    NonTerminal normalize() {
+        final char[] value = getValue().toCharArray();
+        for(final char ch : value) {
+            if(Character.isLetter(ch) && !Character.isLowerCase(ch)) {
+                return new NonTerminal.Builder()
+                        .setValue(getValue().toLowerCase())
+                        .setNodeAction(getNodeAction())
+                        .build();
+            }
+        }
+        return this;
+    }
 
     public static class Builder extends ImmutableNonTerminal.Builder {
     }
 
     @Override
     public String toString() {
-        return identifier();
+        return getValue();
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Roman Fatnev
+ * Copyright (c) 2019 Roman Fatnev
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,9 +20,9 @@ public enum Imports {
     MODEL("io.github.therealmone.tdf4j.model.*"),
     MODEL_AST("io.github.therealmone.tdf4j.model.ast.*"),
     MODEL_EBNF("io.github.therealmone.tdf4j.model.ebnf.*"),
-    COMMONS("io.github.therealmone.tdf4j.commons.*"),
     UTILS("io.github.therealmone.tdf4j.utils.*"),
-    JAVA_UTIL("java.util.*");
+    JAVA_UTIL("java.util.*"),
+    JAVA_UTIL_FUNCTION("java.util.function.*");
 
     private final String value;
 

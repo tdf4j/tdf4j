@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Roman Fatnev
+ * Copyright (c) 2019 Roman Fatnev
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -89,9 +89,9 @@ class ASTImpl implements AST {
 
     private void addChild(final ASTCursor cursor, final ASTElement element) {
         if(cursor.isNode()) {
-            cursor.asNode().children().add(element);
+            cursor.asNode().getChildren().add(element);
         } else if(cursor.isRoot()) {
-            cursor.asRoot().children().add(element);
+            cursor.asRoot().getChildren().add(element);
         }
     }
 

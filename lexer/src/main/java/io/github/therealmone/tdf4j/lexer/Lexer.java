@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Roman Fatnev
+ * Copyright (c) 2019 Roman Fatnev
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,16 +15,18 @@
  */
 package io.github.therealmone.tdf4j.lexer;
 
-import io.github.therealmone.tdf4j.commons.Stream;
+import io.github.therealmone.tdf4j.model.Stream;
 import io.github.therealmone.tdf4j.model.Token;
 
 import javax.annotation.Nonnull;
 import java.util.List;
 
 public interface Lexer {
-    @Nonnull
-    List<Token> analyze(final String input);
 
     @Nonnull
-    Stream<Token> stream(final String input);
+    List<Token> analyze(final CharSequence input);
+
+    @Nonnull
+    Stream<Token> stream(final CharSequence input);
+
 }

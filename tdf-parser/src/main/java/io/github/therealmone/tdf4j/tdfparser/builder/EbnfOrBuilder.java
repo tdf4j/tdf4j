@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Roman Fatnev
+ * Copyright (c) 2019 Roman Fatnev
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,9 +33,9 @@ public class EbnfOrBuilder extends AbstractEbnfElementBuilder<Or> {
 
     private Or oneOf(final List<ASTNode> elements) {
         if(elements.size() == 2) {
-            return new Or.Builder().first(callBuilder(elements.get(0))).second(callBuilder(elements.get(1))).build();
+            return new Or.Builder().setFirst(callBuilder(elements.get(0))).setSecond(callBuilder(elements.get(1))).build();
         } else {
-            return new Or.Builder().first(callBuilder(elements.get(0))).second(oneOf(elements.subList(1, elements.size()))).build();
+            return new Or.Builder().setFirst(callBuilder(elements.get(0))).setSecond(oneOf(elements.subList(1, elements.size()))).build();
         }
     }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Roman Fatnev
+ * Copyright (c) 2019 Roman Fatnev
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 package io.github.therealmone.tdf4j.parser;
 
-import io.github.therealmone.tdf4j.commons.Stream;
+import io.github.therealmone.tdf4j.model.Stream;
 import io.github.therealmone.tdf4j.model.Token;
 import io.github.therealmone.tdf4j.model.ast.AST;
 

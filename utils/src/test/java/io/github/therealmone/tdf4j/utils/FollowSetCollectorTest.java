@@ -1,6 +1,6 @@
 package io.github.therealmone.tdf4j.utils;
 
-import io.github.therealmone.tdf4j.model.ebnf.Follow;
+import io.github.therealmone.tdf4j.model.Follow;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ public class FollowSetCollectorTest {
     public void test() {
         final Follow follow = followSetCollector.collect(new ArrayList<>());
         assertNotNull(follow);
-        assertEquals(0, follow.set().size());
+        assertEquals(0, follow.getSet().size());
     }
 
 }

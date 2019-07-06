@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Roman Fatnev
+ * Copyright (c) 2019 Roman Fatnev
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -68,6 +68,7 @@ public class TdfLexerModule extends AbstractLexerModule {
         tokenize("RIGHT_INLINE_ACTION_BRACKET").pattern(">");
         tokenize("OP_ASSIGN").pattern("=");
         tokenize("OP_SUM").pattern("\\+");
+        tokenize("LAMBDA").pattern("->");
 
         tokenize("WS").pattern("\\s|\\n|\\r").priority(Integer.MAX_VALUE).hidden(true);
         tokenize("SINGLE_LINE_COMMENT").pattern("//.*(\n|\r|\r\n|\n\r)").priority(Integer.MAX_VALUE).hidden(true);

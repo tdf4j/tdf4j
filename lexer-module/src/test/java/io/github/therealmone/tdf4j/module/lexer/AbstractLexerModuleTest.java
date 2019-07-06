@@ -24,12 +24,12 @@ public class AbstractLexerModuleTest {
 
         final List<Terminal> terminals = config.getTerminals();
         assertEquals(3, terminals.size());
-        Assert.assertEquals("ONE", terminals.get(0).tag().value());
-        Assert.assertEquals("^one$", terminals.get(0).pattern().pattern());
-        Assert.assertEquals("TWO", terminals.get(1).tag().value());
-        Assert.assertEquals("^two$", terminals.get(1).pattern().pattern());
-        Assert.assertEquals("THREE", terminals.get(2).tag().value());
-        Assert.assertEquals("^three$", terminals.get(2).pattern().pattern());
+        Assert.assertEquals("ONE", terminals.get(0).getTag().getValue());
+        Assert.assertEquals("^one$", terminals.get(0).getPattern().pattern());
+        Assert.assertEquals("TWO", terminals.get(1).getTag().getValue());
+        Assert.assertEquals("^two$", terminals.get(1).getPattern().pattern());
+        Assert.assertEquals("THREE", terminals.get(2).getTag().getValue());
+        Assert.assertEquals("^three$", terminals.get(2).getPattern().pattern());
     }
 
     @Test(expected = RuntimeException.class)
@@ -95,8 +95,8 @@ public class AbstractLexerModuleTest {
             }
         }.build();
         assertEquals(1, config.getTerminals().size());
-        assertEquals("token", config.getTerminals().get(0).tag().value());
-        assertEquals("pattern", config.getTerminals().get(0).pattern().pattern());
+        assertEquals("TOKEN", config.getTerminals().get(0).getTag().getValue());
+        assertEquals("pattern", config.getTerminals().get(0).getPattern().pattern());
         assertEquals(100, config.getTerminals().get(0).priority());
     }
 }

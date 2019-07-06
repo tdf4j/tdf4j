@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Roman Fatnev
+ * Copyright (c) 2019 Roman Fatnev
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,12 +27,12 @@ public abstract class ASTLeaf implements ASTElement{
         return ASTKind.LEAF;
     }
 
-    public abstract ASTElement parent();
+    public abstract ASTElement getParent();
 
-    public abstract Token token();
+    public abstract Token getToken();
 
     @Override
     public String toString() {
-        return token().toString();
+        return getToken().toString();
     }
 }

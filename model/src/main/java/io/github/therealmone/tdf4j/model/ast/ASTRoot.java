@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Roman Fatnev
+ * Copyright (c) 2019 Roman Fatnev
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,15 +28,15 @@ public abstract class ASTRoot implements ASTElement {
         return ASTKind.ROOT;
     }
 
-    public abstract List<ASTElement> children();
+    public abstract List<ASTElement> getChildren();
 
-    public abstract String tag();
+    public abstract String getTag();
 
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append(tag());
-        for(final ASTElement child : children()) {
+        builder.append(getTag());
+        for(final ASTElement child : getChildren()) {
             builder.append("\n|\n")
                     .append("|--")
                     .append(child.toString());

@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Roman Fatnev
+ * Copyright (c) 2019 Roman Fatnev
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -59,7 +59,7 @@ public class TerminalConstructor implements Constructor {
             builder.hidden(Boolean.parseBoolean(hidden));
         }
         if(isNotBlankOrNull(pattern)) {
-            builder.pattern(compilePattern(pattern, flags));
+            builder.setPattern(compilePattern(pattern, flags));
         }
     }
 

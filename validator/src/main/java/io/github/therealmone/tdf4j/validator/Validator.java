@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Roman Fatnev
+ * Copyright (c) 2019 Roman Fatnev
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 package io.github.therealmone.tdf4j.validator;
 
-import io.github.therealmone.tdf4j.commons.Module;
+import io.github.therealmone.tdf4j.model.Module;
 import io.github.therealmone.tdf4j.module.lexer.AbstractLexerModule;
 import io.github.therealmone.tdf4j.module.parser.AbstractParserModule;
 import io.github.therealmone.tdf4j.validator.impl.ValidatorImpl;

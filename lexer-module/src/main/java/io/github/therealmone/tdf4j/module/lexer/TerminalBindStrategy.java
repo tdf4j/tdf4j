@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Roman Fatnev
+ * Copyright (c) 2019 Roman Fatnev
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 package io.github.therealmone.tdf4j.module.lexer;
 
-import io.github.therealmone.tdf4j.commons.BindStrategy;
+import io.github.therealmone.tdf4j.model.BindStrategy;
 import io.github.therealmone.tdf4j.model.ebnf.ImmutableTerminal;
 import io.github.therealmone.tdf4j.model.ebnf.Terminal;
 

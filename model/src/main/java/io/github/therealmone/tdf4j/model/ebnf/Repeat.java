@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Roman Fatnev
+ * Copyright (c) 2019 Roman Fatnev
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,13 +24,13 @@ public abstract class Repeat extends AbstractElement {
         return Kind.REPEAT;
     }
 
-    public abstract Element[] elements();
+    public abstract Element[] getElements();
 
     public static class Builder extends ImmutableRepeat.Builder {
     }
 
     @Override
     public String toString() {
-        return "{" + toStringGroup(elements()) + "}";
+        return "{" + toStringGroup(getElements()) + "}";
     }
 }

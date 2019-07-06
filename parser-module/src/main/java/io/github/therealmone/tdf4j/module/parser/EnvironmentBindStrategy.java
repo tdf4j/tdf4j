@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Roman Fatnev
+ * Copyright (c) 2019 Roman Fatnev
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,8 +15,8 @@
  */
 package io.github.therealmone.tdf4j.module.parser;
 
-import io.github.therealmone.tdf4j.commons.BindStrategy;
-import io.github.therealmone.tdf4j.commons.Environment;
+import io.github.therealmone.tdf4j.model.BindStrategy;
+import io.github.therealmone.tdf4j.model.Environment;
 
 public class EnvironmentBindStrategy implements BindStrategy.WithoutArgs<Environment.Builder, Environment> {
     private Environment.Builder environment;
@@ -34,8 +34,8 @@ public class EnvironmentBindStrategy implements BindStrategy.WithoutArgs<Environ
     public Environment build() {
         if(environment == null) {
             environment = new Environment.Builder()
-                    .packages()
-                    .dependencies();
+                    .setPackages()
+                    .setDependencies();
         }
         return environment.build();
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Roman Fatnev
+ * Copyright (c) 2019 Roman Fatnev
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,14 +14,8 @@
  * limitations under the License.
  */
 @ParametersAreNonnullByDefault
-@Value.Style(
-        strictBuilder = true,
-        passAnnotations = {Nullable.class, Nonnull.class}
-)
+@Tdf4jStyle
 package io.github.therealmone.tdf4j.model.ast;
 
-import org.immutables.value.Value;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import io.github.therealmone.tdf4j.model.Tdf4jStyle;
 import javax.annotation.ParametersAreNonnullByDefault;

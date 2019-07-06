@@ -55,9 +55,9 @@ public class LexisTest extends TdfParserTest {
 
     private void assertTerminal(final Terminal terminal, final Terminal.Builder another) {
         final Terminal expected = another.build();
-        assertEquals(expected.tag().value(), terminal.tag().value());
-        assertEquals(expected.pattern().pattern(), terminal.pattern().pattern());
-        assertEquals(expected.pattern().flags(), terminal.pattern().flags());
+        assertEquals(expected.getTag().getValue(), terminal.getTag().getValue());
+        assertEquals(expected.getPattern().pattern(), terminal.getPattern().pattern());
+        assertEquals(expected.getPattern().flags(), terminal.getPattern().flags());
         assertEquals(expected.priority(), terminal.priority());
         assertEquals(expected.hidden(), terminal.hidden());
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Roman Fatnev
+ * Copyright (c) 2019 Roman Fatnev
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,8 +33,8 @@ public class BuilderMapper implements Builder<Element>  {
     @Override
     @Nullable
     public Element build(final ASTNode tree) {
-        final ASTNode element = tree.children().get(0).asNode();
-        switch (element.tag()) {
+        final ASTNode element = tree.getChildren().get(0).asNode();
+        switch (element.getTag()) {
             case "ebnf_optional":
                 return optionalBuilder.build(element);
             case "ebnf_or":

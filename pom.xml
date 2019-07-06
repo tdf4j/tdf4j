@@ -53,7 +53,6 @@
     <modules>
         <module>lexer</module>
         <module>lexer-module</module>
-        <module>commons-lib</module>
         <module>parser</module>
         <module>parser-module</module>
         <module>generator</module>
@@ -64,6 +63,14 @@
     </modules>
 
     <dependencies>
+
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>16.0.3</version>
+            <scope>compile</scope>
+        </dependency>
+
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>

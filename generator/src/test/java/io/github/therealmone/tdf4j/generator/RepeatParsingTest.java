@@ -36,6 +36,7 @@ public class RepeatParsingTest extends ParserTest {
      * prod1 := {A, B} | {C | A}
      */
     @Test
+    //todo: fix Expected: [A, C, A]
     public void with_or() {
         final Parser parser = generate(new AbstractParserModule() {
             @Override
@@ -53,9 +54,9 @@ public class RepeatParsingTest extends ParserTest {
         assertNotNull(parse(parser, "ABAB"));
         assertNotNull(parse(parser, "C"));
         assertNotNull(parse(parser, "CC"));
-        assertParserFails(parser, "AA", unexpectedToken(TestTerminal.A, 1, 1));
-        assertParserFails(parser, "A", unexpectedEOF());
-        assertParserFails(parser, "", unexpectedEOF());
+        assertParserFails(parser, "AA", unexpectedToken(TestTerminal.A, 1, 1, "B"));
+        assertParserFails(parser, "A", unexpectedEOF("B"));
+        assertParserFails(parser, "", unexpectedEOF("A", "C", "A"));
     }
 
     /**
@@ -96,10 +97,10 @@ public class RepeatParsingTest extends ParserTest {
         assertNotNull(parse(parser, "CCA"));
         assertNotNull(parse(parser, "ABCCA"));
         assertNotNull(parse(parser, "ABCA"));
-        assertParserFails(parser, "AAABCCA", unexpectedToken(TestTerminal.A, 1, 1));
-        assertParserFails(parser, "A", unexpectedEOF());
-        assertParserFails(parser, "ABA", unexpectedEOF());
-        assertParserFails(parser, "BCA", unexpectedToken(TestTerminal.B));
-        assertParserFails(parser, "", unexpectedEOF());
+        assertParserFails(parser, "AAABCCA", unexpectedToken(TestTerminal.A, 1, 1, "B"));
+        assertParserFails(parser, "A", unexpectedEOF("B"));
+        assertParserFails(parser, "ABA", unexpectedEOF("B"));
+        assertParserFails(parser, "BCA", unexpectedToken(TestTerminal.B, "A"));
+        assertParserFails(parser, "", unexpectedEOF("A"));
     }
 }

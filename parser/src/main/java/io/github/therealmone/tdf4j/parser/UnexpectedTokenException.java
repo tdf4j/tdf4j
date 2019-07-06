@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Roman Fatnev
+ * Copyright (c) 2019 Roman Fatnev
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,8 +17,27 @@ package io.github.therealmone.tdf4j.parser;
 
 import io.github.therealmone.tdf4j.model.Token;
 
+import javax.annotation.Nullable;
+import java.util.Arrays;
+
 public class UnexpectedTokenException extends RuntimeException {
-    public UnexpectedTokenException(final Token token) {
-        super("Unexpected token: " + token);
+
+    public UnexpectedTokenException(@Nullable final Token token, final String... expected) {
+        this(token != null
+            ? "Unexpected token: " + token + ". Expected: " + Arrays.asList(expected)
+            : "Unexpected end of file. Expected: " + Arrays.asList(expected)
+        );
     }
+
+    public UnexpectedTokenException(@Nullable final Token token) {
+        this(token != null
+                ? "Unexpected token: " + token
+                : "Unexpected end of file"
+        );
+    }
+
+    public UnexpectedTokenException(final String message) {
+        super(message);
+    }
+
 }

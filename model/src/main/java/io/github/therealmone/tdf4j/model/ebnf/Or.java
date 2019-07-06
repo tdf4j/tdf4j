@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Roman Fatnev
+ * Copyright (c) 2019 Roman Fatnev
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,15 +24,15 @@ public abstract class Or extends AbstractElement {
         return Kind.OR;
     }
 
-    public abstract Element first();
+    public abstract Element getFirst();
 
-    public abstract Element second();
+    public abstract Element getSecond();
 
     public static class Builder extends ImmutableOr.Builder {
     }
 
     @Override
     public String toString() {
-        return first().toString() + "|" + second().toString();
+        return getFirst().toString() + "|" + getSecond().toString();
     }
 }

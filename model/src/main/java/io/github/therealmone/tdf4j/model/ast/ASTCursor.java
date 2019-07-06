@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Roman Fatnev
+ * Copyright (c) 2019 Roman Fatnev
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -47,9 +47,9 @@ public class ASTCursor implements ASTElement {
     public enum Movement implements Consumer<ASTCursor> {
         TO_PARENT(cursor -> {
             if(cursor.isNode()) {
-                cursor.setValue(cursor.getValue().asNode().parent());
+                cursor.setValue(cursor.getValue().asNode().getParent());
             } else if(cursor.getValue().isLeaf()) {
-                cursor.setValue(cursor.getValue().asLeaf().parent());
+                cursor.setValue(cursor.getValue().asLeaf().getParent());
             }
         }),
 
@@ -59,8 +59,8 @@ public class ASTCursor implements ASTElement {
             }
 
             final List<ASTElement> children = cursor.isNode()
-                    ? cursor.asNode().children()
-                    : cursor.asRoot().children();
+                    ? cursor.asNode().getChildren()
+                    : cursor.asRoot().getChildren();
             for (int i = children.size() - 1; i >= 0; i--) {
                 if(children.get(i).isNode()) {
                     cursor.setValue(children.get(i));
@@ -75,8 +75,8 @@ public class ASTCursor implements ASTElement {
             }
 
             final List<ASTElement> children = cursor.isNode()
-                    ? cursor.asNode().children()
-                    : cursor.asRoot().children();
+                    ? cursor.asNode().getChildren()
+                    : cursor.asRoot().getChildren();
             for (int i = children.size() - 1; i >= 0; i--) {
                 if(children.get(i).isLeaf()) {
                     cursor.setValue(children.get(i));

@@ -1,6 +1,6 @@
 package io.github.therealmone.tdf4j.module.parser;
 
-import io.github.therealmone.tdf4j.commons.Dependency;
+import io.github.therealmone.tdf4j.model.Dependency;
 import io.github.therealmone.tdf4j.utils.FirstSetCollector;
 import io.github.therealmone.tdf4j.utils.FollowSetCollector;
 import org.junit.Assert;
@@ -16,12 +16,12 @@ public class EnvironmentBindTest {
             @Override
             public void configure() {
                 environment()
-                        .packages(
+                        .setPackages(
                                 "package1",
                                 "package2",
                                 "package3"
                         )
-                        .dependencies(
+                        .setDependencies(
                                 dependency(FirstSetCollector.class, "firstSetCollector", new FirstSetCollector()),
                                 dependency(FollowSetCollector.class, "followSetCollector")
                         );
@@ -30,7 +30,7 @@ public class EnvironmentBindTest {
 
         //packages
         {
-            final String[] packages = module.getEnvironment().packages();
+            final String[] packages = module.getEnvironment().getPackages();
             assertEquals(3, packages.length);
             assertEquals("package1", packages[0]);
             assertEquals("package2", packages[1]);
@@ -39,13 +39,13 @@ public class EnvironmentBindTest {
 
         //dependencies
         {
-            final Dependency[] dependencies = module.getEnvironment().dependencies();
+            final Dependency[] dependencies = module.getEnvironment().getDependencies();
             assertEquals(2, dependencies.length);
-            Assert.assertEquals("firstSetCollector", dependencies[0].name());
-            Assert.assertEquals("FirstSetCollector", dependencies[0].clazz().getSimpleName());
+            Assert.assertEquals("firstSetCollector", dependencies[0].getName());
+            Assert.assertEquals("FirstSetCollector", dependencies[0].getClazz().getSimpleName());
             Assert.assertEquals("FirstSetCollector", dependencies[0].instance().getClass().getSimpleName());
-            Assert.assertEquals("followSetCollector", dependencies[1].name());
-            Assert.assertEquals("FollowSetCollector", dependencies[1].clazz().getSimpleName());
+            Assert.assertEquals("followSetCollector", dependencies[1].getName());
+            Assert.assertEquals("FollowSetCollector", dependencies[1].getClazz().getSimpleName());
             Assert.assertEquals("FollowSetCollector", dependencies[1].instance().getClass().getSimpleName());
         }
     }
@@ -58,8 +58,8 @@ public class EnvironmentBindTest {
                 environment();
             }
         }.build();
-        assertEquals(0, module.getEnvironment().packages().length);
-        assertEquals(0, module.getEnvironment().dependencies().length);
+        assertEquals(0, module.getEnvironment().getPackages().length);
+        assertEquals(0, module.getEnvironment().getDependencies().length);
     }
 
     @Test
@@ -67,11 +67,11 @@ public class EnvironmentBindTest {
         final AbstractParserModule module = new AbstractParserModule() {
             @Override
             public void configure() {
-                environment().packages("");
+                environment().setPackages("");
             }
         }.build();
-        assertEquals(1, module.getEnvironment().packages().length);
-        assertEquals(0, module.getEnvironment().dependencies().length);
+        assertEquals(1, module.getEnvironment().getPackages().length);
+        assertEquals(0, module.getEnvironment().getDependencies().length);
     }
 
     @Test
@@ -79,10 +79,10 @@ public class EnvironmentBindTest {
         final AbstractParserModule module = new AbstractParserModule() {
             @Override
             public void configure() {
-                environment().dependencies(dependency(FirstSetCollector.class, "class"));
+                environment().setDependencies(dependency(FirstSetCollector.class, "class"));
             }
         }.build();
-        assertEquals(0, module.getEnvironment().packages().length);
-        assertEquals(1, module.getEnvironment().dependencies().length);
+        assertEquals(0, module.getEnvironment().getPackages().length);
+        assertEquals(1, module.getEnvironment().getDependencies().length);
     }
 }

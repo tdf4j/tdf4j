@@ -34,9 +34,9 @@ public class HiddenTerminalsTest {
         }.build(), new SymbolListenerImpl());
         final List<Token> tokens = lexer.analyze("//comment\nA//comment\rB//comment\r\nC");
         assertEquals(3, tokens.size());
-        assertEquals("A", tokens.get(0).value());
-        assertEquals("B", tokens.get(1).value());
-        assertEquals("C", tokens.get(2).value());
+        assertEquals("A", tokens.get(0).getValue());
+        assertEquals("B", tokens.get(1).getValue());
+        assertEquals("C", tokens.get(2).getValue());
     }
 
     @Test
@@ -50,8 +50,8 @@ public class HiddenTerminalsTest {
         }.build(), new SymbolListenerImpl());
         final List<Token> tokens = lexer.analyze("/*comment\n\r\n\n*/A/*comment*/B/*\ncomment\n*/C");
         assertEquals(3, tokens.size());
-        assertEquals("A", tokens.get(0).value());
-        assertEquals("B", tokens.get(1).value());
-        assertEquals("C", tokens.get(2).value());
+        assertEquals("A", tokens.get(0).getValue());
+        assertEquals("B", tokens.get(1).getValue());
+        assertEquals("C", tokens.get(2).getValue());
     }
 }

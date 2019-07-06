@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Roman Fatnev
+ * Copyright (c) 2019 Roman Fatnev
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@ package io.github.therealmone.tdf4j.model.ebnf;
 
 import org.immutables.value.Value;
 
+import javax.annotation.Nullable;
 import java.util.regex.Pattern;
 
 @Value.Immutable
@@ -26,9 +27,9 @@ public abstract class Terminal extends AbstractElement {
         return Kind.TERMINAL;
     }
 
-    public abstract Tag tag();
+    public abstract Tag getTag();
 
-    public abstract Pattern pattern();
+    public abstract Pattern getPattern();
 
     @Value.Default
     public long priority() {
@@ -42,24 +43,32 @@ public abstract class Terminal extends AbstractElement {
 
     public static class Builder extends ImmutableTerminal.Builder {
         public Terminal.Builder pattern(final String pattern) {
-            super.pattern(Pattern.compile(pattern));
+            super.setPattern(Pattern.compile(pattern));
             return this;
         }
 
         public Terminal.Builder pattern(final String pattern, final int flags) {
-            super.pattern(Pattern.compile(pattern, flags));
+            super.setPattern(Pattern.compile(pattern, flags));
             return this;
         }
 
         public Terminal.Builder tag(final String tag) {
-            super.tag(new Tag.Builder().value(tag).build());
+            super.setTag(new Tag.Builder().setValue(tag).build());
             return this;
+        }
+
+        public Terminal.Builder priority(final long priority) {
+            return super.setPriority(priority);
+        }
+
+        public Terminal.Builder hidden(final boolean hidden) {
+            return super.setHidden(hidden);
         }
     }
 
     @Override
     public String toString() {
-        return pattern() != null ? tag() + " : " + pattern() : tag().toString();
+        return getPattern() != null ? getTag() + " : " + getPattern() : getTag().toString();
     }
 
     @Value.Immutable
@@ -69,7 +78,28 @@ public abstract class Terminal extends AbstractElement {
             return Kind.TERMINAL_TAG;
         }
 
-        public abstract String value();
+        public abstract String getValue();
+
+        @Nullable
+        @Value.Auxiliary
+        @Value.Default
+        public String getTokenAction() {
+            return null;
+        }
+
+        @Value.Check
+        Terminal.Tag normalize() {
+            final char[] value = getValue().toCharArray();
+            for(final char ch : value) {
+                if(Character.isLetter(ch) && !Character.isUpperCase(ch)) {
+                    return new Terminal.Tag.Builder()
+                            .setValue(getValue().toUpperCase())
+                            .setTokenAction(getTokenAction())
+                            .build();
+                }
+            }
+            return this;
+        }
 
         public static class Builder extends ImmutableTag.Builder {
 
@@ -77,7 +107,7 @@ public abstract class Terminal extends AbstractElement {
 
         @Override
         public String toString() {
-            return value();
+            return getValue();
         }
     }
 }

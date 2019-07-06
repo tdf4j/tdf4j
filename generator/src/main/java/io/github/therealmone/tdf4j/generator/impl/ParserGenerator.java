@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Roman Fatnev
+ * Copyright (c) 2019 Roman Fatnev
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,25 +15,17 @@
  */
 package io.github.therealmone.tdf4j.generator.impl;
 
-import io.github.therealmone.tdf4j.commons.Dependency;
+import io.github.therealmone.tdf4j.model.Dependency;
 import io.github.therealmone.tdf4j.generator.Generator;
-import io.github.therealmone.tdf4j.model.ebnf.NonTerminal;
-import io.github.therealmone.tdf4j.model.ebnf.Production;
 import io.github.therealmone.tdf4j.module.parser.AbstractParserModule;
 import io.github.therealmone.tdf4j.utils.Predictor;
 import io.github.therealmone.tdf4j.generator.Imports;
-import io.github.therealmone.tdf4j.generator.templates.ImmutableMethodTemplate;
-import io.github.therealmone.tdf4j.generator.templates.MethodTemplate;
 import io.github.therealmone.tdf4j.generator.templates.ParserTemplate;
-import io.github.therealmone.tdf4j.generator.templates.logic.CodeBlock;
-import io.github.therealmone.tdf4j.generator.utils.MetaInfCollector;
+import io.github.therealmone.tdf4j.generator.MetaInfCollector;
 import io.github.therealmone.tdf4j.parser.MetaInf;
 import io.github.therealmone.tdf4j.parser.Parser;
 import org.joor.Reflect;
 
-import java.util.*;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 public class ParserGenerator implements Generator<Parser> {
     private final MetaInfCollector metaInfCollector = new MetaInfCollector();
@@ -64,45 +56,24 @@ public class ParserGenerator implements Generator<Parser> {
                 parser.build()
         ).create(args(
                 metaInfCollector.collect(parser),
-                new Predictor(module.getGrammar().firstSet(), module.getGrammar().followSet()),
-                module.getEnvironment().dependencies()
+                new Predictor(module.getGrammar().getFirstSet(), module.getGrammar().getFollowSet()),
+                module.getEnvironment().getDependencies()
         )).get();
     }
 
     private ParserTemplate build(final AbstractParserModule module, final String className, final String pack, final Class<? extends Parser> interfaceToImplement) {
         final ParserTemplate.Builder parserBuilder = new ParserTemplate.Builder()
-                .className(className)
-                .pack(pack)
-                .environment(module.getEnvironment())
-                .imports(imports(interfaceToImplement.getCanonicalName()))
-                .interfaceToImplement(interfaceToImplement.getSimpleName());
-        if(module.getGrammar().initProduction() == null) {
+                .setClassName(className)
+                .setPackage(pack)
+                .setEnvironment(module.getEnvironment())
+                .setImports(imports(interfaceToImplement.getCanonicalName()))
+                .setInterface(interfaceToImplement.getSimpleName());
+        if(module.getGrammar().getAxiom() == null) {
             throw new RuntimeException("Initial production is null");
         }
         //noinspection ConstantConditions
-        parserBuilder.initProd(module.getGrammar().initProduction());
-        parserBuilder.addAllMethods(collectMethods(module.getGrammar().productions()));
+        parserBuilder.setGrammar(module.getGrammar());
         return parserBuilder.build();
-    }
-
-    private List<MethodTemplate> collectMethods(final List<Production> productions) {
-        final Map<NonTerminal, MethodTemplate.Builder> declaredMethods = new HashMap<>();
-        for (final Production production : productions) {
-            if(!declaredMethods.containsKey(production.identifier())) {
-                declaredMethods.put(production.identifier(), new MethodTemplate.Builder()
-                        .name(production.identifier().identifier())
-                );
-            }
-
-            final MethodTemplate.Builder builder = declaredMethods.get(production.identifier());
-            production.elements().forEach(element -> {
-                final CodeBlock codeBlock = CodeBlock.fromElement(element);
-                if(codeBlock != null) {
-                    builder.addCodeBlocks(codeBlock);
-                }
-            });
-        }
-        return declaredMethods.values().stream().map((Function<MethodTemplate.Builder, MethodTemplate>) ImmutableMethodTemplate.Builder::build).collect(Collectors.toList());
     }
 
     private Object[] args(final MetaInf meta, final Predictor predictor, final Dependency[] dependencies) {

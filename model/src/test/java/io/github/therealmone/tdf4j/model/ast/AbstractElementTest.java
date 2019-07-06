@@ -16,11 +16,11 @@ public class AbstractElementTest {
         assertEquals("(A,B,C)", aet.toStringGroup(
                 new Group() {
                     @Override
-                    public Element[] elements() {
+                    public Element[] getElements() {
                         return new Element[] {
-                                new Terminal.Tag.Builder().value("A").build(),
-                                new Terminal.Tag.Builder().value("B").build(),
-                                new Terminal.Tag.Builder().value("C").build()
+                                new Terminal.Tag.Builder().setValue("A").build(),
+                                new Terminal.Tag.Builder().setValue("B").build(),
+                                new Terminal.Tag.Builder().setValue("C").build()
                         };
                     }
                 }

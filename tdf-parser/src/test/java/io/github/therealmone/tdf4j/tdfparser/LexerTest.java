@@ -275,17 +275,23 @@ public class LexerTest {
                 token("OP_SUM", "+"));
     }
 
+    @Test
+    public void lambda() {
+        assertLexerReturns("->",
+                token("LAMBDA", "->"));
+    }
+
     private void assertLexerReturns(final String input, final Token... tokens) {
         final List<Token> fromLexer = lexer.analyze(input);
         assertEquals(tokens.length, fromLexer.size());
         for (int i = 0; i < tokens.length; i++) {
-            assertEquals(tokens[i].tag().value(), fromLexer.get(i).tag().value());
-            assertEquals(tokens[i].value(), fromLexer.get(i).value());
+            assertEquals(tokens[i].getTag().getValue(), fromLexer.get(i).getTag().getValue());
+            assertEquals(tokens[i].getValue(), fromLexer.get(i).getValue());
         }
     }
 
     private Token token(final String tag, final String value) {
-        return new Token.Builder().tag(tag).value(value).build();
+        return new Token.Builder().setTag(tag).setValue(value).build();
     }
 
 }

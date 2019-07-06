@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Roman Fatnev
+ * Copyright (c) 2019 Roman Fatnev
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,7 +28,7 @@ public class EbnfGroupBuilder extends AbstractEbnfElementBuilder<Group> {
     @Override
     public Group build(final ASTNode tree) {
         return new Group.Builder()
-                .elements(getInnerElements(tree).stream().map(this::callBuilder).toArray(Element[]::new))
+                .setElements(getInnerElements(tree).stream().map(this::callBuilder).toArray(Element[]::new))
                 .build();
     }
 }

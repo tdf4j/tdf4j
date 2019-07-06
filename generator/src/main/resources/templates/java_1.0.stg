@@ -1,0 +1,136 @@
+/*
+ * Copyright (c) 2019 Roman Fatnev
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+parser(package, imports, environment, className, initProd, methods, interface) ::= <<
+package <package>;
+
+<imports: {import| import <import>;}; separator="\n">
+<environment.packages: {package| import <package>;}; separator="\n">
+
+public class <className> implements <interface> {
+    private final MetaInf meta;
+    private final Predictor predictor;
+
+    <environment.dependencies: {dependency| private final <dependency.clazz.simpleName> <dependency.name>;}; separator="\n">
+
+    private AST ast;
+    private BufferedStream\<Token> stream;
+
+    public <className>(
+        final MetaInf meta,
+        final Predictor predictor<environment.dependencies: {dependency|,<\n><\t><\t>final <dependency.clazz.simpleName> <dependency.name>}>
+    ) {
+        this.meta = meta;
+        this.predictor = predictor;
+        <environment.dependencies: {dependency| this.<dependency.name> = <dependency.name>;}; separator="\n">
+    }
+
+    <environment.code>
+
+    @Override
+    public AST parse(final Stream\<Token> tokens) {
+        this.stream = new BufferedStream\<>(tokens);
+        this.ast = AST.create("<initProd>");
+        <initProd>();
+        return ast;
+    }
+
+    @Override
+    public AST parse(final List\<Token> tokens) {
+        return parse(Stream.of(tokens));
+    }
+
+    @Override
+    public MetaInf meta() {
+        return this.meta;
+    }
+
+    <methods: {method|<method><\n><\n>}>
+}
+>>
+
+method(returnValue, name, codeBlocks) ::= <<
+@SuppressWarnings("ConstantConditions")
+private <returnValue> <name>() {
+    <codeBlocks: {codeBlock|<codeBlock>};separator="\n">
+}
+>>
+
+ele_group(codeBlocks, hash) ::= <<
+<codeBlocks: {codeBlock|<codeBlock>};separator="\n">
+>>
+
+non_terminal(nonTerminal) ::= <<
+ast.addNode("<nonTerminal>").moveCursor(ASTCursor.Movement.TO_LAST_ADDED_NODE);
+<nonTerminal>();
+ast.moveCursor(ASTCursor.Movement.TO_PARENT);
+>>
+
+optional(firstElements, codeBlocks, hash) ::= <<
+if(<firstElements: {firstElement|predictor.predict(stream.peek()).contains("<firstElement>")}; separator="\n|| ">) {
+    <codeBlocks: {codeBlock|<codeBlock>};separator="\n">
+}
+>>
+
+or(firstStartElements, firstCodeBlocks, secondStartElements, secondCodeBlocks) ::= <<
+if(stream.peek() != null && (
+    <firstStartElements: {startElement|predictor.predict(stream.peek()).contains("<startElement>")}; separator="\n|| ">
+)) {
+    <firstCodeBlocks: {codeBlock|<codeBlock>};separator="\n">
+} else if(stream.peek() != null && (
+    <secondStartElements: {startElement|predictor.predict(stream.peek()).contains("<startElement>")}; separator="\n|| ">
+)) {
+    <secondCodeBlocks: {codeBlock|<codeBlock>};separator="\n">
+} else {
+    throw new UnexpectedTokenException(stream.peek());
+}
+>>
+
+oneOf(elements, codeBlocks) ::= <<
+<elements: {element|
+if(stream.peek() != null && predictor.predict(stream.peek()).contains("<element>") {
+
+\}
+}; separator=" else ">
+>>
+
+repeat(firstElements, codeBlocks, hash) ::= <<
+while(true) {
+    if(<firstElements: {firstElement|predictor.predict(stream.peek()).contains("<firstElement>")}; separator="\n|| ">) {
+        <codeBlocks: {codeBlock|<codeBlock>};separator="\n">
+    } else {
+        break;
+    }
+}
+>>
+
+repetition(hash, times, codeBlocks) ::= <<
+for(int i<hash> = 0; i<hash> \< <times>; i<hash>++) {
+    <codeBlocks: {codeBlock|<codeBlock>};separator="\n">
+}
+>>
+
+terminal_tag(terminal) ::= <<
+if(stream.peek() != null && stream.peek().getTag().getValue().equalsIgnoreCase("<terminal>")) {
+    ast.addLeaf(stream.next());
+} else {
+    throw new UnexpectedTokenException(stream.peek());
+}
+>>
+
+inline_action(inlineAction) ::= <<
+<inlineAction>
+>>
+

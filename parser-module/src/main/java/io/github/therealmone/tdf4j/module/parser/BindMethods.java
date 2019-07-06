@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Roman Fatnev
+ * Copyright (c) 2019 Roman Fatnev
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,12 +15,13 @@
  */
 package io.github.therealmone.tdf4j.module.parser;
 
-import io.github.therealmone.tdf4j.commons.Dependency;
-import io.github.therealmone.tdf4j.commons.Environment;
+import io.github.therealmone.tdf4j.model.Dependency;
+import io.github.therealmone.tdf4j.model.Environment;
+import io.github.therealmone.tdf4j.model.Production;
 import io.github.therealmone.tdf4j.model.ebnf.*;
 
 public interface BindMethods {
-    void initProd(final String identifier);
+    void axiom(final String identifier);
 
     Production.Builder prod(final String identifier);
 
@@ -44,7 +45,11 @@ public interface BindMethods {
 
     Terminal.Tag t(final String tag);
 
+    Terminal.Tag t(final String tag, final String tokenAction);
+
     NonTerminal nt(final String identifier);
+
+    NonTerminal nt(final String identifier, final String nodeAction);
 
     InlineAction inline(final String code);
 }

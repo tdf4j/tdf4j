@@ -1,6 +1,6 @@
 package io.github.therealmone.tdf4j.tdfparser;
 
-import io.github.therealmone.tdf4j.commons.Environment;
+import io.github.therealmone.tdf4j.model.Environment;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

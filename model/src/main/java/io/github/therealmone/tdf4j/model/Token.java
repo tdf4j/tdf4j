@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Roman Fatnev
+ * Copyright (c) 2019 Roman Fatnev
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,23 +20,23 @@ import org.immutables.value.Value;
 
 @Value.Immutable
 public interface Token {
-    Terminal.Tag tag();
+    Terminal.Tag getTag();
 
-    String value();
+    String getValue();
 
     @Value.Default
-    default long row() {
+    default long getRow() {
         return 0;
     }
 
     @Value.Default
-    default long column() {
+    default long getColumn() {
         return 0;
     }
 
     class Builder extends ImmutableToken.Builder {
-        public Builder tag(final String tag) {
-            return super.tag(new Terminal.Tag.Builder().value(tag).build());
+        public Builder setTag(final String tag) {
+            return super.setTag(new Terminal.Tag.Builder().setValue(tag).build());
         }
     }
 }

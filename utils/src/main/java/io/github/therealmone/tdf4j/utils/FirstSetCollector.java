@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Roman Fatnev
+ * Copyright (c) 2019 Roman Fatnev
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,8 @@
  */
 package io.github.therealmone.tdf4j.utils;
 
+import io.github.therealmone.tdf4j.model.First;
+import io.github.therealmone.tdf4j.model.Production;
 import io.github.therealmone.tdf4j.model.ebnf.*;
 
 import javax.annotation.Nullable;
@@ -27,22 +29,22 @@ public class FirstSetCollector {
         for(final Production production : productions) {
             firstOf(context, production);
         }
-        return new First.Builder().set(context.getSet()).build();
+        return new First.Builder().setSet(context.getSet()).build();
     }
 
     private List<Terminal.Tag> firstOf(final Context context, @Nullable final Production production) {
         if(production == null) {
             return Collections.emptyList();
         }
-        if (!context.getSet().containsKey(production.identifier())) {
-            context.getSet().put(production.identifier(), new HashSet<>());
+        if (!context.getSet().containsKey(production.getIdentifier())) {
+            context.getSet().put(production.getIdentifier(), new HashSet<>());
         }
-        if (!production.elements().isEmpty()) {
-            context.getSet().get(production.identifier()).addAll(
-                    firstOf(context, production.identifier(), firstElement(production.elements()))
+        if (!production.getElements().isEmpty()) {
+            context.getSet().get(production.getIdentifier()).addAll(
+                    firstOf(context, production.getIdentifier(), firstElement(production.getElements()))
             );
         }
-        return new ArrayList<>(context.getSet().get(production.identifier()));
+        return new ArrayList<>(context.getSet().get(production.getIdentifier()));
     }
 
     private List<Terminal.Tag> firstOf(final Context context, final NonTerminal currentNT, @Nullable final Element element) {
@@ -53,38 +55,38 @@ public class FirstSetCollector {
         switch (element.kind()) {
 
             case GROUP: {
-                return element.asGroup().elements().length == 0
+                return element.asGroup().getElements().length == 0
                         ? Collections.emptyList()
-                        : firstOf(context, currentNT, firstElement(Arrays.asList(element.asGroup().elements())));
+                        : firstOf(context, currentNT, firstElement(Arrays.asList(element.asGroup().getElements())));
             }
 
             case NON_TERMINAL: {
-                return element.asNonTerminal().identifier().equalsIgnoreCase(currentNT.identifier())
+                return element.asNonTerminal().getValue().equalsIgnoreCase(currentNT.getValue())
                         ? Collections.emptyList()
                         : firstOf(context, context.getProduction(element.asNonTerminal()));
             }
 
             case OPTIONAL: {
-                return element.asOptional().elements().length == 0
+                return element.asOptional().getElements().length == 0
                         ? Collections.emptyList()
-                        : firstOf(context, currentNT, firstElement(Arrays.asList(element.asOptional().elements())));
+                        : firstOf(context, currentNT, firstElement(Arrays.asList(element.asOptional().getElements())));
             }
 
             case OR: {
                 return new ArrayList<>() {{
-                    addAll(firstOf(context, currentNT, firstElement(Collections.singletonList(element.asOr().first()))));
-                    addAll(firstOf(context, currentNT, firstElement(Collections.singletonList(element.asOr().second()))));
+                    addAll(firstOf(context, currentNT, firstElement(Collections.singletonList(element.asOr().getFirst()))));
+                    addAll(firstOf(context, currentNT, firstElement(Collections.singletonList(element.asOr().getSecond()))));
                 }};
             }
 
             case REPEAT: {
-                return element.asRepeat().elements().length == 0
+                return element.asRepeat().getElements().length == 0
                         ? Collections.emptyList()
-                        : firstOf(context, currentNT, firstElement(Arrays.asList(element.asRepeat().elements())));
+                        : firstOf(context, currentNT, firstElement(Arrays.asList(element.asRepeat().getElements())));
             }
 
             case REPETITION: {
-                return firstOf(context, currentNT, firstElement(Collections.singletonList(element.asRepetition().element())));
+                return firstOf(context, currentNT, firstElement(Collections.singletonList(element.asRepetition().getElement())));
             }
 
             case TERMINAL_TAG: {
@@ -124,7 +126,7 @@ public class FirstSetCollector {
         @Nullable
         Production getProduction(final NonTerminal ident) {
             for(final Production production : productions) {
-                if(production.identifier().equals(ident)) {
+                if(production.getIdentifier().equals(ident)) {
                     return production;
                 }
             }

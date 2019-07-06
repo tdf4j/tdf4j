@@ -45,12 +45,12 @@ public class LexicalValidationTest extends ValidationTest {
                         return new ArrayList<>() {{
                             add(new Terminal() {
                                 @Override
-                                public Tag tag() {
+                                public Tag getTag() {
                                     return null;
                                 }
 
                                 @Override
-                                public Pattern pattern() {
+                                public Pattern getPattern() {
                                     return Pattern.compile("pattern");
                                 }
                             });
@@ -75,17 +75,17 @@ public class LexicalValidationTest extends ValidationTest {
                         return new ArrayList<>() {{
                             add(new Terminal() {
                                 @Override
-                                public Tag tag() {
+                                public Tag getTag() {
                                     return new Tag() {
                                         @Override
-                                        public String value() {
+                                        public String getValue() {
                                             return null;
                                         }
                                     };
                                 }
 
                                 @Override
-                                public Pattern pattern() {
+                                public Pattern getPattern() {
                                     return Pattern.compile("pattern");
                                 }
                             });
@@ -110,17 +110,17 @@ public class LexicalValidationTest extends ValidationTest {
                         return new ArrayList<>() {{
                             add(new Terminal() {
                                 @Override
-                                public Tag tag() {
+                                public Tag getTag() {
                                     return new Tag() {
                                         @Override
-                                        public String value() {
+                                        public String getValue() {
                                             return "TAG";
                                         }
                                     };
                                 }
 
                                 @Override
-                                public Pattern pattern() {
+                                public Pattern getPattern() {
                                     return null;
                                 }
                             });
@@ -145,34 +145,34 @@ public class LexicalValidationTest extends ValidationTest {
                         return new ArrayList<>() {{
                             add(new Terminal() {
                                 @Override
-                                public Tag tag() {
+                                public Tag getTag() {
                                     return new Tag() {
                                         @Override
-                                        public String value() {
+                                        public String getValue() {
                                             return "TAG1";
                                         }
                                     };
                                 }
 
                                 @Override
-                                public Pattern pattern() {
+                                public Pattern getPattern() {
                                     return Pattern.compile("pattern");
                                 }
                             });
 
                             add(new Terminal() {
                                 @Override
-                                public Tag tag() {
+                                public Tag getTag() {
                                     return new Tag() {
                                         @Override
-                                        public String value() {
+                                        public String getValue() {
                                             return "TAG1";
                                         }
                                     };
                                 }
 
                                 @Override
-                                public Pattern pattern() {
+                                public Pattern getPattern() {
                                     return Pattern.compile("pattern");
                                 }
                             });

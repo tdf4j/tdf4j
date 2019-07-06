@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Roman Fatnev
+ * Copyright (c) 2019 Roman Fatnev
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,8 +27,8 @@ public class EbnfRepetitionBuilder extends AbstractEbnfElementBuilder<Repetition
     @Override
     public Repetition build(final ASTNode tree) {
         return new Repetition.Builder()
-                .times(Integer.parseInt(tree.children().get(0).asLeaf().token().value()))
-                .element(callBuilder(tree.children().get(2).asNode()))
+                .setTimes(Integer.parseInt(tree.getChildren().get(0).asLeaf().getToken().getValue()))
+                .setElement(callBuilder(tree.getChildren().get(2).asNode()))
                 .build();
     }
 

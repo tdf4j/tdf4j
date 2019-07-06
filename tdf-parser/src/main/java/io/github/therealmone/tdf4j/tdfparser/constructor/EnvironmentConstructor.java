@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Roman Fatnev
+ * Copyright (c) 2019 Roman Fatnev
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 package io.github.therealmone.tdf4j.tdfparser.constructor;
 
-import io.github.therealmone.tdf4j.commons.Environment;
+import io.github.therealmone.tdf4j.model.Environment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,9 +31,9 @@ public class EnvironmentConstructor implements Constructor {
 
     @Override
     public void construct() {
-        builder.packages(packages.toArray(new String[]{}));
+        builder.setPackages(packages.toArray(new String[]{}));
         if(code != null && !code.trim().equalsIgnoreCase("")) {
-            builder.code(code);
+            builder.setCode(code);
         }
     }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Roman Fatnev
+ * Copyright (c) 2019 Roman Fatnev
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 package io.github.therealmone.tdf4j.lexer.impl;
 
-import io.github.therealmone.tdf4j.commons.Stream;
+import io.github.therealmone.tdf4j.model.Stream;
 import io.github.therealmone.tdf4j.model.ebnf.Terminal;
 import io.github.therealmone.tdf4j.model.Token;
 import io.github.therealmone.tdf4j.lexer.SymbolListener;
@@ -40,7 +40,7 @@ public class LexerImpl implements Lexer {
 
     @Override
     @Nonnull
-    public List<Token> analyze(final String input) {
+    public List<Token> analyze(final CharSequence input) {
         final List<Token> tokens = new ArrayList<>();
         final Stream<Token> stream = stream(input);
         stream.forEach(tokens::add);
@@ -49,10 +49,10 @@ public class LexerImpl implements Lexer {
 
     @Nonnull
     @Override
-    public Stream<Token> stream(final String input) {
+    public Stream<Token> stream(final CharSequence input) {
         listener.reset();
         final StringBuilder in = new StringBuilder(input);
-        return new Stream.Builder<Token>().generator(() -> nextToken(in)).build();
+        return new Stream.Builder<Token>().setGenerator(() -> nextToken(in)).build();
     }
 
     @Nullable
@@ -76,10 +76,10 @@ public class LexerImpl implements Lexer {
 
     private Token tokenFrom(final Terminal terminal, final StringBuilder buffer, final StringBuilder in) {
         final Token token = new Token.Builder()
-                .tag(terminal.tag())
-                .value(buffer.toString())
-                .row(listener.line())
-                .column(listener.column())
+                .setTag(terminal.getTag())
+                .setValue(buffer.toString())
+                .setRow(listener.line())
+                .setColumn(listener.column())
                 .build();
         buffer.chars().forEach(ch -> listener.listen((char) ch));
         in.replace(0, buffer.length(), "");
@@ -106,7 +106,7 @@ public class LexerImpl implements Lexer {
 
     private boolean anyTerminalHitEnd(final StringBuilder buffer) {
         for(final Terminal terminal : terminals) {
-            final Matcher matcher = terminal.pattern().matcher(buffer);
+            final Matcher matcher = terminal.getPattern().matcher(buffer);
             if(matcher.matches() || matcher.hitEnd()) {
                 return true;
             }
@@ -117,7 +117,7 @@ public class LexerImpl implements Lexer {
     @Nullable
     private Terminal tryToSpecifyTerminal(final StringBuilder buffer) {
         final List<Terminal> terminals = this.terminals.stream()
-                .filter(terminal -> terminal.pattern().matcher(buffer).matches())
+                .filter(terminal -> terminal.getPattern().matcher(buffer).matches())
                 .sorted(Comparator.comparingLong(Terminal::priority))
                 .collect(Collectors.toList());
         return terminals.size() > 0
