@@ -21,6 +21,8 @@ import io.github.therealmone.tdf4j.model.Grammar;
 import org.immutables.value.Value;
 import org.stringtemplate.v4.ST;
 
+import javax.annotation.Nullable;
+
 @Value.Immutable
 public abstract class ParserTemplate implements Buildable {
 
@@ -35,6 +37,9 @@ public abstract class ParserTemplate implements Buildable {
     public abstract Grammar getGrammar();
 
     public abstract String getInterface();
+
+    @Nullable
+    public abstract String getExtension();
 
     @Override
     public String build() {

@@ -71,6 +71,17 @@ public class ParserTest {
         return parser;
     }
 
+    static Parser generate(final ParserOptions options) {
+        final long current = System.currentTimeMillis();
+        final Parser parser = new ParserGenerator(options).generate();
+        System.out.println(parser.meta().getSourceCode());
+        System.out.println(options.getModule().getGrammar().toString());
+        System.out.println(options.getModule().getGrammar().getFirstSet().toString());
+        System.out.println(options.getModule().getGrammar().getFollowSet().toString());
+        System.out.println("Compilation time: " + (System.currentTimeMillis() - current));
+        return parser;
+    }
+
     static AST parse(final Parser parser, final String input) {
         final long current = System.currentTimeMillis();
         final AST ast = parser.parse(lexer.stream(input));

@@ -19,7 +19,7 @@ package <parserTemplate.package>;
 <parserTemplate.imports: {import| import <import>;}; separator="\n">
 <parserTemplate.environment.packages: {package| import <package>;}; separator="\n">
 
-public class <parserTemplate.className> implements <parserTemplate.interface> {
+public class <parserTemplate.className><if(parserTemplate.extension)> extends <parserTemplate.extension><endif> implements <parserTemplate.interface> {
     private final MetaInf meta;
     private final Predictor predictor;
 

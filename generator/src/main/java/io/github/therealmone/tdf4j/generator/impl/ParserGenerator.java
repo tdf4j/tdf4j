@@ -18,7 +18,6 @@ package io.github.therealmone.tdf4j.generator.impl;
 import io.github.therealmone.tdf4j.generator.ParserOptions;
 import io.github.therealmone.tdf4j.model.Dependency;
 import io.github.therealmone.tdf4j.generator.Generator;
-import io.github.therealmone.tdf4j.module.parser.AbstractParserModule;
 import io.github.therealmone.tdf4j.utils.Predictor;
 import io.github.therealmone.tdf4j.generator.Imports;
 import io.github.therealmone.tdf4j.generator.templates.ParserTemplate;
@@ -39,12 +38,7 @@ public class ParserGenerator implements Generator<Parser> {
 
     @Override
     public Parser generate() {
-        final ParserTemplate parser = build(
-                options.getModule(),
-                options.getClassName(),
-                options.getPackage(),
-                options.getInterface()
-        );
+        final ParserTemplate parser = build(options);
         return Reflect.compile(options.getPackage() + "." + options.getClassName(),
                 parser.build()
         ).create(args(
@@ -54,17 +48,18 @@ public class ParserGenerator implements Generator<Parser> {
         )).get();
     }
 
-    private ParserTemplate build(final AbstractParserModule module, final String className, final String pack, final Class<? extends Parser> interfaceToImplement) {
+    private ParserTemplate build(final ParserOptions options) {
         final ParserTemplate.Builder parserBuilder = new ParserTemplate.Builder()
-                .setClassName(className)
-                .setPackage(pack)
-                .setEnvironment(module.getEnvironment())
-                .setImports(imports(interfaceToImplement.getCanonicalName()))
-                .setInterface(interfaceToImplement.getSimpleName());
-        if(module.getGrammar().getAxiom() == null) {
+                .setClassName(options.getClassName())
+                .setPackage(options.getPackage())
+                .setEnvironment(options.getModule().getEnvironment())
+                .setImports(imports(options.getInterface().getCanonicalName()))
+                .setInterface(options.getInterface().getSimpleName())
+                .setExtension(options.getExtension() != null ? options.getExtension().getCanonicalName() : null);
+        if(options.getModule().getGrammar().getAxiom() == null) {
             throw new RuntimeException("Initial production is null");
         }
-        parserBuilder.setGrammar(module.getGrammar());
+        parserBuilder.setGrammar(options.getModule().getGrammar());
         return parserBuilder.build();
     }
 
