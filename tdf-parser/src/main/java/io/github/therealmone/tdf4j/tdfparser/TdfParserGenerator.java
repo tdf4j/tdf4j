@@ -16,6 +16,8 @@
 package io.github.therealmone.tdf4j.tdfparser;
 
 import io.github.therealmone.tdf4j.generator.Generator;
+import io.github.therealmone.tdf4j.generator.LexerOptions;
+import io.github.therealmone.tdf4j.generator.ParserOptions;
 import io.github.therealmone.tdf4j.generator.impl.LexerGenerator;
 import io.github.therealmone.tdf4j.generator.impl.ParserGenerator;
 import io.github.therealmone.tdf4j.lexer.Lexer;
@@ -47,10 +49,20 @@ public class TdfParserGenerator implements Generator<TdfParser> {
 
     @Override
     public TdfParser generate() {
-        final Lexer lexer = new LexerGenerator(new TdfLexerModule()).generate();
-        final TdfParser parser = new ParserGenerator(new TdfParserModule()).generate(TdfParser.class);
+        final Lexer lexer = new LexerGenerator(new LexerOptions.Builder().setModule(new TdfLexerModule()).build()).generate();
+        final TdfParser parser = (TdfParser) new ParserGenerator(new ParserOptions.Builder()
+                .setPackage("io.github.therealmone.tdf4j.tdfparser")
+                .setClassName("TdfParserImpl")
+                .setModule(new TdfParserModule())
+                .setInterface(TdfParser.class)
+                .build()
+        ).generate();
         parser.parse(lexer.stream(config));
         return parser;
+    }
+
+    public static void main(String[] args) {
+
     }
 
 }

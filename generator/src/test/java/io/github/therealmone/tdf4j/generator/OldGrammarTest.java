@@ -16,7 +16,7 @@ public class OldGrammarTest extends ParserTest {
 
     @BeforeClass
     public static void init() {
-        lexer = new LexerGenerator(new AbstractLexerModule() {
+        lexer = new LexerGenerator(new LexerOptions.Builder().setModule(new AbstractLexerModule() {
             @Override
             public void configure() {
                 tokenize("VAR").pattern("^[a-z]+$");
@@ -53,7 +53,7 @@ public class OldGrammarTest extends ParserTest {
                 tokenize("$").pattern("^\\$$");
                 tokenize("ws").pattern("\\s|\\n|\\r").priority(Integer.MAX_VALUE).hidden(true);
             }
-        }).generate();
+        }).build()).generate();
     }
 
     private final Parser parser = generate(new AbstractParserModule() {

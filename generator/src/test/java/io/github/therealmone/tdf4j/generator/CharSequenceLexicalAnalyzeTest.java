@@ -12,14 +12,14 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 public class CharSequenceLexicalAnalyzeTest {
-    private final Lexer lexer = new LexerGenerator(new AbstractLexerModule() {
+    private final Lexer lexer = new LexerGenerator(new LexerOptions.Builder().setModule(new AbstractLexerModule() {
         @Override
         protected void configure() {
             tokenize("A").pattern("A");
             tokenize("B").pattern("B");
             tokenize("C").pattern("C");
         }
-    }).generate();
+    }).build()).generate();
 
 
     @Test

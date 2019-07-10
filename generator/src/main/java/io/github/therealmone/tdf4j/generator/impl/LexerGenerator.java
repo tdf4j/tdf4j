@@ -16,28 +16,20 @@
 package io.github.therealmone.tdf4j.generator.impl;
 
 import io.github.therealmone.tdf4j.generator.Generator;
+import io.github.therealmone.tdf4j.generator.LexerOptions;
 import io.github.therealmone.tdf4j.lexer.Lexer;
-import io.github.therealmone.tdf4j.lexer.SymbolListener;
 import io.github.therealmone.tdf4j.lexer.impl.LexerImpl;
-import io.github.therealmone.tdf4j.lexer.impl.SymbolListenerImpl;
-import io.github.therealmone.tdf4j.module.lexer.AbstractLexerModule;
 
 public class LexerGenerator implements Generator<Lexer> {
-    private final AbstractLexerModule module;
-    private final SymbolListener listener;
+    private final LexerOptions options;
 
-    public LexerGenerator(final AbstractLexerModule module) {
-        this.module = module;
-        this.listener = new SymbolListenerImpl();
-    }
-
-    public LexerGenerator(final AbstractLexerModule module, final SymbolListener listener) {
-        this.module = module;
-        this.listener = listener;
+    public LexerGenerator(final LexerOptions options) {
+        this.options = options;
+        options.getModule().build();
     }
 
     @Override
     public Lexer generate() {
-        return new LexerImpl(module.build(), listener);
+        return new LexerImpl(options.getModule().build(), options.getListener());
     }
 }

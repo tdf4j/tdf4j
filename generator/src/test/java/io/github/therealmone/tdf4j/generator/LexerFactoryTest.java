@@ -45,27 +45,27 @@ public class LexerFactoryTest {
 
     @Test
     public void from_json_string() throws Exception {
-        final Lexer lexer = new LexerGenerator(new JsonLexerModule("{\n" +
+        final Lexer lexer = generate(new JsonLexerModule("{\n" +
                 "  \"terminals\": [\n" +
                 "    {\"tag\": \"tag1\", \"pattern\": \"pattern1\", \"priority\": 1},\n" +
                 "    {\"tag\": \"tag2\", \"pattern\": \"pattern2\"},\n" +
                 "    {\"tag\": \"tag3\", \"pattern\": \"pattern3\", \"priority\": 10000}\n" +
                 "    {\"tag\": \"ws\", \"pattern\": \"\\s|\\n|\\r\", \"priority\": 20000, \"hidden\": true}\n" +
                 "  ]\n" +
-                "}")).generate();
+                "}"));
         assertTokens(lexer.analyze("pattern1 pattern2 pattern3"));
     }
 
     @Test
     public void from_json_string_with_listener() throws Exception {
-        final Lexer lexer = new LexerGenerator(new JsonLexerModule("{\n" +
+        final Lexer lexer = generate(new JsonLexerModule("{\n" +
                 "  \"terminals\": [\n" +
                 "    {\"tag\": \"tag1\", \"pattern\": \"pattern1\", \"priority\": 1},\n" +
                 "    {\"tag\": \"tag2\", \"pattern\": \"pattern2\"},\n" +
                 "    {\"tag\": \"tag3\", \"pattern\": \"pattern3\", \"priority\": 10000}\n" +
                 "    {\"tag\": \"ws\", \"pattern\": \"\\s|\\n|\\r\", \"priority\": 20000, \"hidden\": true}\n" +
                 "  ]\n" +
-                "}"), listener).generate();
+                "}"), listener);
         assertTokens(lexer.analyze("pattern1 pattern2 pattern3"));
         assertEquals("pattern1 pattern2 pattern3", text.toString());
     }
@@ -73,50 +73,50 @@ public class LexerFactoryTest {
     @SuppressWarnings("ConstantConditions")
     @Test
     public void from_json_input_stream() throws Exception {
-        final Lexer lexer = new LexerGenerator(new JsonLexerModule(Thread.currentThread().getContextClassLoader().getResourceAsStream("terminals.json"))).generate();
+        final Lexer lexer = generate(new JsonLexerModule(Thread.currentThread().getContextClassLoader().getResourceAsStream("terminals.json")));
         assertTokens(lexer.analyze("pattern1 pattern2 pattern3"));
     }
 
     @SuppressWarnings("ConstantConditions")
     @Test
     public void from_json_input_stream_with_listener() throws Exception {
-        final Lexer lexer = new LexerGenerator(new JsonLexerModule(Thread.currentThread().getContextClassLoader().getResourceAsStream("terminals.json")), listener).generate();
+        final Lexer lexer = generate(new JsonLexerModule(Thread.currentThread().getContextClassLoader().getResourceAsStream("terminals.json")), listener);
         assertTokens(lexer.analyze("pattern1 pattern2 pattern3"));
         assertEquals("pattern1 pattern2 pattern3", text.toString());
     }
 
     @Test
     public void from_json_file() throws Exception {
-        final Lexer lexer = new LexerGenerator(new JsonLexerModule(new File("src/test/resources/terminals.json"))).generate();
+        final Lexer lexer = generate(new JsonLexerModule(new File("src/test/resources/terminals.json")));
         assertTokens(lexer.analyze("pattern1 pattern2 pattern3"));
     }
 
     @Test
     public void from_json_file_with_listener() throws Exception {
-        final Lexer lexer = new LexerGenerator(new JsonLexerModule(new File("src/test/resources/terminals.json")), listener).generate();
+        final Lexer lexer = generate(new JsonLexerModule(new File("src/test/resources/terminals.json")), listener);
         assertTokens(lexer.analyze("pattern1 pattern2 pattern3"));
         assertEquals("pattern1 pattern2 pattern3", text.toString());
     }
 
     @Test
     public void from_xml_string() throws Exception {
-        final Lexer lexer = new LexerGenerator(new XmlLexerModule("<terminals>\n" +
+        final Lexer lexer = generate(new XmlLexerModule("<terminals>\n" +
                 "  <terminal tag=\"tag1\" pattern=\"pattern1\" priority=\"1\"/>\n" +
                 "  <terminal tag=\"tag2\" pattern=\"pattern2\"/>\n" +
                 "  <terminal tag=\"tag3\" pattern=\"pattern3\" priority=\"10000\"/>\n" +
                 "  <terminal tag=\"ws\" pattern=\"\\s|\\n|\\r\" priority=\"20000\" hidden=\"true\"/>\n" +
-                "</terminals>")).generate();
+                "</terminals>"));
         assertTokens(lexer.analyze("pattern1 pattern2 pattern3"));
     }
 
     @Test
     public void from_xml_string_with_listener() throws Exception {
-        final Lexer lexer = new LexerGenerator(new XmlLexerModule("<terminals>\n" +
+        final Lexer lexer = generate(new XmlLexerModule("<terminals>\n" +
                 "  <terminal tag=\"tag1\" pattern=\"pattern1\" priority=\"1\"/>\n" +
                 "  <terminal tag=\"tag2\" pattern=\"pattern2\"/>\n" +
                 "  <terminal tag=\"tag3\" pattern=\"pattern3\" priority=\"10000\"/>\n" +
                 "  <terminal tag=\"ws\" pattern=\"\\s|\\n|\\r\" priority=\"20000\" hidden=\"true\"/>\n" +
-                "</terminals>"), listener).generate();
+                "</terminals>"), listener);
         assertTokens(lexer.analyze("pattern1 pattern2 pattern3"));
         assertEquals("pattern1 pattern2 pattern3", text.toString());
     }
@@ -124,54 +124,54 @@ public class LexerFactoryTest {
     @SuppressWarnings("ConstantConditions")
     @Test
     public void from_xml_input_stream() throws Exception {
-        final Lexer lexer = new LexerGenerator(new XmlLexerModule(Thread.currentThread().getContextClassLoader().getResourceAsStream("terminals.xml"))).generate();
+        final Lexer lexer = generate(new XmlLexerModule(Thread.currentThread().getContextClassLoader().getResourceAsStream("terminals.xml")));
         assertTokens(lexer.analyze("pattern1pattern2 pattern3"));
     }
 
     @SuppressWarnings("ConstantConditions")
     @Test
     public void from_xml_input_stream_with_listener() throws Exception {
-        final Lexer lexer = new LexerGenerator(new XmlLexerModule(Thread.currentThread().getContextClassLoader().getResourceAsStream("terminals.xml")), listener).generate();
+        final Lexer lexer = generate(new XmlLexerModule(Thread.currentThread().getContextClassLoader().getResourceAsStream("terminals.xml")), listener);
         assertTokens(lexer.analyze("pattern1pattern2 pattern3"));
         assertEquals("pattern1pattern2 pattern3", text.toString());
     }
 
     @Test
     public void from_xml_file() throws Exception {
-        final Lexer lexer = new LexerGenerator(new XmlLexerModule(new File("src/test/resources/terminals.xml"))).generate();
+        final Lexer lexer = generate(new XmlLexerModule(new File("src/test/resources/terminals.xml")));
         assertTokens(lexer.analyze("pattern1 pattern2pattern3"));
     }
 
     @Test
     public void from_xml_file_with_listener() throws Exception {
-        final Lexer lexer = new LexerGenerator(new XmlLexerModule(new File("src/test/resources/terminals.xml")), listener).generate();
+        final Lexer lexer = generate(new XmlLexerModule(new File("src/test/resources/terminals.xml")), listener);
         assertTokens(lexer.analyze("pattern1 pattern2pattern3"));
         assertEquals("pattern1 pattern2pattern3", text.toString());
     }
 
     @Test
     public void with_module() throws Exception {
-        final Lexer lexer = new LexerGenerator(new AbstractLexerModule() {
+        final Lexer lexer = generate(new AbstractLexerModule() {
             @Override
             public void configure() {
                 tokenize("tag1").pattern("pattern1").priority(1);
                 tokenize("tag2").pattern("pattern2");
                 tokenize("tag3").pattern("pattern3").priority(10000);
             }
-        }).generate();
+        });
         assertTokens(lexer.analyze("pattern1pattern2pattern3"));
     }
 
     @Test
     public void with_module_and_listener() throws Exception {
-        final Lexer lexer = new LexerGenerator(new AbstractLexerModule() {
+        final Lexer lexer = generate(new AbstractLexerModule() {
             @Override
             public void configure() {
                 tokenize("tag1").pattern("pattern1").priority(1);
                 tokenize("tag2").pattern("pattern2");
                 tokenize("tag3").pattern("pattern3").priority(10000);
             }
-        }, listener).generate();
+        }, listener);
         assertTokens(lexer.analyze("pattern1pattern2pattern3"));
         assertEquals("pattern1pattern2pattern3", text.toString());
     }
@@ -190,5 +190,13 @@ public class LexerFactoryTest {
             assertEquals("TAG3", tokens.get(2).getTag().getValue());
             assertEquals("pattern3", tokens.get(2).getValue());
         }
+    }
+
+    private Lexer generate(final AbstractLexerModule module, final SymbolListener listener) {
+        return new LexerGenerator(new LexerOptions.Builder().setModule(module).setListener(listener).build()).generate();
+    }
+
+    private Lexer generate(final AbstractLexerModule module) {
+        return new LexerGenerator(new LexerOptions.Builder().setModule(module).build()).generate();
     }
 }

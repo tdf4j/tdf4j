@@ -1,5 +1,7 @@
 package io.github.therealmone.tdf4j.tdfparser;
 
+import io.github.therealmone.tdf4j.generator.LexerOptions;
+import io.github.therealmone.tdf4j.generator.ParserOptions;
 import io.github.therealmone.tdf4j.generator.impl.LexerGenerator;
 import io.github.therealmone.tdf4j.generator.impl.ParserGenerator;
 import io.github.therealmone.tdf4j.lexer.Lexer;
@@ -18,8 +20,16 @@ public class NodeActionTest extends TdfParserTest {
     @Test
     public void test() {
         final TdfParser tdf = generate("NodeActionTest.tdf");
-        final Lexer lexer = new LexerGenerator(tdf.getLexerModule()).generate();
-        final Parser parser = new ParserGenerator(tdf.getParserModule()).generate();
+        final Lexer lexer = new LexerGenerator(new LexerOptions.Builder()
+                .setModule(tdf.getLexerModule())
+                .build()
+        ).generate();
+        final Parser parser = new ParserGenerator(new ParserOptions.Builder()
+                .setPackage("io.github.therealmone.tdf4j.tdfparser")
+                .setClassName("NodeActionTest_parser")
+                .setModule(tdf.getParserModule())
+                .build()
+        ).generate();
         assertNotNull(parser.parse(lexer.stream("ABC")));
         assertEquals(2, nodes.size());
         assertEquals("a", nodes.get(0));

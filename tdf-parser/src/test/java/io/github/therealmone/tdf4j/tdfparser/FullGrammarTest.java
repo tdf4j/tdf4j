@@ -1,6 +1,8 @@
 package io.github.therealmone.tdf4j.tdfparser;
 
 
+import io.github.therealmone.tdf4j.generator.LexerOptions;
+import io.github.therealmone.tdf4j.generator.ParserOptions;
 import io.github.therealmone.tdf4j.generator.impl.LexerGenerator;
 import io.github.therealmone.tdf4j.generator.impl.ParserGenerator;
 import io.github.therealmone.tdf4j.lexer.Lexer;
@@ -22,8 +24,16 @@ public class FullGrammarTest extends TdfParserTest {
     public void before() {
         final TdfParser tdfParser = generate("FullGrammarTest.tdf");
         System.out.println(tdfParser.getParserModule().build().getGrammar());
-        this.lexer = new LexerGenerator(tdfParser.getLexerModule().build()).generate();
-        this.parser = new ParserGenerator(tdfParser.getParserModule().build()).generate();
+        this.lexer = new LexerGenerator(new LexerOptions.Builder()
+                .setModule(tdfParser.getLexerModule())
+                .build()
+        ).generate();
+        this.parser = new ParserGenerator(new ParserOptions.Builder()
+                .setPackage("io.github.therealmone.tdf4j.tdfparser")
+                .setClassName("FullGrammarTest_parser")
+                .setModule(tdfParser.getParserModule())
+                .build()
+        ).generate();
     }
 
     @Test

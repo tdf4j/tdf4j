@@ -11,6 +11,7 @@ import io.github.therealmone.tdf4j.model.ast.AST;
 import org.junit.BeforeClass;
 
 import java.util.Arrays;
+import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -20,22 +21,30 @@ public class ParserTest {
 
     @BeforeClass
     public static void globalSetup() {
-        lexer = new LexerGenerator(new AbstractLexerModule() {
-            @Override
-            public void configure() {
-                for (final TestTerminal testLexeme : TestTerminal.values()) {
-                    tokenize(testLexeme.getTerminal().getTag().getValue())
-                            .pattern(testLexeme.getTerminal().getPattern().pattern())
-                            .priority(testLexeme.getTerminal().priority());
-                }
-                tokenize("ws").pattern("\\s|\\n|\\r").priority(Integer.MAX_VALUE).hidden(true);
-            }
-        }).generate();
+        lexer = new LexerGenerator(new LexerOptions.Builder()
+                .setModule(new AbstractLexerModule() {
+                    @Override
+                    public void configure() {
+                        for (final TestTerminal testLexeme : TestTerminal.values()) {
+                            tokenize(testLexeme.getTerminal().getTag().getValue())
+                                    .pattern(testLexeme.getTerminal().getPattern().pattern())
+                                    .priority(testLexeme.getTerminal().priority());
+                        }
+                        tokenize("ws").pattern("\\s|\\n|\\r").priority(Integer.MAX_VALUE).hidden(true);
+                    }
+                })
+                .build()
+        ).generate();
     }
 
     static Parser generate(final AbstractParserModule module) {
         final long current = System.currentTimeMillis();
-        final Parser parser = new ParserGenerator(module).generate();
+        final Parser parser = new ParserGenerator(new ParserOptions.Builder()
+                .setPackage("io.github.therealmone.tdf4j.generator")
+                .setClassName("ParserImpl_" + UUID.randomUUID().toString().replaceAll("-", ""))
+                .setModule(module)
+                .build()
+        ).generate();
         System.out.println(parser.meta().getSourceCode());
         System.out.println(module.getGrammar().toString());
         System.out.println(module.getGrammar().getFirstSet().toString());
@@ -46,7 +55,14 @@ public class ParserTest {
 
     static <T extends Parser> T generate(final AbstractParserModule module, final Class<T> interfaceToImplement) {
         final long current = System.currentTimeMillis();
-        final T parser = new ParserGenerator(module).generate(interfaceToImplement);
+        @SuppressWarnings("unchecked")
+        final T parser = (T) new ParserGenerator(new ParserOptions.Builder()
+                .setPackage("io.github.therealmone.tdf4j.generator")
+                .setClassName("ParserImpl_" + UUID.randomUUID().toString().replaceAll("-", ""))
+                .setModule(module)
+                .setInterface(interfaceToImplement)
+                .build()
+        ).generate();
         System.out.println(parser.meta().getSourceCode());
         System.out.println(module.getGrammar().toString());
         System.out.println(module.getGrammar().getFirstSet().toString());

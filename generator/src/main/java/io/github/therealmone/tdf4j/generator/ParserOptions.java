@@ -13,9 +13,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@ParametersAreNonnullByDefault
-@Tdf4jStyle
+
 package io.github.therealmone.tdf4j.generator;
 
-import io.github.therealmone.tdf4j.model.Tdf4jStyle;
-import javax.annotation.ParametersAreNonnullByDefault;
+import io.github.therealmone.tdf4j.module.parser.AbstractParserModule;
+import io.github.therealmone.tdf4j.parser.Parser;
+import org.immutables.value.Value;
+
+import javax.annotation.Nullable;
+
+@Value.Immutable
+public interface ParserOptions {
+
+    String getClassName();
+
+    String getPackage();
+
+    AbstractParserModule getModule();
+
+    @Value.Default
+    default Class<? extends Parser> getInterface() {
+        return Parser.class;
+    }
+
+    @Nullable
+    @Value.Default
+    default Class getExtension() {
+        return null;
+    }
+
+    class Builder extends ImmutableParserOptions.Builder {
+    }
+}

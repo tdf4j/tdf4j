@@ -13,9 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@ParametersAreNonnullByDefault
-@Tdf4jStyle
+
 package io.github.therealmone.tdf4j.generator;
 
-import io.github.therealmone.tdf4j.model.Tdf4jStyle;
-import javax.annotation.ParametersAreNonnullByDefault;
+import io.github.therealmone.tdf4j.lexer.SymbolListener;
+import io.github.therealmone.tdf4j.lexer.impl.SymbolListenerImpl;
+import io.github.therealmone.tdf4j.module.lexer.AbstractLexerModule;
+import org.immutables.value.Value;
+
+@Value.Immutable
+public interface LexerOptions {
+
+    AbstractLexerModule getModule();
+
+    @Value.Default
+    default SymbolListener getListener() {
+        return new SymbolListenerImpl();
+    }
+
+    class Builder extends ImmutableLexerOptions.Builder {
+    }
+}
