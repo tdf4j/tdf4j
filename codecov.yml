@@ -4,4 +4,4 @@ coverage:
   range: "40...70"
   ignore:
     - "model"
-    - "tdf-parser\src\main\java\io\github\therealmone\tdf4j\tdfparser\impl\TdfParserImpl"
+    - "tdf-parser/src/main/java/io/github/therealmone/tdf4j/tdfparser/impl/TdfParserImpl.java"
