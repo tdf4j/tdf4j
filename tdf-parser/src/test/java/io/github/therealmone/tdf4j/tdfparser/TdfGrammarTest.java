@@ -12,19 +12,19 @@ public class TdfGrammarTest extends FullGrammarTest {
     @Override
     @Before
     public void before() {
-        final TdfParser tdfParser = generate("TdfGrammar.tdf");
-        System.out.println(tdfParser.getLexerModule().build().getTerminals());
-        System.out.println(tdfParser.getParserModule().build().getGrammar());
+        final Interpreter interpreter = generate("TdfGrammar.tdf");
+        System.out.println(interpreter.getLexerModule().build().getTerminals());
+        System.out.println(interpreter.getParserModule().build().getGrammar());
 
         final TdfParser tempParser = (TdfParser) new ParserGenerator(new ParserOptions.Builder()
                 .setPackage("io.github.therealmone.tdf4j.tdfparser")
                 .setClassName("TdfGrammarTest_tempParser")
-                .setModule(tdfParser.getParserModule())
+                .setModule(interpreter.getParserModule())
                 .setInterface(TdfParser.class)
                 .build()
         ).generate();
         final Lexer tempLexer = new LexerGenerator(new LexerOptions.Builder()
-                .setModule(tdfParser.getLexerModule())
+                .setModule(interpreter.getLexerModule())
                 .build()
         ).generate();
         System.out.println(tempParser.parse(tempLexer.stream(load("FullGrammarTest.tdf"))));

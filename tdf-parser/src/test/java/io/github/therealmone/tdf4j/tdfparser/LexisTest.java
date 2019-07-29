@@ -12,8 +12,8 @@ public class LexisTest extends TdfParserTest {
 
     @Test
     public void test() {
-        final TdfParser tdfParser = generate("LexisTest.tdf");
-        final List<Terminal> terminals = tdfParser.getLexerModule().build().getTerminals();
+        final Interpreter interpreter = generate("LexisTest.tdf");
+        final List<Terminal> terminals = interpreter.getLexerModule().build().getTerminals();
         System.out.println(terminals);
 
         assertEquals(33, terminals.size());

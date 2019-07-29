@@ -10,9 +10,9 @@ public class SyntaxTest extends TdfParserTest {
 
     @Test
     public void test() {
-        final TdfParser tdfParser = generate("SyntaxTest.tdf");
-        System.out.println(tdfParser.getParserModule().build().getGrammar());
-        final Grammar grammar = tdfParser.getParserModule().getGrammar();
+        final Interpreter interpreter = generate("SyntaxTest.tdf");
+        System.out.println(interpreter.getParserModule().build().getGrammar());
+        final Grammar grammar = interpreter.getParserModule().getGrammar();
 
         assertEquals(8, grammar.getProductions().size());
 

@@ -15,54 +15,41 @@
  */
 package io.github.therealmone.tdf4j.tdfparser;
 
-import io.github.therealmone.tdf4j.generator.Generator;
-import io.github.therealmone.tdf4j.generator.LexerOptions;
 import io.github.therealmone.tdf4j.generator.ParserOptions;
-import io.github.therealmone.tdf4j.generator.impl.LexerGenerator;
 import io.github.therealmone.tdf4j.generator.impl.ParserGenerator;
-import io.github.therealmone.tdf4j.lexer.Lexer;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringWriter;
 
-public class TdfParserGenerator implements Generator<TdfParser> {
-    private final String config;
+class TdfParserGenerator {
 
-    public TdfParserGenerator(final InputStream config) throws IOException {
-        this.config = read(config);
-    }
-
-    public TdfParserGenerator(final String config) {
-        this.config = config;
-    }
-
-    private String read(final InputStream input) throws IOException {
-        try(final StringWriter writer = new StringWriter()) {
-            int bt = 0;
-            while((bt = input.read()) != -1) {
-                writer.write(bt);
-            }
-            return writer.toString();
-        }
-    }
-
-    @Override
-    public TdfParser generate() {
-        final Lexer lexer = new LexerGenerator(new LexerOptions.Builder().setModule(new TdfLexerModule()).build()).generate();
-        final TdfParser parser = (TdfParser) new ParserGenerator(new ParserOptions.Builder()
-                .setPackage("io.github.therealmone.tdf4j.tdfparser")
-                .setClassName("TdfParserImpl")
-                .setModule(new TdfParserModule())
+    public static void main(String[] args) throws IOException {
+        final String dir = args[0];
+        final String pack = args[1];
+        final String name = args[2];
+        final TdfParser tdfParser = (TdfParser) new ParserGenerator(new ParserOptions.Builder()
                 .setInterface(TdfParser.class)
+                .setModule(new TdfParserModule())
+                .setClassName(name)
+                .setPackage(pack)
                 .build()
         ).generate();
-        parser.parse(lexer.stream(config));
-        return parser;
+        createClass(dir, name, tdfParser.meta().getSourceCode());
     }
 
-    public static void main(String[] args) {
-
+    private static void createClass(final String dir, final String fileName, final String code) throws IOException {
+        final File file = new File(dir, fileName + ".java");
+        if(file.exists()) {
+            throw new IllegalArgumentException("File '" + file.getName() + "' already exists");
+        }
+        if(!file.createNewFile()) {
+            throw new IOException("Can't create new file '" + file.getName() + "'");
+        }
+        try(final FileWriter writer = new FileWriter(file)) {
+            writer.write(code);
+            writer.flush();
+        }
     }
 
 }

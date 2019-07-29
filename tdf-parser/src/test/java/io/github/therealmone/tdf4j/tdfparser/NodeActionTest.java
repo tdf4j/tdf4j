@@ -19,15 +19,15 @@ public class NodeActionTest extends TdfParserTest {
 
     @Test
     public void test() {
-        final TdfParser tdf = generate("NodeActionTest.tdf");
+        final Interpreter interpreter = generate("NodeActionTest.tdf");
         final Lexer lexer = new LexerGenerator(new LexerOptions.Builder()
-                .setModule(tdf.getLexerModule())
+                .setModule(interpreter.getLexerModule())
                 .build()
         ).generate();
         final Parser parser = new ParserGenerator(new ParserOptions.Builder()
                 .setPackage("io.github.therealmone.tdf4j.tdfparser")
                 .setClassName("NodeActionTest_parser")
-                .setModule(tdf.getParserModule())
+                .setModule(interpreter.getParserModule())
                 .build()
         ).generate();
         assertNotNull(parser.parse(lexer.stream("ABC")));

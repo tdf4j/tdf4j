@@ -22,16 +22,16 @@ public class FullGrammarTest extends TdfParserTest {
 
     @Before
     public void before() {
-        final TdfParser tdfParser = generate("FullGrammarTest.tdf");
-        System.out.println(tdfParser.getParserModule().build().getGrammar());
+        final Interpreter interpreter = generate("FullGrammarTest.tdf");
+        System.out.println(interpreter.getParserModule().build().getGrammar());
         this.lexer = new LexerGenerator(new LexerOptions.Builder()
-                .setModule(tdfParser.getLexerModule())
+                .setModule(interpreter.getLexerModule())
                 .build()
         ).generate();
         this.parser = new ParserGenerator(new ParserOptions.Builder()
                 .setPackage("io.github.therealmone.tdf4j.tdfparser")
                 .setClassName("FullGrammarTest_parser")
-                .setModule(tdfParser.getParserModule())
+                .setModule(interpreter.getParserModule())
                 .build()
         ).generate();
     }

@@ -9,8 +9,8 @@ public class EnvTest extends TdfParserTest {
 
     @Test
     public void test() {
-        final TdfParser tdfParser = generate("EnvTest.tdf");
-        final Environment environment = tdfParser.getParserModule().build().getEnvironment();
+        final Interpreter interpreter = generate("EnvTest.tdf");
+        final Environment environment = interpreter.getParserModule().build().getEnvironment();
 
         assertEquals(2, environment.getPackages().length);
         assertEquals("io.github.therealmone.tdf4j.model.Token", environment.getPackages()[0]);

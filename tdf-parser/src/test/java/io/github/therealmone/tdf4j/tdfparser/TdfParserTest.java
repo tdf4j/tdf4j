@@ -1,6 +1,8 @@
 package io.github.therealmone.tdf4j.tdfparser;
 
 
+import io.github.therealmone.tdf4j.tdfparser.impl.TdfInterpreter;
+
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -8,15 +10,10 @@ import java.io.StringWriter;
 
 class TdfParserTest {
 
-    TdfParser generate(final String fileName) {
-        try {
-            //noinspection ConstantConditions
-            return new TdfParserGenerator(
-                    new BufferedInputStream(Thread.currentThread().getContextClassLoader().getResourceAsStream(fileName))
-            ).generate();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    Interpreter generate(final String fileName) {
+        final Interpreter interpreter = new TdfInterpreter();
+        interpreter.parse(load(fileName));
+        return interpreter;
     }
 
     @SuppressWarnings("ConstantConditions")
