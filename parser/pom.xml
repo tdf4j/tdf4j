@@ -8,7 +8,6 @@
     </parent>
 
     <artifactId>parser</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>Parser</name>
@@ -19,7 +18,7 @@
         <dependency>
             <groupId>org.tdf4j</groupId>
             <artifactId>parser-module</artifactId>
-            <version>1.0.1-SNAPSHOT</version>
+            <version>${tdf.version}</version>
         </dependency>
     </dependencies>
 

@@ -8,7 +8,6 @@
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>generator</artifactId>
-  <version>1.0.1-SNAPSHOT</version>
 
   <name>Generator</name>
   <description>Lexer and parser generator</description>
@@ -18,17 +17,17 @@
     <dependency>
       <groupId>org.tdf4j</groupId>
       <artifactId>parser</artifactId>
-      <version>1.0.1-SNAPSHOT</version>
+      <version>${tdf.version}</version>
     </dependency>
     <dependency>
       <groupId>org.tdf4j</groupId>
       <artifactId>lexer</artifactId>
-      <version>1.0.1-SNAPSHOT</version>
+      <version>${tdf.version}</version>
     </dependency>
     <dependency>
       <groupId>org.tdf4j</groupId>
       <artifactId>validator</artifactId>
-      <version>1.0.1-SNAPSHOT</version>
+      <version>${tdf.version}</version>
     </dependency>
     <!-- https://mvnrepository.com/artifact/org.antlr/stringtemplate -->
     <dependency>

@@ -8,7 +8,6 @@
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>parser-module</artifactId>
-  <version>1.0.1-SNAPSHOT</version>
 
   <name>Parser-module</name>
   <description>Module for syntax analyzer</description>
@@ -18,7 +17,7 @@
     <dependency>
       <groupId>org.tdf4j</groupId>
       <artifactId>utils</artifactId>
-      <version>1.0.1-SNAPSHOT</version>
+      <version>${tdf.version}</version>
     </dependency>
   </dependencies>
 

@@ -8,7 +8,6 @@
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>tdf-parser</artifactId>
-  <version>1.0.1-SNAPSHOT</version>
 
   <name>Tdf-parser</name>
   <description>Tdf format files parser</description>
@@ -18,7 +17,7 @@
     <dependency>
       <groupId>org.tdf4j</groupId>
       <artifactId>generator</artifactId>
-      <version>1.0.1-SNAPSHOT</version>
+      <version>${tdf.version}</version>
     </dependency>
   </dependencies>
 

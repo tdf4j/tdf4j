@@ -8,7 +8,6 @@
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>utils</artifactId>
-  <version>1.0.1-SNAPSHOT</version>
 
   <name>Utils</name>
   <description>Tdf4j util classes</description>
@@ -18,7 +17,7 @@
     <dependency>
       <groupId>org.tdf4j</groupId>
       <artifactId>model</artifactId>
-      <version>1.0.1-SNAPSHOT</version>
+      <version>${tdf.version}</version>
     </dependency>
   </dependencies>
 

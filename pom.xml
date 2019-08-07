@@ -10,6 +10,10 @@
     <description>Java translator description framework</description>
     <url>https://github.com/therealmonE/SPOTranslator</url>
 
+    <properties>
+        <tdf.version>1.0.1-SNAPSHOT</tdf.version>
+    </properties>
+
     <developers>
         <developer>
             <id>therealmone</id>

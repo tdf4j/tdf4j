@@ -8,7 +8,6 @@
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>validator</artifactId>
-  <version>1.0.1-SNAPSHOT</version>
 
   <name>Validator</name>
   <description>Validator for lexical and syntax modules</description>
@@ -18,12 +17,12 @@
     <dependency>
       <groupId>org.tdf4j</groupId>
       <artifactId>lexer-module</artifactId>
-      <version>1.0.1-SNAPSHOT</version>
+      <version>${tdf.version}</version>
     </dependency>
     <dependency>
       <groupId>org.tdf4j</groupId>
       <artifactId>parser-module</artifactId>
-      <version>1.0.1-SNAPSHOT</version>
+      <version>${tdf.version}</version>
     </dependency>
   </dependencies>
 
