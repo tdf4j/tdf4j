@@ -159,10 +159,10 @@ lexis
 
 env
 
-    import "io.github.therealmone.tdf4j.module.lexer.AbstractLexerModule"
-    import "io.github.therealmone.tdf4j.module.parser.AbstractParserModule"
-    import "io.github.therealmone.tdf4j.tdfparser.constructor.*"
-    import "io.github.therealmone.tdf4j.tdfparser.processor.*"
+    import "org.tdf4j.module.lexer.AbstractLexerModule"
+    import "org.tdf4j.module.parser.AbstractParserModule"
+    import "org.tdf4j.tdfparser.constructor.*"
+    import "org.tdf4j.tdfparser.processor.*"
 
     code "
         private final Processor<String> stringProcessor = new StringProcessor();
