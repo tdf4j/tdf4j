@@ -16,21 +16,16 @@
 
 package org.tdf4j.tdfparser.impl;
 
-import org.tdf4j.parser.*;
-import org.tdf4j.model.*;
-import org.tdf4j.utils.*;
 import java.util.*;
 import java.util.function.*;
 import org.tdf4j.tdfparser.TdfParser;
-import org.tdf4j.model.Stream;
-import org.tdf4j.model.Token;
-import org.tdf4j.model.ast.AST;
-import org.tdf4j.model.ast.ASTCursor;
-import org.tdf4j.model.ast.ASTNode;
-import org.tdf4j.module.lexer.AbstractLexerModule;
-import org.tdf4j.module.parser.AbstractParserModule;
-import org.tdf4j.tdfparser.constructor.*;
-import org.tdf4j.tdfparser.processor.*;
+import org.tdf4j.core.model.Stream;
+import org.tdf4j.core.model.Token;
+import org.tdf4j.core.model.ast.AST;
+import org.tdf4j.core.model.ast.ASTCursor;
+import org.tdf4j.core.model.ast.ASTNode;
+import org.tdf4j.core.module.LexerAbstractModule;
+import org.tdf4j.core.module.ParserAbstractModule;
 import org.tdf4j.parser.MetaInf;
 import org.tdf4j.parser.UnexpectedTokenException;
 import org.tdf4j.tdfparser.constructor.EnvironmentConstructor;
@@ -38,8 +33,8 @@ import org.tdf4j.tdfparser.constructor.ProductionConstructor;
 import org.tdf4j.tdfparser.constructor.TerminalConstructor;
 import org.tdf4j.tdfparser.processor.Processor;
 import org.tdf4j.tdfparser.processor.StringProcessor;
-import org.tdf4j.utils.BufferedStream;
-import org.tdf4j.utils.Predictor;
+import org.tdf4j.core.utils.BufferedStream;
+import org.tdf4j.core.utils.Predictor;
 
 class TdfParserImpl implements TdfParser {
     private final MetaInf meta;
@@ -60,16 +55,16 @@ class TdfParserImpl implements TdfParser {
     private final Stack<TerminalConstructor> terminals = new Stack<>();
     private final Stack<EnvironmentConstructor> environments = new Stack<>();
     private final Stack<ProductionConstructor> productions = new Stack<>();
-    private AbstractLexerModule lexerModule;
-    private AbstractParserModule parserModule;
+    private LexerAbstractModule lexerModule;
+    private ParserAbstractModule parserModule;
 
     @Override
-    public AbstractLexerModule getLexerModule() {
+    public LexerAbstractModule getLexerModule() {
        return this.lexerModule;
     }
 
     @Override
-    public AbstractParserModule getParserModule() {
+    public ParserAbstractModule getParserModule() {
        return this.parserModule;
     }
 
@@ -168,12 +163,12 @@ class TdfParserImpl implements TdfParser {
 
     @SuppressWarnings("ConstantConditions")
     private void tdf_lang() {
-        this.lexerModule = new AbstractLexerModule() {
+        this.lexerModule = new LexerAbstractModule() {
            @Override
            public void configure() {}
         };
 
-        this.parserModule = new AbstractParserModule() {
+        this.parserModule = new ParserAbstractModule() {
            @Override
            public void configure() {}
         };

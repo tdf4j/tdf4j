@@ -15,9 +15,9 @@
  */
 package org.tdf4j.parser;
 
-import org.tdf4j.model.Stream;
-import org.tdf4j.model.Token;
-import org.tdf4j.model.ast.AST;
+import org.tdf4j.core.model.Stream;
+import org.tdf4j.core.model.Token;
+import org.tdf4j.core.model.ast.AST;
 
 import java.util.List;
 

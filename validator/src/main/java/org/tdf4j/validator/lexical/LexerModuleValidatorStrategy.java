@@ -15,15 +15,15 @@
  */
 package org.tdf4j.validator.lexical;
 
-import org.tdf4j.module.lexer.AbstractLexerModule;
+import org.tdf4j.core.module.LexerAbstractModule;
 import org.tdf4j.validator.ValidatorException;
 import org.tdf4j.validator.ValidatorRule;
 import org.tdf4j.validator.ValidatorStrategy;
 
 import java.util.*;
 
-public class LexerModuleValidatorStrategy implements ValidatorStrategy<AbstractLexerModule> {
-    private final List<ValidatorRule<AbstractLexerModule>> rules;
+public class LexerModuleValidatorStrategy implements ValidatorStrategy<LexerAbstractModule> {
+    private final List<ValidatorRule<LexerAbstractModule>> rules;
 
     public LexerModuleValidatorStrategy() {
         this.rules = List.of(
@@ -36,11 +36,11 @@ public class LexerModuleValidatorStrategy implements ValidatorStrategy<AbstractL
     }
 
     @Override
-    public void apply(final AbstractLexerModule module) throws ValidatorException {
+    public void apply(final LexerAbstractModule module) throws ValidatorException {
         if(!module.isBuilt()) {
             module.build();
         }
-        for(final ValidatorRule<AbstractLexerModule> rule : rules) {
+        for(final ValidatorRule<LexerAbstractModule> rule : rules) {
             rule.visit(module);
         }
     }

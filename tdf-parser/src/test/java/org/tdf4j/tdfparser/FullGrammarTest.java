@@ -23,7 +23,7 @@ import org.tdf4j.generator.impl.LexerGenerator;
 import org.tdf4j.generator.impl.ParserGenerator;
 import org.tdf4j.lexer.Lexer;
 import org.tdf4j.lexer.UnexpectedSymbolException;
-import org.tdf4j.model.ast.AST;
+import org.tdf4j.core.model.ast.AST;
 import org.tdf4j.parser.Parser;
 import org.tdf4j.parser.UnexpectedTokenException;
 import org.junit.Before;

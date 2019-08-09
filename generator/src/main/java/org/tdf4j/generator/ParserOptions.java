@@ -16,7 +16,7 @@
 
 package org.tdf4j.generator;
 
-import org.tdf4j.module.parser.AbstractParserModule;
+import org.tdf4j.core.module.ParserAbstractModule;
 import org.tdf4j.parser.Parser;
 import org.immutables.value.Value;
 
@@ -29,7 +29,7 @@ public interface ParserOptions {
 
     String getPackage();
 
-    AbstractParserModule getModule();
+    ParserAbstractModule getModule();
 
     @Value.Default
     default Class<? extends Parser> getInterface() {

@@ -15,11 +15,11 @@
  */
 package org.tdf4j.generator;
 
+import org.tdf4j.core.model.ebnf.*;
 import org.tdf4j.generator.templates.ElementRenderer;
 import org.tdf4j.generator.templates.adaptor.*;
 import org.stringtemplate.v4.STGroup;
 import org.stringtemplate.v4.STGroupFile;
-import org.tdf4j.model.ebnf.*;
 
 public enum Template {
     JAVA(new STGroupFile("templates/java_1.1.stg"));

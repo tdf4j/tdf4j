@@ -17,5 +17,5 @@
 @Tdf4jStyle
 package org.tdf4j.generator;
 
-import org.tdf4j.model.Tdf4jStyle;
+import org.tdf4j.core.Tdf4jStyle;
 import javax.annotation.ParametersAreNonnullByDefault;

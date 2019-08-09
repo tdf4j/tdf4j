@@ -15,9 +15,9 @@
  */
 package org.tdf4j.tdfparser.builder;
 
-import org.tdf4j.model.ast.ASTNode;
-import org.tdf4j.model.ebnf.Element;
-import org.tdf4j.model.ebnf.Optional;
+import org.tdf4j.core.model.ast.ASTNode;
+import org.tdf4j.core.model.ebnf.Element;
+import org.tdf4j.core.model.ebnf.Optional;
 
 
 public class EbnfOptionalBuilder extends AbstractEbnfElementBuilder<Optional> {

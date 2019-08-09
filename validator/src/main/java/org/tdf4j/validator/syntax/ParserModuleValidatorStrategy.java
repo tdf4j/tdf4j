@@ -15,15 +15,15 @@
  */
 package org.tdf4j.validator.syntax;
 
-import org.tdf4j.module.parser.AbstractParserModule;
+import org.tdf4j.core.module.ParserAbstractModule;
 import org.tdf4j.validator.ValidatorException;
 import org.tdf4j.validator.ValidatorRule;
 import org.tdf4j.validator.ValidatorStrategy;
 
 import java.util.List;
 
-public class ParserModuleValidatorStrategy implements ValidatorStrategy<AbstractParserModule> {
-    private final List<ValidatorRule<AbstractParserModule>> rules;
+public class ParserModuleValidatorStrategy implements ValidatorStrategy<ParserAbstractModule> {
+    private final List<ValidatorRule<ParserAbstractModule>> rules;
 
     public ParserModuleValidatorStrategy() {
         this.rules = List.of(
@@ -32,11 +32,11 @@ public class ParserModuleValidatorStrategy implements ValidatorStrategy<Abstract
     }
 
     @Override
-    public void apply(final AbstractParserModule module) throws ValidatorException {
+    public void apply(final ParserAbstractModule module) throws ValidatorException {
         if(!module.isBuilt()) {
             module.build();
         }
-        for(final ValidatorRule<AbstractParserModule> rule : rules) {
+        for(final ValidatorRule<ParserAbstractModule> rule : rules) {
             rule.visit(module);
         }
     }

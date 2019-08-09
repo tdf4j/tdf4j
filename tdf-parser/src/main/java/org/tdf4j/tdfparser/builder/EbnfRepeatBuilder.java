@@ -15,9 +15,9 @@
  */
 package org.tdf4j.tdfparser.builder;
 
-import org.tdf4j.model.ast.ASTNode;
-import org.tdf4j.model.ebnf.Element;
-import org.tdf4j.model.ebnf.Repeat;
+import org.tdf4j.core.model.ast.ASTNode;
+import org.tdf4j.core.model.ebnf.Element;
+import org.tdf4j.core.model.ebnf.Repeat;
 
 public class EbnfRepeatBuilder extends AbstractEbnfElementBuilder<Repeat> {
 

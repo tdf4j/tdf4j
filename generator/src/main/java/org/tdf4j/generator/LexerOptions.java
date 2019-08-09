@@ -18,13 +18,13 @@ package org.tdf4j.generator;
 
 import org.tdf4j.lexer.SymbolListener;
 import org.tdf4j.lexer.impl.SymbolListenerImpl;
-import org.tdf4j.module.lexer.AbstractLexerModule;
+import org.tdf4j.core.module.LexerAbstractModule;
 import org.immutables.value.Value;
 
 @Value.Immutable
 public interface LexerOptions {
 
-    AbstractLexerModule getModule();
+    LexerAbstractModule getModule();
 
     @Value.Default
     default SymbolListener getListener() {

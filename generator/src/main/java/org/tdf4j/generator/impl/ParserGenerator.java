@@ -16,9 +16,9 @@
 package org.tdf4j.generator.impl;
 
 import org.tdf4j.generator.ParserOptions;
-import org.tdf4j.model.Dependency;
+import org.tdf4j.core.model.Dependency;
 import org.tdf4j.generator.Generator;
-import org.tdf4j.utils.Predictor;
+import org.tdf4j.core.utils.Predictor;
 import org.tdf4j.generator.Imports;
 import org.tdf4j.generator.templates.ParserTemplate;
 import org.tdf4j.generator.MetaInfCollector;

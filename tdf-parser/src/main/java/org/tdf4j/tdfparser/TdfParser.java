@@ -15,14 +15,14 @@
  */
 package org.tdf4j.tdfparser;
 
-import org.tdf4j.module.lexer.AbstractLexerModule;
-import org.tdf4j.module.parser.AbstractParserModule;
+import org.tdf4j.core.module.LexerAbstractModule;
+import org.tdf4j.core.module.ParserAbstractModule;
 import org.tdf4j.parser.Parser;
 
 public interface TdfParser extends Parser {
 
-    AbstractLexerModule getLexerModule();
+    LexerAbstractModule getLexerModule();
 
-    AbstractParserModule getParserModule();
+    ParserAbstractModule getParserModule();
 
 }

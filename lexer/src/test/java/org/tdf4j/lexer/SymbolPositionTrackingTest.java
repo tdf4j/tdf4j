@@ -18,7 +18,7 @@ package org.tdf4j.lexer;
 
 import org.tdf4j.lexer.impl.LexerImpl;
 import org.tdf4j.lexer.impl.SymbolListenerImpl;
-import org.tdf4j.module.lexer.AbstractLexerModule;
+import org.tdf4j.core.module.LexerAbstractModule;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -28,7 +28,7 @@ public class SymbolPositionTrackingTest {
 
     @Test
     public void first_symbol_at_first_line() {
-        final Lexer lexer = new LexerImpl(new AbstractLexerModule() {
+        final Lexer lexer = new LexerImpl(new LexerAbstractModule() {
             @Override
             public void configure() {
             }
@@ -38,7 +38,7 @@ public class SymbolPositionTrackingTest {
 
     @Test
     public void last_symbol_at_first_line() {
-        final Lexer lexer = new LexerImpl(new AbstractLexerModule() {
+        final Lexer lexer = new LexerImpl(new LexerAbstractModule() {
             @Override
             public void configure() {
                 tokenize("A").pattern("A");
@@ -51,7 +51,7 @@ public class SymbolPositionTrackingTest {
 
     @Test
     public void first_symbol_at_last_line() {
-        final Lexer lexer = new LexerImpl(new AbstractLexerModule() {
+        final Lexer lexer = new LexerImpl(new LexerAbstractModule() {
             @Override
             public void configure() {
                 tokenize("A").pattern("A");
@@ -64,7 +64,7 @@ public class SymbolPositionTrackingTest {
 
     @Test
     public void last_symbol_at_last_line() {
-        final Lexer lexer = new LexerImpl(new AbstractLexerModule() {
+        final Lexer lexer = new LexerImpl(new LexerAbstractModule() {
             @Override
             public void configure() {
                 tokenize("A").pattern("A");
@@ -77,7 +77,7 @@ public class SymbolPositionTrackingTest {
 
     @Test
     public void middle() {
-        final Lexer lexer = new LexerImpl(new AbstractLexerModule() {
+        final Lexer lexer = new LexerImpl(new LexerAbstractModule() {
             @Override
             public void configure() {
                 tokenize("A").pattern("A");

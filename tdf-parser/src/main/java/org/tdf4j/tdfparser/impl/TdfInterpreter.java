@@ -19,17 +19,17 @@ package org.tdf4j.tdfparser.impl;
 import org.tdf4j.generator.LexerOptions;
 import org.tdf4j.generator.impl.LexerGenerator;
 import org.tdf4j.lexer.Lexer;
-import org.tdf4j.model.Grammar;
-import org.tdf4j.model.ast.AST;
-import org.tdf4j.module.lexer.AbstractLexerModule;
-import org.tdf4j.module.parser.AbstractParserModule;
+import org.tdf4j.core.model.Grammar;
+import org.tdf4j.core.model.ast.AST;
+import org.tdf4j.core.module.LexerAbstractModule;
+import org.tdf4j.core.module.ParserAbstractModule;
 import org.tdf4j.tdfparser.Interpreter;
 import org.tdf4j.tdfparser.TdfLexerModule;
 import org.tdf4j.tdfparser.TdfParser;
 import org.tdf4j.tdfparser.TdfParserModule;
-import org.tdf4j.utils.FirstSetCollector;
-import org.tdf4j.utils.FollowSetCollector;
-import org.tdf4j.utils.Predictor;
+import org.tdf4j.core.utils.FirstSetCollector;
+import org.tdf4j.core.utils.FollowSetCollector;
+import org.tdf4j.core.utils.Predictor;
 
 import javax.annotation.Nullable;
 
@@ -48,13 +48,13 @@ public class TdfInterpreter implements Interpreter {
 
     @Nullable
     @Override
-    public AbstractLexerModule getLexerModule() {
+    public LexerAbstractModule getLexerModule() {
         return parser.getLexerModule();
     }
 
     @Nullable
     @Override
-    public AbstractParserModule getParserModule() {
+    public ParserAbstractModule getParserModule() {
         return parser.getParserModule();
     }
 

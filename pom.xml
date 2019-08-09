@@ -56,13 +56,10 @@
 
     <modules>
         <module>lexer</module>
-        <module>lexer-module</module>
         <module>parser</module>
-        <module>parser-module</module>
         <module>generator</module>
         <module>validator</module>
-        <module>model</module>
-        <module>utils</module>
+        <module>core</module>
         <module>tdf-parser</module>
     </modules>
 

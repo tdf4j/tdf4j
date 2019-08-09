@@ -15,7 +15,7 @@
  */
 package org.tdf4j.generator.templates.adaptor;
 
-import org.tdf4j.model.ebnf.Repetition;
+import org.tdf4j.core.model.ebnf.Repetition;
 import org.stringtemplate.v4.Interpreter;
 import org.stringtemplate.v4.ModelAdaptor;
 import org.stringtemplate.v4.ST;

@@ -15,7 +15,7 @@
  */
 package org.tdf4j.tdfparser.builder;
 
-import org.tdf4j.model.ast.ASTNode;
+import org.tdf4j.core.model.ast.ASTNode;
 
 public interface Builder<T> {
 

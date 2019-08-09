@@ -16,8 +16,8 @@
 
 package org.tdf4j.validator.lexical;
 
-import org.tdf4j.model.ebnf.Terminal;
-import org.tdf4j.module.lexer.AbstractLexerModule;
+import org.tdf4j.core.model.ebnf.Terminal;
+import org.tdf4j.core.module.LexerAbstractModule;
 import org.tdf4j.validator.ValidatorException;
 import org.tdf4j.validator.ValidatorRule;
 
@@ -26,10 +26,10 @@ import java.util.Set;
 
 import static org.tdf4j.validator.lexical.LexerValidatorException.LEXER_TERMINAL_COLLISION;
 
-public class TerminalCollisionRule implements ValidatorRule<AbstractLexerModule> {
+public class TerminalCollisionRule implements ValidatorRule<LexerAbstractModule> {
 
     @Override
-    public void visit(final AbstractLexerModule module) throws ValidatorException {
+    public void visit(final LexerAbstractModule module) throws ValidatorException {
         final Set<String> tags = new HashSet<>();
         for(final Terminal terminal : module.getTerminals()) {
             if(tags.contains(terminal.getTag().getValue())) {

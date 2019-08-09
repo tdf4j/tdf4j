@@ -15,7 +15,7 @@
  */
 package org.tdf4j.tdfparser.constructor;
 
-import org.tdf4j.model.Environment;
+import org.tdf4j.core.model.Environment;
 
 import java.util.ArrayList;
 import java.util.List;

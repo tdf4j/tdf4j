@@ -16,7 +16,7 @@
 
 package org.tdf4j.generator;
 
-import org.tdf4j.module.parser.AbstractParserModule;
+import org.tdf4j.core.module.ParserAbstractModule;
 import org.tdf4j.parser.Parser;
 import org.junit.Test;
 
@@ -29,7 +29,7 @@ public class AdditionalCodeGenerationTest extends ParserTest {
 
     @Test
     public void with_inline_actions() {
-        final Parser parser = generate(new AbstractParserModule() {
+        final Parser parser = generate(new ParserAbstractModule() {
             @Override
             public void configure() {
                 environment()
@@ -53,7 +53,7 @@ public class AdditionalCodeGenerationTest extends ParserTest {
     @Test
     public void with_dependencies() {
         final List<String> test = new ArrayList<>();
-        final Parser parser = generate(new AbstractParserModule() {
+        final Parser parser = generate(new ParserAbstractModule() {
             @Override
             public void configure() {
                 environment()

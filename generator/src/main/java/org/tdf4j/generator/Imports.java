@@ -17,10 +17,10 @@ package org.tdf4j.generator;
 
 public enum Imports {
     PARSER("org.tdf4j.parser.*"),
-    MODEL("org.tdf4j.model.*"),
-    MODEL_AST("org.tdf4j.model.ast.*"),
-    MODEL_EBNF("org.tdf4j.model.ebnf.*"),
-    UTILS("org.tdf4j.utils.*"),
+    MODEL("org.tdf4j.core.model.*"),
+    MODEL_AST("org.tdf4j.core.model.ast.*"),
+    MODEL_EBNF("org.tdf4j.core.model.ebnf.*"),
+    UTILS("org.tdf4j.core.utils.*"),
     JAVA_UTIL("java.util.*"),
     JAVA_UTIL_FUNCTION("java.util.function.*");
 

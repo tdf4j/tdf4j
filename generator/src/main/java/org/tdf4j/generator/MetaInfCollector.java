@@ -15,7 +15,7 @@
  */
 package org.tdf4j.generator;
 
-import org.tdf4j.model.Dependency;
+import org.tdf4j.core.model.Dependency;
 import org.tdf4j.generator.templates.ParserTemplate;
 import org.tdf4j.parser.MetaInf;
 

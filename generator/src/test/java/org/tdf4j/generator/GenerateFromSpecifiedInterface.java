@@ -16,7 +16,7 @@
 
 package org.tdf4j.generator;
 
-import org.tdf4j.module.parser.AbstractParserModule;
+import org.tdf4j.core.module.ParserAbstractModule;
 import org.tdf4j.parser.Parser;
 import org.junit.Test;
 
@@ -29,7 +29,7 @@ public class GenerateFromSpecifiedInterface extends ParserTest {
 
     @Test
     public void normal() {
-        final TestInterface parser = generate(new AbstractParserModule() {
+        final TestInterface parser = generate(new ParserAbstractModule() {
             @Override
             public void configure() {
                 environment().setCode(
@@ -52,7 +52,7 @@ public class GenerateFromSpecifiedInterface extends ParserTest {
 
     @Test(expected = NullPointerException.class)
     public void null_interface() {
-        generate(new AbstractParserModule() {
+        generate(new ParserAbstractModule() {
             @Override
             public void configure() {
                 environment().setCode(

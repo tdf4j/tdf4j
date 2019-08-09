@@ -16,10 +16,10 @@
 
 package org.tdf4j.lexer;
 
-import org.tdf4j.model.Token;
+import org.tdf4j.core.model.Token;
 import org.tdf4j.lexer.impl.LexerImpl;
 import org.tdf4j.lexer.impl.SymbolListenerImpl;
-import org.tdf4j.module.lexer.AbstractLexerModule;
+import org.tdf4j.core.module.LexerAbstractModule;
 import org.junit.Test;
 
 import java.util.List;
@@ -30,7 +30,7 @@ public class HiddenTerminalsTest {
 
     @Test
     public void white_spaces() {
-        final Lexer lexer = new LexerImpl(new AbstractLexerModule() {
+        final Lexer lexer = new LexerImpl(new LexerAbstractModule() {
             @Override
             public void configure() {
                 tokenize("ws").pattern("\\s|\\n|\\r").hidden(true);
@@ -41,7 +41,7 @@ public class HiddenTerminalsTest {
 
     @Test
     public void single_line_comment() {
-        final Lexer lexer = new LexerImpl(new AbstractLexerModule() {
+        final Lexer lexer = new LexerImpl(new LexerAbstractModule() {
             @Override
             public void configure() {
                 tokenize("single_line_comment").pattern("//.*(\n|\r|\r\n|\n\r)").hidden(true);
@@ -57,7 +57,7 @@ public class HiddenTerminalsTest {
 
     @Test
     public void multi_line_comment() {
-        final Lexer lexer = new LexerImpl(new AbstractLexerModule() {
+        final Lexer lexer = new LexerImpl(new LexerAbstractModule() {
             @Override
             public void configure() {
                 tokenize("multi_line_comment").pattern("/\\*[^(\\*/)]*\\*/").hidden(true);

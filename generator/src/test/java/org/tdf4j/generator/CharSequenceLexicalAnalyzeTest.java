@@ -18,9 +18,9 @@ package org.tdf4j.generator;
 
 import org.tdf4j.generator.impl.LexerGenerator;
 import org.tdf4j.lexer.Lexer;
-import org.tdf4j.model.Stream;
-import org.tdf4j.model.Token;
-import org.tdf4j.module.lexer.AbstractLexerModule;
+import org.tdf4j.core.model.Stream;
+import org.tdf4j.core.model.Token;
+import org.tdf4j.core.module.LexerAbstractModule;
 import org.junit.Test;
 
 import java.util.List;
@@ -28,7 +28,7 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 public class CharSequenceLexicalAnalyzeTest {
-    private final Lexer lexer = new LexerGenerator(new LexerOptions.Builder().setModule(new AbstractLexerModule() {
+    private final Lexer lexer = new LexerGenerator(new LexerOptions.Builder().setModule(new LexerAbstractModule() {
         @Override
         protected void configure() {
             tokenize("A").pattern("A");

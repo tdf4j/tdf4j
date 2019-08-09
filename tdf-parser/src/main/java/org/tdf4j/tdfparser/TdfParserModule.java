@@ -15,17 +15,17 @@
  */
 package org.tdf4j.tdfparser;
 
-import org.tdf4j.module.parser.AbstractParserModule;
+import org.tdf4j.core.module.ParserAbstractModule;
 
-public class TdfParserModule extends AbstractParserModule {
+public class TdfParserModule extends ParserAbstractModule {
 
     @Override
     protected void configure() {
 
         environment()
                 .packages(
-                        "org.tdf4j.module.lexer.AbstractLexerModule",
-                        "org.tdf4j.module.parser.AbstractParserModule",
+                        "org.tdf4j.core.module.LexerAbstractModule",
+                        "org.tdf4j.core.module.ParserAbstractModule",
                         "org.tdf4j.tdfparser.constructor.*",
                         "org.tdf4j.tdfparser.processor.*"
                 )
@@ -35,16 +35,16 @@ public class TdfParserModule extends AbstractParserModule {
                         "private final Stack<TerminalConstructor> terminals = new Stack<>();\n" +
                         "private final Stack<EnvironmentConstructor> environments = new Stack<>();\n" +
                         "private final Stack<ProductionConstructor> productions = new Stack<>();\n" +
-                        "private AbstractLexerModule lexerModule;\n" +
-                        "private org.tdf4j.module.parser.AbstractParserModule parserModule;\n" +
+                        "private LexerAbstractModule lexerModule;\n" +
+                        "private org.tdf4j.core.module.ParserAbstractModule parserModule;\n" +
                         "\n" +
                         "@Override\n" +
-                        "public AbstractLexerModule getLexerModule() {\n" +
+                        "public LexerAbstractModule getLexerModule() {\n" +
                         "   return this.lexerModule;\n" +
                         "}\n" +
                         "\n" +
                         "@Override\n" +
-                        "public AbstractParserModule getParserModule() {\n" +
+                        "public ParserAbstractModule getParserModule() {\n" +
                         "   return this.parserModule;\n" +
                         "}\n" +
                         "\n" +
@@ -65,12 +65,12 @@ public class TdfParserModule extends AbstractParserModule {
         prod("tdf_lang")
                 .is(
                         inline(
-                                "this.lexerModule = new AbstractLexerModule() {\n" +
+                                "this.lexerModule = new LexerAbstractModule() {\n" +
                                         "   @Override\n" +
                                         "   public void configure() {}\n" +
                                         "};\n" +
                                         "\n" +
-                                        "this.parserModule = new AbstractParserModule() {\n" +
+                                        "this.parserModule = new ParserAbstractModule() {\n" +
                                         "   @Override\n" +
                                         "   public void configure() {}\n" +
                                         "};\n"

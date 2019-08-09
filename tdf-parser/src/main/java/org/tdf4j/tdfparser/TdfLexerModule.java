@@ -15,11 +15,11 @@
  */
 package org.tdf4j.tdfparser;
 
-import org.tdf4j.module.lexer.AbstractLexerModule;
+import org.tdf4j.core.module.LexerAbstractModule;
 
 import java.util.regex.Pattern;
 
-public class TdfLexerModule extends AbstractLexerModule {
+public class TdfLexerModule extends LexerAbstractModule {
 
     @Override
     protected void configure() {

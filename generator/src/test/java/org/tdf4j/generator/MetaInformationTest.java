@@ -17,9 +17,9 @@
 package org.tdf4j.generator;
 
 import org.tdf4j.generator.impl.ParserGenerator;
-import org.tdf4j.module.parser.AbstractParserModule;
-import org.tdf4j.utils.FirstSetCollector;
-import org.tdf4j.utils.FollowSetCollector;
+import org.tdf4j.core.module.ParserAbstractModule;
+import org.tdf4j.core.utils.FirstSetCollector;
+import org.tdf4j.core.utils.FollowSetCollector;
 import org.tdf4j.parser.Parser;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -30,7 +30,7 @@ public class MetaInformationTest extends ParserTest {
 
     @Test
     public void package_test() {
-        final Parser parser = generate(new AbstractParserModule() {
+        final Parser parser = generate(new ParserAbstractModule() {
             @Override
             public void configure() {
                 prod("prod1").is(t("A"));
@@ -41,7 +41,7 @@ public class MetaInformationTest extends ParserTest {
 
     @Test
     public void imports() {
-        final Parser parser = generate(new AbstractParserModule() {
+        final Parser parser = generate(new ParserAbstractModule() {
             @Override
             public void configure() {
                 prod("prod1").is(t("A"));
@@ -57,7 +57,7 @@ public class MetaInformationTest extends ParserTest {
 
     @Test
     public void env_imports() {
-        final Parser parser = generate(new AbstractParserModule() {
+        final Parser parser = generate(new ParserAbstractModule() {
             @Override
             public void configure() {
                 environment()
@@ -76,7 +76,7 @@ public class MetaInformationTest extends ParserTest {
 
     @Test
     public void dependencies() {
-        final Parser parser = generate(new AbstractParserModule() {
+        final Parser parser = generate(new ParserAbstractModule() {
             @Override
             public void configure() {
                 environment()
@@ -98,7 +98,7 @@ public class MetaInformationTest extends ParserTest {
         final Parser parser = new ParserGenerator(new ParserOptions.Builder()
                 .setPackage("org.tdf4j.generator")
                 .setClassName("MetaInfTestParser")
-                .setModule(new AbstractParserModule() {
+                .setModule(new ParserAbstractModule() {
                     @Override
                     public void configure() {
                         prod("prod1").is(t("A"));

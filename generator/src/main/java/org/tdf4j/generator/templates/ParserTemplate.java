@@ -15,9 +15,9 @@
  */
 package org.tdf4j.generator.templates;
 
-import org.tdf4j.model.Environment;
+import org.tdf4j.core.model.Environment;
 import org.tdf4j.generator.Template;
-import org.tdf4j.model.Grammar;
+import org.tdf4j.core.model.Grammar;
 import org.immutables.value.Value;
 import org.stringtemplate.v4.ST;
 

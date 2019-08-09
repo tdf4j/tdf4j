@@ -16,12 +16,12 @@
 
 package org.tdf4j.lexer;
 
-import org.tdf4j.model.Stream;
-import org.tdf4j.model.Token;
+import org.tdf4j.core.model.Stream;
+import org.tdf4j.core.model.Token;
 import org.tdf4j.lexer.impl.LexerImpl;
 import org.tdf4j.lexer.impl.SymbolListenerImpl;
 import org.tdf4j.lexer.utils.Config;
-import org.tdf4j.module.lexer.AbstractLexerModule;
+import org.tdf4j.core.module.LexerAbstractModule;
 import org.junit.Test;
 
 import java.util.List;
@@ -409,7 +409,7 @@ public class LexerTest {
 
     @Test(expected = RuntimeException.class)
     public void unexpected_symbol() {
-        final Lexer lexer = new LexerImpl(new AbstractLexerModule() {
+        final Lexer lexer = new LexerImpl(new LexerAbstractModule() {
             @Override
             public void configure() {
             }
@@ -425,7 +425,7 @@ public class LexerTest {
 
     @Test
     public void without_spaces() {
-        final Lexer lexer = new LexerImpl(new AbstractLexerModule() {
+        final Lexer lexer = new LexerImpl(new LexerAbstractModule() {
             @Override
             public void configure() {
                 tokenize("A").pattern("A");
@@ -443,7 +443,7 @@ public class LexerTest {
     @SuppressWarnings("ConstantConditions")
     @Test
     public void string_test() {
-        final Lexer lexer = new LexerImpl(new AbstractLexerModule() {
+        final Lexer lexer = new LexerImpl(new LexerAbstractModule() {
             @Override
             public void configure() {
                 tokenize("PRINT").pattern("^print$").priority(1);

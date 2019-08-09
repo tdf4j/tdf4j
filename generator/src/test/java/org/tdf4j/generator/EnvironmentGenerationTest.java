@@ -16,9 +16,9 @@
 
 package org.tdf4j.generator;
 
-import org.tdf4j.module.parser.AbstractParserModule;
-import org.tdf4j.utils.FirstSetCollector;
-import org.tdf4j.utils.FollowSetCollector;
+import org.tdf4j.core.module.ParserAbstractModule;
+import org.tdf4j.core.utils.FirstSetCollector;
+import org.tdf4j.core.utils.FollowSetCollector;
 import org.tdf4j.parser.Parser;
 import org.apache.commons.digester3.Digester;
 import org.joor.ReflectException;
@@ -30,7 +30,7 @@ public class EnvironmentGenerationTest extends ParserTest {
 
     @Test
     public void packages() {
-        final Parser parser = generate(new AbstractParserModule() {
+        final Parser parser = generate(new ParserAbstractModule() {
             @Override
             public void configure() {
                 environment()
@@ -51,7 +51,7 @@ public class EnvironmentGenerationTest extends ParserTest {
 
     @Test
     public void dependencies() {
-        final Parser parser = generate(new AbstractParserModule() {
+        final Parser parser = generate(new ParserAbstractModule() {
             @Override
             public void configure() {
                 environment()
@@ -72,7 +72,7 @@ public class EnvironmentGenerationTest extends ParserTest {
 
     @Test(expected = ReflectException.class)
     public void unknown_classes() {
-        generate(new AbstractParserModule() {
+        generate(new ParserAbstractModule() {
             @Override
             public void configure() {
                 environment()
@@ -91,7 +91,7 @@ public class EnvironmentGenerationTest extends ParserTest {
 
     @Test
     public void specified_package() {
-        final Parser parser = generate(new AbstractParserModule() {
+        final Parser parser = generate(new ParserAbstractModule() {
             @Override
             public void configure() {
                 environment()

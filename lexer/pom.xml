@@ -17,7 +17,7 @@
     <dependencies>
         <dependency>
             <groupId>org.tdf4j</groupId>
-            <artifactId>lexer-module</artifactId>
+            <artifactId>core</artifactId>
             <version>${tdf.version}</version>
         </dependency>
     </dependencies>

@@ -16,12 +16,7 @@
   <dependencies>
     <dependency>
       <groupId>org.tdf4j</groupId>
-      <artifactId>lexer-module</artifactId>
-      <version>${tdf.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.tdf4j</groupId>
-      <artifactId>parser-module</artifactId>
+      <artifactId>core</artifactId>
       <version>${tdf.version}</version>
     </dependency>
   </dependencies>

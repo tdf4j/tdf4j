@@ -15,8 +15,8 @@
  */
 package org.tdf4j.tdfparser.builder;
 
-import org.tdf4j.model.ast.ASTNode;
-import org.tdf4j.model.ebnf.NonTerminal;
+import org.tdf4j.core.model.ast.ASTNode;
+import org.tdf4j.core.model.ebnf.NonTerminal;
 import org.tdf4j.tdfparser.processor.StringProcessor;
 
 public class EbnfNonTerminalBuilder extends AbstractEbnfElementBuilder<NonTerminal> {

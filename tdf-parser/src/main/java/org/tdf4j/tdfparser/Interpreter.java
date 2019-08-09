@@ -16,19 +16,19 @@
 
 package org.tdf4j.tdfparser;
 
-import org.tdf4j.model.ast.AST;
-import org.tdf4j.module.lexer.AbstractLexerModule;
-import org.tdf4j.module.parser.AbstractParserModule;
+import org.tdf4j.core.model.ast.AST;
+import org.tdf4j.core.module.LexerAbstractModule;
+import org.tdf4j.core.module.ParserAbstractModule;
 
 import javax.annotation.Nullable;
 
 public interface Interpreter {
 
     @Nullable
-    AbstractLexerModule getLexerModule();
+    LexerAbstractModule getLexerModule();
 
     @Nullable
-    AbstractParserModule getParserModule();
+    ParserAbstractModule getParserModule();
 
     AST parse(final CharSequence input);
 

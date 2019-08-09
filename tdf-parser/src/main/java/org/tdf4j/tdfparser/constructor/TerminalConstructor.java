@@ -15,7 +15,7 @@
  */
 package org.tdf4j.tdfparser.constructor;
 
-import org.tdf4j.model.ebnf.Terminal;
+import org.tdf4j.core.model.ebnf.Terminal;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

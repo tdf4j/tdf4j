@@ -16,7 +16,7 @@
 
 package org.tdf4j.tdfparser;
 
-import org.tdf4j.model.Environment;
+import org.tdf4j.core.model.Environment;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -29,8 +29,8 @@ public class EnvTest extends TdfParserTest {
         final Environment environment = interpreter.getParserModule().build().getEnvironment();
 
         assertEquals(2, environment.getPackages().length);
-        assertEquals("org.tdf4j.model.Token", environment.getPackages()[0]);
-        assertEquals("org.tdf4j.module.lexer.AbstractLexerModule", environment.getPackages()[1]);
+        assertEquals("org.tdf4j.core.model.Token", environment.getPackages()[0]);
+        assertEquals("org.tdf4j.core.module.LexerAbstractModule", environment.getPackages()[1]);
         assertEquals(0, environment.getDependencies().length);
         assertEquals("" +
                 "        public String test() {" +

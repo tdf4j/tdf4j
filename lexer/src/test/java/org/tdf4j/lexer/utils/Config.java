@@ -16,11 +16,11 @@
 
 package org.tdf4j.lexer.utils;
 
-import org.tdf4j.module.lexer.AbstractLexerModule;
+import org.tdf4j.core.module.LexerAbstractModule;
 
 import java.util.regex.Pattern;
 
-public class Config extends AbstractLexerModule {
+public class Config extends LexerAbstractModule {
     @Override
     public void configure() {
         tokenize("VAR").pattern("^[a-z]+$");

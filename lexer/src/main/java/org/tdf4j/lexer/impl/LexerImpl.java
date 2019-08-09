@@ -15,13 +15,13 @@
  */
 package org.tdf4j.lexer.impl;
 
-import org.tdf4j.model.Stream;
-import org.tdf4j.model.ebnf.Terminal;
-import org.tdf4j.model.Token;
+import org.tdf4j.core.model.Stream;
+import org.tdf4j.core.model.ebnf.Terminal;
+import org.tdf4j.core.model.Token;
 import org.tdf4j.lexer.SymbolListener;
 import org.tdf4j.lexer.UnexpectedSymbolException;
 import org.tdf4j.lexer.Lexer;
-import org.tdf4j.module.lexer.AbstractLexerModule;
+import org.tdf4j.core.module.LexerAbstractModule;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -33,7 +33,7 @@ public class LexerImpl implements Lexer {
     private final List<Terminal> terminals;
     private final SymbolListener listener;
 
-    public LexerImpl(final AbstractLexerModule config, final SymbolListener listener) {
+    public LexerImpl(final LexerAbstractModule config, final SymbolListener listener) {
         this.terminals = config.getTerminals();
         this.listener = listener;
     }

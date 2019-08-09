@@ -15,8 +15,8 @@
  */
 package org.tdf4j.lexer;
 
-import org.tdf4j.model.Stream;
-import org.tdf4j.model.Token;
+import org.tdf4j.core.model.Stream;
+import org.tdf4j.core.model.Token;
 
 import javax.annotation.Nonnull;
 import java.util.List;

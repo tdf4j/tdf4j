@@ -16,16 +16,16 @@
 
 package org.tdf4j.validator.lexical;
 
-import org.tdf4j.module.lexer.AbstractLexerModule;
+import org.tdf4j.core.module.LexerAbstractModule;
 import org.tdf4j.validator.ValidatorException;
 import org.tdf4j.validator.ValidatorRule;
 
 import static org.tdf4j.validator.lexical.LexerValidatorException.LEXER_TERMINALS_NULL;
 
-public class TerminalListNotNullRule implements ValidatorRule<AbstractLexerModule> {
+public class TerminalListNotNullRule implements ValidatorRule<LexerAbstractModule> {
 
     @Override
-    public void visit(final AbstractLexerModule module) throws ValidatorException {
+    public void visit(final LexerAbstractModule module) throws ValidatorException {
         if(module.getTerminals() == null) {
             throw LEXER_TERMINALS_NULL;
         }

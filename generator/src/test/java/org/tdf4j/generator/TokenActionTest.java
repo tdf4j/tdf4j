@@ -16,7 +16,7 @@
 
 package org.tdf4j.generator;
 
-import org.tdf4j.module.parser.AbstractParserModule;
+import org.tdf4j.core.module.ParserAbstractModule;
 import org.tdf4j.parser.Parser;
 import org.junit.Test;
 
@@ -30,7 +30,7 @@ public class TokenActionTest extends ParserTest {
     @Test
     public void normal() {
         final List<String> tokens = new ArrayList<>();
-        final Parser parser = generate(new AbstractParserModule() {
+        final Parser parser = generate(new ParserAbstractModule() {
             @Override
             protected void configure() {
                 environment()
@@ -54,7 +54,7 @@ public class TokenActionTest extends ParserTest {
     @Test
     public void nullable() {
         final List<String> tokens = new ArrayList<>();
-        final Parser parser = generate(new AbstractParserModule() {
+        final Parser parser = generate(new ParserAbstractModule() {
             @Override
             protected void configure() {
                 environment()

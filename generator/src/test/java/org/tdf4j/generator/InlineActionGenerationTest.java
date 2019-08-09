@@ -16,7 +16,7 @@
 
 package org.tdf4j.generator;
 
-import org.tdf4j.module.parser.AbstractParserModule;
+import org.tdf4j.core.module.ParserAbstractModule;
 import org.tdf4j.parser.Parser;
 import org.junit.Test;
 
@@ -30,7 +30,7 @@ public class InlineActionGenerationTest extends ParserTest {
 
     @Test
     public void normal() {
-        final Parser parser = generate(new AbstractParserModule() {
+        final Parser parser = generate(new ParserAbstractModule() {
             @Override
             public void configure() {
                 prod("prod1")
@@ -48,7 +48,7 @@ public class InlineActionGenerationTest extends ParserTest {
     @Test
     public void with_dependencies() {
         final List<String> test = new ArrayList<>();
-        final Parser parser = generate(new AbstractParserModule() {
+        final Parser parser = generate(new ParserAbstractModule() {
             @Override
             public void configure() {
                 environment()
@@ -79,7 +79,7 @@ public class InlineActionGenerationTest extends ParserTest {
     @Test
     public void in_middle() {
         final List<String> test = new ArrayList<>();
-        final Parser parser = generate(new AbstractParserModule() {
+        final Parser parser = generate(new ParserAbstractModule() {
             @Override
             public void configure() {
                 environment()
@@ -112,7 +112,7 @@ public class InlineActionGenerationTest extends ParserTest {
     @Test
     public void at_the_beginning() {
         final List<String> test = new ArrayList<>();
-        final Parser parser = generate(new AbstractParserModule() {
+        final Parser parser = generate(new ParserAbstractModule() {
             @Override
             public void configure() {
                 environment()

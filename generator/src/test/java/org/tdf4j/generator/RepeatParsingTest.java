@@ -16,7 +16,7 @@
 
 package org.tdf4j.generator;
 
-import org.tdf4j.module.parser.AbstractParserModule;
+import org.tdf4j.core.module.ParserAbstractModule;
 import org.tdf4j.parser.Parser;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -30,7 +30,7 @@ public class RepeatParsingTest extends ParserTest {
      */
     @Test
     public void nested() {
-        final Parser parser = generate(new AbstractParserModule() {
+        final Parser parser = generate(new ParserAbstractModule() {
             @Override
             public void configure() {
                 prod("prod1")
@@ -54,7 +54,7 @@ public class RepeatParsingTest extends ParserTest {
     @Test
     //todo: fix Expected: [A, C, A]
     public void with_or() {
-        final Parser parser = generate(new AbstractParserModule() {
+        final Parser parser = generate(new ParserAbstractModule() {
             @Override
             public void configure() {
                 prod("prod1")
@@ -81,7 +81,7 @@ public class RepeatParsingTest extends ParserTest {
     @Test
     @Ignore//todo: {[...]} - разрешать? Получается бесконечный цикл
     public void with_optional() {
-        final Parser parser = generate(new AbstractParserModule() {
+        final Parser parser = generate(new ParserAbstractModule() {
             @Override
             public void configure() {
                 prod("prod1")
@@ -102,7 +102,7 @@ public class RepeatParsingTest extends ParserTest {
      */
     @Test
     public void with_group() {
-        final Parser parser = generate(new AbstractParserModule() {
+        final Parser parser = generate(new ParserAbstractModule() {
             @Override
             public void configure() {
                 prod("prod1")

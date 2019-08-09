@@ -16,7 +16,7 @@
 
 package org.tdf4j.validator;
 
-import org.tdf4j.model.Module;
+import org.tdf4j.core.module.Module;
 
 import static org.junit.Assert.*;
 

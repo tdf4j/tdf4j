@@ -16,7 +16,7 @@
 
 package org.tdf4j.generator;
 
-import org.tdf4j.module.parser.AbstractParserModule;
+import org.tdf4j.core.module.ParserAbstractModule;
 import org.tdf4j.parser.Parser;
 import org.junit.Test;
 
@@ -34,7 +34,7 @@ public class ExtensionTest extends ParserTest {
         final Parser parser = generate(new ParserOptions.Builder()
                 .setPackage("org.tdf4j.generator")
                 .setClassName("ParserImpl_" + UUID.randomUUID().toString().replaceAll("-", ""))
-                .setModule(new AbstractParserModule() {
+                .setModule(new ParserAbstractModule() {
                     @Override
                     protected void configure() {
                         prod("prod1")
@@ -56,7 +56,7 @@ public class ExtensionTest extends ParserTest {
         generate(new ParserOptions.Builder()
                 .setPackage("org.tdf4j.generator")
                 .setClassName("ParserImpl_" + UUID.randomUUID().toString().replaceAll("-", ""))
-                .setModule(new AbstractParserModule() {
+                .setModule(new ParserAbstractModule() {
                     @Override
                     protected void configure() {
                         prod("prod1")

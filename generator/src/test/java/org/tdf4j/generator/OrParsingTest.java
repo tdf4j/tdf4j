@@ -16,7 +16,7 @@
 
 package org.tdf4j.generator;
 
-import org.tdf4j.module.parser.AbstractParserModule;
+import org.tdf4j.core.module.ParserAbstractModule;
 import org.tdf4j.parser.Parser;
 import org.junit.Test;
 
@@ -29,7 +29,7 @@ public class OrParsingTest extends ParserTest {
      */
     @Test
     public void nested() {
-        final Parser parser = generate(new AbstractParserModule() {
+        final Parser parser = generate(new ParserAbstractModule() {
             @Override
             public void configure() {
                 prod("prod1")
@@ -50,7 +50,7 @@ public class OrParsingTest extends ParserTest {
      */
     @Test
     public void with_optional() {
-        final Parser parser = generate(new AbstractParserModule() {
+        final Parser parser = generate(new ParserAbstractModule() {
             @Override
             public void configure() {
                 prod("prod1")
@@ -73,7 +73,7 @@ public class OrParsingTest extends ParserTest {
      */
     @Test
     public void with_repeat() {
-        final Parser parser = generate(new AbstractParserModule() {
+        final Parser parser = generate(new ParserAbstractModule() {
             @Override
             public void configure() {
                 prod("prod1")
@@ -96,7 +96,7 @@ public class OrParsingTest extends ParserTest {
      */
     @Test
     public void with_group() {
-        final Parser parser = generate(new AbstractParserModule() {
+        final Parser parser = generate(new ParserAbstractModule() {
             @Override
             public void configure() {
                 prod("prod1")

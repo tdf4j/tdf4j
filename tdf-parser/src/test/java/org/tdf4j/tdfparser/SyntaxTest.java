@@ -16,8 +16,8 @@
 
 package org.tdf4j.tdfparser;
 
-import org.tdf4j.model.Grammar;
-import org.tdf4j.model.Production;
+import org.tdf4j.core.model.Grammar;
+import org.tdf4j.core.model.Production;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

@@ -16,7 +16,7 @@
 
 package org.tdf4j.tdfparser;
 
-import org.tdf4j.model.ebnf.Terminal;
+import org.tdf4j.core.model.ebnf.Terminal;
 import org.junit.Test;
 
 import java.util.List;

@@ -15,7 +15,7 @@
  */
 package org.tdf4j.parser;
 
-import org.tdf4j.model.Token;
+import org.tdf4j.core.model.Token;
 
 import javax.annotation.Nullable;
 import java.util.Arrays;

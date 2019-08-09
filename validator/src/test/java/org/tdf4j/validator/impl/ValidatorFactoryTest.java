@@ -16,8 +16,8 @@
 
 package org.tdf4j.validator.impl;
 
-import org.tdf4j.module.lexer.AbstractLexerModule;
-import org.tdf4j.module.parser.AbstractParserModule;
+import org.tdf4j.core.module.LexerAbstractModule;
+import org.tdf4j.core.module.ParserAbstractModule;
 import org.tdf4j.validator.Validator;
 import org.tdf4j.validator.ValidatorStrategy;
 import org.tdf4j.validator.lexical.LexerModuleValidatorStrategy;
@@ -31,13 +31,13 @@ public class ValidatorFactoryTest {
 
     @Test
     public void parser_module() {
-        final Validator<AbstractParserModule> validator = Validator.syntax();
+        final Validator<ParserAbstractModule> validator = Validator.syntax();
         checkStrategy((ValidatorImpl) validator, ParserModuleValidatorStrategy.class);
     }
 
     @Test
     public void lexer_module() {
-        final Validator<AbstractLexerModule> validator = Validator.lexical();
+        final Validator<LexerAbstractModule> validator = Validator.lexical();
         checkStrategy((ValidatorImpl) validator, LexerModuleValidatorStrategy.class);
     }
 

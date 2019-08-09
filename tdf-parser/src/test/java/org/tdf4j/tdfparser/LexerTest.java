@@ -19,7 +19,7 @@ package org.tdf4j.tdfparser;
 import org.tdf4j.generator.LexerOptions;
 import org.tdf4j.generator.impl.LexerGenerator;
 import org.tdf4j.lexer.Lexer;
-import org.tdf4j.model.Token;
+import org.tdf4j.core.model.Token;
 import org.junit.Test;
 
 import java.util.List;

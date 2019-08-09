@@ -15,7 +15,7 @@
  */
 package org.tdf4j.validator.impl;
 
-import org.tdf4j.model.Module;
+import org.tdf4j.core.module.Module;
 import org.tdf4j.validator.Validator;
 import org.tdf4j.validator.ValidatorException;
 import org.tdf4j.validator.ValidatorStrategy;

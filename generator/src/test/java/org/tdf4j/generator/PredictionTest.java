@@ -17,7 +17,7 @@
 package org.tdf4j.generator;
 
 import org.junit.Test;
-import org.tdf4j.model.ebnf.*;
+import org.tdf4j.core.model.ebnf.*;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

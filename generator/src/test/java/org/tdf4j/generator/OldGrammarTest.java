@@ -18,8 +18,8 @@ package org.tdf4j.generator;
 
 import org.tdf4j.generator.impl.LexerGenerator;
 import org.tdf4j.lexer.UnexpectedSymbolException;
-import org.tdf4j.module.lexer.AbstractLexerModule;
-import org.tdf4j.module.parser.AbstractParserModule;
+import org.tdf4j.core.module.LexerAbstractModule;
+import org.tdf4j.core.module.ParserAbstractModule;
 import org.tdf4j.parser.Parser;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -32,7 +32,7 @@ public class OldGrammarTest extends ParserTest {
 
     @BeforeClass
     public static void init() {
-        lexer = new LexerGenerator(new LexerOptions.Builder().setModule(new AbstractLexerModule() {
+        lexer = new LexerGenerator(new LexerOptions.Builder().setModule(new LexerAbstractModule() {
             @Override
             public void configure() {
                 tokenize("VAR").pattern("^[a-z]+$");
@@ -72,7 +72,7 @@ public class OldGrammarTest extends ParserTest {
         }).build()).generate();
     }
 
-    private final Parser parser = generate(new AbstractParserModule() {
+    private final Parser parser = generate(new ParserAbstractModule() {
         @Override
         public void configure() {
             prod("lang")

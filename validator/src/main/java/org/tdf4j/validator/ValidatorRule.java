@@ -15,7 +15,7 @@
  */
 package org.tdf4j.validator;
 
-import org.tdf4j.model.Module;
+import org.tdf4j.core.module.Module;
 
 @FunctionalInterface
 public interface ValidatorRule<T extends Module> {

@@ -16,7 +16,7 @@
 package org.tdf4j.generator.templates;
 
 import org.tdf4j.generator.Template;
-import org.tdf4j.model.ebnf.Element;
+import org.tdf4j.core.model.ebnf.Element;
 import org.stringtemplate.v4.AttributeRenderer;
 import org.stringtemplate.v4.STGroup;
 

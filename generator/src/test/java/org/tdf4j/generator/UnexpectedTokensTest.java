@@ -16,7 +16,7 @@
 
 package org.tdf4j.generator;
 
-import org.tdf4j.module.parser.AbstractParserModule;
+import org.tdf4j.core.module.ParserAbstractModule;
 import org.tdf4j.parser.Parser;
 import org.tdf4j.parser.UnexpectedTokenException;
 import org.junit.Test;
@@ -27,7 +27,7 @@ public class UnexpectedTokensTest extends ParserTest {
 
     @Test
     public void terminals() {
-        final Parser parser = generate(new AbstractParserModule() {
+        final Parser parser = generate(new ParserAbstractModule() {
             @Override
             protected void configure() {
                 prod("prod1").is(t("A"), t("B"), t("C"));
@@ -43,7 +43,7 @@ public class UnexpectedTokensTest extends ParserTest {
 
     @Test
     public void or() {
-        final Parser parser = generate(new AbstractParserModule() {
+        final Parser parser = generate(new ParserAbstractModule() {
             @Override
             protected void configure() {
                 prod("prod1").is(or(t("A"), t("B")));
@@ -59,7 +59,7 @@ public class UnexpectedTokensTest extends ParserTest {
 
     @Test
     public void or_of_non_terminals() {
-        final Parser parser = generate(new AbstractParserModule() {
+        final Parser parser = generate(new ParserAbstractModule() {
             @Override
             protected void configure() {
                 prod("prod1").is(or(nt("a"), nt("b")));

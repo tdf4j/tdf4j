@@ -16,8 +16,8 @@
 
 package org.tdf4j.validator.lexical;
 
-import org.tdf4j.model.ebnf.Terminal;
-import org.tdf4j.module.lexer.AbstractLexerModule;
+import org.tdf4j.core.model.ebnf.Terminal;
+import org.tdf4j.core.module.LexerAbstractModule;
 import org.tdf4j.validator.ValidationTest;
 import org.tdf4j.validator.Validator;
 import org.junit.Test;
@@ -27,13 +27,13 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 public class LexicalValidationTest extends ValidationTest {
-    private final Validator<AbstractLexerModule> validator = Validator.lexical();
+    private final Validator<LexerAbstractModule> validator = Validator.lexical();
 
     @Test
     public void terminal_list_null() {
         assertThrows(
                 validator,
-                new AbstractLexerModule() {
+                new LexerAbstractModule() {
                     @Override
                     public void configure() {
                     }
@@ -51,7 +51,7 @@ public class LexicalValidationTest extends ValidationTest {
     public void terminal_tag_null() {
         assertThrows(
                 validator,
-                new AbstractLexerModule() {
+                new LexerAbstractModule() {
                     @Override
                     public void configure() {
                     }
@@ -81,7 +81,7 @@ public class LexicalValidationTest extends ValidationTest {
     public void terminal_tag_value_null() {
         assertThrows(
                 validator,
-                new AbstractLexerModule() {
+                new LexerAbstractModule() {
                     @Override
                     public void configure() {
                     }
@@ -116,7 +116,7 @@ public class LexicalValidationTest extends ValidationTest {
     public void terminal_pattern_null() {
         assertThrows(
                 validator,
-                new AbstractLexerModule() {
+                new LexerAbstractModule() {
                     @Override
                     public void configure() {
                     }
@@ -151,7 +151,7 @@ public class LexicalValidationTest extends ValidationTest {
     public void terminal_tag_collision() {
         assertThrows(
                 validator,
-                new AbstractLexerModule() {
+                new LexerAbstractModule() {
                     @Override
                     public void configure() {
                     }

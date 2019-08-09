@@ -19,11 +19,11 @@ package org.tdf4j.generator;
 import org.tdf4j.generator.impl.LexerGenerator;
 import org.tdf4j.generator.impl.ParserGenerator;
 import org.tdf4j.lexer.Lexer;
-import org.tdf4j.module.lexer.AbstractLexerModule;
-import org.tdf4j.module.parser.AbstractParserModule;
+import org.tdf4j.core.module.LexerAbstractModule;
+import org.tdf4j.core.module.ParserAbstractModule;
 import org.tdf4j.parser.Parser;
 import org.tdf4j.parser.UnexpectedTokenException;
-import org.tdf4j.model.ast.AST;
+import org.tdf4j.core.model.ast.AST;
 import org.junit.BeforeClass;
 
 import java.util.Arrays;
@@ -38,7 +38,7 @@ public class ParserTest {
     @BeforeClass
     public static void globalSetup() {
         lexer = new LexerGenerator(new LexerOptions.Builder()
-                .setModule(new AbstractLexerModule() {
+                .setModule(new LexerAbstractModule() {
                     @Override
                     public void configure() {
                         for (final TestTerminal testLexeme : TestTerminal.values()) {
@@ -53,7 +53,7 @@ public class ParserTest {
         ).generate();
     }
 
-    static Parser generate(final AbstractParserModule module) {
+    static Parser generate(final ParserAbstractModule module) {
         final long current = System.currentTimeMillis();
         final Parser parser = new ParserGenerator(new ParserOptions.Builder()
                 .setPackage("org.tdf4j.generator")
@@ -69,7 +69,7 @@ public class ParserTest {
         return parser;
     }
 
-    static <T extends Parser> T generate(final AbstractParserModule module, final Class<T> interfaceToImplement) {
+    static <T extends Parser> T generate(final ParserAbstractModule module, final Class<T> interfaceToImplement) {
         final long current = System.currentTimeMillis();
         @SuppressWarnings("unchecked")
         final T parser = (T) new ParserGenerator(new ParserOptions.Builder()

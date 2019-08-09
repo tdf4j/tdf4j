@@ -15,10 +15,10 @@
  */
 package org.tdf4j.tdfparser.constructor;
 
-import org.tdf4j.model.ast.ASTElement;
-import org.tdf4j.model.ast.ASTNode;
-import org.tdf4j.model.ebnf.Element;
-import org.tdf4j.model.Production;
+import org.tdf4j.core.model.ast.ASTElement;
+import org.tdf4j.core.model.ast.ASTNode;
+import org.tdf4j.core.model.ebnf.Element;
+import org.tdf4j.core.model.Production;
 import org.tdf4j.tdfparser.builder.BuilderMapper;
 
 import java.util.ArrayList;
