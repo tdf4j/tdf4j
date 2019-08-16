@@ -39,9 +39,7 @@ public interface ParserBindMethods {
 
     Repetition repetition(final Element element, final int times);
 
-    Or or(final Element first, final Element second);
-
-    OneOf oneOf(final Element ... elements);
+    Or or(final Element ... alternatives);
 
     Terminal.Tag t(final String tag);
 

@@ -37,8 +37,8 @@ public class SyntaxTest extends TdfParserTest {
             final Production production = grammar.getProductions().get(0);
             assertEquals("or", production.getIdentifier().getValue());
             assertEquals(1, production.getElements().size());
-            assertEquals("A", production.getElements().get(0).asOr().getFirst().asTerminalTag().getValue());
-            assertEquals("non_terminal", production.getElements().get(0).asOr().getSecond().asNonTerminal().getValue());
+            assertEquals("A", production.getElements().get(0).asOr().getAlternatives().get(0).getElement().asTerminalTag().getValue());
+            assertEquals("non_terminal", production.getElements().get(0).asOr().getAlternatives().get(1).getElement().asNonTerminal().getValue());
         }
 
         //[1] - non_terminal

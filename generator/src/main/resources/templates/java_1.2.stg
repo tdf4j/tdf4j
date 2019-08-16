@@ -61,6 +61,15 @@ public class <parserTemplate.className><if(parserTemplate.extension)> extends <p
         return predictor.predict(stream.peek()).contains(element);
     }
 
+    private boolean canReachAny(final String... elements) {
+        for(final String element : elements) {
+            if(canReach(element)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private void match(final String terminal) {
         match(terminal, null);
     }
@@ -77,14 +86,29 @@ public class <parserTemplate.className><if(parserTemplate.extension)> extends <p
         }
     }
 
-    private int predict(final String... alternatives) throws UnexpectedTokenException {
-        final java.util.Optional\<String> choice = Arrays.stream(alternatives)
-            .filter(alt -> canReach(alt))
+    private int predict(final Alt... alternatives) throws UnexpectedTokenException {
+        final java.util.Optional\<Alt> choice = Arrays.stream(alternatives)
+            .filter(alt -> canReachAny(alt.elements))
             .findFirst();
         if(!choice.isPresent()) {
-            throw new UnexpectedTokenException(stream.peek(), alternatives);
+            throw new UnexpectedTokenException(stream.peek(), expected(alternatives));
         }
-        return Arrays.asList(alternatives).indexOf(choice.get());
+        return choice.get().index;
+    }
+
+    private String[] expected(final Alt... alternatives) {
+        return Arrays.stream(alternatives)
+            .flatMap(alt -> Arrays.stream(alt.elements))
+            .toArray(String[]::new);
+    }
+
+    private class Alt {
+        final String[] elements;
+        final int index;
+        public Alt(final int index, final String... elements) {
+            this.elements = elements;
+            this.index = index;
+        }
     }
 
     <parserTemplate.grammar.productions: {production|<method("void", production.identifier.value, production.elements)><\n><\n>}>
@@ -121,24 +145,8 @@ if(<optional.start: {startElement|canReach("<startElement>")}; separator="\n|| "
 >>
 
 or(or) ::= <<
-if(stream.peek() != null && (
-    <or.firstStart: {startElement|canReach("<startElement>")}; separator="\n|| ">
-)) {
-    <or.first>
-} else if(stream.peek() != null && (
-    <or.secondStart: {startElement|canReach("<startElement>")}; separator="\n|| ">
-)) {
-    <or.second>
-} else {
-    throw new UnexpectedTokenException(stream.peek(), <or.firstStart: {startElement|"<startElement>"}; separator=" , "> , <or.secondStart: {startElement|"<startElement>"}; separator=" , ">);
-}
->>
-
-oneOf(oneOf) ::= <<
-switch(predict(new String[] {
-    <oneOf.start: {startElement|"<startElement>"}; separator=", ">
-})) {
-    <oneOf.alternatives: {alternative|case <alternative.index> : {
+switch(predict(<or.alternatives: {alternative|new Alt(<alternative.index>, <alternative.start: {element|"<element>"}; separator=", ">)}; separator=", ">)) {
+    <or.alternatives: {alternative|case <alternative.index> : {
         <alternative>
         break;
     \}}; separator="\n">
@@ -157,7 +165,7 @@ while(true) {
 
 repetition(repetition) ::= <<
 for(int i<repetition.hash> = 0; i<repetition.hash> \< <repetition.times>; i<repetition.hash>++) {
-<repetition.element>
+    <repetition.element>
 }
 >>
 

@@ -30,14 +30,13 @@ public enum Template {
         this.stGroup = stGroup;
         stGroup.load();
         stGroup.registerModelAdaptor(Optional.class, new OptionalAdaptor());
-        stGroup.registerModelAdaptor(Or.class, new OrAdaptor());
         stGroup.registerModelAdaptor(Repeat.class, new RepeatAdaptor());
         stGroup.registerModelAdaptor(Repetition.class, new RepetitionAdaptor());
         stGroup.registerModelAdaptor(NonTerminal.class, new NonTerminalAdaptor());
         stGroup.registerModelAdaptor(Terminal.Tag.class, new TerminalAdaptor());
         stGroup.registerModelAdaptor(Group.class, new GroupAdaptor());
         stGroup.registerModelAdaptor(InlineAction.class, new InlineActionAdaptor());
-        stGroup.registerModelAdaptor(OneOf.class, new OneOfAdaptor());
+        stGroup.registerModelAdaptor(Or.class, new OrAdaptor());
         stGroup.registerModelAdaptor(Alternative.class, new AlternativeAdaptor());
         stGroup.registerRenderer(Element.class, new ElementRenderer());
     }

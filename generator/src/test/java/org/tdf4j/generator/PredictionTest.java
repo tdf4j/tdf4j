@@ -22,6 +22,7 @@ import org.tdf4j.core.utils.Elements;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -128,12 +129,7 @@ public class PredictionTest {
     public void or_with_nulls() {
         assertEquals(0, Elements.getStartElements(new Or() {
             @Override
-            public Element getFirst() {
-                return null;
-            }
-
-            @Override
-            public Element getSecond() {
+            public List<Alternative> getAlternatives() {
                 return null;
             }
         }).size());
@@ -143,13 +139,17 @@ public class PredictionTest {
     public void or() {
         assertEquals(2, Elements.getStartElements(new Or() {
             @Override
-            public Element getFirst() {
-                return new Terminal.Tag.Builder().setValue("A").build();
-            }
-
-            @Override
-            public Element getSecond() {
-                return new Terminal.Tag.Builder().setValue("B").build();
+            public List<Alternative> getAlternatives() {
+                return new ArrayList<>() {{
+                    add(new Alternative.Builder().setIndex(0)
+                            .setElement(new Terminal.Tag.Builder().setValue("A").build())
+                            .build()
+                    );
+                    add(new Alternative.Builder().setIndex(0)
+                            .setElement(new Terminal.Tag.Builder().setValue("B").build())
+                            .build()
+                    );
+                }};
             }
         }).size());
     }
@@ -158,13 +158,17 @@ public class PredictionTest {
     public void or_with_inline_actions() {
         assertEquals("A", Elements.getStartElements(new Or() {
             @Override
-            public Element getFirst() {
-                return new InlineAction.Builder().setCode("code").build();
-            }
-
-            @Override
-            public Element getSecond() {
-                return new Terminal.Tag.Builder().setValue("A").build();
+            public List<Alternative> getAlternatives() {
+                return new ArrayList<>() {{
+                    add(new Alternative.Builder().setIndex(0)
+                            .setElement(new InlineAction.Builder().setCode("code").build())
+                            .build()
+                    );
+                    add(new Alternative.Builder().setIndex(0)
+                            .setElement(new Terminal.Tag.Builder().setValue("A").build())
+                            .build()
+                    );
+                }};
             }
         }).get(0));
     }

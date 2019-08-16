@@ -334,22 +334,8 @@ public class FirstSetCollectorTest {
         return new Repetition.Builder().setElement(element).setTimes(times).build();
     }
 
-    private Or or(final Element first, final Element second) {
-        return new Or.Builder().setFirst(first).setSecond(second).build();
-    }
-
-    private Or oneOf(final Element... elements) {
-        if(elements.length < 2) {
-            throw new RuntimeException("oneOf() accepts 2 ore more elements");
-        }
-
-        if(elements.length == 2) {
-            return new Or.Builder().setFirst(elements[0]).setSecond(elements[1]).build();
-        } else {
-            final Element[] toRecursion = new Element[elements.length - 1];
-            System.arraycopy(elements, 1, toRecursion, 0, elements.length - 1);
-            return new Or.Builder().setFirst(elements[0]).setSecond(oneOf(toRecursion)).build();
-        }
+    private Or or(final Element ... alternatives) {
+        return new Or.Builder().addAlternatives(alternatives).build();
     }
 
     private Terminal.Tag t(final String tag) {

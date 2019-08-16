@@ -136,10 +136,10 @@ public class ParserAbstractModuleTest {
             assertTrue(production.getElements().get(2).isOptional());
             assertEquals(1, production.getElements().get(2).asOptional().getElements().length);
             assertTrue(production.getElements().get(2).asOptional().getElements()[0].isOr());
-            assertTrue(production.getElements().get(2).asOptional().getElements()[0].asOr().getFirst().isNonTerminal());
-            assertTrue(production.getElements().get(2).asOptional().getElements()[0].asOr().getSecond().isNonTerminal());
-            assertEquals("name4", production.getElements().get(2).asOptional().getElements()[0].asOr().getFirst().asNonTerminal().getValue());
-            assertEquals("name5", production.getElements().get(2).asOptional().getElements()[0].asOr().getSecond().asNonTerminal().getValue());
+            assertTrue(production.getElements().get(2).asOptional().getElements()[0].asOr().getAlternatives().get(0).getElement().isNonTerminal());
+            assertTrue(production.getElements().get(2).asOptional().getElements()[0].asOr().getAlternatives().get(1).getElement().isNonTerminal());
+            assertEquals("name4", production.getElements().get(2).asOptional().getElements()[0].asOr().getAlternatives().get(0).getElement().asNonTerminal().getValue());
+            assertEquals("name5", production.getElements().get(2).asOptional().getElements()[0].asOr().getAlternatives().get(1).getElement().asNonTerminal().getValue());
         }
 
         //.then(optional(optional(), name("name6")));
@@ -290,8 +290,8 @@ public class ParserAbstractModuleTest {
             @Override
             public void configure() {
                 prod("prod1")
-                        .then(oneOf(t("A"), t("B"), t("C")))
-                        .then(oneOf(optional(t("C")), t("A")));
+                        .then(or(t("A"), t("B"), t("C")))
+                        .then(or(optional(t("C")), t("A")));
             }
         }.build();
         final Grammar grammar = module.getGrammar();

@@ -90,14 +90,6 @@ public interface Element {
         return (InlineAction) this;
     }
 
-    default boolean isOneOf() {
-        return this.kind() == Kind.ONE_OF;
-    }
-
-    default OneOf asOneOf() {
-        return (OneOf) this;
-    }
-
     default boolean isAlternative() {
         return this.kind() == Kind.ALTERNATIVE;
     }
@@ -116,7 +108,6 @@ public interface Element {
         TERMINAL_TAG,
         NON_TERMINAL,
         INLINE_ACTION,
-        ONE_OF,
         ALTERNATIVE
     }
 }

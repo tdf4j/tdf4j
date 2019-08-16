@@ -16,23 +16,49 @@
 package org.tdf4j.core.model.ebnf;
 
 import org.immutables.value.Value;
+import org.tdf4j.core.utils.Elements;
+
+import java.util.List;
 
 @Value.Immutable
 public abstract class Or implements Element {
+
     @Override
     public Kind kind() {
         return Kind.OR;
     }
 
-    public abstract Element getFirst();
+    public abstract List<Alternative> getAlternatives();
 
-    public abstract Element getSecond();
+    @Value.Check
+    Or normalize() {
+        if(getAlternatives().size() < 2) {
+            throw new IllegalArgumentException("Or element accept 2 or more alternatives");
+        }
+        return this;
+    }
 
     public static class Builder extends ImmutableOr.Builder {
+        private int counter;
+
+        public Builder addAlternatives(final Element... elements) {
+            for(final Element alt : elements) {
+                super.addAlternatives(new Alternative.Builder()
+                        .setIndex(counter++)
+                        .setElement(alt)
+                        .build()
+                );
+            }
+            return this;
+        }
+
     }
 
     @Override
     public String toString() {
-        return getFirst().toString() + "|" + getSecond().toString();
+        return Elements.convertToString("|", getAlternatives().stream()
+                .map(Alternative::getElement)
+                .toArray(Element[]::new));
     }
+
 }

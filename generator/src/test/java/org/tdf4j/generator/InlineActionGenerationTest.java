@@ -123,7 +123,7 @@ public class InlineActionGenerationTest extends ParserTest {
                 prod("prod1")
                         .is(
                                 inline("list.add(\"value1\");"),
-                                oneOf(
+                                or(
                                         t("A"),
                                         t("B"),
                                         t("C")

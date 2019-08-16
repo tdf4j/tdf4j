@@ -43,12 +43,6 @@ public final class Elements {
                         ? Collections.emptyList()
                         : getStartElements(firstNotInlineElement(element.asRepetition().getElement()));
 
-            case OR:
-                return new ArrayList<>() {{
-                    addAll(getStartElements(firstNotInlineElement(element.asOr().getFirst())));
-                    addAll(getStartElements(firstNotInlineElement(element.asOr().getSecond())));
-                }};
-
             case GROUP:
                 return element.asGroup().getElements().length == 0
                         ? Collections.emptyList()
@@ -65,10 +59,12 @@ public final class Elements {
             case NON_TERMINAL:
                 return new ArrayList<>() {{add(element.asNonTerminal().getValue());}};
 
-            case ONE_OF:
+            case OR:
                 return new ArrayList<>() {{
-                    for(final Alternative alt : element.asOneOf().getAlternatives()) {
-                        addAll(getStartElements(firstNotInlineElement(alt)));
+                    if(element.asOr().getAlternatives() != null) {
+                        for (final Alternative alt : element.asOr().getAlternatives()) {
+                            addAll(getStartElements(firstNotInlineElement(alt)));
+                        }
                     }
                 }};
 

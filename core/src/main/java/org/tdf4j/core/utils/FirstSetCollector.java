@@ -75,13 +75,6 @@ public class FirstSetCollector {
                         : firstOf(context, currentNT, firstElement(Arrays.asList(element.asOptional().getElements())));
             }
 
-            case OR: {
-                return new ArrayList<>() {{
-                    addAll(firstOf(context, currentNT, firstElement(Collections.singletonList(element.asOr().getFirst()))));
-                    addAll(firstOf(context, currentNT, firstElement(Collections.singletonList(element.asOr().getSecond()))));
-                }};
-            }
-
             case REPEAT: {
                 return element.asRepeat().getElements().length == 0
                         ? Collections.emptyList()
@@ -98,9 +91,9 @@ public class FirstSetCollector {
                 }};
             }
 
-            case ONE_OF: {
+            case OR: {
                 return new ArrayList<>() {{
-                    for(final Alternative alt : element.asOneOf().getAlternatives()) {
+                    for(final Alternative alt : element.asOr().getAlternatives()) {
                         addAll(firstOf(context, currentNT, alt));
                     }
                 }};

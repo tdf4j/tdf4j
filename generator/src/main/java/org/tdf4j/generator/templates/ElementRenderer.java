@@ -37,9 +37,6 @@ public class ElementRenderer implements AttributeRenderer {
             case OPTIONAL:
                 return template.getInstanceOf("optional").add("optional", element).render();
 
-            case OR:
-                return template.getInstanceOf("or").add("or", element).render();
-
             case REPEAT:
                 return template.getInstanceOf("repeat").add("repeat", element).render();
 
@@ -52,8 +49,8 @@ public class ElementRenderer implements AttributeRenderer {
             case INLINE_ACTION:
                 return template.getInstanceOf("inline_action").add("inline_action", element).render();
 
-            case ONE_OF:
-                return template.getInstanceOf("oneOf").add("oneOf", element).render();
+            case OR:
+                return template.getInstanceOf("or").add("or", element).render();
 
             case ALTERNATIVE:
                 return this.toString(element.asAlternative().getElement(), formatString, locale);

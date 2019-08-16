@@ -16,6 +16,7 @@
 package org.tdf4j.tdfparser.builder;
 
 import org.tdf4j.core.model.ast.ASTNode;
+import org.tdf4j.core.model.ebnf.Element;
 import org.tdf4j.core.model.ebnf.Or;
 
 import java.util.List;
@@ -32,11 +33,11 @@ public class EbnfOrBuilder extends AbstractEbnfElementBuilder<Or> {
     }
 
     private Or oneOf(final List<ASTNode> elements) {
-        if(elements.size() == 2) {
-            return new Or.Builder().setFirst(callBuilder(elements.get(0))).setSecond(callBuilder(elements.get(1))).build();
-        } else {
-            return new Or.Builder().setFirst(callBuilder(elements.get(0))).setSecond(oneOf(elements.subList(1, elements.size()))).build();
-        }
+        return new Or.Builder().addAlternatives(
+                elements.stream()
+                        .map(this::callBuilder)
+                        .toArray(Element[]::new)
+        ).build();
     }
 
 }

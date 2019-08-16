@@ -80,7 +80,7 @@ public class OldGrammarTest extends ParserTest {
                     .then(t("$"));
 
             prod("expr")
-                    .then(oneOf(
+                    .then(or(
                             nt("while_loop"),
                             nt("for_loop"),
                             nt("if_statement"),
@@ -236,7 +236,7 @@ public class OldGrammarTest extends ParserTest {
                     );
 
             prod("type")
-                    .is(oneOf(
+                    .is(or(
                             t("ARRAYLIST"),
                             t("HASHSET")
                     ));
@@ -274,7 +274,7 @@ public class OldGrammarTest extends ParserTest {
 
             prod("value_expr_1")
                     .is(
-                            oneOf(
+                            or(
                                 nt("value"),
                                 nt("get_expr"),
                                 nt("size_expr")
@@ -283,7 +283,7 @@ public class OldGrammarTest extends ParserTest {
                     );
 
             prod("value")
-                    .is(oneOf(
+                    .is(or(
                             t("VAR"),
                             t("DIGIT"),
                             t("DOUBLE"),

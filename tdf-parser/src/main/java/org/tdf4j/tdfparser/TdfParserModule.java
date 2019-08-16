@@ -108,7 +108,7 @@ public class TdfParserModule extends ParserAbstractModule {
 
         prod("terminal_parameters_values")
                 .is(
-                        oneOf(
+                        or(
                                 nt("terminal_parameter_priority"),
                                 nt("terminal_parameter_hidden"),
                                 nt("terminal_parameter_pattern_flag")
@@ -139,7 +139,7 @@ public class TdfParserModule extends ParserAbstractModule {
 
         prod("pattern_flags")
                 .is(
-                        oneOf(
+                        or(
                                 t("TERMINAL_PARAMETER_PATTERN_FLAG_VALUE_UNIX_LINES"),
                                 t("TERMINAL_PARAMETER_PATTERN_FLAG_VALUE_CASE_INSENSITIVE"),
                                 t("TERMINAL_PARAMETER_PATTERN_FLAG_VALUE_COMMENTS"),
@@ -206,7 +206,7 @@ public class TdfParserModule extends ParserAbstractModule {
 
         prod("ebnf_element")
                 .is(
-                        oneOf(
+                        or(
                                 nt("ebnf_optional"),
                                 nt("ebnf_or"),
                                 nt("ebnf_repeat"),

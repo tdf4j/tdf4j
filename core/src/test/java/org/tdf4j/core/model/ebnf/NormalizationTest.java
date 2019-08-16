@@ -46,7 +46,7 @@ public class NormalizationTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void one_of() {
-        final OneOf oneOf = new OneOf.Builder().addAlternatives(
+        new Or.Builder().addAlternatives(
                 new Terminal.Tag.Builder().setValue("A").build()
         ).build();
     }

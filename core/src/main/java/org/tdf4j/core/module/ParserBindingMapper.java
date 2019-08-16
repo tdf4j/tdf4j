@@ -70,13 +70,8 @@ public abstract class ParserBindingMapper implements ParserBindMethods {
     }
 
     @Override
-    public Or or(final Element first, final Element second) {
-        return new Or.Builder().setFirst(first).setSecond(second).build();
-    }
-
-    @Override
-    public OneOf oneOf(final Element... elements) {
-        return new OneOf.Builder().addAlternatives(elements).build();
+    public Or or(final Element ... alternatives) {
+        return new Or.Builder().addAlternatives(alternatives).build();
     }
 
     @Override
