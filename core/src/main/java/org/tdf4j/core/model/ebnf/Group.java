@@ -16,9 +16,10 @@
 package org.tdf4j.core.model.ebnf;
 
 import org.immutables.value.Value;
+import org.tdf4j.core.utils.Elements;
 
 @Value.Immutable
-public abstract class Group extends AbstractElement {
+public abstract class Group implements Element {
     @Override
     public Kind kind() {
         return Kind.GROUP;
@@ -31,6 +32,6 @@ public abstract class Group extends AbstractElement {
 
     @Override
     public String toString() {
-        return "(" + toStringGroup(getElements()) + ")";
+        return "(" + Elements.convertToString(getElements()) + ")";
     }
 }

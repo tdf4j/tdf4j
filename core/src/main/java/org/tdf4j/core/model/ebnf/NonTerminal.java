@@ -20,7 +20,7 @@ import org.immutables.value.Value;
 import javax.annotation.Nullable;
 
 @Value.Immutable
-public abstract class NonTerminal extends AbstractElement {
+public abstract class NonTerminal implements Element {
     @Override
     public Kind kind() {
         return Kind.NON_TERMINAL;

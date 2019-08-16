@@ -20,6 +20,7 @@ import org.stringtemplate.v4.Interpreter;
 import org.stringtemplate.v4.ModelAdaptor;
 import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.misc.STNoSuchPropertyException;
+import org.tdf4j.core.utils.Elements;
 
 public class NonTerminalAdaptor implements ModelAdaptor {
 
@@ -27,12 +28,10 @@ public class NonTerminalAdaptor implements ModelAdaptor {
     public Object getProperty(final Interpreter interp, final ST self, final Object o, final Object property, final String propertyName) throws STNoSuchPropertyException {
         final NonTerminal nonTerminal = (NonTerminal) o;
         switch (propertyName) {
-            case "value":
-                return nonTerminal.getValue();
-            case "nodeAction":
-                return nonTerminal.getNodeAction();
-            default:
-                return null;
+            case "value" : return nonTerminal.getValue();
+            case "nodeAction" : return nonTerminal.getNodeAction();
+            case "start" : return Elements.getStartElements(nonTerminal);
+            default : throw new STNoSuchPropertyException(null, nonTerminal, propertyName);
         }
     }
 

@@ -20,6 +20,7 @@ import org.stringtemplate.v4.Interpreter;
 import org.stringtemplate.v4.ModelAdaptor;
 import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.misc.STNoSuchPropertyException;
+import org.tdf4j.core.utils.Elements;
 
 public class TerminalAdaptor implements ModelAdaptor {
 
@@ -27,12 +28,10 @@ public class TerminalAdaptor implements ModelAdaptor {
     public Object getProperty(final Interpreter interp, final ST self, final Object o, final Object property, final String propertyName) throws STNoSuchPropertyException {
         final Terminal.Tag terminal = (Terminal.Tag) o;
         switch (propertyName) {
-            case "value":
-                return terminal.getValue();
-            case "tokenAction":
-                return terminal.getTokenAction();
-            default:
-                return null;
+            case "value" : return terminal.getValue();
+            case "tokenAction" : return terminal.getTokenAction();
+            case "start" : return Elements.getStartElements(terminal);
+            default : throw new STNoSuchPropertyException(null, terminal, propertyName);
         }
     }
 

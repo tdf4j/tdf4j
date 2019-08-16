@@ -20,6 +20,7 @@ import org.stringtemplate.v4.Interpreter;
 import org.stringtemplate.v4.ModelAdaptor;
 import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.misc.STNoSuchPropertyException;
+import org.tdf4j.core.utils.Elements;
 
 public class RepetitionAdaptor implements ModelAdaptor {
 
@@ -27,14 +28,11 @@ public class RepetitionAdaptor implements ModelAdaptor {
     public Object getProperty(final Interpreter interp, final ST self, final Object o, final Object property, final String propertyName) throws STNoSuchPropertyException {
         final Repetition repetition = (Repetition) o;
         switch(propertyName) {
-            case "hash":
-                return repetition.hashCode();
-            case "times":
-                return repetition.getTimes();
-            case "element":
-                return repetition.getElement();
-            default:
-                return null;
+            case "hash" : return repetition.hashCode();
+            case "times" : return repetition.getTimes();
+            case "element" : return repetition.getElement();
+            case "start" : return Elements.getStartElements(repetition);
+            default : throw new STNoSuchPropertyException(null, repetition, propertyName);
         }
     }
 

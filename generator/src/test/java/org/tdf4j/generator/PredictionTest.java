@@ -18,6 +18,7 @@ package org.tdf4j.generator;
 
 import org.junit.Test;
 import org.tdf4j.core.model.ebnf.*;
+import org.tdf4j.core.utils.Elements;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -27,16 +28,15 @@ import java.util.regex.Pattern;
 import static org.junit.Assert.*;
 
 public class PredictionTest {
-    private final Prediction prediction = new Prediction();
 
     @Test
     public void get_start_element_from_null() {
-        assertEquals(0, prediction.getStartElements(null).size());
+        assertEquals(0, Elements.getStartElements(null).size());
     }
 
     @Test
     public void empty_repeat() {
-        assertEquals(0, prediction.getStartElements(new Repeat() {
+        assertEquals(0, Elements.getStartElements(new Repeat() {
             @Override
             public Element[] getElements() {
                 return new Element[0];
@@ -46,7 +46,7 @@ public class PredictionTest {
 
     @Test
     public void repeat() {
-        assertEquals("A", prediction.getStartElements(new Repeat() {
+        assertEquals("A", Elements.getStartElements(new Repeat() {
             @Override
             public Element[] getElements() {
                 return new Element[] {new Terminal.Tag.Builder().setValue("A").build()};
@@ -56,7 +56,7 @@ public class PredictionTest {
 
     @Test
     public void repeat_with_inline_action() {
-        assertEquals("A", prediction.getStartElements(new Repeat() {
+        assertEquals("A", Elements.getStartElements(new Repeat() {
             @Override
             public Element[] getElements() {
                 return new Element[] {
@@ -69,7 +69,7 @@ public class PredictionTest {
 
     @Test
     public void repeat_inline_action_only() {
-        assertEquals(0, prediction.getStartElements(new Repeat() {
+        assertEquals(0, Elements.getStartElements(new Repeat() {
             @Override
             public Element[] getElements() {
                 return new Element[] {
@@ -81,7 +81,7 @@ public class PredictionTest {
 
     @Test
     public void empty_repetition() {
-        assertEquals(0, prediction.getStartElements(new Repetition() {
+        assertEquals(0, Elements.getStartElements(new Repetition() {
             @Override
             public Element getElement() {
                 return null;
@@ -96,7 +96,7 @@ public class PredictionTest {
 
     @Test
     public void repetition() {
-        assertEquals("A", prediction.getStartElements(new Repetition() {
+        assertEquals("A", Elements.getStartElements(new Repetition() {
             @Override
             public Element getElement() {
                 return new Terminal.Tag.Builder().setValue("A").build();
@@ -111,7 +111,7 @@ public class PredictionTest {
 
     @Test
     public void repetition_with_inline_action() {
-        assertEquals(0, prediction.getStartElements(new Repetition() {
+        assertEquals(0, Elements.getStartElements(new Repetition() {
             @Override
             public Element getElement() {
                 return new InlineAction.Builder().setCode("code").build();
@@ -126,7 +126,7 @@ public class PredictionTest {
 
     @Test
     public void or_with_nulls() {
-        assertEquals(0, prediction.getStartElements(new Or() {
+        assertEquals(0, Elements.getStartElements(new Or() {
             @Override
             public Element getFirst() {
                 return null;
@@ -141,7 +141,7 @@ public class PredictionTest {
 
     @Test
     public void or() {
-        assertEquals(2, prediction.getStartElements(new Or() {
+        assertEquals(2, Elements.getStartElements(new Or() {
             @Override
             public Element getFirst() {
                 return new Terminal.Tag.Builder().setValue("A").build();
@@ -156,7 +156,7 @@ public class PredictionTest {
 
     @Test
     public void or_with_inline_actions() {
-        assertEquals("A", prediction.getStartElements(new Or() {
+        assertEquals("A", Elements.getStartElements(new Or() {
             @Override
             public Element getFirst() {
                 return new InlineAction.Builder().setCode("code").build();
@@ -171,7 +171,7 @@ public class PredictionTest {
 
     @Test
     public void empty_group() {
-        assertEquals(0, prediction.getStartElements(new Group() {
+        assertEquals(0, Elements.getStartElements(new Group() {
             @Override
             public Element[] getElements() {
                 return new Element[0];
@@ -181,7 +181,7 @@ public class PredictionTest {
 
     @Test
     public void group() {
-        assertEquals("A", prediction.getStartElements(new Group() {
+        assertEquals("A", Elements.getStartElements(new Group() {
             @Override
             public Element[] getElements() {
                 return new Element[] {
@@ -193,7 +193,7 @@ public class PredictionTest {
 
     @Test
     public void group_with_inline_action() {
-        assertEquals("A", prediction.getStartElements(new Group() {
+        assertEquals("A", Elements.getStartElements(new Group() {
             @Override
             public Element[] getElements() {
                 return new Element[] {
@@ -206,7 +206,7 @@ public class PredictionTest {
 
     @Test
     public void group_with_inline_action_only() {
-        assertEquals(0, prediction.getStartElements(new Group() {
+        assertEquals(0, Elements.getStartElements(new Group() {
             @Override
             public Element[] getElements() {
                 return new Element[] {
@@ -218,7 +218,7 @@ public class PredictionTest {
 
     @Test
     public void empty_optional() {
-        assertEquals(0, prediction.getStartElements(new Optional() {
+        assertEquals(0, Elements.getStartElements(new Optional() {
             @Override
             public Element[] getElements() {
                 return new Element[0];
@@ -228,7 +228,7 @@ public class PredictionTest {
 
     @Test
     public void optional() {
-        assertEquals("A", prediction.getStartElements(new Optional() {
+        assertEquals("A", Elements.getStartElements(new Optional() {
             @Override
             public Element[] getElements() {
                 return new Element[] {
@@ -240,7 +240,7 @@ public class PredictionTest {
 
     @Test
     public void optional_with_inline_action() {
-        assertEquals("A", prediction.getStartElements(new Optional() {
+        assertEquals("A", Elements.getStartElements(new Optional() {
             @Override
             public Element[] getElements() {
                 return new Element[] {
@@ -253,7 +253,7 @@ public class PredictionTest {
 
     @Test
     public void optional_with_inline_action_only() {
-        assertEquals(0, prediction.getStartElements(new Optional() {
+        assertEquals(0, Elements.getStartElements(new Optional() {
             @Override
             public Element[] getElements() {
                 return new Element[] {
@@ -265,17 +265,17 @@ public class PredictionTest {
 
     @Test
     public void tag() {
-        assertEquals("A", prediction.getStartElements(new Terminal.Tag.Builder().setValue("A").build()).get(0));
+        assertEquals("A", Elements.getStartElements(new Terminal.Tag.Builder().setValue("A").build()).get(0));
     }
 
     @Test
     public void non_terminal() {
-        assertEquals("prod1", prediction.getStartElements(new NonTerminal.Builder().setValue("prod1").build()).get(0));
+        assertEquals("prod1", Elements.getStartElements(new NonTerminal.Builder().setValue("prod1").build()).get(0));
     }
 
     @Test
     public void unknown_element() {
-        assertEquals(0, prediction.getStartElements(new Terminal() {
+        assertEquals(0, Elements.getStartElements(new Terminal() {
             @Override
             public Tag getTag() {
                 return null;
@@ -290,20 +290,6 @@ public class PredictionTest {
 
     @Test
     public void first_not_inline_element() {
-        assertNull(prediction.firstNotInlineElement(new InlineAction.Builder().setCode("code").build()));
-    }
-
-    private class Prediction extends org.tdf4j.generator.templates.adaptor.Prediction {
-        @Nonnull
-        @Override
-        protected List<String> getStartElements(@Nullable final Element element) {
-            return super.getStartElements(element);
-        }
-
-        @Nullable
-        @Override
-        public Element firstNotInlineElement(final Element... elements) {
-            return super.firstNotInlineElement(elements);
-        }
+        assertNull(Elements.firstNotInlineElement(new InlineAction.Builder().setCode("code").build()));
     }
 }

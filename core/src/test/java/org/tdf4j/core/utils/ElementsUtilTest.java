@@ -14,9 +14,8 @@
  * limitations under the License.
  */
 
-package org.tdf4j.core.model.ast;
+package org.tdf4j.core.utils;
 
-import org.tdf4j.core.model.ebnf.AbstractElement;
 import org.tdf4j.core.model.ebnf.Element;
 import org.tdf4j.core.model.ebnf.Group;
 import org.tdf4j.core.model.ebnf.Terminal;
@@ -24,12 +23,11 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class AbstractElementTest {
+public class ElementsUtilTest {
 
     @Test
     public void to_string_group() {
-        final AET aet = new AET();
-        assertEquals("(A,B,C)", aet.toStringGroup(
+        assertEquals("(A,B,C)", Elements.convertToString(
                 new Group() {
                     @Override
                     public Element[] getElements() {
@@ -45,19 +43,15 @@ public class AbstractElementTest {
 
     @Test
     public void to_string_empty_group() {
-        final AET aet = new AET();
-        assertEquals("", aet.toStringGroup());
+        assertEquals("", Elements.convertToString());
     }
 
-    class AET extends AbstractElement {
-        @Override
-        public Kind kind() {
-            return null;
-        }
-
-        @Override
-        public String toStringGroup(final Element... elements) {
-            return super.toStringGroup(elements);
-        }
+    @Test
+    public void to_string_with_separator() {
+        assertEquals("A|||B|||C", Elements.convertToString( "|||",
+                new Terminal.Tag.Builder().setValue("A").build(),
+                new Terminal.Tag.Builder().setValue("B").build(),
+                new Terminal.Tag.Builder().setValue("C").build()
+        ));
     }
 }

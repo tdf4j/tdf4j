@@ -75,18 +75,8 @@ public abstract class ParserBindingMapper implements ParserBindMethods {
     }
 
     @Override
-    public Or oneOf(final Element... elements) {
-        if(elements.length < 2) {
-            throw new RuntimeException("oneOf() accepts 2 ore more elements");
-        }
-
-        if(elements.length == 2) {
-            return new Or.Builder().setFirst(elements[0]).setSecond(elements[1]).build();
-        } else {
-            final Element[] toRecursion = new Element[elements.length - 1];
-            System.arraycopy(elements, 1, toRecursion, 0, elements.length - 1);
-            return new Or.Builder().setFirst(elements[0]).setSecond(oneOf(toRecursion)).build();
-        }
+    public OneOf oneOf(final Element... elements) {
+        return new OneOf.Builder().addAlternatives(elements).build();
     }
 
     @Override

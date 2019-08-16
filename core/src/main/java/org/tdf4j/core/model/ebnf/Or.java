@@ -18,7 +18,7 @@ package org.tdf4j.core.model.ebnf;
 import org.immutables.value.Value;
 
 @Value.Immutable
-public abstract class Or extends AbstractElement {
+public abstract class Or implements Element {
     @Override
     public Kind kind() {
         return Kind.OR;

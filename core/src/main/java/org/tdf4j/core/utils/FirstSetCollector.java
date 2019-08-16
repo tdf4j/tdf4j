@@ -17,6 +17,7 @@ package org.tdf4j.core.utils;
 
 import org.tdf4j.core.model.First;
 import org.tdf4j.core.model.Production;
+import org.tdf4j.core.model.ebnf.Alternative;
 import org.tdf4j.core.model.ebnf.Element;
 import org.tdf4j.core.model.ebnf.NonTerminal;
 import org.tdf4j.core.model.ebnf.Terminal;
@@ -95,6 +96,18 @@ public class FirstSetCollector {
                 return new ArrayList<>() {{
                     add(element.asTerminalTag());
                 }};
+            }
+
+            case ONE_OF: {
+                return new ArrayList<>() {{
+                    for(final Alternative alt : element.asOneOf().getAlternatives()) {
+                        addAll(firstOf(context, currentNT, alt));
+                    }
+                }};
+            }
+
+            case ALTERNATIVE: {
+                return firstOf(context, currentNT, element.asAlternative().getElement());
             }
 
             default: return Collections.emptyList();

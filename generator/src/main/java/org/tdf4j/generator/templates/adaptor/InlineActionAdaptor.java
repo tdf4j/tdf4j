@@ -27,10 +27,8 @@ public class InlineActionAdaptor implements ModelAdaptor {
     public Object getProperty(final Interpreter interp, final ST self, final Object o, final Object property, final String propertyName) throws STNoSuchPropertyException {
         final InlineAction inlineAction = (InlineAction) o;
         switch (propertyName) {
-            case "code":
-                return inlineAction.getCode();
-            default:
-                return null;
+            case "code": return inlineAction.getCode();
+            default : throw new STNoSuchPropertyException(null, inlineAction, propertyName);
         }
     }
 

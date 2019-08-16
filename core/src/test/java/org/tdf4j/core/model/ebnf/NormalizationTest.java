@@ -44,4 +44,11 @@ public class NormalizationTest {
         assertEquals("node.action", nonTerminal.getNodeAction());
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void one_of() {
+        final OneOf oneOf = new OneOf.Builder().addAlternatives(
+                new Terminal.Tag.Builder().setValue("A").build()
+        ).build();
+    }
+
 }

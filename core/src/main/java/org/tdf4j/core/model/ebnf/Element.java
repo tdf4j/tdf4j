@@ -90,6 +90,22 @@ public interface Element {
         return (InlineAction) this;
     }
 
+    default boolean isOneOf() {
+        return this.kind() == Kind.ONE_OF;
+    }
+
+    default OneOf asOneOf() {
+        return (OneOf) this;
+    }
+
+    default boolean isAlternative() {
+        return this.kind() == Kind.ALTERNATIVE;
+    }
+
+    default Alternative asAlternative() {
+        return (Alternative) this;
+    }
+
     enum Kind {
         OPTIONAL,
         OR,
@@ -99,6 +115,8 @@ public interface Element {
         TERMINAL,
         TERMINAL_TAG,
         NON_TERMINAL,
-        INLINE_ACTION
+        INLINE_ACTION,
+        ONE_OF,
+        ALTERNATIVE
     }
 }

@@ -21,7 +21,7 @@ import javax.annotation.Nullable;
 import java.util.regex.Pattern;
 
 @Value.Immutable
-public abstract class Terminal extends AbstractElement {
+public abstract class Terminal implements Element {
     @Override
     public Kind kind() {
         return Kind.TERMINAL;

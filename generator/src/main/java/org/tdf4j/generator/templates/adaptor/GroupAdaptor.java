@@ -20,6 +20,7 @@ import org.stringtemplate.v4.Interpreter;
 import org.stringtemplate.v4.ModelAdaptor;
 import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.misc.STNoSuchPropertyException;
+import org.tdf4j.core.utils.Elements;
 
 public class GroupAdaptor implements ModelAdaptor {
 
@@ -27,10 +28,9 @@ public class GroupAdaptor implements ModelAdaptor {
     public Object getProperty(final Interpreter interp, final ST self, final Object o, final Object property, final String propertyName) throws STNoSuchPropertyException {
         final Group group = (Group) o;
         switch (propertyName) {
-            case "elements":
-                return group.getElements();
-            default:
-                return null;
+            case "elements" : return group.getElements();
+            case "start" : return Elements.getStartElements(group);
+            default : throw new STNoSuchPropertyException(null, group, propertyName);
         }
     }
 

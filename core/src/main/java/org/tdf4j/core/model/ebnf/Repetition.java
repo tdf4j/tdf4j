@@ -18,7 +18,7 @@ package org.tdf4j.core.model.ebnf;
 import org.immutables.value.Value;
 
 @Value.Immutable
-public abstract class Repetition extends AbstractElement {
+public abstract class Repetition implements Element {
     @Override
     public Kind kind() {
         return Kind.REPETITION;

@@ -52,6 +52,12 @@ public class ElementRenderer implements AttributeRenderer {
             case INLINE_ACTION:
                 return template.getInstanceOf("inline_action").add("inline_action", element).render();
 
+            case ONE_OF:
+                return template.getInstanceOf("oneOf").add("oneOf", element).render();
+
+            case ALTERNATIVE:
+                return this.toString(element.asAlternative().getElement(), formatString, locale);
+
             default:
                 return null;
         }

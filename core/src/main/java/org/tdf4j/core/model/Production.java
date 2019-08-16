@@ -18,6 +18,7 @@ package org.tdf4j.core.model;
 import org.tdf4j.core.model.ebnf.Element;
 import org.tdf4j.core.model.ebnf.NonTerminal;
 import org.immutables.value.Value;
+import org.tdf4j.core.utils.Elements;
 
 import java.util.List;
 
@@ -44,14 +45,7 @@ public abstract class Production {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
-        builder.append(getIdentifier()).append(" := ");
-        if(getElements().size() > 0) {
-            for (final Element element : getElements()) {
-                builder.append(element.toString()).append(",");
-            }
-        }
-        builder.replace(builder.length() - 1, builder.length(), "");
-        return builder.toString();
+        return getIdentifier() + " := " +
+                Elements.convertToString(getElements().toArray(new Element[]{}));
     }
 }

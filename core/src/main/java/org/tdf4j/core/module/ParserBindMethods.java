@@ -41,7 +41,7 @@ public interface ParserBindMethods {
 
     Or or(final Element first, final Element second);
 
-    Or oneOf(final Element ... elements);
+    OneOf oneOf(final Element ... elements);
 
     Terminal.Tag t(final String tag);
 

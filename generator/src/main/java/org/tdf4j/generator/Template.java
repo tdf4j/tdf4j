@@ -22,7 +22,7 @@ import org.stringtemplate.v4.STGroup;
 import org.stringtemplate.v4.STGroupFile;
 
 public enum Template {
-    JAVA(new STGroupFile("templates/java_1.1.stg"));
+    JAVA(new STGroupFile("templates/java_1.2.stg"));
 
     private final STGroup stGroup;
 
@@ -37,6 +37,8 @@ public enum Template {
         stGroup.registerModelAdaptor(Terminal.Tag.class, new TerminalAdaptor());
         stGroup.registerModelAdaptor(Group.class, new GroupAdaptor());
         stGroup.registerModelAdaptor(InlineAction.class, new InlineActionAdaptor());
+        stGroup.registerModelAdaptor(OneOf.class, new OneOfAdaptor());
+        stGroup.registerModelAdaptor(Alternative.class, new AlternativeAdaptor());
         stGroup.registerRenderer(Element.class, new ElementRenderer());
     }
 
