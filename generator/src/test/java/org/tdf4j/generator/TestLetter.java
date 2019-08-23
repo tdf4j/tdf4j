@@ -13,7 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@ParametersAreNonnullByDefault
-package org.tdf4j.validator.impl;
 
-import javax.annotation.ParametersAreNonnullByDefault;
+package org.tdf4j.generator;
+
+import org.tdf4j.core.model.Letter;
+
+public enum TestLetter {
+    A("A", 0),
+    B("B", 0),
+    C("C", 0);
+
+    private final Letter letter;
+
+    TestLetter(final String tag, final long priority) {
+        this.letter = new Letter.Builder().tag(tag).pattern(tag).priority(priority).build();
+    }
+
+    public Letter getLetter() {
+        return letter;
+    }
+}

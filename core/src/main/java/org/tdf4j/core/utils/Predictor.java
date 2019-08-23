@@ -28,7 +28,7 @@ import java.util.Map;
 public class Predictor {
     private final First first;
     private final Follow follow;
-    final Map<Terminal.Tag, List<String>> cache = new HashMap<>();
+    final Map<Terminal, List<String>> cache = new HashMap<>();
 
     public Predictor(final First first, final Follow follow) {
         this.first = first;

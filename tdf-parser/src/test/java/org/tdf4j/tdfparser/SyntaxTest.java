@@ -37,7 +37,7 @@ public class SyntaxTest extends TdfParserTest {
             final Production production = grammar.getProductions().get(0);
             assertEquals("or", production.getIdentifier().getValue());
             assertEquals(1, production.getElements().size());
-            assertEquals("A", production.getElements().get(0).asOr().getAlternatives().get(0).getElement().asTerminalTag().getValue());
+            assertEquals("A", production.getElements().get(0).asOr().getAlternatives().get(0).getElement().asTerminal().getValue());
             assertEquals("non_terminal", production.getElements().get(0).asOr().getAlternatives().get(1).getElement().asNonTerminal().getValue());
         }
 
@@ -55,7 +55,7 @@ public class SyntaxTest extends TdfParserTest {
             assertEquals("repeat", production.getIdentifier().getValue());
             assertEquals(1, production.getElements().size());
             assertEquals(2, production.getElements().get(0).asRepeat().getElements().length);
-            assertEquals("A", production.getElements().get(0).asRepeat().getElements()[0].asTerminalTag().getValue());
+            assertEquals("A", production.getElements().get(0).asRepeat().getElements()[0].asTerminal().getValue());
             assertEquals("non_terminal", production.getElements().get(0).asRepeat().getElements()[1].asNonTerminal().getValue());
         }
 
@@ -72,7 +72,7 @@ public class SyntaxTest extends TdfParserTest {
             final Production production = grammar.getProductions().get(4);
             assertEquals("optional", production.getIdentifier().getValue());
             assertEquals(1, production.getElements().size());
-            assertEquals("A", production.getElements().get(0).asOptional().getElements()[0].asTerminalTag().getValue());
+            assertEquals("A", production.getElements().get(0).asOptional().getElements()[0].asTerminal().getValue());
             assertEquals("non_terminal", production.getElements().get(0).asOptional().getElements()[1].asNonTerminal().getValue());
         }
 
@@ -81,7 +81,7 @@ public class SyntaxTest extends TdfParserTest {
             final Production production = grammar.getProductions().get(5);
             assertEquals("terminal", production.getIdentifier().getValue());
             assertEquals(1, production.getElements().size());
-            assertEquals("A", production.getElements().get(0).asTerminalTag().getValue());
+            assertEquals("A", production.getElements().get(0).asTerminal().getValue());
         }
 
         //[6] - repetition
@@ -90,7 +90,7 @@ public class SyntaxTest extends TdfParserTest {
             assertEquals("repetition", production.getIdentifier().getValue());
             assertEquals(1, production.getElements().size());
             assertEquals(3, production.getElements().get(0).asRepetition().getTimes());
-            assertEquals("A", production.getElements().get(0).asRepetition().getElement().asGroup().getElements()[0].asTerminalTag().getValue());
+            assertEquals("A", production.getElements().get(0).asRepetition().getElement().asGroup().getElements()[0].asTerminal().getValue());
             assertEquals("non_terminal", production.getElements().get(0).asRepetition().getElement().asGroup().getElements()[1].asNonTerminal().getValue());
         }
 
@@ -99,7 +99,7 @@ public class SyntaxTest extends TdfParserTest {
             final Production production = grammar.getProductions().get(7);
             assertEquals("group", production.getIdentifier().getValue());
             assertEquals(1, production.getElements().size());
-            assertEquals("A", production.getElements().get(0).asGroup().getElements()[0].asTerminalTag().getValue());
+            assertEquals("A", production.getElements().get(0).asGroup().getElements()[0].asTerminal().getValue());
             assertEquals("non_terminal", production.getElements().get(0).asGroup().getElements()[1].asNonTerminal().getValue());
         }
     }

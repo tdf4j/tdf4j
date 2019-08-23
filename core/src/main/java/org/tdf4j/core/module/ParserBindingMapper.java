@@ -75,13 +75,13 @@ public abstract class ParserBindingMapper implements ParserBindMethods {
     }
 
     @Override
-    public Terminal.Tag t(final String tag) {
-        return new Terminal.Tag.Builder().setValue(tag).build();
+    public Terminal t(final String tag) {
+        return new Terminal.Builder().setValue(tag).build();
     }
 
     @Override
-    public Terminal.Tag t(final String tag, @SyntaxHighlight.TokenAction final String tokenAction) {
-        return new Terminal.Tag.Builder().setValue(tag).setTokenAction(tokenAction).build();
+    public Terminal t(final String tag, @SyntaxHighlight.TokenAction final String tokenAction) {
+        return new Terminal.Builder().setValue(tag).setTokenAction(tokenAction).build();
     }
 
     @Override

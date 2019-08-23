@@ -142,4 +142,24 @@ public class ASTTest {
         assertTrue(ast.onCursor().isRoot());
         assertEquals("lang", ast.onCursor().asRoot().getTag());
     }
+
+    @Test
+    public void last_leaf() {
+        final AST ast = AST.create("lang");
+        assertNull(ast.getLastLeaf());
+        ast.addLeaf(new Token.Builder().setTag("leaf1").setValue("leaf1").build());
+        ast.addLeaf(new Token.Builder().setTag("leaf2").setValue("leaf2").build());
+        assertEquals("leaf2", ast.getLastLeaf().getToken().getValue());
+        assertEquals("lang", ast.onCursor().asRoot().getTag());
+    }
+
+    @Test
+    public void last_node() {
+        final AST ast = AST.create("lang");
+        assertNull(ast.getLastNode());
+        ast.addNode("node1");
+        ast.addNode("node2");
+        assertEquals("node2", ast.getLastNode().getTag());
+        assertEquals("lang", ast.onCursor().asRoot().getTag());
+    }
 }

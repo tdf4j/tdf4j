@@ -32,9 +32,9 @@ public class ElementsUtilTest {
                     @Override
                     public Element[] getElements() {
                         return new Element[] {
-                                new Terminal.Tag.Builder().setValue("A").build(),
-                                new Terminal.Tag.Builder().setValue("B").build(),
-                                new Terminal.Tag.Builder().setValue("C").build()
+                                new Terminal.Builder().setValue("A").build(),
+                                new Terminal.Builder().setValue("B").build(),
+                                new Terminal.Builder().setValue("C").build()
                         };
                     }
                 }
@@ -49,9 +49,9 @@ public class ElementsUtilTest {
     @Test
     public void to_string_with_separator() {
         assertEquals("A|||B|||C", Elements.convertToString( "|||",
-                new Terminal.Tag.Builder().setValue("A").build(),
-                new Terminal.Tag.Builder().setValue("B").build(),
-                new Terminal.Tag.Builder().setValue("C").build()
+                new Terminal.Builder().setValue("A").build(),
+                new Terminal.Builder().setValue("B").build(),
+                new Terminal.Builder().setValue("C").build()
         ));
     }
 }

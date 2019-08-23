@@ -67,10 +67,10 @@ public class PredictorTest {
             predictor.predict(token("tag1", "tag1"));
             predictor.predict(token("tag2", "taп2"));
             predictor.predict(token("tag3", "tag3"));
-            final Map<Terminal.Tag, List<String>> cache = predictor.cache;
-            final Terminal.Tag tag1 = new Terminal.Tag.Builder().setValue("tag1").build();
-            final Terminal.Tag tag2 = new Terminal.Tag.Builder().setValue("tag2").build();
-            final Terminal.Tag tag3 = new Terminal.Tag.Builder().setValue("tag3").build();
+            final Map<Terminal, List<String>> cache = predictor.cache;
+            final Terminal tag1 = new Terminal.Builder().setValue("tag1").build();
+            final Terminal tag2 = new Terminal.Builder().setValue("tag2").build();
+            final Terminal tag3 = new Terminal.Builder().setValue("tag3").build();
             assertEquals(3, cache.size());
             assertTrue(cache.containsKey(tag1));
             assertTrue(cache.containsKey(tag2));
@@ -92,15 +92,15 @@ public class PredictorTest {
         return new NonTerminal.Builder().setValue(ident).build();
     }
 
-    private Set<Terminal.Tag> tags(final String ... tags) {
+    private Set<Terminal> tags(final String ... tags) {
         return new HashSet<>() {{
             for (final String tag : tags) {
-                add(new Terminal.Tag.Builder().setValue(tag).build());
+                add(new Terminal.Builder().setValue(tag).build());
             }
         }};
     }
 
     private Token token(final String tag, final String value) {
-        return new Token.Builder().setTag(new Terminal.Tag.Builder().setValue(tag).build()).setValue(value).build();
+        return new Token.Builder().setTag(new Terminal.Builder().setValue(tag).build()).setValue(value).build();
     }
 }

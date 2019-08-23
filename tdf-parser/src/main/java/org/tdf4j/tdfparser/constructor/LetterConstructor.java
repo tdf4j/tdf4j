@@ -15,6 +15,7 @@
  */
 package org.tdf4j.tdfparser.constructor;
 
+import org.tdf4j.core.model.Letter;
 import org.tdf4j.core.model.ebnf.Terminal;
 
 import javax.annotation.Nonnull;
@@ -23,14 +24,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-public class TerminalConstructor implements Constructor {
-    private final Terminal.Builder builder;
+public class LetterConstructor implements Constructor {
+    private final Letter.Builder builder;
     private String pattern;
     private List<String> flags = new ArrayList<>();
     private String hidden;
     private String priority;
 
-    public TerminalConstructor(final Terminal.Builder builder) {
+    public LetterConstructor(final Letter.Builder builder) {
         this.builder = builder;
     }
 

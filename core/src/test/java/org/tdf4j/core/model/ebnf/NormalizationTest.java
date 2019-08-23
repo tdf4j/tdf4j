@@ -24,7 +24,7 @@ public class NormalizationTest {
 
     @Test
     public void terminal() {
-        final Terminal.Tag terminal = new Terminal.Tag.Builder()
+        final Terminal terminal = new Terminal.Builder()
                 .setValue("this_is_1_terminal")
                 .setTokenAction("token.action")
                 .build();
@@ -47,7 +47,7 @@ public class NormalizationTest {
     @Test(expected = IllegalArgumentException.class)
     public void one_of() {
         new Or.Builder().addAlternatives(
-                new Terminal.Tag.Builder().setValue("A").build()
+                new Terminal.Builder().setValue("A").build()
         ).build();
     }
 

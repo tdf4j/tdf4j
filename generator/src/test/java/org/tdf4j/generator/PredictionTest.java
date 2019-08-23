@@ -50,7 +50,7 @@ public class PredictionTest {
         assertEquals("A", Elements.getStartElements(new Repeat() {
             @Override
             public Element[] getElements() {
-                return new Element[] {new Terminal.Tag.Builder().setValue("A").build()};
+                return new Element[] {new Terminal.Builder().setValue("A").build()};
             }
         }).get(0));
     }
@@ -62,7 +62,7 @@ public class PredictionTest {
             public Element[] getElements() {
                 return new Element[] {
                         new InlineAction.Builder().setCode("code").build(),
-                        new Terminal.Tag.Builder().setValue("A").build()
+                        new Terminal.Builder().setValue("A").build()
                 };
             }
         }).get(0));
@@ -100,7 +100,7 @@ public class PredictionTest {
         assertEquals("A", Elements.getStartElements(new Repetition() {
             @Override
             public Element getElement() {
-                return new Terminal.Tag.Builder().setValue("A").build();
+                return new Terminal.Builder().setValue("A").build();
             }
 
             @Override
@@ -142,11 +142,11 @@ public class PredictionTest {
             public List<Alternative> getAlternatives() {
                 return new ArrayList<>() {{
                     add(new Alternative.Builder().setIndex(0)
-                            .setElement(new Terminal.Tag.Builder().setValue("A").build())
+                            .setElement(new Terminal.Builder().setValue("A").build())
                             .build()
                     );
                     add(new Alternative.Builder().setIndex(0)
-                            .setElement(new Terminal.Tag.Builder().setValue("B").build())
+                            .setElement(new Terminal.Builder().setValue("B").build())
                             .build()
                     );
                 }};
@@ -165,7 +165,7 @@ public class PredictionTest {
                             .build()
                     );
                     add(new Alternative.Builder().setIndex(0)
-                            .setElement(new Terminal.Tag.Builder().setValue("A").build())
+                            .setElement(new Terminal.Builder().setValue("A").build())
                             .build()
                     );
                 }};
@@ -189,7 +189,7 @@ public class PredictionTest {
             @Override
             public Element[] getElements() {
                 return new Element[] {
-                        new Terminal.Tag.Builder().setValue("A").build()
+                        new Terminal.Builder().setValue("A").build()
                 };
             }
         }).get(0));
@@ -202,7 +202,7 @@ public class PredictionTest {
             public Element[] getElements() {
                 return new Element[] {
                         new InlineAction.Builder().setCode("code").build(),
-                        new Terminal.Tag.Builder().setValue("A").build()
+                        new Terminal.Builder().setValue("A").build()
                 };
             }
         }).get(0));
@@ -236,7 +236,7 @@ public class PredictionTest {
             @Override
             public Element[] getElements() {
                 return new Element[] {
-                        new Terminal.Tag.Builder().setValue("A").build()
+                        new Terminal.Builder().setValue("A").build()
                 };
             }
         }).get(0));
@@ -249,7 +249,7 @@ public class PredictionTest {
             public Element[] getElements() {
                 return new Element[] {
                         new InlineAction.Builder().setCode("code").build(),
-                        new Terminal.Tag.Builder().setValue("A").build()
+                        new Terminal.Builder().setValue("A").build()
                 };
             }
         }).get(0));
@@ -269,7 +269,7 @@ public class PredictionTest {
 
     @Test
     public void tag() {
-        assertEquals("A", Elements.getStartElements(new Terminal.Tag.Builder().setValue("A").build()).get(0));
+        assertEquals("A", Elements.getStartElements(new Terminal.Builder().setValue("A").build()).get(0));
     }
 
     @Test
@@ -279,14 +279,9 @@ public class PredictionTest {
 
     @Test
     public void unknown_element() {
-        assertEquals(0, Elements.getStartElements(new Terminal() {
+        assertEquals(0, Elements.getStartElements(new InlineAction() {
             @Override
-            public Tag getTag() {
-                return null;
-            }
-
-            @Override
-            public Pattern getPattern() {
+            public String getCode() {
                 return null;
             }
         }).size());

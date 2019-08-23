@@ -53,7 +53,7 @@ public class ASTCursor implements ASTElement {
             }
         }),
 
-        TO_LAST_ADDED_NODE(cursor -> {
+        TO_LAST_NODE_CHILD(cursor -> {
             if(cursor.isLeaf()) {
                 return;
             }
@@ -69,7 +69,7 @@ public class ASTCursor implements ASTElement {
             }
         }),
 
-        TO_LAST_ADDED_LEAF(cursor -> {
+        TO_LAST_LEAF_CHILD(cursor -> {
             if(cursor.isLeaf()) {
                 return;
             }

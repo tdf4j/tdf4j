@@ -58,7 +58,6 @@
         <module>lexer</module>
         <module>parser</module>
         <module>generator</module>
-        <module>validator</module>
         <module>core</module>
         <module>tdf-parser</module>
     </modules>

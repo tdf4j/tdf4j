@@ -22,7 +22,8 @@ public enum Imports {
     MODEL_EBNF("org.tdf4j.core.model.ebnf.*"),
     UTILS("org.tdf4j.core.utils.*"),
     JAVA_UTIL("java.util.*"),
-    JAVA_UTIL_FUNCTION("java.util.function.*");
+    JAVA_UTIL_FUNCTION("java.util.function.*"),
+    CURSOR_MOVEMENT("static org.tdf4j.core.model.ast.ASTCursor.Movement.*");
 
     private final String value;
 

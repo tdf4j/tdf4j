@@ -43,7 +43,7 @@ public class ElementRenderer implements AttributeRenderer {
             case REPETITION:
                 return template.getInstanceOf("repetition").add("repetition", element).render();
 
-            case TERMINAL_TAG:
+            case TERMINAL:
                 return template.getInstanceOf("terminal_tag").add("terminal_tag", element).render();
 
             case INLINE_ACTION:

@@ -282,7 +282,7 @@ public class FirstSetCollectorTest {
     public void unknown_element() {
         final First first = firstSetCollector.collect(new ArrayList<>() {{
             add(prod("prod1").is(
-                    (Element) () -> Element.Kind.TERMINAL
+                    (Element) () -> Element.Kind.INLINE_ACTION
             ).build());
         }});
         assertFirstContains(first, "prod1");
@@ -338,8 +338,8 @@ public class FirstSetCollectorTest {
         return new Or.Builder().addAlternatives(alternatives).build();
     }
 
-    private Terminal.Tag t(final String tag) {
-        return new Terminal.Tag.Builder().setValue(tag).build();
+    private Terminal t(final String tag) {
+        return new Terminal.Builder().setValue(tag).build();
     }
 
     private NonTerminal nt(final String identifier) {
@@ -358,7 +358,7 @@ public class FirstSetCollectorTest {
         final Set<String> set = first.getSet()
                 .get(new NonTerminal.Builder().setValue(ident).build())
                 .stream()
-                .map(Terminal.Tag::getValue)
+                .map(Terminal::getValue)
                 .collect(Collectors.toSet());
         assertEquals(tags.length, set.size());
         for(final String tag : tags) {

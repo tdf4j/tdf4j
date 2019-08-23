@@ -61,10 +61,10 @@ public class OrParsingTest extends ParserTest {
         assertNotNull(parse(parser, "AC"));
         assertNotNull(parse(parser, "BC"));
         assertNotNull(parse(parser, "C"));
-        assertParserFails(parser, "ABC", unexpectedToken(TestTerminal.B, 1, 1, "C"));
-        assertParserFails(parser, "AB", unexpectedToken(TestTerminal.B, 1, 1, "C"));
-        assertParserFails(parser, "BAC", unexpectedToken(TestTerminal.A, 1, 1, "C"));
-        assertParserFails(parser, "BA", unexpectedToken(TestTerminal.A, 1, 1, "C"));
+        assertParserFails(parser, "ABC", unexpectedToken(TestLetter.B, 1, 1, "C"));
+        assertParserFails(parser, "AB", unexpectedToken(TestLetter.B, 1, 1, "C"));
+        assertParserFails(parser, "BAC", unexpectedToken(TestLetter.A, 1, 1, "C"));
+        assertParserFails(parser, "BA", unexpectedToken(TestLetter.A, 1, 1, "C"));
         assertParserFails(parser, "", unexpectedEOF("C"));
     }
 
@@ -108,8 +108,8 @@ public class OrParsingTest extends ParserTest {
         });
         assertNotNull(parse(parser, "AB"));
         assertNotNull(parse(parser, "C"));
-        assertParserFails(parser, "AC", unexpectedToken(TestTerminal.C, 1, 1, "B"));
-        assertParserFails(parser, "B", unexpectedToken(TestTerminal.B, "A", "C"));
+        assertParserFails(parser, "AC", unexpectedToken(TestLetter.C, 1, 1, "B"));
+        assertParserFails(parser, "B", unexpectedToken(TestLetter.B, "A", "C"));
         assertParserFails(parser, "", unexpectedEOF("A", "C"));
     }
 }

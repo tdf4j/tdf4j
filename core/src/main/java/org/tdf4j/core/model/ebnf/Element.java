@@ -26,14 +26,6 @@ public interface Element {
         return (Terminal) this;
     }
 
-    default boolean isTerminalTag() {
-        return this.kind() == Kind.TERMINAL_TAG;
-    }
-
-    default Terminal.Tag asTerminalTag() {
-        return (Terminal.Tag) this;
-    }
-
     default boolean isNonTerminal() {
         return this.kind() == Kind.NON_TERMINAL;
     }
@@ -105,7 +97,6 @@ public interface Element {
         REPETITION,
         GROUP,
         TERMINAL,
-        TERMINAL_TAG,
         NON_TERMINAL,
         INLINE_ACTION,
         ALTERNATIVE

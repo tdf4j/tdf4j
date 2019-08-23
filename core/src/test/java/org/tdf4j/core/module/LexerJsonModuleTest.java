@@ -18,8 +18,9 @@ package org.tdf4j.core.module;
 
 import org.json.simple.parser.ParseException;
 import org.junit.Test;
-import org.tdf4j.core.module.LexerAbstractModule;
-import org.tdf4j.core.module.LexerJsonModule;
+import org.tdf4j.core.model.Letter;
+
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -34,21 +35,26 @@ public class LexerJsonModuleTest {
                 "    {\"tag\": \"tag3\", \"pattern\": \"pattern3\", \"priority\": 10000}\n" +
                 "  ]\n" +
                 "}").build();
-        assertEquals(3, module.getTerminals().size());
+        assertNotNull(module.getAlphabet());
+        final List<Letter> letters = module.getAlphabet().getLetters();
+        assertEquals(3, letters.size());
         {
-            assertEquals("TAG1", module.getTerminals().get(0).getTag().getValue());
-            assertEquals("pattern1", module.getTerminals().get(0).getPattern().pattern());
-            assertEquals(1, module.getTerminals().get(0).priority());
+            final Letter letter_0 = letters.get(0);
+            assertEquals("TAG1", letter_0.getTag().getValue());
+            assertEquals("pattern1", letter_0.getPattern().pattern());
+            assertEquals(1, letter_0.priority());
         }
         {
-            assertEquals("TAG2", module.getTerminals().get(1).getTag().getValue());
-            assertEquals("pattern2", module.getTerminals().get(1).getPattern().pattern());
-            assertEquals(0, module.getTerminals().get(1).priority());
+            final Letter letter_1 = letters.get(1);
+            assertEquals("TAG2", letter_1.getTag().getValue());
+            assertEquals("pattern2", letter_1.getPattern().pattern());
+            assertEquals(0, letter_1.priority());
         }
         {
-            assertEquals("TAG3", module.getTerminals().get(2).getTag().getValue());
-            assertEquals("pattern3", module.getTerminals().get(2).getPattern().pattern());
-            assertEquals(10000, module.getTerminals().get(2).priority());
+            final Letter letter_2 = letters.get(2);
+            assertEquals("TAG3", letter_2.getTag().getValue());
+            assertEquals("pattern3", letter_2.getPattern().pattern());
+            assertEquals(10000, letter_2.priority());
         }
     }
 
@@ -58,7 +64,7 @@ public class LexerJsonModuleTest {
                 "  \"terminals\" : [\n" +
                 "  ]\n" +
                 "}").build();
-        assertEquals(0, module.getTerminals().size());
+        assertEquals(0, module.getAlphabet().getLetters().size());
     }
 
     @Test(expected = ParseException.class)

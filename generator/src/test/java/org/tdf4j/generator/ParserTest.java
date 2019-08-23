@@ -41,10 +41,10 @@ public class ParserTest {
                 .setModule(new LexerAbstractModule() {
                     @Override
                     public void configure() {
-                        for (final TestTerminal testLexeme : TestTerminal.values()) {
-                            tokenize(testLexeme.getTerminal().getTag().getValue())
-                                    .pattern(testLexeme.getTerminal().getPattern().pattern())
-                                    .priority(testLexeme.getTerminal().priority());
+                        for (final TestLetter testLexeme : TestLetter.values()) {
+                            tokenize(testLexeme.getLetter().getTag().getValue())
+                                    .pattern(testLexeme.getLetter().getPattern().pattern())
+                                    .priority(testLexeme.getLetter().priority());
                         }
                         tokenize("ws").pattern("\\s|\\n|\\r").priority(Integer.MAX_VALUE).hidden(true);
                     }
@@ -106,23 +106,23 @@ public class ParserTest {
         return ast;
     }
 
-    static String unexpectedToken(final TestTerminal testTerminal) {
-        return unexpectedToken(testTerminal, 1, 0);
+    static String unexpectedToken(final TestLetter testLetter) {
+        return unexpectedToken(testLetter, 1, 0);
     }
 
-    static String unexpectedToken(final TestTerminal testTerminal, final String... expected) {
-        return unexpectedToken(testTerminal, 1, 0, expected);
+    static String unexpectedToken(final TestLetter testLetter, final String... expected) {
+        return unexpectedToken(testLetter, 1, 0, expected);
     }
 
-    static String unexpectedToken(final TestTerminal testTerminal, final long row, final long columt) {
+    static String unexpectedToken(final TestLetter testLetter, final long row, final long columt) {
         return String.format("Unexpected token: Token{tag=%1$s, value=%1$s, row=%2$d, column=%3$d}",
-                testTerminal.getTerminal().getTag().getValue(),
+                testLetter.getLetter().getTag().getValue(),
                 row, columt);
     }
 
-    static String unexpectedToken(final TestTerminal testTerminal, final long row, final long columt, final String... expected) {
+    static String unexpectedToken(final TestLetter testLetter, final long row, final long columt, final String... expected) {
         return String.format("Unexpected token: Token{tag=%1$s, value=%1$s, row=%2$d, column=%3$d}. Expected: " + Arrays.asList(expected),
-                testTerminal.getTerminal().getTag().getValue(),
+                testLetter.getLetter().getTag().getValue(),
                 row, columt);
     }
 

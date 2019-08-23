@@ -18,96 +18,45 @@ package org.tdf4j.core.model.ebnf;
 import org.immutables.value.Value;
 
 import javax.annotation.Nullable;
-import java.util.regex.Pattern;
 
 @Value.Immutable
 public abstract class Terminal implements Element {
+
     @Override
     public Kind kind() {
         return Kind.TERMINAL;
     }
 
-    public abstract Tag getTag();
+    public abstract String getValue();
 
-    public abstract Pattern getPattern();
-
+    @Nullable
+    @Value.Auxiliary
     @Value.Default
-    public long priority() {
-        return 0;
+    public String getTokenAction() {
+        return null;
     }
 
-    @Value.Default
-    public boolean hidden() {
-        return false;
+    @Value.Check
+    Terminal normalize() {
+        final char[] value = getValue().toCharArray();
+        for(final char ch : value) {
+            if(Character.isLetter(ch) && !Character.isUpperCase(ch)) {
+                return new Terminal.Builder()
+                        .setValue(getValue().toUpperCase())
+                        .setTokenAction(getTokenAction())
+                        .build();
+            }
+        }
+        return this;
     }
 
     public static class Builder extends ImmutableTerminal.Builder {
-        public Terminal.Builder pattern(final String pattern) {
-            super.setPattern(Pattern.compile(pattern));
-            return this;
-        }
 
-        public Terminal.Builder pattern(final String pattern, final int flags) {
-            super.setPattern(Pattern.compile(pattern, flags));
-            return this;
-        }
-
-        public Terminal.Builder tag(final String tag) {
-            super.setTag(new Tag.Builder().setValue(tag).build());
-            return this;
-        }
-
-        public Terminal.Builder priority(final long priority) {
-            return super.setPriority(priority);
-        }
-
-        public Terminal.Builder hidden(final boolean hidden) {
-            return super.setHidden(hidden);
-        }
     }
 
     @Override
     public String toString() {
-        return getPattern() != null ? getTag() + " : " + getPattern() : getTag().toString();
+        return getValue();
     }
 
-    @Value.Immutable
-    public static abstract class Tag implements Element {
-        @Override
-        public Kind kind() {
-            return Kind.TERMINAL_TAG;
-        }
-
-        public abstract String getValue();
-
-        @Nullable
-        @Value.Auxiliary
-        @Value.Default
-        public String getTokenAction() {
-            return null;
-        }
-
-        @Value.Check
-        Terminal.Tag normalize() {
-            final char[] value = getValue().toCharArray();
-            for(final char ch : value) {
-                if(Character.isLetter(ch) && !Character.isUpperCase(ch)) {
-                    return new Terminal.Tag.Builder()
-                            .setValue(getValue().toUpperCase())
-                            .setTokenAction(getTokenAction())
-                            .build();
-                }
-            }
-            return this;
-        }
-
-        public static class Builder extends ImmutableTag.Builder {
-
-        }
-
-        @Override
-        public String toString() {
-            return getValue();
-        }
-    }
 }

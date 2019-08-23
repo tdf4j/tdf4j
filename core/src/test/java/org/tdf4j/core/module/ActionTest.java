@@ -29,7 +29,7 @@ public class ActionTest {
         new ParserAbstractModule() {
             @Override
             protected void configure() {
-                final Terminal.Tag terminal = t("A", "System.out.println(token);");
+                final Terminal terminal = t("A", "System.out.println(token);");
                 assertEquals("A", terminal.getValue());
                 assertEquals("System.out.println(token);", terminal.getTokenAction());
             }

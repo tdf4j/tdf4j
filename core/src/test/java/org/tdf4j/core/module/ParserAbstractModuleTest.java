@@ -48,8 +48,8 @@ public class ParserAbstractModuleTest {
         {
             assertEquals("prod1", grammar.getProductions().get(1).getIdentifier().getValue());
             assertEquals(2, grammar.getProductions().get(1).getElements().size());
-            assertEquals("ELE1", grammar.getProductions().get(1).getElements().get(0).asTerminalTag().getValue());
-            assertEquals("ELE2", grammar.getProductions().get(1).getElements().get(1).asTerminalTag().getValue());
+            assertEquals("ELE1", grammar.getProductions().get(1).getElements().get(0).asTerminal().getValue());
+            assertEquals("ELE2", grammar.getProductions().get(1).getElements().get(1).asTerminal().getValue());
         }
     }
 
@@ -117,12 +117,12 @@ public class ParserAbstractModuleTest {
         {
             assertTrue(production.getElements().get(0).isOptional());
             assertEquals(3, production.getElements().get(0).asOptional().getElements().length);
-            assertTrue(production.getElements().get(0).asOptional().getElements()[0].isTerminalTag());
-            assertTrue(production.getElements().get(0).asOptional().getElements()[1].isTerminalTag());
-            assertTrue(production.getElements().get(0).asOptional().getElements()[2].isTerminalTag());
-            assertEquals("NAME1", production.getElements().get(0).asOptional().getElements()[0].asTerminalTag().getValue());
-            assertEquals("NAME2", production.getElements().get(0).asOptional().getElements()[1].asTerminalTag().getValue());
-            assertEquals("NAME3", production.getElements().get(0).asOptional().getElements()[2].asTerminalTag().getValue());
+            assertTrue(production.getElements().get(0).asOptional().getElements()[0].isTerminal());
+            assertTrue(production.getElements().get(0).asOptional().getElements()[1].isTerminal());
+            assertTrue(production.getElements().get(0).asOptional().getElements()[2].isTerminal());
+            assertEquals("NAME1", production.getElements().get(0).asOptional().getElements()[0].asTerminal().getValue());
+            assertEquals("NAME2", production.getElements().get(0).asOptional().getElements()[1].asTerminal().getValue());
+            assertEquals("NAME3", production.getElements().get(0).asOptional().getElements()[2].asTerminal().getValue());
         }
 
         //.then(optional())
@@ -148,8 +148,8 @@ public class ParserAbstractModuleTest {
             assertEquals(2, production.getElements().get(3).asOptional().getElements().length);
             assertTrue(production.getElements().get(3).asOptional().getElements()[0].isOptional());
             assertEquals(0, production.getElements().get(3).asOptional().getElements()[0].asOptional().getElements().length);
-            assertTrue(production.getElements().get(3).asOptional().getElements()[1].isTerminalTag());
-            assertEquals("NAME6", production.getElements().get(3).asOptional().getElements()[1].asTerminalTag().getValue());
+            assertTrue(production.getElements().get(3).asOptional().getElements()[1].isTerminal());
+            assertEquals("NAME6", production.getElements().get(3).asOptional().getElements()[1].asTerminal().getValue());
         }
 
         //toString()

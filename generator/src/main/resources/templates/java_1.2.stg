@@ -78,8 +78,8 @@ public class <parserTemplate.className><if(parserTemplate.extension)> extends <p
         if(stream.peek() != null && stream.peek().getTag().getValue().equalsIgnoreCase(terminal)) {
             ast.addLeaf(stream.next());
             if(action != null) {
-                action.accept(ast.moveCursor(ASTCursor.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().getToken());
-                ast.moveCursor(ASTCursor.Movement.TO_PARENT);
+                action.accept(ast.moveCursor(TO_LAST_LEAF_CHILD).onCursor().asLeaf().getToken());
+                ast.moveCursor(TO_PARENT);
             }
         } else {
             throw new UnexpectedTokenException(stream.peek(), terminal);
@@ -116,7 +116,6 @@ public class <parserTemplate.className><if(parserTemplate.extension)> extends <p
 >>
 
 method(returnValue, identifier, elements) ::= <<
-@SuppressWarnings("ConstantConditions")
 private <returnValue> <identifier>() {
     <elements: {element|<element>};separator="\n">
 }
@@ -127,14 +126,14 @@ ele_group(ele_group) ::= <<
 >>
 
 non_terminal(non_terminal) ::= <<
-ast.addNode("<non_terminal.value>").moveCursor(ASTCursor.Movement.TO_LAST_ADDED_NODE);
+ast.addNode("<non_terminal.value>").moveCursor(TO_LAST_NODE_CHILD);
 <non_terminal.value>();
 <if(non_terminal.nodeAction)>
 ((Consumer\<ASTNode>) node -> {
     <non_terminal.nodeAction>
 }).accept(ast.onCursor().asNode());
 <endif>
-ast.moveCursor(ASTCursor.Movement.TO_PARENT);
+ast.moveCursor(TO_PARENT);
 >>
 
 
@@ -145,7 +144,9 @@ if(<optional.start: {startElement|canReach("<startElement>")}; separator="\n|| "
 >>
 
 or(or) ::= <<
-switch(predict(<or.alternatives: {alternative|new Alt(<alternative.index>, <alternative.start: {element|"<element>"}; separator=", ">)}; separator=", ">)) {
+switch(predict(
+        <or.alternatives:{alternative|new Alt(<alternative.index>, <alternative.start: {element|"<element>"}; separator=", ">)}; separator=",\n">)
+) {
     <or.alternatives: {alternative|case <alternative.index> : {
         <alternative>
         break;

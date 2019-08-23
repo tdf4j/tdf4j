@@ -42,10 +42,10 @@ public class GroupParsingTest extends ParserTest {
             }
         });
         assertNotNull(parse(parser, "ABC"));
-        assertParserFails(parser, "AC", unexpectedToken(TestTerminal.C, 1, 1, "B"));
+        assertParserFails(parser, "AC", unexpectedToken(TestLetter.C, 1, 1, "B"));
         assertParserFails(parser, "AB", unexpectedEOF("C"));
-        assertParserFails(parser, "BC", unexpectedToken(TestTerminal.B, "A"));
-        assertParserFails(parser, "C", unexpectedToken(TestTerminal.C, "A"));
+        assertParserFails(parser, "BC", unexpectedToken(TestLetter.B, "A"));
+        assertParserFails(parser, "C", unexpectedToken(TestLetter.C, "A"));
         assertParserFails(parser, "", unexpectedEOF("A"));
     }
 
@@ -53,7 +53,6 @@ public class GroupParsingTest extends ParserTest {
      * prod1 := (A, B) | (C | A)
      */
     @Test
-    //todo: fix Expected: [A, C, A]
     public void with_or() {
         final Parser parser = generate(new ParserAbstractModule() {
             @Override
@@ -71,7 +70,7 @@ public class GroupParsingTest extends ParserTest {
         assertNotNull(parse(parser, "AB"));
         assertNotNull(parse(parser, "C"));
         assertParserFails(parser, "A", unexpectedEOF("B"));
-        assertParserFails(parser, "B", unexpectedToken(TestTerminal.B, "A", "C", "A"));
+        assertParserFails(parser, "B", unexpectedToken(TestLetter.B, "A", "C", "A"));
         assertParserFails(parser, "", unexpectedEOF("A", "C", "A"));
     }
 
@@ -93,9 +92,9 @@ public class GroupParsingTest extends ParserTest {
         assertNotNull(parse(parser, "ABA"));
         assertNotNull(parse(parser, "CCA"));
         assertParserFails(parser, "A", unexpectedEOF("B"));
-        assertParserFails(parser, "B", unexpectedToken(TestTerminal.B, "A"));
-        assertParserFails(parser, "CA", unexpectedToken(TestTerminal.A, 1, 1, "C"));
-        assertParserFails(parser, "CB", unexpectedToken(TestTerminal.B, 1, 1, "C"));
+        assertParserFails(parser, "B", unexpectedToken(TestLetter.B, "A"));
+        assertParserFails(parser, "CA", unexpectedToken(TestLetter.A, 1, 1, "C"));
+        assertParserFails(parser, "CB", unexpectedToken(TestLetter.B, 1, 1, "C"));
     }
 
     /**
@@ -119,8 +118,8 @@ public class GroupParsingTest extends ParserTest {
         assertNotNull(parse(parser, "ABABCCA"));
         assertParserFails(parser, "ABA", unexpectedEOF("B"));
         assertParserFails(parser, "A", unexpectedEOF("B"));
-        assertParserFails(parser, "B", unexpectedToken(TestTerminal.B, "A"));
-        assertParserFails(parser, "BC", unexpectedToken(TestTerminal.B, "A"));
+        assertParserFails(parser, "B", unexpectedToken(TestLetter.B, "A"));
+        assertParserFails(parser, "BC", unexpectedToken(TestLetter.B, "A"));
         assertParserFails(parser, "", unexpectedEOF("A"));
     }
 }

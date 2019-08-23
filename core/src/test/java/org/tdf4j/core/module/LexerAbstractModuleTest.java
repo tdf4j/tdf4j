@@ -16,10 +16,10 @@
 
 package org.tdf4j.core.module;
 
+import org.tdf4j.core.model.Letter;
 import org.tdf4j.core.model.ebnf.Terminal;
 import org.junit.Assert;
 import org.junit.Test;
-import org.tdf4j.core.module.LexerAbstractModule;
 
 import java.util.List;
 import java.util.regex.PatternSyntaxException;
@@ -39,14 +39,14 @@ public class LexerAbstractModuleTest {
             }
         }.build();
 
-        final List<Terminal> terminals = config.getTerminals();
-        assertEquals(3, terminals.size());
-        Assert.assertEquals("ONE", terminals.get(0).getTag().getValue());
-        Assert.assertEquals("^one$", terminals.get(0).getPattern().pattern());
-        Assert.assertEquals("TWO", terminals.get(1).getTag().getValue());
-        Assert.assertEquals("^two$", terminals.get(1).getPattern().pattern());
-        Assert.assertEquals("THREE", terminals.get(2).getTag().getValue());
-        Assert.assertEquals("^three$", terminals.get(2).getPattern().pattern());
+        final List<Letter> letters = config.getAlphabet().getLetters();
+        assertEquals(3, letters.size());
+        Assert.assertEquals("ONE", letters.get(0).getTag().getValue());
+        Assert.assertEquals("^one$", letters.get(0).getPattern().pattern());
+        Assert.assertEquals("TWO", letters.get(1).getTag().getValue());
+        Assert.assertEquals("^two$", letters.get(1).getPattern().pattern());
+        Assert.assertEquals("THREE", letters.get(2).getTag().getValue());
+        Assert.assertEquals("^three$", letters.get(2).getPattern().pattern());
     }
 
     @Test(expected = RuntimeException.class)
@@ -111,9 +111,10 @@ public class LexerAbstractModuleTest {
                 tokenize("token").pattern("pattern").priority(100);
             }
         }.build();
-        assertEquals(1, config.getTerminals().size());
-        assertEquals("TOKEN", config.getTerminals().get(0).getTag().getValue());
-        assertEquals("pattern", config.getTerminals().get(0).getPattern().pattern());
-        assertEquals(100, config.getTerminals().get(0).priority());
+        assertEquals(1, config.getAlphabet().getLetters().size());
+        final Letter letter = config.getAlphabet().getLetters().get(0);
+        assertEquals("TOKEN", letter.getTag().getValue());
+        assertEquals("pattern", letter.getPattern().pattern());
+        assertEquals(100, letter.priority());
     }
 }

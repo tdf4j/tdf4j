@@ -26,7 +26,7 @@ public class TerminalAdaptor implements ModelAdaptor {
 
     @Override
     public Object getProperty(final Interpreter interp, final ST self, final Object o, final Object property, final String propertyName) throws STNoSuchPropertyException {
-        final Terminal.Tag terminal = (Terminal.Tag) o;
+        final Terminal terminal = (Terminal) o;
         switch (propertyName) {
             case "value" : return terminal.getValue();
             case "tokenAction" : return terminal.getTokenAction();

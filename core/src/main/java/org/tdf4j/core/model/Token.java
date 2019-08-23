@@ -20,7 +20,7 @@ import org.immutables.value.Value;
 
 @Value.Immutable
 public interface Token {
-    Terminal.Tag getTag();
+    Terminal getTag();
 
     String getValue();
 
@@ -36,7 +36,7 @@ public interface Token {
 
     class Builder extends ImmutableToken.Builder {
         public Builder setTag(final String tag) {
-            return super.setTag(new Terminal.Tag.Builder().setValue(tag).build());
+            return super.setTag(new Terminal.Builder().setValue(tag).build());
         }
     }
 }

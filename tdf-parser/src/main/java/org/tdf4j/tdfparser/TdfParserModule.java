@@ -32,7 +32,7 @@ public class TdfParserModule extends ParserAbstractModule {
                 .code(
                         "" +
                         "private final Processor<String> stringProcessor = new StringProcessor();\n" +
-                        "private final Stack<TerminalConstructor> terminals = new Stack<>();\n" +
+                        "private final Stack<LetterConstructor> letters = new Stack<>();\n" +
                         "private final Stack<EnvironmentConstructor> environments = new Stack<>();\n" +
                         "private final Stack<ProductionConstructor> productions = new Stack<>();\n" +
                         "private LexerAbstractModule lexerModule;\n" +
@@ -46,18 +46,6 @@ public class TdfParserModule extends ParserAbstractModule {
                         "@Override\n" +
                         "public ParserAbstractModule getParserModule() {\n" +
                         "   return this.parserModule;\n" +
-                        "}\n" +
-                        "\n" +
-                        "private String lastValue(final AST ast) {\n" +
-                        "   final String value = ast.moveCursor(ASTCursor.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().getToken().getValue();\n" +
-                        "   ast.moveCursor(ASTCursor.Movement.TO_PARENT);\n" +
-                        "   return value;\n" +
-                        "}\n" +
-                        "\n" +
-                        "private ASTNode lastNode(final AST ast) {\n" +
-                        "   final ASTNode lastNode = ast.moveCursor(ASTCursor.Movement.TO_LAST_ADDED_NODE).onCursor().asNode();\n" +
-                        "   ast.moveCursor(ASTCursor.Movement.TO_PARENT);\n" +
-                        "   return lastNode;\n" +
                         "}\n"
                 );
 
@@ -91,11 +79,11 @@ public class TdfParserModule extends ParserAbstractModule {
 
         prod("terminal_description")
                 .is(
-                        t("TERMINAL_TAG", "terminals.push(new TerminalConstructor(lexerModule.tokenize(token.getValue())));"),
-                        t("STRING", "terminals.peek().setPattern(stringProcessor.process(token.getValue()));"),
+                        t("TERMINAL_TAG", "letters.push(new LetterConstructor(lexerModule.tokenize(token.getValue())));"),
+                        t("STRING", "letters.peek().setPattern(stringProcessor.process(token.getValue()));"),
                         optional(nt("terminal_parameters")),
                         inline(
-                                "terminals.pop().construct();\n"
+                                "letters.pop().construct();\n"
                         )
                 );
 
@@ -120,14 +108,14 @@ public class TdfParserModule extends ParserAbstractModule {
                 .is(
                         t("TERMINAL_PARAMETER_PRIORITY"),
                         t("COLON"),
-                        t("INTEGER", "terminals.peek().setPriority(token.getValue());")
+                        t("INTEGER", "letters.peek().setPriority(token.getValue());")
                 );
 
         prod("terminal_parameter_hidden")
                 .is(
                         t("TERMINAL_PARAMETER_HIDDEN"),
                         t("COLON"),
-                        t("BOOLEAN", "terminals.peek().setHidden(token.getValue());")
+                        t("BOOLEAN", "letters.peek().setHidden(token.getValue());")
                 );
 
         prod("terminal_parameter_pattern_flag")
@@ -151,7 +139,7 @@ public class TdfParserModule extends ParserAbstractModule {
                                 t("TERMINAL_PARAMETER_PATTERN_FLAG_VALUE_UNICODE_CHARACTER_CLASS")
                         ),
                         inline(
-                                "terminals.peek().addFlag(lastValue(ast));\n"
+                                "letters.peek().addFlag(ast.getLastLeaf().getToken().getValue());\n"
                         ),
                         optional(t("OP_SUM"), nt("pattern_flags"))
                 );
@@ -178,7 +166,7 @@ public class TdfParserModule extends ParserAbstractModule {
         prod("env_code")
                 .is(
                         t("KEY_CODE"),
-                        t("STRING", "environments.peek().setCode(stringProcessor.process(token.getValue()));\n")
+                        t("STRING", "environments.peek().setCode(stringProcessor.process(token.getValue()));")
                 );
 
         prod("syntax")

@@ -26,15 +26,15 @@ public interface AST {
 
     AST addNode(final String tag);
 
-    @Nullable
-    ASTNode lastNode();
-
     AST addLeaf(final ASTLeaf leaf);
 
     AST addLeaf(final Token token);
 
     @Nullable
-    ASTLeaf lastLeaf();
+    ASTNode getLastNode();
+
+    @Nullable
+    ASTLeaf getLastLeaf();
 
     ASTRoot getRoot();
 

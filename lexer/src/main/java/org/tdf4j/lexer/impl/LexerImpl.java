@@ -15,8 +15,8 @@
  */
 package org.tdf4j.lexer.impl;
 
+import org.tdf4j.core.model.Letter;
 import org.tdf4j.core.model.Stream;
-import org.tdf4j.core.model.ebnf.Terminal;
 import org.tdf4j.core.model.Token;
 import org.tdf4j.lexer.SymbolListener;
 import org.tdf4j.lexer.UnexpectedSymbolException;
@@ -30,11 +30,11 @@ import java.util.regex.Matcher;
 import java.util.stream.Collectors;
 
 public class LexerImpl implements Lexer {
-    private final List<Terminal> terminals;
+    private final List<Letter> letters;
     private final SymbolListener listener;
 
     public LexerImpl(final LexerAbstractModule config, final SymbolListener listener) {
-        this.terminals = config.getTerminals();
+        this.letters = config.getAlphabet().getLetters();
         this.listener = listener;
     }
 
@@ -60,12 +60,12 @@ public class LexerImpl implements Lexer {
         final StringBuilder buffer = new StringBuilder();
         while(in.length() != 0) {
             buffer.append(in.charAt(buffer.length()));
-            if(!anyTerminalHitEnd(buffer) || buffer.length() == in.length()) {
+            if(!anyLetterHitEnd(buffer) || buffer.length() == in.length()) {
                 removeLast(buffer, in);
-                final Terminal terminal = tryToSpecifyTerminal(buffer);
-                if(terminal != null) {
-                    final Token token = tokenFrom(terminal, buffer, in);
-                    return terminal.hidden() ? nextToken(in) : token;
+                final Letter letter = tryToSpecifyLetter(buffer);
+                if(letter != null) {
+                    final Token token = tokenFrom(letter, buffer, in);
+                    return letter.hidden() ? nextToken(in) : token;
                 } else {
                     throw exception(buffer, in);
                 }
@@ -74,9 +74,9 @@ public class LexerImpl implements Lexer {
         return null;
     }
 
-    private Token tokenFrom(final Terminal terminal, final StringBuilder buffer, final StringBuilder in) {
+    private Token tokenFrom(final Letter letter, final StringBuilder buffer, final StringBuilder in) {
         final Token token = new Token.Builder()
-                .setTag(terminal.getTag())
+                .setTag(letter.getTag())
                 .setValue(buffer.toString())
                 .setRow(listener.line())
                 .setColumn(listener.column())
@@ -99,14 +99,14 @@ public class LexerImpl implements Lexer {
     private void removeLast(final StringBuilder buffer, final StringBuilder in) {
         if(buffer.length() != in.length()) {
             buffer.deleteCharAt(buffer.length() - 1);
-        } else if(tryToSpecifyTerminal(buffer) == null) {
+        } else if(tryToSpecifyLetter(buffer) == null) {
             buffer.deleteCharAt(buffer.length() - 1);
         }
     }
 
-    private boolean anyTerminalHitEnd(final StringBuilder buffer) {
-        for(final Terminal terminal : terminals) {
-            final Matcher matcher = terminal.getPattern().matcher(buffer);
+    private boolean anyLetterHitEnd(final StringBuilder buffer) {
+        for(final Letter letter : letters) {
+            final Matcher matcher = letter.getPattern().matcher(buffer);
             if(matcher.matches() || matcher.hitEnd()) {
                 return true;
             }
@@ -115,13 +115,13 @@ public class LexerImpl implements Lexer {
     }
 
     @Nullable
-    private Terminal tryToSpecifyTerminal(final StringBuilder buffer) {
-        final List<Terminal> terminals = this.terminals.stream()
+    private Letter tryToSpecifyLetter(final StringBuilder buffer) {
+        final List<Letter> letters = this.letters.stream()
                 .filter(terminal -> terminal.getPattern().matcher(buffer).matches())
-                .sorted(Comparator.comparingLong(Terminal::priority))
+                .sorted(Comparator.comparingLong(Letter::priority))
                 .collect(Collectors.toList());
-        return terminals.size() > 0
-                ? terminals.get(terminals.size() - 1)
+        return letters.size() > 0
+                ? letters.get(letters.size() - 1)
                 : null;
     }
 }

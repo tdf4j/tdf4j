@@ -15,8 +15,8 @@
  */
 package org.tdf4j.core.module;
 
-import org.tdf4j.core.model.ebnf.Terminal;
+import org.tdf4j.core.model.Letter;
 
 public interface LexerBindMethods {
-    Terminal.Builder tokenize(final String tag);
+    Letter.Builder tokenize(final String tag);
 }

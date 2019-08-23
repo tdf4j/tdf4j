@@ -35,7 +35,7 @@ public class FirstSetCollector {
         return new First.Builder().setSet(context.getSet()).build();
     }
 
-    private List<Terminal.Tag> firstOf(final Context context, @Nullable final Production production) {
+    private List<Terminal> firstOf(final Context context, @Nullable final Production production) {
         if(production == null) {
             return Collections.emptyList();
         }
@@ -50,7 +50,7 @@ public class FirstSetCollector {
         return new ArrayList<>(context.getSet().get(production.getIdentifier()));
     }
 
-    private List<Terminal.Tag> firstOf(final Context context, final NonTerminal currentNT, @Nullable final Element element) {
+    private List<Terminal> firstOf(final Context context, final NonTerminal currentNT, @Nullable final Element element) {
         if(element == null || element.kind() == null) {
             return Collections.emptyList();
         }
@@ -85,9 +85,9 @@ public class FirstSetCollector {
                 return firstOf(context, currentNT, firstElement(Collections.singletonList(element.asRepetition().getElement())));
             }
 
-            case TERMINAL_TAG: {
+            case TERMINAL: {
                 return new ArrayList<>() {{
-                    add(element.asTerminalTag());
+                    add(element.asTerminal());
                 }};
             }
 
@@ -120,14 +120,14 @@ public class FirstSetCollector {
 
     static class Context {
         private final List<Production> productions;
-        private final Map<NonTerminal, Set<Terminal.Tag>> set;
+        private final Map<NonTerminal, Set<Terminal>> set;
 
         Context(final List<Production> productions) {
             this.productions = productions;
             this.set = new HashMap<>();
         }
 
-        Map<NonTerminal, Set<Terminal.Tag>> getSet() {
+        Map<NonTerminal, Set<Terminal>> getSet() {
             return set;
         }
 

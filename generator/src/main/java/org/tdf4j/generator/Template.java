@@ -33,7 +33,7 @@ public enum Template {
         stGroup.registerModelAdaptor(Repeat.class, new RepeatAdaptor());
         stGroup.registerModelAdaptor(Repetition.class, new RepetitionAdaptor());
         stGroup.registerModelAdaptor(NonTerminal.class, new NonTerminalAdaptor());
-        stGroup.registerModelAdaptor(Terminal.Tag.class, new TerminalAdaptor());
+        stGroup.registerModelAdaptor(Terminal.class, new TerminalAdaptor());
         stGroup.registerModelAdaptor(Group.class, new GroupAdaptor());
         stGroup.registerModelAdaptor(InlineAction.class, new InlineActionAdaptor());
         stGroup.registerModelAdaptor(Or.class, new OrAdaptor());

@@ -26,7 +26,7 @@ import java.util.Set;
 public abstract class Follow {
 
     @Value.Default
-    public Map<Production, Set<Terminal.Tag>> getSet() {
+    public Map<Production, Set<Terminal>> getSet() {
         return new HashMap<>();
     }
 

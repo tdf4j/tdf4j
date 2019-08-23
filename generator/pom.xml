@@ -24,11 +24,6 @@
       <artifactId>lexer</artifactId>
       <version>${tdf.version}</version>
     </dependency>
-    <dependency>
-      <groupId>org.tdf4j</groupId>
-      <artifactId>validator</artifactId>
-      <version>${tdf.version}</version>
-    </dependency>
     <!-- https://mvnrepository.com/artifact/org.antlr/stringtemplate -->
     <dependency>
       <groupId>org.antlr</groupId>

@@ -73,7 +73,7 @@ ele_group(codeBlocks, hash) ::= <<
 >>
 
 non_terminal(nonTerminal) ::= <<
-ast.addNode("<nonTerminal>").moveCursor(ASTCursor.Movement.TO_LAST_ADDED_NODE);
+ast.addNode("<nonTerminal>").moveCursor(ASTCursor.Movement.TO_LAST_NODE_CHILD);
 <nonTerminal>();
 ast.moveCursor(ASTCursor.Movement.TO_PARENT);
 >>

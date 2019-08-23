@@ -41,9 +41,9 @@ public interface ParserBindMethods {
 
     Or or(final Element ... alternatives);
 
-    Terminal.Tag t(final String tag);
+    Terminal t(final String tag);
 
-    Terminal.Tag t(final String tag, final String tokenAction);
+    Terminal t(final String tag, final String tokenAction);
 
     NonTerminal nt(final String identifier);
 

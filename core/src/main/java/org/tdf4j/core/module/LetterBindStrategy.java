@@ -15,17 +15,18 @@
  */
 package org.tdf4j.core.module;
 
-import org.tdf4j.core.model.ebnf.ImmutableTerminal;
-import org.tdf4j.core.model.ebnf.Terminal;
+import org.tdf4j.core.model.Alphabet;
+import org.tdf4j.core.model.ImmutableLetter;
+import org.tdf4j.core.model.Letter;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class TerminalBindStrategy implements BindStrategy<String, Terminal.Builder, List<Terminal>> {
-    private final Map<String, Terminal.Builder> builders = new HashMap<>();
+public class LetterBindStrategy implements BindStrategy<String, Letter.Builder, Alphabet> {
+    private final Map<String, Letter.Builder> builders = new HashMap<>();
 
     @Override
-    public Terminal.Builder bind(final String key) {
+    public Letter.Builder bind(final String key) {
         //noinspection ConstantConditions
         if(key == null || key.trim().equals("")) {
             throw new RuntimeException("Tag can't be null or blank");
@@ -33,12 +34,14 @@ public class TerminalBindStrategy implements BindStrategy<String, Terminal.Build
         if(builders.containsKey(key)) {
             throw new RuntimeException("Key " + key + " already bind");
         }
-        builders.put(key, new Terminal.Builder().tag(key));
+        builders.put(key, new Letter.Builder().tag(key));
         return builders.get(key);
     }
 
     @Override
-    public List<Terminal> build() {
-        return builders.values().stream().map(ImmutableTerminal.Builder::build).collect(Collectors.toList());
+    public Alphabet build() {
+        return new Alphabet.Builder().addAllLetters(
+                builders.values().stream().map(ImmutableLetter.Builder::build).collect(Collectors.toList())
+        ).build();
     }
 }

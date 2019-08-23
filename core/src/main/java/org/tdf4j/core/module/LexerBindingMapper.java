@@ -15,15 +15,14 @@
  */
 package org.tdf4j.core.module;
 
-import org.tdf4j.core.model.ebnf.Terminal;
-
-import java.util.List;
+import org.tdf4j.core.model.Alphabet;
+import org.tdf4j.core.model.Letter;
 
 public abstract class LexerBindingMapper implements LexerBindMethods {
-    final BindStrategy<String, Terminal.Builder, List<Terminal>> terminalBindStrategy = new TerminalBindStrategy();
+    final BindStrategy<String, Letter.Builder, Alphabet> letterBindStrategy = new LetterBindStrategy();
 
     @Override
-    public Terminal.Builder tokenize(String tag) {
-        return terminalBindStrategy.bind(tag);
+    public Letter.Builder tokenize(String tag) {
+        return letterBindStrategy.bind(tag);
     }
 }

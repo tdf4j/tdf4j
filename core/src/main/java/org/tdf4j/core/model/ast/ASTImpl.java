@@ -20,6 +20,8 @@ import org.tdf4j.core.model.Token;
 import javax.annotation.Nullable;
 import java.util.function.Consumer;
 
+import static org.tdf4j.core.model.ast.ASTCursor.Movement.*;
+
 class ASTImpl implements AST {
     private final ASTRoot root;
     private final ASTCursor cursor;
@@ -44,15 +46,6 @@ class ASTImpl implements AST {
     }
 
     @Override
-    @Nullable
-    public ASTNode lastNode() {
-        final ASTElement element = this.moveCursor(ASTCursor.Movement.TO_LAST_ADDED_NODE).onCursor();
-        return element != null && element.isNode()
-                ? element.asNode()
-                : null;
-    }
-
-    @Override
     public AST addLeaf(final Token token) {
         return addLeaf(ModifiableASTLeaf.create()
                 .setToken(token)
@@ -66,10 +59,31 @@ class ASTImpl implements AST {
         return this;
     }
 
+    private void addChild(final ASTCursor cursor, final ASTElement element) {
+        if(cursor.isNode()) {
+            cursor.asNode().getChildren().add(element);
+        } else if(cursor.isRoot()) {
+            cursor.asRoot().getChildren().add(element);
+        }
+    }
+
     @Override
     @Nullable
-    public ASTLeaf lastLeaf() {
-        final ASTElement element = this.moveCursor(ASTCursor.Movement.TO_LAST_ADDED_NODE).onCursor();
+    public ASTNode getLastNode() {
+        moveCursor(TO_LAST_NODE_CHILD);
+        final ASTElement element = onCursor();
+        moveCursor(TO_PARENT);
+        return element != null && element.isNode()
+                ? element.asNode()
+                : null;
+    }
+
+    @Override
+    @Nullable
+    public ASTLeaf getLastLeaf() {
+        moveCursor(TO_LAST_LEAF_CHILD);
+        final ASTElement element = onCursor();
+        moveCursor(TO_PARENT);
         return element != null && element.isLeaf()
                 ? element.asLeaf()
                 : null;
@@ -85,14 +99,6 @@ class ASTImpl implements AST {
     public ASTImpl moveCursor(final ASTCursor.Movement movement) {
         movement.accept(cursor);
         return this;
-    }
-
-    private void addChild(final ASTCursor cursor, final ASTElement element) {
-        if(cursor.isNode()) {
-            cursor.asNode().getChildren().add(element);
-        } else if(cursor.isRoot()) {
-            cursor.asRoot().getChildren().add(element);
-        }
     }
 
     @Override

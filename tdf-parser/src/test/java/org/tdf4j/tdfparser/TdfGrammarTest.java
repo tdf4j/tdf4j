@@ -29,7 +29,7 @@ public class TdfGrammarTest extends FullGrammarTest {
     @Before
     public void before() {
         final Interpreter interpreter = generate("TdfGrammar.tdf");
-        System.out.println(interpreter.getLexerModule().build().getTerminals());
+        System.out.println(interpreter.getLexerModule().build().getAlphabet());
         System.out.println(interpreter.getParserModule().build().getGrammar());
 
         final TdfParser tempParser = (TdfParser) new ParserGenerator(new ParserOptions.Builder()
@@ -44,7 +44,7 @@ public class TdfGrammarTest extends FullGrammarTest {
                 .build()
         ).generate();
         System.out.println(tempParser.parse(tempLexer.stream(load("FullGrammarTest.tdf"))));
-        System.out.println(tempParser.getLexerModule().build().getTerminals());
+        System.out.println(tempParser.getLexerModule().build().getAlphabet());
         System.out.println(tempParser.getParserModule().build().getGrammar());
 
         this.parser = new ParserGenerator(new ParserOptions.Builder()

@@ -19,7 +19,7 @@ import org.tdf4j.core.model.ast.ASTNode;
 import org.tdf4j.core.model.ebnf.Terminal;
 import org.tdf4j.tdfparser.processor.StringProcessor;
 
-public class EbnfTerminalBuilder extends AbstractEbnfElementBuilder<Terminal.Tag> {
+public class EbnfTerminalBuilder extends AbstractEbnfElementBuilder<Terminal> {
     private final StringProcessor stringProcessor = new StringProcessor();
 
     EbnfTerminalBuilder(final BuilderMapper mapper) {
@@ -27,8 +27,8 @@ public class EbnfTerminalBuilder extends AbstractEbnfElementBuilder<Terminal.Tag
     }
 
     @Override
-    public Terminal.Tag build(final ASTNode tree) {
-        return new Terminal.Tag.Builder()
+    public Terminal build(final ASTNode tree) {
+        return new Terminal.Builder()
                 .setValue(tree.getChildren().get(0).asLeaf().getToken().getValue())
                 .setTokenAction(tree.getChildren().size() > 1
                         ? stringProcessor.process(tree.getChildren().get(2).asLeaf().getToken().getValue())

@@ -53,8 +53,8 @@ public final class Elements {
                         ? Collections.emptyList()
                         : getStartElements(firstNotInlineElement(element.asOptional().getElements()));
 
-            case TERMINAL_TAG:
-                return new ArrayList<>() {{add(element.asTerminalTag().getValue());}};
+            case TERMINAL:
+                return new ArrayList<>() {{add(element.asTerminal().getValue());}};
 
             case NON_TERMINAL:
                 return new ArrayList<>() {{add(element.asNonTerminal().getValue());}};

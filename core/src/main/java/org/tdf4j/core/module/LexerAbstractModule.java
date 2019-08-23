@@ -15,21 +15,20 @@
  */
 package org.tdf4j.core.module;
 
+import org.tdf4j.core.model.Alphabet;
 import org.tdf4j.core.model.ebnf.Terminal;
+
+import javax.annotation.Nullable;
 import java.util.*;
 
 public abstract class LexerAbstractModule extends LexerBindingMapper implements Module {
-    private final List<Terminal> terminals;
+    private Alphabet alphabet;
     private boolean built = false;
-
-    public LexerAbstractModule() {
-        terminals = new ArrayList<>();
-    }
 
     public LexerAbstractModule build() {
         if(!isBuilt()) {
             this.configure();
-            this.terminals.addAll(terminalBindStrategy.build());
+            this.alphabet = letterBindStrategy.build();
             built = true;
         }
         return this;
@@ -37,8 +36,9 @@ public abstract class LexerAbstractModule extends LexerBindingMapper implements 
 
     protected abstract void configure();
 
-    public List<Terminal> getTerminals() {
-        return Collections.unmodifiableList(terminals);
+    @Nullable
+    public Alphabet getAlphabet() {
+        return alphabet;
     }
 
     public boolean isBuilt() {
