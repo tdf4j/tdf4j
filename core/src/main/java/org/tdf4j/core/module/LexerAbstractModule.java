@@ -16,17 +16,15 @@
 package org.tdf4j.core.module;
 
 import org.tdf4j.core.model.Alphabet;
-import org.tdf4j.core.model.ebnf.Terminal;
 
-import javax.annotation.Nullable;
-import java.util.*;
+import javax.annotation.Nonnull;
 
 public abstract class LexerAbstractModule extends LexerBindingMapper implements Module {
     private Alphabet alphabet;
     private boolean built = false;
 
     public LexerAbstractModule build() {
-        if(!isBuilt()) {
+        if(!built) {
             this.configure();
             this.alphabet = letterBindStrategy.build();
             built = true;
@@ -36,12 +34,12 @@ public abstract class LexerAbstractModule extends LexerBindingMapper implements 
 
     protected abstract void configure();
 
-    @Nullable
+    @Nonnull
     public Alphabet getAlphabet() {
+        if (!built) {
+            throw new IllegalStateException("Module isn't built");
+        }
         return alphabet;
     }
 
-    public boolean isBuilt() {
-        return built;
-    }
 }

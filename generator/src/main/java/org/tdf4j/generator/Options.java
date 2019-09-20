@@ -16,6 +16,7 @@
 
 package org.tdf4j.generator;
 
+import org.tdf4j.core.module.LexerAbstractModule;
 import org.tdf4j.core.module.ParserAbstractModule;
 import org.tdf4j.parser.Parser;
 import org.immutables.value.Value;
@@ -23,13 +24,15 @@ import org.immutables.value.Value;
 import javax.annotation.Nullable;
 
 @Value.Immutable
-public interface ParserOptions {
+public interface Options {
 
     String getClassName();
 
     String getPackage();
 
-    ParserAbstractModule getModule();
+    LexerAbstractModule getLexerModule();
+
+    ParserAbstractModule getParserModule();
 
     @Value.Default
     default Class<? extends Parser> getInterface() {
@@ -42,6 +45,6 @@ public interface ParserOptions {
         return null;
     }
 
-    class Builder extends ImmutableParserOptions.Builder {
+    class Builder extends ImmutableOptions.Builder {
     }
 }

@@ -48,7 +48,7 @@ public class MetaInformationTest extends ParserTest {
             }
         });
         final String[] imports = parser.meta().getImports();
-        assertEquals(9, imports.length);
+        assertEquals(10, imports.length);
         for (int i = 0; i < Imports.values().length; i++) {
             assertEquals(Imports.values()[i].getValue(), imports[i]);
         }
@@ -95,15 +95,17 @@ public class MetaInformationTest extends ParserTest {
 
     @Test
     public void class_name() {
-        final Parser parser = new ParserGenerator(new ParserOptions.Builder()
+        final Parser parser = new ParserGenerator(new Options.Builder()
                 .setPackage("org.tdf4j.generator")
                 .setClassName("MetaInfTestParser")
-                .setModule(new ParserAbstractModule() {
+                .setParserModule(new ParserAbstractModule() {
                     @Override
                     public void configure() {
                         prod("prod1").is(t("A"));
                     }
-                }).build()).generate();
+                })
+                .setLexerModule(lexerModule)
+                .build()).generate();
         assertEquals("MetaInfTestParser", parser.meta().getClassName());
     }
 

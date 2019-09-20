@@ -16,8 +16,6 @@
 
 package org.tdf4j.lexer;
 
-import org.tdf4j.lexer.impl.LexerImpl;
-import org.tdf4j.lexer.impl.SymbolListenerImpl;
 import org.tdf4j.core.module.LexerAbstractModule;
 import org.junit.Test;
 
@@ -33,7 +31,7 @@ public class SymbolPositionTrackingTest {
             public void configure() {
             }
         }.build(), new SymbolListenerImpl());
-        assertThrows(() -> lexer.analyze("A\nB\nC"), UnexpectedSymbolException.class, unexpectedSymbol('A', 1, 1));
+        assertThrows(() -> lexer.analyze("A\nB\nC").toList(), UnexpectedSymbolException.class, unexpectedSymbol('A', 1, 1));
     }
 
     @Test
@@ -46,7 +44,7 @@ public class SymbolPositionTrackingTest {
                 tokenize("ws").pattern("\\s|\\n|\\r").hidden(true);
             }
         }.build(), new SymbolListenerImpl());
-        assertThrows(() -> lexer.analyze("ABC\nA\nB"), UnexpectedSymbolException.class, unexpectedSymbol('C', 1, 3));
+        assertThrows(() -> lexer.analyze("ABC\nA\nB").toList(), UnexpectedSymbolException.class, unexpectedSymbol('C', 1, 3));
     }
 
     @Test
@@ -59,7 +57,7 @@ public class SymbolPositionTrackingTest {
                 tokenize("ws").pattern("\\s|\\n|\\r").hidden(true);
             }
         }.build(), new SymbolListenerImpl());
-        assertThrows(() -> lexer.analyze("A \n B \n C"), UnexpectedSymbolException.class, unexpectedSymbol('C', 3, 2));
+        assertThrows(() -> lexer.analyze("A \n B \n C").toList(), UnexpectedSymbolException.class, unexpectedSymbol('C', 3, 2));
     }
 
     @Test
@@ -72,7 +70,7 @@ public class SymbolPositionTrackingTest {
                 tokenize("ws").pattern("\\s|\\n|\\r").hidden(true);
             }
         }.build(), new SymbolListenerImpl());
-        assertThrows(() -> lexer.analyze("AA\n BBBA \n ABC"), UnexpectedSymbolException.class, unexpectedSymbol('C', 3, 4));
+        assertThrows(() -> lexer.analyze("AA\n BBBA \n ABC").toList(), UnexpectedSymbolException.class, unexpectedSymbol('C', 3, 4));
     }
 
     @Test
@@ -85,7 +83,7 @@ public class SymbolPositionTrackingTest {
                 tokenize("ws").pattern("\\s|\\n|\\r").hidden(true);
             }
         }.build(), new SymbolListenerImpl());
-        assertThrows(() -> lexer.analyze("AA \nBBABCA\n ABC"), UnexpectedSymbolException.class, unexpectedSymbol('C', 2, 5));
+        assertThrows(() -> lexer.analyze("AA \nBBABCA\n ABC").toList(), UnexpectedSymbolException.class, unexpectedSymbol('C', 2, 5));
     }
 
     private static void assertThrows(final Callback callback, final Class<? extends Throwable> ex, final String message) {

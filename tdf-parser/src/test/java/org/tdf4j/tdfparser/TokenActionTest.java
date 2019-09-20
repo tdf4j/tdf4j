@@ -16,11 +16,8 @@
 
 package org.tdf4j.tdfparser;
 
-import org.tdf4j.generator.LexerOptions;
-import org.tdf4j.generator.ParserOptions;
-import org.tdf4j.generator.impl.LexerGenerator;
+import org.tdf4j.generator.Options;
 import org.tdf4j.generator.impl.ParserGenerator;
-import org.tdf4j.lexer.Lexer;
 import org.tdf4j.parser.Parser;
 import org.junit.Test;
 
@@ -35,17 +32,14 @@ public class TokenActionTest extends TdfParserTest {
     @Test
     public void test() {
         final Interpreter interpreter = generate("TokenActionTest.tdf");
-        final Lexer lexer = new LexerGenerator(new LexerOptions.Builder()
-                .setModule(interpreter.getLexerModule())
-                .build()
-        ).generate();
-        final Parser parser = new ParserGenerator(new ParserOptions.Builder()
+        final Parser parser = new ParserGenerator(new Options.Builder()
                 .setPackage("org.tdf4j.tdfparser")
                 .setClassName("TokenActionTest_parser")
-                .setModule(interpreter.getParserModule())
+                .setParserModule(interpreter.getParserModule())
+                .setLexerModule(interpreter.getLexerModule())
                 .build()
         ).generate();
-        assertNotNull(parser.parse(lexer.stream("ABC")));
+        assertNotNull(parser.parse("ABC"));
         assertEquals(2, tokens.size());
         assertEquals("A", tokens.get(0));
         assertEquals("C", tokens.get(1));

@@ -17,8 +17,6 @@
 package org.tdf4j.lexer;
 
 import org.tdf4j.core.model.Token;
-import org.tdf4j.lexer.impl.LexerImpl;
-import org.tdf4j.lexer.impl.SymbolListenerImpl;
 import org.tdf4j.core.module.LexerAbstractModule;
 import org.junit.Test;
 
@@ -36,7 +34,7 @@ public class HiddenTerminalsTest {
                 tokenize("ws").pattern("\\s|\\n|\\r").hidden(true);
             }
         }.build(), new SymbolListenerImpl());
-        assertEquals(0, lexer.analyze("   \n  \r \n\r  \r\n").size());
+        assertEquals(0, lexer.analyze("   \n  \r \n\r  \r\n").toList().size());
     }
 
     @Test
@@ -48,7 +46,7 @@ public class HiddenTerminalsTest {
                 tokenize("VAR").pattern("[A-Z]+");
             }
         }.build(), new SymbolListenerImpl());
-        final List<Token> tokens = lexer.analyze("//comment\nA//comment\rB//comment\r\nC");
+        final List<Token> tokens = lexer.analyze("//comment\nA//comment\rB//comment\r\nC").toList();
         assertEquals(3, tokens.size());
         assertEquals("A", tokens.get(0).getValue());
         assertEquals("B", tokens.get(1).getValue());
@@ -64,7 +62,7 @@ public class HiddenTerminalsTest {
                 tokenize("VAR").pattern("[A-Z]+");
             }
         }.build(), new SymbolListenerImpl());
-        final List<Token> tokens = lexer.analyze("/*comment\n\r\n\n*/A/*comment*/B/*\ncomment\n*/C");
+        final List<Token> tokens = lexer.analyze("/*comment\n\r\n\n*/A/*comment*/B/*\ncomment\n*/C").toList();
         assertEquals(3, tokens.size());
         assertEquals("A", tokens.get(0).getValue());
         assertEquals("B", tokens.get(1).getValue());

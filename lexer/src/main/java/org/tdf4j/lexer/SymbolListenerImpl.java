@@ -13,13 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.tdf4j.lexer.impl;
-
-import org.tdf4j.lexer.SymbolListener;
+package org.tdf4j.lexer;
 
 public class SymbolListenerImpl implements SymbolListener {
     private int column = 0;
     private int line = 1;
+
+    SymbolListenerImpl() {
+        //package-private
+    }
 
     @Override
     public void listen(char ch) {

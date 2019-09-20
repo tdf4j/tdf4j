@@ -19,6 +19,7 @@
 package org.tdf4j.tdfparser.impl;
 
 import org.tdf4j.parser.*;
+import org.tdf4j.lexer.*;
 import org.tdf4j.core.model.*;
 import org.tdf4j.core.model.ast.*;
 import org.tdf4j.core.model.ebnf.*;
@@ -35,6 +36,7 @@ import org.tdf4j.tdfparser.processor.*;
 public class TdfParserImpl implements TdfParser {
     private final MetaInf meta;
     private final Predictor predictor;
+    private final Lexer lexer;
 
 
     private AST ast;
@@ -42,9 +44,11 @@ public class TdfParserImpl implements TdfParser {
 
     public TdfParserImpl(
         final MetaInf meta,
+        final Lexer lexer,
         final Predictor predictor
     ) {
         this.meta = meta;
+        this.lexer = lexer;
         this.predictor = predictor;
     }
 
@@ -67,16 +71,11 @@ public class TdfParserImpl implements TdfParser {
 
 
     @Override
-    public AST parse(final Stream<Token> tokens) {
-        this.stream = new BufferedStream<>(tokens);
+    public AST parse(final CharSequence input) {
+        this.stream = new BufferedStream<>(lexer.analyze(input));
         this.ast = AST.create("tdf_lang");
         tdf_lang();
         return ast;
-    }
-
-    @Override
-    public AST parse(final List<Token> tokens) {
-        return parse(Stream.of(tokens));
     }
 
     @Override

@@ -18,6 +18,7 @@ package org.tdf4j.core.model;
 import org.immutables.value.Value;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -64,5 +65,11 @@ public interface Stream<T> {
     }
 
     class Builder<T> extends ImmutableStream.Builder<T> {
+    }
+
+    default List<T> toList() {
+        final List<T> list = new ArrayList<>();
+        forEach(list::add);
+        return list;
     }
 }

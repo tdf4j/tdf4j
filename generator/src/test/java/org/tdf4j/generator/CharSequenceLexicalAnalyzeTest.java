@@ -16,7 +16,6 @@
 
 package org.tdf4j.generator;
 
-import org.tdf4j.generator.impl.LexerGenerator;
 import org.tdf4j.lexer.Lexer;
 import org.tdf4j.core.model.Stream;
 import org.tdf4j.core.model.Token;
@@ -28,21 +27,21 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 public class CharSequenceLexicalAnalyzeTest {
-    private final Lexer lexer = new LexerGenerator(new LexerOptions.Builder().setModule(new LexerAbstractModule() {
+    private final Lexer lexer = Lexer.get(new LexerAbstractModule() {
         @Override
         protected void configure() {
             tokenize("A").pattern("A");
             tokenize("B").pattern("B");
             tokenize("C").pattern("C");
         }
-    }).build()).generate();
+    });
 
 
     @Test
     public void from_string() {
         //analyze
         {
-            final List<Token> tokens = lexer.analyze("ABC");
+            final List<Token> tokens = lexer.analyze("ABC").toList();
             assertEquals(3, tokens.size());
             assertEquals("A", tokens.get(0).getTag().getValue());
             assertEquals("A", tokens.get(0).getValue());
@@ -54,7 +53,7 @@ public class CharSequenceLexicalAnalyzeTest {
 
         //stream
         {
-            final Stream<Token> tokens = lexer.stream("ABC");
+            final Stream<Token> tokens = lexer.analyze("ABC");
             assertEquals("A", tokens.next().getValue());
             assertEquals("B", tokens.next().getValue());
             assertEquals("C", tokens.next().getValue());
@@ -65,7 +64,7 @@ public class CharSequenceLexicalAnalyzeTest {
     public void from_string_builder() {
         //analyze
         {
-            final List<Token> tokens = lexer.analyze(new StringBuilder("ABC"));
+            final List<Token> tokens = lexer.analyze(new StringBuilder("ABC")).toList();
             assertEquals(3, tokens.size());
             assertEquals("A", tokens.get(0).getTag().getValue());
             assertEquals("A", tokens.get(0).getValue());
@@ -77,7 +76,7 @@ public class CharSequenceLexicalAnalyzeTest {
 
         //stream
         {
-            final Stream<Token> tokens = lexer.stream(new StringBuilder("ABC"));
+            final Stream<Token> tokens = lexer.analyze(new StringBuilder("ABC"));
             assertEquals("A", tokens.next().getValue());
             assertEquals("B", tokens.next().getValue());
             assertEquals("C", tokens.next().getValue());
@@ -88,7 +87,7 @@ public class CharSequenceLexicalAnalyzeTest {
     public void from_string_buffer() {
         //analyze
         {
-            final List<Token> tokens = lexer.analyze(new StringBuffer("ABC"));
+            final List<Token> tokens = lexer.analyze(new StringBuffer("ABC")).toList();
             assertEquals(3, tokens.size());
             assertEquals("A", tokens.get(0).getTag().getValue());
             assertEquals("A", tokens.get(0).getValue());
@@ -100,7 +99,7 @@ public class CharSequenceLexicalAnalyzeTest {
 
         //stream
         {
-            final Stream<Token> tokens = lexer.stream(new StringBuffer("ABC"));
+            final Stream<Token> tokens = lexer.analyze(new StringBuffer("ABC"));
             assertEquals("A", tokens.next().getValue());
             assertEquals("B", tokens.next().getValue());
             assertEquals("C", tokens.next().getValue());

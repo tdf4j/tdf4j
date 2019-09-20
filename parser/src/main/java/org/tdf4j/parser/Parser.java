@@ -15,16 +15,12 @@
  */
 package org.tdf4j.parser;
 
-import org.tdf4j.core.model.Stream;
-import org.tdf4j.core.model.Token;
 import org.tdf4j.core.model.ast.AST;
 
-import java.util.List;
-
 public interface Parser {
-    AST parse(final Stream<Token> tokens);
 
-    AST parse(final List<Token> tokens);
+    AST parse(final CharSequence input);
 
     MetaInf meta();
+
 }

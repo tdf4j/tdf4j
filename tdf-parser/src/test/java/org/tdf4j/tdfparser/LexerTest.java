@@ -16,8 +16,6 @@
 
 package org.tdf4j.tdfparser;
 
-import org.tdf4j.generator.LexerOptions;
-import org.tdf4j.generator.impl.LexerGenerator;
 import org.tdf4j.lexer.Lexer;
 import org.tdf4j.core.model.Token;
 import org.junit.Test;
@@ -27,10 +25,7 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 public class LexerTest {
-    private final Lexer lexer = new LexerGenerator(new LexerOptions.Builder()
-            .setModule(new TdfLexerModule())
-            .build()
-    ).generate();
+    private final Lexer lexer = Lexer.get(new TdfLexerModule());
 
     @Test
     public void eof() {
@@ -302,7 +297,7 @@ public class LexerTest {
     }
 
     private void assertLexerReturns(final String input, final Token... tokens) {
-        final List<Token> fromLexer = lexer.analyze(input);
+        final List<Token> fromLexer = lexer.analyze(input).toList();
         assertEquals(tokens.length, fromLexer.size());
         for (int i = 0; i < tokens.length; i++) {
             assertEquals(tokens[i].getTag().getValue(), fromLexer.get(i).getTag().getValue());

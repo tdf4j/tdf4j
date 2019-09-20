@@ -15,13 +15,14 @@
  */
 package org.tdf4j.generator.impl;
 
-import org.tdf4j.generator.ParserOptions;
+import org.tdf4j.generator.Options;
 import org.tdf4j.core.model.Dependency;
 import org.tdf4j.generator.Generator;
 import org.tdf4j.core.utils.Predictor;
 import org.tdf4j.generator.Imports;
 import org.tdf4j.generator.templates.ParserTemplate;
 import org.tdf4j.generator.MetaInfCollector;
+import org.tdf4j.lexer.Lexer;
 import org.tdf4j.parser.MetaInf;
 import org.tdf4j.parser.Parser;
 import org.joor.Reflect;
@@ -29,11 +30,11 @@ import org.joor.Reflect;
 
 public class ParserGenerator implements Generator<Parser> {
     private final MetaInfCollector metaInfCollector = new MetaInfCollector();
-    private final ParserOptions options;
+    private final Options options;
 
-    public ParserGenerator(final ParserOptions options) {
+    public ParserGenerator(final Options options) {
         this.options = options;
-        options.getModule().build();
+        options.getParserModule().build();
     }
 
     @Override
@@ -43,32 +44,34 @@ public class ParserGenerator implements Generator<Parser> {
                 parser.build()
         ).create(args(
                 metaInfCollector.collect(parser),
-                new Predictor(options.getModule().getGrammar().getFirstSet(), options.getModule().getGrammar().getFollowSet()),
-                options.getModule().getEnvironment().getDependencies()
+                Lexer.get(options.getLexerModule()),
+                new Predictor(options.getParserModule().getGrammar().getFirstSet(), options.getParserModule().getGrammar().getFollowSet()),
+                options.getParserModule().getEnvironment().getDependencies()
         )).get();
     }
 
-    private ParserTemplate build(final ParserOptions options) {
+    private ParserTemplate build(final Options options) {
         final ParserTemplate.Builder parserBuilder = new ParserTemplate.Builder()
                 .setClassName(options.getClassName())
                 .setPackage(options.getPackage())
-                .setEnvironment(options.getModule().getEnvironment())
+                .setEnvironment(options.getParserModule().getEnvironment())
                 .setImports(imports(options.getInterface().getCanonicalName()))
                 .setInterface(options.getInterface().getSimpleName())
                 .setExtension(options.getExtension() != null ? options.getExtension().getCanonicalName() : null);
-        if(options.getModule().getGrammar().getAxiom() == null) {
+        if(options.getParserModule().getGrammar().getAxiom() == null) {
             throw new RuntimeException("Initial production is null");
         }
-        parserBuilder.setGrammar(options.getModule().getGrammar());
+        parserBuilder.setGrammar(options.getParserModule().getGrammar());
         return parserBuilder.build();
     }
 
-    private Object[] args(final MetaInf meta, final Predictor predictor, final Dependency[] dependencies) {
-        final Object[] args = new Object[dependencies.length + 2];
+    private Object[] args(final MetaInf meta, final Lexer lexer, final Predictor predictor, final Dependency[] dependencies) {
+        final Object[] args = new Object[dependencies.length + 3];
         args[0] = meta;
-        args[1] = predictor;
+        args[1] = lexer;
+        args[2] = predictor;
         for (int i = 0; i < dependencies.length; i++) {
-            args[i + 2] = dependencies[i].instance();
+            args[i + 3] = dependencies[i].instance();
         }
         return args;
     }

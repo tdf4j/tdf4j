@@ -22,7 +22,7 @@ import org.stringtemplate.v4.STGroup;
 import org.stringtemplate.v4.STGroupFile;
 
 public enum Template {
-    JAVA(new STGroupFile("templates/java_1.2.stg"));
+    JAVA(new STGroupFile("templates/java_1.3.stg"));
 
     private final STGroup stGroup;
 

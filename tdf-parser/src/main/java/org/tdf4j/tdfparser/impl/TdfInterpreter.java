@@ -16,8 +16,6 @@
 
 package org.tdf4j.tdfparser.impl;
 
-import org.tdf4j.generator.LexerOptions;
-import org.tdf4j.generator.impl.LexerGenerator;
 import org.tdf4j.lexer.Lexer;
 import org.tdf4j.core.model.Grammar;
 import org.tdf4j.core.model.ast.AST;
@@ -34,13 +32,11 @@ import org.tdf4j.core.utils.Predictor;
 import javax.annotation.Nullable;
 
 public class TdfInterpreter implements Interpreter {
-    private final Lexer lexer;
     private final TdfParser parser;
 
     public TdfInterpreter() {
-        this.lexer = new LexerGenerator(new LexerOptions.Builder().setModule(new TdfLexerModule()).build()).generate();
         final Grammar grammar = new TdfParserModule().build().getGrammar();
-        this.parser = new TdfParserImpl(null, new Predictor(
+        this.parser = new TdfParserImpl(null, Lexer.get(new TdfLexerModule()), new Predictor(
                 new FirstSetCollector().collect(grammar.getProductions()),
                 new FollowSetCollector().collect(grammar.getProductions())
         ));
@@ -60,7 +56,7 @@ public class TdfInterpreter implements Interpreter {
 
     @Override
     public AST parse(final CharSequence input) {
-        return parser.parse(lexer.stream(input));
+        return parser.parse(input);
     }
 
 }

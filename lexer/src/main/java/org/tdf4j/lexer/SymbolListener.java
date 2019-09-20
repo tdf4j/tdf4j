@@ -16,6 +16,7 @@
 package org.tdf4j.lexer;
 
 public interface SymbolListener {
+
     void listen(final char ch);
 
     int line();
@@ -23,4 +24,9 @@ public interface SymbolListener {
     int column();
 
     void reset();
+
+    static SymbolListener getDefault() {
+        return new SymbolListenerImpl();
+    }
+
 }

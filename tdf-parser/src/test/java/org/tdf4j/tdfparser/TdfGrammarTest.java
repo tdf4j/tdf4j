@@ -16,11 +16,8 @@
 
 package org.tdf4j.tdfparser;
 
-import org.tdf4j.generator.LexerOptions;
-import org.tdf4j.generator.ParserOptions;
-import org.tdf4j.generator.impl.LexerGenerator;
+import org.tdf4j.generator.Options;
 import org.tdf4j.generator.impl.ParserGenerator;
-import org.tdf4j.lexer.Lexer;
 import org.junit.Before;
 
 public class TdfGrammarTest extends FullGrammarTest {
@@ -32,29 +29,23 @@ public class TdfGrammarTest extends FullGrammarTest {
         System.out.println(interpreter.getLexerModule().build().getAlphabet());
         System.out.println(interpreter.getParserModule().build().getGrammar());
 
-        final TdfParser tempParser = (TdfParser) new ParserGenerator(new ParserOptions.Builder()
+        final TdfParser tempParser = (TdfParser) new ParserGenerator(new Options.Builder()
                 .setPackage("org.tdf4j.tdfparser")
                 .setClassName("TdfGrammarTest_tempParser")
-                .setModule(interpreter.getParserModule())
+                .setParserModule(interpreter.getParserModule())
+                .setLexerModule(interpreter.getLexerModule())
                 .setInterface(TdfParser.class)
                 .build()
         ).generate();
-        final Lexer tempLexer = new LexerGenerator(new LexerOptions.Builder()
-                .setModule(interpreter.getLexerModule())
-                .build()
-        ).generate();
-        System.out.println(tempParser.parse(tempLexer.stream(load("FullGrammarTest.tdf"))));
+        System.out.println(tempParser.parse(load("FullGrammarTest.tdf")));
         System.out.println(tempParser.getLexerModule().build().getAlphabet());
         System.out.println(tempParser.getParserModule().build().getGrammar());
 
-        this.parser = new ParserGenerator(new ParserOptions.Builder()
+        this.parser = new ParserGenerator(new Options.Builder()
                 .setPackage("org.tdf4j.tdfparser")
                 .setClassName("TdfGrammarTest_parser")
-                .setModule(tempParser.getParserModule())
-                .build()
-        ).generate();
-        this.lexer = new LexerGenerator(new LexerOptions.Builder()
-                .setModule(tempParser.getLexerModule())
+                .setParserModule(tempParser.getParserModule())
+                .setLexerModule(tempParser.getLexerModule())
                 .build()
         ).generate();
     }

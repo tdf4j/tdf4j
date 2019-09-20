@@ -17,6 +17,7 @@ package org.tdf4j.generator;
 
 public enum Imports {
     PARSER("org.tdf4j.parser.*"),
+    LEXER("org.tdf4j.lexer.*"),
     MODEL("org.tdf4j.core.model.*"),
     MODEL_AST("org.tdf4j.core.model.ast.*"),
     MODEL_EBNF("org.tdf4j.core.model.ebnf.*"),

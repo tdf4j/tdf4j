@@ -13,14 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.tdf4j.lexer.impl;
+package org.tdf4j.lexer;
 
+import org.tdf4j.core.model.Alphabet;
 import org.tdf4j.core.model.Letter;
 import org.tdf4j.core.model.Stream;
 import org.tdf4j.core.model.Token;
-import org.tdf4j.lexer.SymbolListener;
-import org.tdf4j.lexer.UnexpectedSymbolException;
-import org.tdf4j.lexer.Lexer;
 import org.tdf4j.core.module.LexerAbstractModule;
 
 import javax.annotation.Nonnull;
@@ -30,26 +28,17 @@ import java.util.regex.Matcher;
 import java.util.stream.Collectors;
 
 public class LexerImpl implements Lexer {
-    private final List<Letter> letters;
+    private final Alphabet alphabet;
     private final SymbolListener listener;
 
-    public LexerImpl(final LexerAbstractModule config, final SymbolListener listener) {
-        this.letters = config.getAlphabet().getLetters();
+    LexerImpl(final LexerAbstractModule module, final SymbolListener listener) {
+        this.alphabet = module.build().getAlphabet();
         this.listener = listener;
     }
 
-    @Override
-    @Nonnull
-    public List<Token> analyze(final CharSequence input) {
-        final List<Token> tokens = new ArrayList<>();
-        final Stream<Token> stream = stream(input);
-        stream.forEach(tokens::add);
-        return tokens;
-    }
-
     @Nonnull
     @Override
-    public Stream<Token> stream(final CharSequence input) {
+    public Stream<Token> analyze(final CharSequence input) {
         listener.reset();
         final StringBuilder in = new StringBuilder(input);
         return new Stream.Builder<Token>().setGenerator(() -> nextToken(in)).build();
@@ -105,7 +94,7 @@ public class LexerImpl implements Lexer {
     }
 
     private boolean anyLetterHitEnd(final StringBuilder buffer) {
-        for(final Letter letter : letters) {
+        for(final Letter letter : alphabet.getLetters()) {
             final Matcher matcher = letter.getPattern().matcher(buffer);
             if(matcher.matches() || matcher.hitEnd()) {
                 return true;
@@ -116,7 +105,7 @@ public class LexerImpl implements Lexer {
 
     @Nullable
     private Letter tryToSpecifyLetter(final StringBuilder buffer) {
-        final List<Letter> letters = this.letters.stream()
+        final List<Letter> letters = this.alphabet.getLetters().stream()
                 .filter(terminal -> terminal.getPattern().matcher(buffer).matches())
                 .sorted(Comparator.comparingLong(Letter::priority))
                 .collect(Collectors.toList());

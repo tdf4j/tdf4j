@@ -31,10 +31,10 @@ public class ExtensionTest extends ParserTest {
 
     @Test
     public void test() {
-        final Parser parser = generate(new ParserOptions.Builder()
+        final Parser parser = generate(new Options.Builder()
                 .setPackage("org.tdf4j.generator")
                 .setClassName("ParserImpl_" + UUID.randomUUID().toString().replaceAll("-", ""))
-                .setModule(new ParserAbstractModule() {
+                .setParserModule(new ParserAbstractModule() {
                     @Override
                     protected void configure() {
                         prod("prod1")
@@ -43,9 +43,10 @@ public class ExtensionTest extends ParserTest {
                                 );
                     }
                 })
+                .setLexerModule(lexerModule)
                 .setExtension(AbstractParser.class)
                 .build());
-        assertNotNull(parser.parse(lexer.stream("A")));
+        assertNotNull(parser.parse("A"));
         assertEquals(1, testValues.size());
         assertEquals("SomeTestValue", testValues.get(0));
         assertTrue(parser instanceof AbstractParser);
@@ -53,10 +54,10 @@ public class ExtensionTest extends ParserTest {
 
     @Test(expected = org.joor.ReflectException.class)
     public void nullable() {
-        generate(new ParserOptions.Builder()
+        generate(new Options.Builder()
                 .setPackage("org.tdf4j.generator")
                 .setClassName("ParserImpl_" + UUID.randomUUID().toString().replaceAll("-", ""))
-                .setModule(new ParserAbstractModule() {
+                .setParserModule(new ParserAbstractModule() {
                     @Override
                     protected void configure() {
                         prod("prod1")
@@ -65,6 +66,7 @@ public class ExtensionTest extends ParserTest {
                                 );
                     }
                 })
+                .setLexerModule(lexerModule)
                 .setExtension(null)
                 .build());
     }

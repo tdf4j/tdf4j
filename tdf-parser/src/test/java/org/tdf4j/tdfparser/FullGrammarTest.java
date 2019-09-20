@@ -16,10 +16,7 @@
 
 package org.tdf4j.tdfparser;
 
-
-import org.tdf4j.generator.LexerOptions;
-import org.tdf4j.generator.ParserOptions;
-import org.tdf4j.generator.impl.LexerGenerator;
+import org.tdf4j.generator.Options;
 import org.tdf4j.generator.impl.ParserGenerator;
 import org.tdf4j.lexer.Lexer;
 import org.tdf4j.lexer.UnexpectedSymbolException;
@@ -33,21 +30,17 @@ import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 
 public class FullGrammarTest extends TdfParserTest {
-    Lexer lexer;
     Parser parser;
 
     @Before
     public void before() {
         final Interpreter interpreter = generate("FullGrammarTest.tdf");
         System.out.println(interpreter.getParserModule().build().getGrammar());
-        this.lexer = new LexerGenerator(new LexerOptions.Builder()
-                .setModule(interpreter.getLexerModule())
-                .build()
-        ).generate();
-        this.parser = new ParserGenerator(new ParserOptions.Builder()
+        this.parser = new ParserGenerator(new Options.Builder()
                 .setPackage("org.tdf4j.tdfparser")
                 .setClassName("FullGrammarTest_parser")
-                .setModule(interpreter.getParserModule())
+                .setParserModule(interpreter.getParserModule())
+                .setLexerModule(interpreter.getLexerModule())
                 .build()
         ).generate();
     }
@@ -250,7 +243,7 @@ public class FullGrammarTest extends TdfParserTest {
 
     private AST parse(final String input) {
         final long current = System.currentTimeMillis();
-        final AST ast = this.parser.parse(this.lexer.stream(input));
+        final AST ast = this.parser.parse(input);
         System.out.println("Parsing time: " + (System.currentTimeMillis() - current));
         System.out.println(ast);
         return ast;

@@ -18,8 +18,6 @@ package org.tdf4j.lexer;
 
 import org.tdf4j.core.model.Stream;
 import org.tdf4j.core.model.Token;
-import org.tdf4j.lexer.impl.LexerImpl;
-import org.tdf4j.lexer.impl.SymbolListenerImpl;
 import org.tdf4j.lexer.utils.Config;
 import org.tdf4j.core.module.LexerAbstractModule;
 import org.junit.Test;
@@ -35,34 +33,34 @@ public class LexerTest {
         Lexer lexer = new LexerImpl(new Config().build(), new SymbolListenerImpl());
 
         {
-            final List<Token> tokens = lexer.analyze("value");
+            final List<Token> tokens = lexer.analyze("value").toList();
             assertEquals(1, tokens.size());
             assertEquals("VAR", tokens.get(0).getTag().getValue());
             assertEquals("value", tokens.get(0).getValue());
         }
 
         {
-            final List<Token> tokens = lexer.analyze("0");
+            final List<Token> tokens = lexer.analyze("0").toList();
             assertEquals(1, tokens.size());
             assertEquals("DIGIT", tokens.get(0).getTag().getValue());
             assertEquals("0", tokens.get(0).getValue());
         }
 
         {
-            final List<Token> tokens = lexer.analyze("=");
+            final List<Token> tokens = lexer.analyze("=").toList();
             assertEquals(1, tokens.size());
             assertEquals("ASSIGN_OP", tokens.get(0).getTag().getValue());
             assertEquals("=", tokens.get(0).getValue());
         }
 
         {
-            final List<Token> tokens = lexer.analyze("+");
+            final List<Token> tokens = lexer.analyze("+").toList();
             assertEquals(1, tokens.size());
             assertEquals("OP", tokens.get(0).getTag().getValue());
         }
 
         {
-            final List<Token> tokens = lexer.analyze("value = 15 + 0");
+            final List<Token> tokens = lexer.analyze("value = 15 + 0").toList();
             assertEquals(5, tokens.size());
             assertEquals("VAR", tokens.get(0).getTag().getValue());
             assertEquals("value", tokens.get(0).getValue());
@@ -77,7 +75,7 @@ public class LexerTest {
         }
 
         {
-            final List<Token> tokens = lexer.analyze("15 = value - 10");
+            final List<Token> tokens = lexer.analyze("15 = value - 10").toList();
             assertEquals(5, tokens.size());
             assertEquals("DIGIT", tokens.get(0).getTag().getValue());
             assertEquals("15", tokens.get(0).getValue());
@@ -92,7 +90,7 @@ public class LexerTest {
         }
 
         {
-            final List<Token> tokens = lexer.analyze("= value / 0");
+            final List<Token> tokens = lexer.analyze("= value / 0").toList();
             assertEquals(4, tokens.size());
             assertEquals("ASSIGN_OP", tokens.get(0).getTag().getValue());
             assertEquals("=", tokens.get(0).getValue());
@@ -105,7 +103,7 @@ public class LexerTest {
         }
 
         {
-            final List<Token> tokens = lexer.analyze("* = value - 100000");
+            final List<Token> tokens = lexer.analyze("* = value - 100000").toList();
             assertEquals(5, tokens.size());
             assertEquals("OP", tokens.get(0).getTag().getValue());
             assertEquals("*", tokens.get(0).getValue());
@@ -120,7 +118,7 @@ public class LexerTest {
         }
 
         {
-            final List<Token> tokens = lexer.analyze("value = a + b - c / 0 * 10045645 = value1 = value2 = - * + /");
+            final List<Token> tokens = lexer.analyze("value = a + b - c / 0 * 10045645 = value1 = value2 = - * + /").toList();
             assertEquals(22, tokens.size());
             assertEquals("VAR", tokens.get(0).getTag().getValue());
             assertEquals("value", tokens.get(0).getValue());
@@ -169,7 +167,7 @@ public class LexerTest {
         }
 
         {
-            final List<Token> tokens = lexer.analyze("= - * + / value1 = value2 = a + b * 0 - 9999 = 10000 - 10000 * = value");
+            final List<Token> tokens = lexer.analyze("= - * + / value1 = value2 = a + b * 0 - 9999 = 10000 - 10000 * = value").toList();
             assertEquals(25, tokens.size());
             assertEquals("ASSIGN_OP", tokens.get(0).getTag().getValue());
             assertEquals("=", tokens.get(0).getValue());
@@ -224,7 +222,7 @@ public class LexerTest {
         }
 
         {
-            final List<Token> tokens = lexer.analyze("= = = = = = = = = = = 10000 100 10 1 0 v a l u e * * * * - - - - / / /");
+            final List<Token> tokens = lexer.analyze("= = = = = = = = = = = 10000 100 10 1 0 v a l u e * * * * - - - - / / /").toList();
             assertEquals(32, tokens.size());
             assertEquals("ASSIGN_OP", tokens.get(0).getTag().getValue());
             assertEquals("=", tokens.get(0).getValue());
@@ -293,7 +291,7 @@ public class LexerTest {
         }
 
         {
-            final List<Token> tokens = lexer.analyze("!= !");
+            final List<Token> tokens = lexer.analyze("!= !").toList();
             assertEquals(2, tokens.size());
             assertEquals("COP", tokens.get(0).getTag().getValue());
             assertEquals("!=", tokens.get(0).getValue());
@@ -302,112 +300,112 @@ public class LexerTest {
         }
 
         {
-            final List<Token> tokens = lexer.analyze("0.155");
+            final List<Token> tokens = lexer.analyze("0.155").toList();
             assertEquals(1, tokens.size());
             assertEquals("DOUBLE", tokens.get(0).getTag().getValue());
             assertEquals("0.155", tokens.get(0).getValue());
         }
 
         {
-            final List<Token> tokens = lexer.analyze("155.0000000");
+            final List<Token> tokens = lexer.analyze("155.0000000").toList();
             assertEquals(1, tokens.size());
             assertEquals("DOUBLE", tokens.get(0).getTag().getValue());
             assertEquals("155.0000000", tokens.get(0).getValue());
         }
 
         {
-            final List<Token> tokens = lexer.analyze("print");
+            final List<Token> tokens = lexer.analyze("print").toList();
             assertEquals(1, tokens.size());
             assertEquals("PRINT", tokens.get(0).getTag().getValue());
             assertEquals("print", tokens.get(0).getValue());
         }
 
         {
-            final List<Token> tokens = lexer.analyze("size");
+            final List<Token> tokens = lexer.analyze("size").toList();
             assertEquals(1, tokens.size());
             assertEquals("SIZE", tokens.get(0).getTag().getValue());
             assertEquals("size", tokens.get(0).getValue());
         }
 
         {
-            final List<Token> tokens = lexer.analyze("else");
+            final List<Token> tokens = lexer.analyze("else").toList();
             assertEquals(1, tokens.size());
             assertEquals("ELSE", tokens.get(0).getTag().getValue());
             assertEquals("else", tokens.get(0).getValue());
         }
 
         {
-            final List<Token> tokens = lexer.analyze("new");
+            final List<Token> tokens = lexer.analyze("new").toList();
             assertEquals(1, tokens.size());
             assertEquals("NEW", tokens.get(0).getTag().getValue());
             assertEquals("new", tokens.get(0).getValue());
         }
 
         {
-            final List<Token> tokens = lexer.analyze("typeof");
+            final List<Token> tokens = lexer.analyze("typeof").toList();
             assertEquals(1, tokens.size());
             assertEquals("TYPEOF", tokens.get(0).getTag().getValue());
             assertEquals("typeof", tokens.get(0).getValue());
         }
 
         {
-            final List<Token> tokens = lexer.analyze("arraylist");
+            final List<Token> tokens = lexer.analyze("arraylist").toList();
             assertEquals(1, tokens.size());
             assertEquals("ARRAYLIST", tokens.get(0).getTag().getValue());
             assertEquals("arraylist", tokens.get(0).getValue());
         }
 
         {
-            final List<Token> tokens = lexer.analyze("hashset");
+            final List<Token> tokens = lexer.analyze("hashset").toList();
             assertEquals(1, tokens.size());
             assertEquals("HASHSET", tokens.get(0).getTag().getValue());
             assertEquals("hashset", tokens.get(0).getValue());
         }
 
         {
-            final List<Token> tokens = lexer.analyze("get");
+            final List<Token> tokens = lexer.analyze("get").toList();
             assertEquals(1, tokens.size());
             assertEquals("GET", tokens.get(0).getTag().getValue());
             assertEquals("get", tokens.get(0).getValue());
         }
 
         {
-            final List<Token> tokens = lexer.analyze("put");
+            final List<Token> tokens = lexer.analyze("put").toList();
             assertEquals(1, tokens.size());
             assertEquals("PUT", tokens.get(0).getTag().getValue());
             assertEquals("put", tokens.get(0).getValue());
         }
 
         {
-            final List<Token> tokens = lexer.analyze("remove");
+            final List<Token> tokens = lexer.analyze("remove").toList();
             assertEquals(1, tokens.size());
             assertEquals("REMOVE", tokens.get(0).getTag().getValue());
             assertEquals("remove", tokens.get(0).getValue());
         }
 
         {
-            final List<Token> tokens = lexer.analyze("rewrite");
+            final List<Token> tokens = lexer.analyze("rewrite").toList();
             assertEquals(1, tokens.size());
             assertEquals("REWRITE", tokens.get(0).getTag().getValue());
             assertEquals("rewrite", tokens.get(0).getValue());
         }
 
         {
-            final List<Token> tokens = lexer.analyze(",");
+            final List<Token> tokens = lexer.analyze(",").toList();
             assertEquals(1, tokens.size());
             assertEquals("COMMA", tokens.get(0).getTag().getValue());
             assertEquals(",", tokens.get(0).getValue());
         }
 
         {
-            final List<Token> tokens = lexer.analyze("\"string\"");
+            final List<Token> tokens = lexer.analyze("\"string\"").toList();
             assertEquals(1, tokens.size());
             assertEquals("STRING", tokens.get(0).getTag().getValue());
             assertEquals("\"string\"", tokens.get(0).getValue());
         }
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test(expected = UnexpectedSymbolException.class)
     public void unexpected_symbol() {
         final Lexer lexer = new LexerImpl(new LexerAbstractModule() {
             @Override
@@ -416,7 +414,7 @@ public class LexerTest {
         }, new SymbolListenerImpl());
 
         try {
-            lexer.analyze("unexpected");
+            lexer.analyze("unexpected").toList();
         } catch (UnexpectedSymbolException e) {
             assertEquals("Unexpected symbol: u ( line 1, column 1 )", e.getMessage());
             throw e;
@@ -434,7 +432,7 @@ public class LexerTest {
             }
         }.build(), new SymbolListenerImpl());
 
-        final Stream<Token> tokens = lexer.stream("ABC");
+        final Stream<Token> tokens = lexer.analyze("ABC");
         assertEquals("A", tokens.next().getTag().getValue());
         assertEquals("B", tokens.next().getTag().getValue());
         assertEquals("C", tokens.next().getTag().getValue());
@@ -453,7 +451,7 @@ public class LexerTest {
                 tokenize("DEL").pattern("^;$");
             }
         }.build(), new SymbolListenerImpl());
-        final Stream<Token> stream = lexer.stream("print(\"Test String\");");
+        final Stream<Token> stream = lexer.analyze("print(\"Test String\");");
         assertEquals("print", stream.next().getValue());
         assertEquals("(", stream.next().getValue());
         assertEquals("\"Test String\"", stream.next().getValue());

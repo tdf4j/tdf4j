@@ -17,16 +17,21 @@ package org.tdf4j.lexer;
 
 import org.tdf4j.core.model.Stream;
 import org.tdf4j.core.model.Token;
+import org.tdf4j.core.module.LexerAbstractModule;
 
 import javax.annotation.Nonnull;
-import java.util.List;
 
 public interface Lexer {
 
     @Nonnull
-    List<Token> analyze(final CharSequence input);
+    Stream<Token> analyze(final CharSequence input);
 
-    @Nonnull
-    Stream<Token> stream(final CharSequence input);
+    static Lexer get(final LexerAbstractModule module) {
+        return get(module, SymbolListener.getDefault());
+    }
+
+    static Lexer get(final LexerAbstractModule module, final SymbolListener listener) {
+        return new LexerImpl(module, listener);
+    }
 
 }
