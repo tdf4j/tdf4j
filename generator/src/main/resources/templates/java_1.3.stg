@@ -109,6 +109,24 @@ public class <parserTemplate.className><if(parserTemplate.extension)> extends <p
         }
     }
 
+    private void call(final String nonTerminal, final Callback callback) {
+        call(nonTerminal, callback, null);
+    }
+
+    private void call(final String nonTerminal, final Callback callback, final Consumer\<ASTNode> action) {
+            ast.addNode(nonTerminal).moveCursor(TO_LAST_NODE_CHILD);
+            callback.call();
+            if (action != null) {
+                action.accept(ast.onCursor().asNode());
+            }
+            ast.moveCursor(TO_PARENT);
+        }
+
+    @FunctionalInterface
+    private interface Callback {
+        void call();
+    }
+
     <parserTemplate.grammar.productions: {production|<method("void", production.identifier.value, production.elements)><\n><\n>}>
 }
 >>
@@ -124,14 +142,11 @@ ele_group(ele_group) ::= <<
 >>
 
 non_terminal(non_terminal) ::= <<
-ast.addNode("<non_terminal.value>").moveCursor(TO_LAST_NODE_CHILD);
-<non_terminal.value>();
-<if(non_terminal.nodeAction)>
-((Consumer\<ASTNode>) node -> {
+<if (non_terminal.nodeAction)>
+call("<non_terminal.value>", this::<non_terminal.value>, node -> {
     <non_terminal.nodeAction>
-}).accept(ast.onCursor().asNode());
-<endif>
-ast.moveCursor(TO_PARENT);
+});<else>
+call("<non_terminal.value>", this::<non_terminal.value>);<endif>
 >>
 
 

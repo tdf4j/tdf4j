@@ -1,28 +1,9 @@
-/*
- *
- *  Copyright (c) 2019 tdf4j
- *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
- */
-
 package org.tdf4j.tdfparser.impl;
 
 import org.tdf4j.parser.*;
 import org.tdf4j.lexer.*;
 import org.tdf4j.core.model.*;
 import org.tdf4j.core.model.ast.*;
-import org.tdf4j.core.model.ebnf.*;
 import org.tdf4j.core.utils.*;
 import java.util.*;
 import java.util.function.*;
@@ -137,39 +118,47 @@ public class TdfParserImpl implements TdfParser {
         }
     }
 
+    private void call(final String nonTerminal, final Callback callback) {
+        call(nonTerminal, callback, null);
+    }
+
+    private void call(final String nonTerminal, final Callback callback, final Consumer<ASTNode> action) {
+            ast.addNode(nonTerminal).moveCursor(TO_LAST_NODE_CHILD);
+            callback.call();
+            if (action != null) {
+                action.accept(ast.onCursor().asNode());
+            }
+            ast.moveCursor(TO_PARENT);
+        }
+
+    @FunctionalInterface
+    private interface Callback {
+        void call();
+    }
+
     private void ebnf_optional() {
         match("LEFT_SQUARE_BRACKET");
-        ast.addNode("ebnf_elements_set").moveCursor(TO_LAST_NODE_CHILD);
-        ebnf_elements_set();
-        ast.moveCursor(TO_PARENT);
+        call("ebnf_elements_set", this::ebnf_elements_set);
         match("RIGHT_SQUARE_BRACKET");
     }
 
     private void ebnf_elements_set() {
-        ast.addNode("ebnf_element").moveCursor(TO_LAST_NODE_CHILD);
-        ebnf_element();
-        ast.moveCursor(TO_PARENT);
+        call("ebnf_element", this::ebnf_element);
         if(canReach("COMMA")) {
             match("COMMA");
-            ast.addNode("ebnf_elements_set").moveCursor(TO_LAST_NODE_CHILD);
-            ebnf_elements_set();
-            ast.moveCursor(TO_PARENT);
+            call("ebnf_elements_set", this::ebnf_elements_set);
         }
     }
 
     private void ebnf_or() {
         for(int i487805674 = 0; i487805674 < 2; i487805674++) {
             match("LOP_OR");
-            ast.addNode("ebnf_element").moveCursor(TO_LAST_NODE_CHILD);
-            ebnf_element();
-            ast.moveCursor(TO_PARENT);
+            call("ebnf_element", this::ebnf_element);
         }
         while(true) {
             if(canReach("LOP_OR")) {
                 match("LOP_OR");
-                ast.addNode("ebnf_element").moveCursor(TO_LAST_NODE_CHILD);
-                ebnf_element();
-                ast.moveCursor(TO_PARENT);
+                call("ebnf_element", this::ebnf_element);
             } else {
                 break;
             }
@@ -187,17 +176,11 @@ public class TdfParserImpl implements TdfParser {
            public void configure() {}
         };
 
-        ast.addNode("lexis").moveCursor(TO_LAST_NODE_CHILD);
-        lexis();
-        ast.moveCursor(TO_PARENT);
+        call("lexis", this::lexis);
         if(canReach("environment")) {
-            ast.addNode("environment").moveCursor(TO_LAST_NODE_CHILD);
-            environment();
-            ast.moveCursor(TO_PARENT);
+            call("environment", this::environment);
         }
-        ast.addNode("syntax").moveCursor(TO_LAST_NODE_CHILD);
-        syntax();
-        ast.moveCursor(TO_PARENT);
+        call("syntax", this::syntax);
         match("EOF");
     }
 
@@ -205,9 +188,7 @@ public class TdfParserImpl implements TdfParser {
         match("KEY_LEXIS");
         while(true) {
             if(canReach("terminal_description")) {
-                ast.addNode("terminal_description").moveCursor(TO_LAST_NODE_CHILD);
-                terminal_description();
-                ast.moveCursor(TO_PARENT);
+                call("terminal_description", this::terminal_description);
             } else {
                 break;
             }
@@ -224,9 +205,7 @@ public class TdfParserImpl implements TdfParser {
     private void terminal_parameter_pattern_flag() {
         match("TERMINAL_PARAMETER_PATTERN_FLAG");
         match("COLON");
-        ast.addNode("pattern_flags").moveCursor(TO_LAST_NODE_CHILD);
-        pattern_flags();
-        ast.moveCursor(TO_PARENT);
+        call("pattern_flags", this::pattern_flags);
     }
 
     private void terminal_parameter_priority() {
@@ -242,12 +221,9 @@ public class TdfParserImpl implements TdfParser {
             productions.push(new ProductionConstructor(parserModule.prod(token.getValue())));
         });
         match("OP_ASSIGN");
-        ast.addNode("ebnf_elements_set").moveCursor(TO_LAST_NODE_CHILD);
-        ebnf_elements_set();
-        ((Consumer<ASTNode>) node -> {
+        call("ebnf_elements_set", this::ebnf_elements_set, node -> {
             productions.peek().setElements(node);
-        }).accept(ast.onCursor().asNode());
-        ast.moveCursor(TO_PARENT);
+        });
         match("DELIMITER");
         productions.pop().construct();
 
@@ -314,9 +290,7 @@ public class TdfParserImpl implements TdfParser {
 
         if(canReach("OP_SUM")) {
             match("OP_SUM");
-            ast.addNode("pattern_flags").moveCursor(TO_LAST_NODE_CHILD);
-            pattern_flags();
-            ast.moveCursor(TO_PARENT);
+            call("pattern_flags", this::pattern_flags);
         }
     }
 
@@ -326,17 +300,13 @@ public class TdfParserImpl implements TdfParser {
 
         while(true) {
             if(canReach("env_import")) {
-                ast.addNode("env_import").moveCursor(TO_LAST_NODE_CHILD);
-                env_import();
-                ast.moveCursor(TO_PARENT);
+                call("env_import", this::env_import);
             } else {
                 break;
             }
         }
         if(canReach("env_code")) {
-            ast.addNode("env_code").moveCursor(TO_LAST_NODE_CHILD);
-            env_code();
-            ast.moveCursor(TO_PARENT);
+            call("env_code", this::env_code);
         }
         environments.pop().construct();
 
@@ -357,53 +327,39 @@ public class TdfParserImpl implements TdfParser {
                 new Alt(2, "terminal_parameter_pattern_flag"))
         ) {
             case 0 : {
-                    ast.addNode("terminal_parameter_priority").moveCursor(TO_LAST_NODE_CHILD);
-                    terminal_parameter_priority();
-                    ast.moveCursor(TO_PARENT);
+                    call("terminal_parameter_priority", this::terminal_parameter_priority);
                     break;
                 }
             case 1 : {
-                    ast.addNode("terminal_parameter_hidden").moveCursor(TO_LAST_NODE_CHILD);
-                    terminal_parameter_hidden();
-                    ast.moveCursor(TO_PARENT);
+                    call("terminal_parameter_hidden", this::terminal_parameter_hidden);
                     break;
                 }
             case 2 : {
-                    ast.addNode("terminal_parameter_pattern_flag").moveCursor(TO_LAST_NODE_CHILD);
-                    terminal_parameter_pattern_flag();
-                    ast.moveCursor(TO_PARENT);
+                    call("terminal_parameter_pattern_flag", this::terminal_parameter_pattern_flag);
                     break;
                 }
         }
         if(canReach("COMMA")) {
             match("COMMA");
-            ast.addNode("terminal_parameters_values").moveCursor(TO_LAST_NODE_CHILD);
-            terminal_parameters_values();
-            ast.moveCursor(TO_PARENT);
+            call("terminal_parameters_values", this::terminal_parameters_values);
         }
     }
 
     private void ebnf_repetition() {
         match("INTEGER");
         match("OP_MULTIPLY");
-        ast.addNode("ebnf_element").moveCursor(TO_LAST_NODE_CHILD);
-        ebnf_element();
-        ast.moveCursor(TO_PARENT);
+        call("ebnf_element", this::ebnf_element);
     }
 
     private void ebnf_group() {
         match("LEFT_BRACKET");
-        ast.addNode("ebnf_elements_set").moveCursor(TO_LAST_NODE_CHILD);
-        ebnf_elements_set();
-        ast.moveCursor(TO_PARENT);
+        call("ebnf_elements_set", this::ebnf_elements_set);
         match("RIGHT_BRACKET");
     }
 
     private void terminal_parameters() {
         match("LEFT_SQUARE_BRACKET");
-        ast.addNode("terminal_parameters_values").moveCursor(TO_LAST_NODE_CHILD);
-        terminal_parameters_values();
-        ast.moveCursor(TO_PARENT);
+        call("terminal_parameters_values", this::terminal_parameters_values);
         match("RIGHT_SQUARE_BRACKET");
     }
 
@@ -416,9 +372,7 @@ public class TdfParserImpl implements TdfParser {
 
     private void ebnf_repeat() {
         match("LEFT_FIGURE_BRACKET");
-        ast.addNode("ebnf_elements_set").moveCursor(TO_LAST_NODE_CHILD);
-        ebnf_elements_set();
-        ast.moveCursor(TO_PARENT);
+        call("ebnf_elements_set", this::ebnf_elements_set);
         match("RIGHT_FIGURE_BRACKET");
     }
 
@@ -426,9 +380,7 @@ public class TdfParserImpl implements TdfParser {
         match("KEY_SYNTAX");
         while(true) {
             if(canReach("production_description")) {
-                ast.addNode("production_description").moveCursor(TO_LAST_NODE_CHILD);
-                production_description();
-                ast.moveCursor(TO_PARENT);
+                call("production_description", this::production_description);
             } else {
                 break;
             }
@@ -447,51 +399,35 @@ public class TdfParserImpl implements TdfParser {
                 new Alt(7, "ebnf_inline_action"))
         ) {
             case 0 : {
-                    ast.addNode("ebnf_optional").moveCursor(TO_LAST_NODE_CHILD);
-                    ebnf_optional();
-                    ast.moveCursor(TO_PARENT);
+                    call("ebnf_optional", this::ebnf_optional);
                     break;
                 }
             case 1 : {
-                    ast.addNode("ebnf_or").moveCursor(TO_LAST_NODE_CHILD);
-                    ebnf_or();
-                    ast.moveCursor(TO_PARENT);
+                    call("ebnf_or", this::ebnf_or);
                     break;
                 }
             case 2 : {
-                    ast.addNode("ebnf_repeat").moveCursor(TO_LAST_NODE_CHILD);
-                    ebnf_repeat();
-                    ast.moveCursor(TO_PARENT);
+                    call("ebnf_repeat", this::ebnf_repeat);
                     break;
                 }
             case 3 : {
-                    ast.addNode("ebnf_repetition").moveCursor(TO_LAST_NODE_CHILD);
-                    ebnf_repetition();
-                    ast.moveCursor(TO_PARENT);
+                    call("ebnf_repetition", this::ebnf_repetition);
                     break;
                 }
             case 4 : {
-                    ast.addNode("ebnf_group").moveCursor(TO_LAST_NODE_CHILD);
-                    ebnf_group();
-                    ast.moveCursor(TO_PARENT);
+                    call("ebnf_group", this::ebnf_group);
                     break;
                 }
             case 5 : {
-                    ast.addNode("ebnf_terminal").moveCursor(TO_LAST_NODE_CHILD);
-                    ebnf_terminal();
-                    ast.moveCursor(TO_PARENT);
+                    call("ebnf_terminal", this::ebnf_terminal);
                     break;
                 }
             case 6 : {
-                    ast.addNode("ebnf_non_terminal").moveCursor(TO_LAST_NODE_CHILD);
-                    ebnf_non_terminal();
-                    ast.moveCursor(TO_PARENT);
+                    call("ebnf_non_terminal", this::ebnf_non_terminal);
                     break;
                 }
             case 7 : {
-                    ast.addNode("ebnf_inline_action").moveCursor(TO_LAST_NODE_CHILD);
-                    ebnf_inline_action();
-                    ast.moveCursor(TO_PARENT);
+                    call("ebnf_inline_action", this::ebnf_inline_action);
                     break;
                 }
         }
@@ -519,9 +455,7 @@ public class TdfParserImpl implements TdfParser {
             letters.peek().setPattern(stringProcessor.process(token.getValue()));
         });
         if(canReach("terminal_parameters")) {
-            ast.addNode("terminal_parameters").moveCursor(TO_LAST_NODE_CHILD);
-            terminal_parameters();
-            ast.moveCursor(TO_PARENT);
+            call("terminal_parameters", this::terminal_parameters);
         }
         letters.pop().construct();
 

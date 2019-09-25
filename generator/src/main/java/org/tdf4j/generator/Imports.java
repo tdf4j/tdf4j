@@ -20,7 +20,6 @@ public enum Imports {
     LEXER("org.tdf4j.lexer.*"),
     MODEL("org.tdf4j.core.model.*"),
     MODEL_AST("org.tdf4j.core.model.ast.*"),
-    MODEL_EBNF("org.tdf4j.core.model.ebnf.*"),
     UTILS("org.tdf4j.core.utils.*"),
     JAVA_UTIL("java.util.*"),
     JAVA_UTIL_FUNCTION("java.util.function.*"),
