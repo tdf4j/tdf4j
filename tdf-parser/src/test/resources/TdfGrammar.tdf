@@ -1,18 +1,18 @@
 /*
-Copyright 2019 Roman Fatnev
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-*/
+ * Copyright (c) 2019 Roman Fatnev
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 
 
@@ -159,37 +159,37 @@ lexis
 
 env
 
-    import "io.github.therealmone.tdf4j.module.lexer.AbstractLexerModule"
-    import "io.github.therealmone.tdf4j.module.parser.AbstractParserModule"
-    import "io.github.therealmone.tdf4j.tdfparser.constructor.*"
-    import "io.github.therealmone.tdf4j.tdfparser.processor.*"
+    import "org.tdf4j.core.module.LexerAbstractModule"
+    import "org.tdf4j.core.module.ParserAbstractModule"
+    import "org.tdf4j.tdfparser.constructor.*"
+    import "org.tdf4j.tdfparser.processor.*"
 
     code "
         private final Processor<String> stringProcessor = new StringProcessor();
-        private final Stack<TerminalConstructor> terminals = new Stack<>();
+        private final Stack<LetterConstructor> letters = new Stack<>();
         private final Stack<EnvironmentConstructor> environments = new Stack<>();
         private final Stack<ProductionConstructor> productions = new Stack<>();
-        private AbstractLexerModule lexerModule;
-        private AbstractParserModule parserModule;
+        private LexerAbstractModule lexerModule;
+        private ParserAbstractModule parserModule;
 
         @Override
-        public AbstractLexerModule getLexerModule() {
+        public LexerAbstractModule getLexerModule() {
             return this.lexerModule;
         }
 
         @Override
-        public AbstractParserModule getParserModule() {
+        public ParserAbstractModule getParserModule() {
             return this.parserModule;
         }
 
         private String lastValue(final AST ast) {
-            final String value = ast.moveCursor(ASTCursor.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value();
+            final String value = ast.moveCursor(ASTCursor.Movement.TO_LAST_LEAF_CHILD).onCursor().asLeaf().getToken().getValue();
             ast.moveCursor(ASTCursor.Movement.TO_PARENT);
             return value;
         }
 
         private ASTNode lastNode(final AST ast) {
-            final ASTNode lastNode = ast.moveCursor(ASTCursor.Movement.TO_LAST_ADDED_NODE).onCursor().asNode();
+            final ASTNode lastNode = ast.moveCursor(ASTCursor.Movement.TO_LAST_NODE_CHILD).onCursor().asNode();
             ast.moveCursor(ASTCursor.Movement.TO_PARENT);
             return lastNode;
         }
@@ -199,12 +199,12 @@ syntax
 
     tdf_lang =
         <"
-            this.lexerModule = new AbstractLexerModule() {
+            this.lexerModule = new LexerAbstractModule() {
                 @Override
                 public void configure() {}
             };
 
-            this.parserModule = new AbstractParserModule() {
+            this.parserModule = new ParserAbstractModule() {
                 @Override
                 public void configure() {}
             };
@@ -222,12 +222,10 @@ syntax
 
 
     terminal_description =
-            TERMINAL_TAG
-        ,   <"terminals.push(new TerminalConstructor(lexerModule.tokenize(lastValue(ast))));">
-        ,   STRING
-        ,   <"terminals.peek().setPattern(stringProcessor.process(lastValue(ast)));">
+            TERMINAL_TAG -> "letters.push(new LetterConstructor(lexerModule.tokenize(token.getValue())));"
+        ,   STRING -> "letters.peek().setPattern(stringProcessor.process(token.getValue()));"
         ,   [terminal_parameters]
-        ,   <"terminals.pop().construct();">
+        ,   <"letters.pop().construct();">
         ;
 
     terminal_parameters =
@@ -246,15 +244,13 @@ syntax
     terminal_parameter_priority =
             TERMINAL_PARAMETER_PRIORITY
         ,   COLON
-        ,   INTEGER
-        ,   <"terminals.peek().setPriority(lastValue(ast));">
+        ,   INTEGER -> "letters.peek().setPriority(token.getValue());"
         ;
 
     terminal_parameter_hidden =
             TERMINAL_PARAMETER_HIDDEN
         ,   COLON
-        ,   BOOLEAN
-        ,   <"terminals.peek().setHidden(lastValue(ast));">
+        ,   BOOLEAN -> "letters.peek().setHidden(token.getValue());"
         ;
 
     terminal_parameter_pattern_flag =
@@ -273,7 +269,7 @@ syntax
         |   TERMINAL_PARAMETER_PATTERN_FLAG_VALUE_UNICODE_CASE
         |   TERMINAL_PARAMETER_PATTERN_FLAG_VALUE_CANON_EQ
         |   TERMINAL_PARAMETER_PATTERN_FLAG_VALUE_UNICODE_CHARACTER_CLASS
-        ,   <"terminals.peek().addFlag(lastValue(ast));">
+        ,   <"letters.peek().addFlag(lastValue(ast));">
         ,   [OP_SUM, pattern_flags]
         ;
 
@@ -287,14 +283,12 @@ syntax
 
     env_import =
             KEY_IMPORT
-        ,   STRING
-        ,   <"environments.peek().addPackage(stringProcessor.process(lastValue(ast)));">
+        ,   STRING -> "environments.peek().addPackage(stringProcessor.process(token.getValue()));"
         ;
 
     env_code =
             KEY_CODE
-        ,   STRING
-        ,   <"environments.peek().setCode(stringProcessor.process(lastValue(ast)));">
+        ,   STRING -> "environments.peek().setCode(stringProcessor.process(token.getValue()));"
         ;
 
     syntax_prod =
@@ -303,11 +297,9 @@ syntax
         ;
 
     production_description =
-            NON_TERMINAL
-        ,   <"productions.push(new ProductionConstructor(parserModule.prod(lastValue(ast))));">
+            NON_TERMINAL -> "productions.push(new ProductionConstructor(parserModule.prod(token.getValue())));"
         ,   OP_ASSIGN
-        ,   ebnf_elements_set
-        ,   <"productions.peek().setElements(lastNode(ast));">
+        ,   ebnf_elements_set -> "productions.peek().setElements(node);"
         ,   DELIMITER
         ,   <"productions.pop().construct();">
         ;
@@ -330,10 +322,12 @@ syntax
 
     ebnf_terminal =
             TERMINAL_TAG
+        ,   [LAMBDA, STRING]
         ;
 
     ebnf_non_terminal =
             NON_TERMINAL
+        ,   [LAMBDA, STRING]
         ;
 
     ebnf_optional =

@@ -3,4 +3,5 @@ coverage:
   round: nearest
   range: "40...70"
   ignore:
-    - "model"
+    - "core/src/main/java/org/tdf4j/core/model" #model
+    - "tdf-parser/src/main/java/org/tdf4j/tdfparser/impl/TdfParserImpl.java" #tdf parser

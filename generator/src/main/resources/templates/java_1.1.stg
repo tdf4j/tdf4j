@@ -1,0 +1,139 @@
+/*
+ * Copyright (c) 2019 Roman Fatnev
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+parser(parserTemplate) ::= <<
+package <parserTemplate.package>;
+
+<parserTemplate.imports: {import| import <import>;}; separator="\n">
+<parserTemplate.environment.packages: {package| import <package>;}; separator="\n">
+
+public class <parserTemplate.className><if(parserTemplate.extension)> extends <parserTemplate.extension><endif> implements <parserTemplate.interface> {
+    private final MetaInf meta;
+    private final Predictor predictor;
+
+    <parserTemplate.environment.dependencies: {dependency| private final <dependency.clazz.simpleName> <dependency.name>;}; separator="\n">
+
+    private AST ast;
+    private BufferedStream\<Token> stream;
+
+    public <parserTemplate.className>(
+        final MetaInf meta,
+        final Predictor predictor<parserTemplate.environment.dependencies: {dependency|,<\n><\t><\t>final <dependency.clazz.simpleName> <dependency.name>}>
+    ) {
+        this.meta = meta;
+        this.predictor = predictor;
+        <parserTemplate.environment.dependencies: {dependency| this.<dependency.name> = <dependency.name>;}; separator="\n">
+    }
+
+    <parserTemplate.environment.code>
+
+    @Override
+    public AST parse(final Stream\<Token> tokens) {
+        this.stream = new BufferedStream\<>(tokens);
+        this.ast = AST.create("<parserTemplate.grammar.axiom>");
+        <parserTemplate.grammar.axiom>();
+        return ast;
+    }
+
+    @Override
+    public AST parse(final List\<Token> tokens) {
+        return parse(Stream.of(tokens));
+    }
+
+    @Override
+    public MetaInf meta() {
+        return this.meta;
+    }
+
+    <parserTemplate.grammar.productions: {production|<method("void", production.identifier.value, production.elements)><\n><\n>}>
+}
+>>
+
+method(returnValue, identifier, elements) ::= <<
+@SuppressWarnings("ConstantConditions")
+private <returnValue> <identifier>() {
+    <elements: {element|<element>};separator="\n">
+}
+>>
+
+ele_group(ele_group) ::= <<
+<ele_group.elements: {element|<element>};separator="\n">
+>>
+
+non_terminal(non_terminal) ::= <<
+ast.addNode("<non_terminal.value>").moveCursor(ASTCursor.Movement.TO_LAST_NODE_CHILD);
+<non_terminal.value>();
+<if(non_terminal.nodeAction)>
+((Consumer\<ASTNode>) node -> {
+    <non_terminal.nodeAction>
+}).accept(ast.onCursor().asNode());
+<endif>
+ast.moveCursor(ASTCursor.Movement.TO_PARENT);
+>>
+
+optional(optional) ::= <<
+if(<optional.start: {startElement|predictor.predict(stream.peek()).contains("<startElement>")}; separator="\n|| ">) {
+    <optional.elements: {element|<element>};separator="\n">
+}
+>>
+
+or(or) ::= <<
+if(stream.peek() != null && (
+    <or.firstStart: {startElement|predictor.predict(stream.peek()).contains("<startElement>")}; separator="\n|| ">
+)) {
+    <or.first>
+} else if(stream.peek() != null && (
+    <or.secondStart: {startElement|predictor.predict(stream.peek()).contains("<startElement>")}; separator="\n|| ">
+)) {
+    <or.second>
+} else {
+    throw new UnexpectedTokenException(stream.peek(), <or.firstStart: {startElement|"<startElement>"}; separator=" , "> , <or.secondStart: {startElement|"<startElement>"}; separator=" , ">);
+}
+>>
+
+repeat(repeat) ::= <<
+while(true) {
+    if(<repeat.start: {startElement|predictor.predict(stream.peek()).contains("<startElement>")}; separator="\n|| ">) {
+        <repeat.elements: {element|<element>};separator="\n">
+    } else {
+        break;
+    }
+}
+>>
+
+repetition(repetition) ::= <<
+for(int i<repetition.hash> = 0; i<repetition.hash> \< <repetition.times>; i<repetition.hash>++) {
+<repetition.element>
+}
+>>
+
+terminal_tag(terminal_tag) ::= <<
+if(stream.peek() != null && stream.peek().getTag().getValue().equalsIgnoreCase("<terminal_tag.value>")) {
+    ast.addLeaf(stream.next());
+    <if(terminal_tag.tokenAction)>
+    ((Consumer\<Token>) token -> {
+        <terminal_tag.tokenAction>
+    }).accept(ast.moveCursor(ASTCursor.Movement.TO_LAST_LEAF_CHILD).onCursor().asLeaf().getToken());
+    ast.moveCursor(ASTCursor.Movement.TO_PARENT);
+    <endif>
+} else {
+    throw new UnexpectedTokenException(stream.peek(), "<terminal_tag.value>");
+}
+>>
+
+inline_action(inline_action) ::= <<
+<inline_action.code>
+>>
+
