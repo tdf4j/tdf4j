@@ -16,8 +16,8 @@
 lexis
 
 env
-    import "io.github.therealmone.tdf4j.model.Token"
-    import "io.github.therealmone.tdf4j.module.lexer.AbstractLexerModule"
+    import "org.tdf4j.core.model.Token"
+    import "org.tdf4j.core.module.LexerAbstractModule"
 
     code "
         public String test() {

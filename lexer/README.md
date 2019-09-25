@@ -35,9 +35,9 @@ Terminals consist of **tag**, **pattern**, **priority** and **hidden flag**.
  
 There is three ways for configuration:
 ##### 1. In code
-Lexer accepts ```AbstractLexerModule``` as configuration class. To configure lexer by code you must extend this class:
+Lexer accepts ```LexerAbstractModule``` as configuration class. To configure lexer by code you must extend this class:
 ```java
-    class Configuration extends AbstractLexerModule {
+    class Configuration extends LexerAbstractModule {
         @Override
         public void configure() {
             tokenize("TAG1").pattern("pattern1").priority(1);

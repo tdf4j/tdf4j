@@ -159,37 +159,37 @@ lexis
 
 env
 
-    import "io.github.therealmone.tdf4j.module.lexer.AbstractLexerModule"
-    import "io.github.therealmone.tdf4j.module.parser.AbstractParserModule"
-    import "io.github.therealmone.tdf4j.tdfparser.constructor.*"
-    import "io.github.therealmone.tdf4j.tdfparser.processor.*"
+    import "org.tdf4j.core.module.LexerAbstractModule"
+    import "org.tdf4j.core.module.ParserAbstractModule"
+    import "org.tdf4j.tdfparser.constructor.*"
+    import "org.tdf4j.tdfparser.processor.*"
 
     code "
         private final Processor<String> stringProcessor = new StringProcessor();
-        private final Stack<TerminalConstructor> terminals = new Stack<>();
+        private final Stack<LetterConstructor> letters = new Stack<>();
         private final Stack<EnvironmentConstructor> environments = new Stack<>();
         private final Stack<ProductionConstructor> productions = new Stack<>();
-        private AbstractLexerModule lexerModule;
-        private AbstractParserModule parserModule;
+        private LexerAbstractModule lexerModule;
+        private ParserAbstractModule parserModule;
 
         @Override
-        public AbstractLexerModule getLexerModule() {
+        public LexerAbstractModule getLexerModule() {
             return this.lexerModule;
         }
 
         @Override
-        public AbstractParserModule getParserModule() {
+        public ParserAbstractModule getParserModule() {
             return this.parserModule;
         }
 
         private String lastValue(final AST ast) {
-            final String value = ast.moveCursor(ASTCursor.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().getToken().getValue();
+            final String value = ast.moveCursor(ASTCursor.Movement.TO_LAST_LEAF_CHILD).onCursor().asLeaf().getToken().getValue();
             ast.moveCursor(ASTCursor.Movement.TO_PARENT);
             return value;
         }
 
         private ASTNode lastNode(final AST ast) {
-            final ASTNode lastNode = ast.moveCursor(ASTCursor.Movement.TO_LAST_ADDED_NODE).onCursor().asNode();
+            final ASTNode lastNode = ast.moveCursor(ASTCursor.Movement.TO_LAST_NODE_CHILD).onCursor().asNode();
             ast.moveCursor(ASTCursor.Movement.TO_PARENT);
             return lastNode;
         }
@@ -199,12 +199,12 @@ syntax
 
     tdf_lang =
         <"
-            this.lexerModule = new AbstractLexerModule() {
+            this.lexerModule = new LexerAbstractModule() {
                 @Override
                 public void configure() {}
             };
 
-            this.parserModule = new AbstractParserModule() {
+            this.parserModule = new ParserAbstractModule() {
                 @Override
                 public void configure() {}
             };
@@ -222,10 +222,10 @@ syntax
 
 
     terminal_description =
-            TERMINAL_TAG -> "terminals.push(new TerminalConstructor(lexerModule.tokenize(token.getValue())));"
-        ,   STRING -> "terminals.peek().setPattern(stringProcessor.process(token.getValue()));"
+            TERMINAL_TAG -> "letters.push(new LetterConstructor(lexerModule.tokenize(token.getValue())));"
+        ,   STRING -> "letters.peek().setPattern(stringProcessor.process(token.getValue()));"
         ,   [terminal_parameters]
-        ,   <"terminals.pop().construct();">
+        ,   <"letters.pop().construct();">
         ;
 
     terminal_parameters =
@@ -244,13 +244,13 @@ syntax
     terminal_parameter_priority =
             TERMINAL_PARAMETER_PRIORITY
         ,   COLON
-        ,   INTEGER -> "terminals.peek().setPriority(token.getValue());"
+        ,   INTEGER -> "letters.peek().setPriority(token.getValue());"
         ;
 
     terminal_parameter_hidden =
             TERMINAL_PARAMETER_HIDDEN
         ,   COLON
-        ,   BOOLEAN -> "terminals.peek().setHidden(token.getValue());"
+        ,   BOOLEAN -> "letters.peek().setHidden(token.getValue());"
         ;
 
     terminal_parameter_pattern_flag =
@@ -269,7 +269,7 @@ syntax
         |   TERMINAL_PARAMETER_PATTERN_FLAG_VALUE_UNICODE_CASE
         |   TERMINAL_PARAMETER_PATTERN_FLAG_VALUE_CANON_EQ
         |   TERMINAL_PARAMETER_PATTERN_FLAG_VALUE_UNICODE_CHARACTER_CLASS
-        ,   <"terminals.peek().addFlag(lastValue(ast));">
+        ,   <"letters.peek().addFlag(lastValue(ast));">
         ,   [OP_SUM, pattern_flags]
         ;
 

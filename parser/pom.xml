@@ -2,13 +2,12 @@
 
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>io.github.therealmone.tdf4j</groupId>
+        <groupId>org.tdf4j</groupId>
         <artifactId>tdf4j</artifactId>
         <version>1.0.1-SNAPSHOT</version>
     </parent>
 
     <artifactId>parser</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>Parser</name>
@@ -17,9 +16,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>io.github.therealmone.tdf4j</groupId>
-            <artifactId>parser-module</artifactId>
-            <version>1.0.1-SNAPSHOT</version>
+            <groupId>org.tdf4j</groupId>
+            <artifactId>core</artifactId>
+            <version>${tdf.version}</version>
         </dependency>
     </dependencies>
 

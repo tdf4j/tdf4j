@@ -19,7 +19,7 @@ package <parserTemplate.package>;
 <parserTemplate.imports: {import| import <import>;}; separator="\n">
 <parserTemplate.environment.packages: {package| import <package>;}; separator="\n">
 
-public class <parserTemplate.className> implements <parserTemplate.interface> {
+public class <parserTemplate.className><if(parserTemplate.extension)> extends <parserTemplate.extension><endif> implements <parserTemplate.interface> {
     private final MetaInf meta;
     private final Predictor predictor;
 
@@ -73,7 +73,7 @@ ele_group(ele_group) ::= <<
 >>
 
 non_terminal(non_terminal) ::= <<
-ast.addNode("<non_terminal.value>").moveCursor(ASTCursor.Movement.TO_LAST_ADDED_NODE);
+ast.addNode("<non_terminal.value>").moveCursor(ASTCursor.Movement.TO_LAST_NODE_CHILD);
 <non_terminal.value>();
 <if(non_terminal.nodeAction)>
 ((Consumer\<ASTNode>) node -> {
@@ -125,7 +125,7 @@ if(stream.peek() != null && stream.peek().getTag().getValue().equalsIgnoreCase("
     <if(terminal_tag.tokenAction)>
     ((Consumer\<Token>) token -> {
         <terminal_tag.tokenAction>
-    }).accept(ast.moveCursor(ASTCursor.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().getToken());
+    }).accept(ast.moveCursor(ASTCursor.Movement.TO_LAST_LEAF_CHILD).onCursor().asLeaf().getToken());
     ast.moveCursor(ASTCursor.Movement.TO_PARENT);
     <endif>
 } else {
