@@ -140,7 +140,7 @@ public class PredictionTest {
         assertEquals(2, Elements.getStartElements(new Or() {
             @Override
             public List<Alternative> getAlternatives() {
-                return new ArrayList<>() {{
+                return new ArrayList<Alternative>() {{
                     add(new Alternative.Builder().setIndex(0)
                             .setElement(new Terminal.Builder().setValue("A").build())
                             .build()
@@ -159,7 +159,7 @@ public class PredictionTest {
         assertEquals("A", Elements.getStartElements(new Or() {
             @Override
             public List<Alternative> getAlternatives() {
-                return new ArrayList<>() {{
+                return new ArrayList<Alternative>() {{
                     add(new Alternative.Builder().setIndex(0)
                             .setElement(new InlineAction.Builder().setCode("code").build())
                             .build()

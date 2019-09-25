@@ -86,13 +86,13 @@ public class FirstSetCollector {
             }
 
             case TERMINAL: {
-                return new ArrayList<>() {{
+                return new ArrayList<Terminal>() {{
                     add(element.asTerminal());
                 }};
             }
 
             case OR: {
-                return new ArrayList<>() {{
+                return new ArrayList<Terminal>() {{
                     for(final Alternative alt : element.asOr().getAlternatives()) {
                         addAll(firstOf(context, currentNT, alt));
                     }

@@ -54,13 +54,13 @@ public final class Elements {
                         : getStartElements(firstNotInlineElement(element.asOptional().getElements()));
 
             case TERMINAL:
-                return new ArrayList<>() {{add(element.asTerminal().getValue());}};
+                return new ArrayList<String>() {{add(element.asTerminal().getValue());}};
 
             case NON_TERMINAL:
-                return new ArrayList<>() {{add(element.asNonTerminal().getValue());}};
+                return new ArrayList<String>() {{add(element.asNonTerminal().getValue());}};
 
             case OR:
-                return new ArrayList<>() {{
+                return new ArrayList<String>() {{
                     if(element.asOr().getAlternatives() != null) {
                         for (final Alternative alt : element.asOr().getAlternatives()) {
                             addAll(getStartElements(firstNotInlineElement(alt)));
