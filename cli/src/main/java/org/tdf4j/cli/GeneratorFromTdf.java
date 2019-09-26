@@ -6,6 +6,7 @@ import org.tdf4j.generator.impl.ParserGenerator;
 import org.tdf4j.tdfparser.*;
 
 import com.beust.jcommander.Parameter;
+import org.tdf4j.tdfparser.impl.TdfInterpreter;
 
 import java.io.*;
 
@@ -35,20 +36,16 @@ public class GeneratorFromTdf {
     }
 
     private void run() {
-        /*final Interpreter interpreter = new TdfInterpreter();
+        final Interpreter interpreter = new TdfInterpreter();
         interpreter.parse(load());
-        */
+
         final TdfParser tdfParser = (TdfParser) new ParserGenerator(new Options.Builder()
-                .setInterface(TdfParser.class)
-                .setParserModule(new TdfParserModule())
-                .setLexerModule(new TdfLexerModule())
+                .setParserModule(interpreter.getParserModule())
+                .setLexerModule(interpreter.getLexerModule())
                 .setClassName(name)
                 .setPackage(pack)
                 .build()
         ).generate();
-        tdfParser.parse(load());
-        tdfParser.getLexerModule().build();
-        tdfParser.getParserModule().build();
 
         TdfParserUtils.createClass(dir, name, tdfParser.meta().getSourceCode());
     }
