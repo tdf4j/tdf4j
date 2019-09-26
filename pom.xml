@@ -60,6 +60,7 @@
         <module>generator</module>
         <module>core</module>
         <module>tdf-parser</module>
+        <module>cli</module>
     </modules>
 
     <dependencies>

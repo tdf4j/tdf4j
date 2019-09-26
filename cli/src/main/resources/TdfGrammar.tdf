@@ -1,0 +1,346 @@
+lexis
+
+    EOF
+        "\$"
+
+    KEY_LEXIS
+        "lexis"
+
+    TERMINAL_TAG
+        "[A-Z][A-Z0-9_]*"
+
+    STRING
+        "\"((\\\")|[^\"])*\""
+
+    LEFT_SQUARE_BRACKET
+        "\["
+
+    RIGHT_SQUARE_BRACKET
+        "\]"
+
+    INTEGER
+        "-?(0|([1-9][0-9]*))"
+        [priority: 1]
+
+    COLON
+        ":"
+
+    BOOLEAN
+        "true|false"
+        [priority: 1, pattern: CASE_INSENSITIVE]
+
+    COMMA
+        ","
+
+    TERMINAL_PARAMETER_PRIORITY
+        "priority"
+
+    TERMINAL_PARAMETER_HIDDEN
+        "hidden"
+
+    TERMINAL_PARAMETER_PATTERN_FLAG
+        "pattern"
+
+    TERMINAL_PARAMETER_PATTERN_FLAG_VALUE_UNIX_LINES
+        "UNIX_LINES"
+        [priority: 1]
+
+    TERMINAL_PARAMETER_PATTERN_FLAG_VALUE_CASE_INSENSITIVE
+        "CASE_INSENSITIVE"
+        [priority: 1]
+
+    TERMINAL_PARAMETER_PATTERN_FLAG_VALUE_COMMENTS
+        "COMMENTS"
+        [priority: 1]
+
+    TERMINAL_PARAMETER_PATTERN_FLAG_VALUE_MULTILINE
+        "MULTILINE"
+        [priority: 1]
+
+    TERMINAL_PARAMETER_PATTERN_FLAG_VALUE_LITERAL
+        "LITERAL"
+        [priority: 1]
+
+    TERMINAL_PARAMETER_PATTERN_FLAG_VALUE_DOTALL
+        "DOTALL"
+        [priority: 1]
+
+    TERMINAL_PARAMETER_PATTERN_FLAG_VALUE_UNICODE_CASE
+        "UNICODE_CASE"
+        [priority: 1]
+
+    TERMINAL_PARAMETER_PATTERN_FLAG_VALUE_CANON_EQ
+        "CANON_EQ"
+        [priority: 1]
+
+    TERMINAL_PARAMETER_PATTERN_FLAG_VALUE_UNICODE_CHARACTER_CLASS
+        "UNICODE_CHARACTER_CLASS"
+        [priority: 1]
+
+    KEY_ENV
+        "env"
+
+    KEY_IMPORT
+        "import"
+
+    KEY_CODE
+        "code"
+
+    KEY_SYNTAX
+        "syntax"
+
+    DELIMITER
+        ";"
+
+    NON_TERMINAL
+        "[a-z][a-z0-9_]*"
+        [priority: -1]
+
+    LOP_OR
+        "\|"
+
+    LEFT_FIGURE_BRACKET
+        "\{"
+
+    RIGHT_FIGURE_BRACKET
+        "\}"
+
+    OP_MULTIPLY
+        "\*"
+
+    LEFT_BRACKET
+        "\("
+
+    RIGHT_BRACKET
+        "\)"
+
+    LEFT_INLINE_ACTION_BRACKET
+        "<"
+
+    RIGHT_INLINE_ACTION_BRACKET
+        ">"
+
+    OP_ASSIGN
+        "="
+
+    WS
+        "\s|\n|\r"
+        [priority: 1000, hidden: true]
+
+    SINGLE_LINE_COMMENT
+        "//.*(\n|\r|\r\n|\n\r)"
+        [priority: 1000, hidden: true]
+
+    MULTI_LINE_COMMENT
+        "/\*[^*]*\*+(?:[^/*][^*]*\*+)*/"
+        [priority: 1000, pattern: MULTILINE + DOTALL, hidden: true]
+
+env
+
+    import "org.tdf4j.core.module.LexerAbstractModule"
+    import "org.tdf4j.core.module.ParserAbstractModule"
+    import "org.tdf4j.tdfparser.constructor.*"
+    import "org.tdf4j.tdfparser.processor.*"
+
+    code "
+        private final Processor<String> stringProcessor = new StringProcessor();
+        private final Stack<LetterConstructor> letters = new Stack<>();
+        private final Stack<EnvironmentConstructor> environments = new Stack<>();
+        private final Stack<ProductionConstructor> productions = new Stack<>();
+        private LexerAbstractModule lexerModule;
+        private ParserAbstractModule parserModule;
+
+        @Override
+        public LexerAbstractModule getLexerModule() {
+            return this.lexerModule;
+        }
+
+        @Override
+        public ParserAbstractModule getParserModule() {
+            return this.parserModule;
+        }
+
+        private String lastValue(final AST ast) {
+            final String value = ast.moveCursor(ASTCursor.Movement.TO_LAST_LEAF_CHILD).onCursor().asLeaf().getToken().getValue();
+            ast.moveCursor(ASTCursor.Movement.TO_PARENT);
+            return value;
+        }
+
+        private ASTNode lastNode(final AST ast) {
+            final ASTNode lastNode = ast.moveCursor(ASTCursor.Movement.TO_LAST_NODE_CHILD).onCursor().asNode();
+            ast.moveCursor(ASTCursor.Movement.TO_PARENT);
+            return lastNode;
+        }
+    "
+
+syntax
+
+    tdf_lang =
+        <"
+            this.lexerModule = new LexerAbstractModule() {
+                @Override
+                public void configure() {}
+            };
+
+            this.parserModule = new ParserAbstractModule() {
+                @Override
+                public void configure() {}
+            };
+        ">
+        ,   lexis_prod
+        ,   [environment]
+        ,   syntax_prod
+        ,   EOF
+        ;
+
+    lexis_prod =
+            KEY_LEXIS
+        ,   {terminal_description}
+        ;
+
+
+    terminal_description =
+            TERMINAL_TAG -> "letters.push(new LetterConstructor(lexerModule.tokenize(token.getValue())));"
+        ,   STRING -> "letters.peek().setPattern(stringProcessor.process(token.getValue()));"
+        ,   [terminal_parameters]
+        ,   <"letters.pop().construct();">
+        ;
+
+    terminal_parameters =
+            LEFT_SQUARE_BRACKET
+        ,   terminal_parameters_values
+        ,   RIGHT_SQUARE_BRACKET
+        ;
+
+    terminal_parameters_values =
+        |   terminal_parameter_priority
+        |   terminal_parameter_hidden
+        |   terminal_parameter_pattern_flag
+        ,   [COMMA, terminal_parameters_values]
+        ;
+
+    terminal_parameter_priority =
+            TERMINAL_PARAMETER_PRIORITY
+        ,   COLON
+        ,   INTEGER -> "letters.peek().setPriority(token.getValue());"
+        ;
+
+    terminal_parameter_hidden =
+            TERMINAL_PARAMETER_HIDDEN
+        ,   COLON
+        ,   BOOLEAN -> "letters.peek().setHidden(token.getValue());"
+        ;
+
+    terminal_parameter_pattern_flag =
+            TERMINAL_PARAMETER_PATTERN_FLAG
+        ,   COLON
+        ,   pattern_flags
+        ;
+
+    pattern_flags =
+        |   TERMINAL_PARAMETER_PATTERN_FLAG_VALUE_UNIX_LINES
+        |   TERMINAL_PARAMETER_PATTERN_FLAG_VALUE_CASE_INSENSITIVE
+        |   TERMINAL_PARAMETER_PATTERN_FLAG_VALUE_COMMENTS
+        |   TERMINAL_PARAMETER_PATTERN_FLAG_VALUE_MULTILINE
+        |   TERMINAL_PARAMETER_PATTERN_FLAG_VALUE_LITERAL
+        |   TERMINAL_PARAMETER_PATTERN_FLAG_VALUE_DOTALL
+        |   TERMINAL_PARAMETER_PATTERN_FLAG_VALUE_UNICODE_CASE
+        |   TERMINAL_PARAMETER_PATTERN_FLAG_VALUE_CANON_EQ
+        |   TERMINAL_PARAMETER_PATTERN_FLAG_VALUE_UNICODE_CHARACTER_CLASS
+        ,   <"letters.peek().addFlag(lastValue(ast));">
+        ,   [OP_SUM, pattern_flags]
+        ;
+
+    environment =
+            KEY_ENV
+        ,   <"environments.push(new EnvironmentConstructor(parserModule.environment()));">
+        ,   {env_import}
+        ,   [env_code]
+        ,   <"environments.pop().construct();">
+        ;
+
+    env_import =
+            KEY_IMPORT
+        ,   STRING -> "environments.peek().addPackage(stringProcessor.process(token.getValue()));"
+        ;
+
+    env_code =
+            KEY_CODE
+        ,   STRING -> "environments.peek().setCode(stringProcessor.process(token.getValue()));"
+        ;
+
+    syntax_prod =
+            KEY_SYNTAX
+        ,   {production_description}
+        ;
+
+    production_description =
+            NON_TERMINAL -> "productions.push(new ProductionConstructor(parserModule.prod(token.getValue())));"
+        ,   OP_ASSIGN
+        ,   ebnf_elements_set -> "productions.peek().setElements(node);"
+        ,   DELIMITER
+        ,   <"productions.pop().construct();">
+        ;
+
+    ebnf_elements_set =
+            ebnf_element
+        ,   [COMMA, ebnf_elements_set]
+        ;
+
+    ebnf_element =
+        |   ebnf_optional
+        |   ebnf_or
+        |   ebnf_repeat
+        |   ebnf_repetition
+        |   ebnf_group
+        |   ebnf_terminal
+        |   ebnf_non_terminal
+        |   ebnf_inline_action
+        ;
+
+    ebnf_terminal =
+            TERMINAL_TAG
+        ,   [LAMBDA, STRING]
+        ;
+
+    ebnf_non_terminal =
+            NON_TERMINAL
+        ,   [LAMBDA, STRING]
+        ;
+
+    ebnf_optional =
+            LEFT_SQUARE_BRACKET
+        ,   ebnf_elements_set
+        ,   RIGHT_SQUARE_BRACKET
+        ;
+
+    ebnf_or =
+            2 * (LOP_OR, ebnf_element)
+        ,   {LOP_OR, ebnf_element}
+        ;
+
+    ebnf_repeat =
+            LEFT_FIGURE_BRACKET
+        ,   ebnf_elements_set
+        ,   RIGHT_FIGURE_BRACKET
+        ;
+
+    ebnf_repetition =
+            INTEGER
+        ,   OP_MULTIPLY
+        ,   ebnf_element
+        ;
+
+    ebnf_group =
+            LEFT_BRACKET
+        ,   ebnf_elements_set
+        ,   RIGHT_BRACKET
+        ;
+
+    ebnf_inline_action =
+            LEFT_INLINE_ACTION_BRACKET
+        ,   STRING
+        ,   RIGHT_INLINE_ACTION_BRACKET
+        ;
+
+$

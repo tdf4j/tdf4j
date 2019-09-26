@@ -18,13 +18,9 @@ package org.tdf4j.tdfparser;
 import org.tdf4j.generator.Options;
 import org.tdf4j.generator.impl.ParserGenerator;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-
 class TdfParserGenerator {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args){
         final String dir = args[0];
         final String pack = args[1];
         final String name = args[2];
@@ -36,21 +32,7 @@ class TdfParserGenerator {
                 .setPackage(pack)
                 .build()
         ).generate();
-        createClass(dir, name, tdfParser.meta().getSourceCode());
-    }
-
-    private static void createClass(final String dir, final String fileName, final String code) throws IOException {
-        final File file = new File(dir, fileName + ".java");
-        if(file.exists()) {
-            throw new IllegalArgumentException("File '" + file.getName() + "' already exists");
-        }
-        if(!file.createNewFile()) {
-            throw new IOException("Can't create new file '" + file.getName() + "'");
-        }
-        try(final FileWriter writer = new FileWriter(file)) {
-            writer.write(code);
-            writer.flush();
-        }
+        TdfParserUtils.createClass(dir, name, tdfParser.meta().getSourceCode());
     }
 
 }
