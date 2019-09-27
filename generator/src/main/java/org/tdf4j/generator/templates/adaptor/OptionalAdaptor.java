@@ -20,7 +20,8 @@ import org.stringtemplate.v4.Interpreter;
 import org.stringtemplate.v4.ModelAdaptor;
 import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.misc.STNoSuchPropertyException;
-import org.tdf4j.core.utils.Elements;
+
+import static org.tdf4j.core.model.ebnf.Elements.*;
 
 public class OptionalAdaptor implements ModelAdaptor {
 
@@ -28,7 +29,7 @@ public class OptionalAdaptor implements ModelAdaptor {
     public Object getProperty(final Interpreter interp, final ST self, final Object o, final Object property, final String propertyName) throws STNoSuchPropertyException {
         final Optional optional = (Optional) o;
         switch (propertyName) {
-            case "start" : return Elements.getStartElements(optional);
+            case "start" : return getStartElements(optional);
             case "elements" : return optional.getElements();
             default : throw new STNoSuchPropertyException(null, optional, propertyName);
         }

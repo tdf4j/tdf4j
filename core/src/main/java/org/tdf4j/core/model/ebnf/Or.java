@@ -16,9 +16,11 @@
 package org.tdf4j.core.model.ebnf;
 
 import org.immutables.value.Value;
-import org.tdf4j.core.utils.Elements;
 
 import java.util.List;
+
+import static org.tdf4j.core.model.ebnf.EBNFBuilder.*;
+import static org.tdf4j.core.model.ebnf.Elements.*;
 
 @Value.Immutable
 public abstract class Or implements Element {
@@ -43,11 +45,7 @@ public abstract class Or implements Element {
 
         public Builder addAlternatives(final Element... elements) {
             for(final Element alt : elements) {
-                super.addAlternatives(new Alternative.Builder()
-                        .setIndex(counter++)
-                        .setElement(alt)
-                        .build()
-                );
+                super.addAlternatives(alternative(counter++, alt));
             }
             return this;
         }
@@ -56,7 +54,7 @@ public abstract class Or implements Element {
 
     @Override
     public String toString() {
-        return Elements.convertToString("|", getAlternatives().stream()
+        return convertToString("|", getAlternatives().stream()
                 .map(Alternative::getElement)
                 .toArray(Element[]::new));
     }

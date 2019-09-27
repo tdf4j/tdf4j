@@ -16,6 +16,7 @@
 package org.tdf4j.tdfparser.builder;
 
 import org.tdf4j.core.model.ast.ASTNode;
+import org.tdf4j.core.model.ebnf.EBNFBuilder;
 import org.tdf4j.core.model.ebnf.NonTerminal;
 import org.tdf4j.tdfparser.processor.StringProcessor;
 
@@ -28,12 +29,11 @@ public class EbnfNonTerminalBuilder extends AbstractEbnfElementBuilder<NonTermin
 
     @Override
     public NonTerminal build(final ASTNode tree) {
-        return new NonTerminal.Builder()
-                .setValue(tree.getChildren().get(0).asLeaf().getToken().getValue())
-                .setNodeAction(tree.getChildren().size() > 1
+        return EBNFBuilder.nonTerminal(
+                tree.getChildren().get(0).asLeaf().getToken().getValue(),
+                tree.getChildren().size() > 1
                         ? stringProcessor.process(tree.getChildren().get(2).asLeaf().getToken().getValue())
-                        : null
-                ).build();
+                        : null);
     }
 
 }

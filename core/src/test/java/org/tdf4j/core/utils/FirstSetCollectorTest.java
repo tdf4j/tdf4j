@@ -29,6 +29,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static org.junit.Assert.*;
+import static org.tdf4j.core.model.ebnf.EBNFBuilder.*;
 
 public class FirstSetCollectorTest {
     private final FirstSetCollector firstSetCollector = new FirstSetCollector();
@@ -254,7 +255,7 @@ public class FirstSetCollectorTest {
             add(new Production() {
                 @Override
                 public NonTerminal getIdentifier() {
-                    return new NonTerminal.Builder().setValue("prod1").build();
+                    return nonTerminal("prod1");
                 }
 
                 @Override
@@ -318,45 +319,21 @@ public class FirstSetCollectorTest {
         return new Production.Builder().identifier(identifier);
     }
 
-    private Optional optional(final Element... elements) {
-        return new Optional.Builder().setElements(elements).build();
-    }
-
-    private Group group(final Element ... elements) {
-        return new Group.Builder().setElements(elements).build();
-    }
-
-    private Repeat repeat(final Element ... elements) {
-        return new Repeat.Builder().setElements(elements).build();
-    }
-
-    private Repetition repetition(final Element element, final int times) {
-        return new Repetition.Builder().setElement(element).setTimes(times).build();
-    }
-
-    private Or or(final Element ... alternatives) {
-        return new Or.Builder().addAlternatives(alternatives).build();
-    }
-
     private Terminal t(final String tag) {
-        return new Terminal.Builder().setValue(tag).build();
+        return terminal(tag);
     }
 
     private NonTerminal nt(final String identifier) {
-        return new NonTerminal.Builder().setValue(identifier).build();
+        return nonTerminal(identifier);
     }
 
-    public InlineAction inline(final String code) {
-        //noinspection ConstantConditions
-        if(code == null || code.trim().equalsIgnoreCase("")) {
-            throw new IllegalStateException("Code can't be blank or null");
-        }
-        return new InlineAction.Builder().setCode(code).build();
+    private InlineAction inline(final String code) {
+        return inlineAction(code);
     }
 
     private static void assertFirstContains(final First first, final String ident, final String ... tags) {
         final Set<String> set = first.getSet()
-                .get(new NonTerminal.Builder().setValue(ident).build())
+                .get(nonTerminal(ident))
                 .stream()
                 .map(Terminal::getValue)
                 .collect(Collectors.toSet());
