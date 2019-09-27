@@ -13,15 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.tdf4j.core.module;
 
-import org.tdf4j.core.model.Letter;
-import org.tdf4j.core.model.ebnf.Terminal;
+package org.tdf4j.core.utils;
 
-public interface LexerBindMethods {
-
-    Letter.Builder tokenize(final String tag);
-
-    Letter.Builder tokenize(final Terminal tag);
-
+@FunctionalInterface
+public interface Callback {
+    
+    void call();
+    
 }

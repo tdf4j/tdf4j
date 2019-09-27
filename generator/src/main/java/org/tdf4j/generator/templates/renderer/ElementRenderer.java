@@ -44,7 +44,7 @@ public class ElementRenderer implements AttributeRenderer {
                 return template.getInstanceOf("repetition").add("repetition", element).render();
 
             case TERMINAL:
-                return template.getInstanceOf("terminal_tag").add("terminal_tag", element).render();
+                return template.getInstanceOf("terminal").add("terminal", element).render();
 
             case INLINE_ACTION:
                 return template.getInstanceOf("inline_action").add("inline_action", element).render();

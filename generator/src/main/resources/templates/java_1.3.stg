@@ -19,27 +19,28 @@ package <parserTemplate.package>;
 <parserTemplate.imports: {import| import <import>;}; separator="\n">
 <parserTemplate.environment.packages: {package| import <package>;}; separator="\n">
 
-public class <parserTemplate.className><if(parserTemplate.extension)> extends <parserTemplate.extension><endif> implements <parserTemplate.interface> {
-    private final MetaInf meta;
-    private final Predictor predictor;
+public class <parserTemplate.className> extends AbstractParser implements <parserTemplate.interface> {
+
+    //Terminals
+    <parserTemplate.alphabet.letters: {letter|private final Terminal <letter.tag.value> = terminal("<letter.tag.value>");}; separator="\n">
+
+    //NonTerminals
+    <parserTemplate.grammar.productions: {prod|private final CallableNonTerminal <prod.identifier.value> = callableNonTerminal("<prod.identifier.value>", this::<prod.identifier.value>);}; separator="\n">
+
     private final Lexer lexer = Lexer.get(new LexerAbstractModule() {
-        @Override
-        public void configure() {
-            <parserTemplate.alphabet.letters: {letter| tokenize("<letter.tag.value>").pattern("<letter.pattern>").priority(<letter.priority>).hidden(<letter.hidden>);}; separator="\n">
-        }
-    });
+             @Override
+             public void configure() {
+                 <parserTemplate.alphabet.letters: {letter|tokenize(<letter.tag.value>).pattern("<letter.pattern>").priority(<letter.priority>).hidden(<letter.hidden>);}; separator="\n">
+             }
+         });
 
     <parserTemplate.environment.dependencies: {dependency| private final <dependency.clazz.simpleName> <dependency.name>;}; separator="\n">
-
-    private AST ast;
-    private BufferedStream\<Token> stream;
 
     public <parserTemplate.className>(
         final MetaInf meta,
         final Predictor predictor<parserTemplate.environment.dependencies: {dependency|,<\n><\t><\t>final <dependency.clazz.simpleName> <dependency.name>}>
     ) {
-        this.meta = meta;
-        this.predictor = predictor;
+        super(meta, predictor);
         <parserTemplate.environment.dependencies: {dependency| this.<dependency.name> = <dependency.name>;}; separator="\n">
     }
 
@@ -48,86 +49,9 @@ public class <parserTemplate.className><if(parserTemplate.extension)> extends <p
     @Override
     public AST parse(final CharSequence input) {
         this.stream = new BufferedStream\<>(lexer.analyze(input));
-        this.ast = AST.create("<parserTemplate.grammar.axiom>");
-        <parserTemplate.grammar.axiom>();
+        this.ast = AST.create(<parserTemplate.grammar.axiom>);
+        <parserTemplate.grammar.axiom>.call();
         return ast;
-    }
-
-    @Override
-    public MetaInf meta() {
-        return this.meta;
-    }
-
-    private boolean canReach(final String element) {
-        return predictor.predict(stream.peek()).contains(element);
-    }
-
-    private boolean canReachAny(final String... elements) {
-        for(final String element : elements) {
-            if(canReach(element)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private void match(final String terminal) {
-        match(terminal, null);
-    }
-
-    private void match(final String terminal, final Consumer\<Token> action) {
-        if(stream.peek() != null && stream.peek().getTag().getValue().equalsIgnoreCase(terminal)) {
-            ast.addLeaf(stream.next());
-            if(action != null) {
-                action.accept(ast.moveCursor(TO_LAST_LEAF_CHILD).onCursor().asLeaf().getToken());
-                ast.moveCursor(TO_PARENT);
-            }
-        } else {
-            throw new UnexpectedTokenException(stream.peek(), terminal);
-        }
-    }
-
-    private int predict(final Alt... alternatives) throws UnexpectedTokenException {
-        final java.util.Optional\<Alt> choice = Arrays.stream(alternatives)
-            .filter(alt -> canReachAny(alt.elements))
-            .findFirst();
-        if(!choice.isPresent()) {
-            throw new UnexpectedTokenException(stream.peek(), expected(alternatives));
-        }
-        return choice.get().index;
-    }
-
-    private String[] expected(final Alt... alternatives) {
-        return Arrays.stream(alternatives)
-            .flatMap(alt -> Arrays.stream(alt.elements))
-            .toArray(String[]::new);
-    }
-
-    private class Alt {
-        final String[] elements;
-        final int index;
-        Alt(final int index, final String... elements) {
-            this.elements = elements;
-            this.index = index;
-        }
-    }
-
-    private void call(final String nonTerminal, final Callback callback) {
-        call(nonTerminal, callback, null);
-    }
-
-    private void call(final String nonTerminal, final Callback callback, final Consumer\<ASTNode> action) {
-            ast.addNode(nonTerminal).moveCursor(TO_LAST_NODE_CHILD);
-            callback.call();
-            if (action != null) {
-                action.accept(ast.onCursor().asNode());
-            }
-            ast.moveCursor(TO_PARENT);
-        }
-
-    @FunctionalInterface
-    private interface Callback {
-        void call();
     }
 
     <parserTemplate.grammar.productions: {production|<method("void", production.identifier.value, production.elements)><\n><\n>}>
@@ -146,15 +70,15 @@ ele_group(ele_group) ::= <<
 
 non_terminal(non_terminal) ::= <<
 <if (non_terminal.nodeAction)>
-call("<non_terminal.value>", this::<non_terminal.value>, node -> {
+call(<non_terminal.value>, node -> {
     <non_terminal.nodeAction>
 });<else>
-call("<non_terminal.value>", this::<non_terminal.value>);<endif>
+call(<non_terminal.value>);<endif>
 >>
 
 
 optional(optional) ::= <<
-if(<optional.start: {startElement|canReach("<startElement>")}; separator="\n|| ">) {
+if(<optional.start: {startElement|canReach(<startElement>)}; separator="\n|| ">) {
     <optional.elements: {element|<element>};separator="\n">
 }
 >>
@@ -172,7 +96,7 @@ switch(predict(
 
 repeat(repeat) ::= <<
 while(true) {
-    if(<repeat.start: {startElement|canReach("<startElement>")}; separator="\n|| ">) {
+    if(<repeat.start: {startElement|canReach(<startElement>)}; separator="\n|| ">) {
         <repeat.elements: {element|<element>};separator="\n">
     } else {
         break;
@@ -186,12 +110,12 @@ for(int i<repetition.hash> = 0; i<repetition.hash> \< <repetition.times>; i<repe
 }
 >>
 
-terminal_tag(terminal_tag) ::= <<
-<if(terminal_tag.tokenAction)>
-match("<terminal_tag.value>", token -> {
-    <terminal_tag.tokenAction>
+terminal(terminal) ::= <<
+<if(terminal.tokenAction)>
+match(<terminal.value>, token -> {
+    <terminal.tokenAction>
 });<else>
-match("<terminal_tag.value>");<endif>
+match(<terminal.value>);<endif>
 >>
 
 inline_action(inline_action) ::= <<

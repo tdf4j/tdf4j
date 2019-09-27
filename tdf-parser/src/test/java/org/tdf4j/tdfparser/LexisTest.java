@@ -17,7 +17,6 @@
 package org.tdf4j.tdfparser;
 
 import org.tdf4j.core.model.Letter;
-import org.tdf4j.core.model.ebnf.Terminal;
 import org.junit.Test;
 
 import java.util.List;
@@ -34,39 +33,39 @@ public class LexisTest extends TdfParserTest {
         System.out.println(letters);
 
         assertEquals(33, letters.size());
-        assertTerminal(letters.get(0), letter("PRINT").pattern("print").priority(1));
-        assertTerminal(letters.get(1), letter("NEW").pattern("new").priority(1));
-        assertTerminal(letters.get(2), letter("REWRITE").pattern("rewrite").priority(1));
-        assertTerminal(letters.get(3), letter("QUOTE").pattern("\""));
-        assertTerminal(letters.get(4), letter("VAR").pattern("[a-z]+"));
-        assertTerminal(letters.get(5), letter("CONCAT").pattern("\\+\\+").priority(2));
-        assertTerminal(letters.get(6), letter("DO").pattern("do").priority(1));
-        assertTerminal(letters.get(7), letter("ASSIGN_OP").pattern("="));
-        assertTerminal(letters.get(8), letter("REMOVE").pattern("remove").priority(1));
-        assertTerminal(letters.get(9), letter("ELSE").pattern("else").priority(1));
-        assertTerminal(letters.get(10), letter("DOUBLE").pattern("-?((0[.][0-9]*)|([1-9][0-9]*[.][0-9]*))"));
-        assertTerminal(letters.get(11), letter("WS").pattern("\\s|\\n|\\r").priority(3).hidden(true));
-        assertTerminal(letters.get(12), letter("IF").pattern("if").priority(1));
-        assertTerminal(letters.get(13), letter("EOF").pattern("\\$"));
-        assertTerminal(letters.get(14), letter("COMMA").pattern(","));
-        assertTerminal(letters.get(15), letter("OP").pattern("[\\+\\-/\\*]|(div)|(mod)").priority(1));
-        assertTerminal(letters.get(16), letter("ARRAYLIST").pattern("arraylist").priority(1));
-        assertTerminal(letters.get(17), letter("COP").pattern("[<>]|(<=)|(>=)|(==)|(!=)").priority(1));
-        assertTerminal(letters.get(18), letter("SIZE").pattern("size").priority(1));
-        assertTerminal(letters.get(19), letter("FOR").pattern("for").priority(1));
-        assertTerminal(letters.get(20), letter("DEL").pattern(";", Pattern.MULTILINE));
-        assertTerminal(letters.get(21), letter("HASHSET").pattern("hashset").priority(1));
-        assertTerminal(letters.get(22), letter("LOP").pattern("[&\\|\\^\\!]").priority(1));
-        assertTerminal(letters.get(23), letter("DIGIT").pattern("-?(0|([1-9][0-9]*))").priority(1));
-        assertTerminal(letters.get(24), letter("PUT").pattern("put").priority(1));
-        assertTerminal(letters.get(25), letter("RB").pattern("\\)"));
-        assertTerminal(letters.get(26), letter("TYPEOF").pattern("typeof").priority(1));
+        assertTerminal(letters.get(0), letter("VAR").pattern("[a-z]+"));
+        assertTerminal(letters.get(1), letter("STRING").pattern("\"[^\"]*\""));
+        assertTerminal(letters.get(2), letter("NEW").pattern("new").priority(1));
+        assertTerminal(letters.get(3), letter("TYPEOF").pattern("typeof").priority(1));
+        assertTerminal(letters.get(4), letter("HASHSET").pattern("hashset").priority(1));
+        assertTerminal(letters.get(5), letter("ARRAYLIST").pattern("arraylist").priority(1));
+        assertTerminal(letters.get(6), letter("GET").pattern("get").priority(1));
+        assertTerminal(letters.get(7), letter("SIZE").pattern("size").priority(1));
+        assertTerminal(letters.get(8), letter("PUT").pattern("put").priority(1));
+        assertTerminal(letters.get(9), letter("REMOVE").pattern("remove").priority(1));
+        assertTerminal(letters.get(10), letter("REWRITE").pattern("rewrite").priority(1));
+        assertTerminal(letters.get(11), letter("PRINT").pattern("print").priority(1));
+        assertTerminal(letters.get(12), letter("COMMA").pattern(","));
+        assertTerminal(letters.get(13), letter("CONCAT").pattern("\\+\\+").priority(2));
+        assertTerminal(letters.get(14), letter("QUOTE").pattern("\""));
+        assertTerminal(letters.get(15), letter("DIGIT").pattern("-?(0|([1-9][0-9]*))").priority(1));
+        assertTerminal(letters.get(16), letter("DOUBLE").pattern("-?((0[.][0-9]*)|([1-9][0-9]*[.][0-9]*))"));
+        assertTerminal(letters.get(17), letter("ASSIGN_OP").pattern("="));
+        assertTerminal(letters.get(18), letter("OP").pattern("[\\+\\-/\\*]|(div)|(mod)").priority(1));
+        assertTerminal(letters.get(19), letter("DEL").pattern(";", Pattern.MULTILINE));
+        assertTerminal(letters.get(20), letter("WHILE").pattern("while").priority(1));
+        assertTerminal(letters.get(21), letter("IF").pattern("if").priority(1));
+        assertTerminal(letters.get(22), letter("ELSE").pattern("else").priority(1));
+        assertTerminal(letters.get(23), letter("DO").pattern("do").priority(1));
+        assertTerminal(letters.get(24), letter("FOR").pattern("for").priority(1));
+        assertTerminal(letters.get(25), letter("LOP").pattern("[&\\|\\^\\!]").priority(1));
+        assertTerminal(letters.get(26), letter("COP").pattern("[<>]|(<=)|(>=)|(==)|(!=)").priority(1));
         assertTerminal(letters.get(27), letter("LB").pattern("\\("));
-        assertTerminal(letters.get(28), letter("GET").pattern("get").priority(1));
-        assertTerminal(letters.get(29), letter("FRB").pattern("\\}"));
-        assertTerminal(letters.get(30), letter("STRING").pattern("\"[^\"]*\""));
-        assertTerminal(letters.get(31), letter("WHILE").pattern("while").priority(1));
-        assertTerminal(letters.get(32), letter("FLB").pattern("\\{"));
+        assertTerminal(letters.get(28), letter("RB").pattern("\\)"));
+        assertTerminal(letters.get(29), letter("FLB").pattern("\\{"));
+        assertTerminal(letters.get(30), letter("FRB").pattern("\\}"));
+        assertTerminal(letters.get(31), letter("EOF").pattern("\\$"));
+        assertTerminal(letters.get(32), letter("WS").pattern("\\s|\\n|\\r").priority(3).hidden(true));
 
     }
 

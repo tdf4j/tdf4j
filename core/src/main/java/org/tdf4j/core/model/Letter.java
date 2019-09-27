@@ -58,6 +58,11 @@ public abstract class Letter {
             return this;
         }
 
+        public Letter.Builder tag(final Terminal tag) {
+            super.setTag(tag);
+            return this;
+        }
+
         public Letter.Builder priority(final long priority) {
             return super.setPriority(priority);
         }

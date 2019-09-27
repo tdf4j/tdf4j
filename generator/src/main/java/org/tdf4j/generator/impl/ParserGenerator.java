@@ -56,8 +56,7 @@ public class ParserGenerator implements Generator<Parser> {
                 .setEnvironment(options.getParserModule().getEnvironment())
                 .setImports(imports(options.getInterface().getCanonicalName()))
                 .setInterface(options.getInterface().getSimpleName())
-                .setAlphabet(options.getLexerModule().getAlphabet())
-                .setExtension(options.getExtension() != null ? options.getExtension().getCanonicalName() : null);
+                .setAlphabet(options.getLexerModule().getAlphabet());
         if(options.getParserModule().getGrammar().getAxiom() == null) {
             throw new RuntimeException("Initial production is null");
         }
