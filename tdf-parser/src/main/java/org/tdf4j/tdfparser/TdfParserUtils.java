@@ -11,9 +11,6 @@ public class TdfParserUtils {
             throw new IllegalArgumentException("File '" + file.getName() + "' already exists");
         }
         try (final FileWriter writer = new FileWriter(file)) {
-            if(!file.createNewFile()) {
-                throw new IOException("Can't create new file '" + file.getName() + "'");
-            }
             writer.write(code);
             writer.flush();
         } catch (IOException e) {

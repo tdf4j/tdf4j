@@ -1,71 +1,58 @@
 package org.tdf4j.cli;
 
 import com.beust.jcommander.JCommander;
+import org.tdf4j.core.module.LexerAbstractModule;
+import org.tdf4j.core.module.ParserAbstractModule;
 import org.tdf4j.generator.Options;
 import org.tdf4j.generator.impl.ParserGenerator;
+import org.tdf4j.parser.Parser;
 import org.tdf4j.tdfparser.*;
 
-import com.beust.jcommander.Parameter;
 import org.tdf4j.tdfparser.impl.TdfInterpreter;
 
 import java.io.*;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 public class GeneratorFromTdf {
+    private static final Charset ENCODING = StandardCharsets.UTF_8;
 
-    // задаются как аргменты
-    @Parameter(names = {"--fileName", "-fn"})
-    private static String fileName;
-
-    @Parameter(names = {"--directory", "-dir"})
-    private static String dir;
-
-    @Parameter(names = {"--package", "-p"})
-    private static String pack;
-
-    @Parameter(names = {"--className", "-cn"})
-    private static String name;
-
-
-    public static void main(String ... args) {
-        final GeneratorFromTdf generator = new GeneratorFromTdf();
+    public static void main(String ... args) throws IOException {
+        final Args programAgrs = new Args();
         JCommander.newBuilder()
-                .addObject(generator)
+                .addObject(programAgrs)
                 .build()
                 .parse(args);
-        generator.run();
+        process(programAgrs);
     }
 
-    private void run() {
+    private static void process(final Args args) throws IOException {
         final Interpreter interpreter = new TdfInterpreter();
-        interpreter.parse(load());
+        interpreter.parse(loadGrammar(args.grammar));
+        generateParser(args, interpreter.getLexerModule(), interpreter.getParserModule());
+    }
 
-        final TdfParser tdfParser = (TdfParser) new ParserGenerator(new Options.Builder()
-                .setParserModule(interpreter.getParserModule())
-                .setLexerModule(interpreter.getLexerModule())
-                .setClassName(name)
-                .setPackage(pack)
+    private static void generateParser(final Args args, final LexerAbstractModule lexerModule, final ParserAbstractModule parserModule) {
+        final Parser parser = new ParserGenerator(new Options.Builder()
+                .setParserModule(parserModule)
+                .setLexerModule(lexerModule)
+                .setClassName(args.name)
+                .setPackage(args.pack)
                 .build()
         ).generate();
-
-        TdfParserUtils.createClass(dir, name, tdfParser.meta().getSourceCode());
+        TdfParserUtils.createClass(args.dir, args.name, parser.meta().getSourceCode());
     }
 
-    @SuppressWarnings("ConstantConditions")
-    private static String load() {
-        StringBuilder stringBuilder = new StringBuilder();
-        String line;
-
-        try {
-            try (final InputStream inputStream = new BufferedInputStream(Thread.currentThread().getContextClassLoader().getResourceAsStream(fileName));
-                 final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream))) {
-                while ((line = bufferedReader.readLine()) != null) {
-                    stringBuilder.append(line);
-                }
+    private static String loadGrammar(final String fileName) throws IOException {
+        try (
+                final StringWriter writer = new StringWriter();
+                final Reader reader = new InputStreamReader(new BufferedInputStream(new FileInputStream(fileName)), ENCODING)
+        ) {
+            int bt;
+            while ((bt = reader.read()) != -1) {
+                writer.write(bt);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+            return writer.toString();
         }
-
-        return stringBuilder.toString();
     }
 }

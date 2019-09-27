@@ -150,12 +150,10 @@ env
         private LexerAbstractModule lexerModule;
         private ParserAbstractModule parserModule;
 
-        @Override
         public LexerAbstractModule getLexerModule() {
             return this.lexerModule;
         }
 
-        @Override
         public ParserAbstractModule getParserModule() {
             return this.parserModule;
         }
