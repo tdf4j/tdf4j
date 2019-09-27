@@ -13,26 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.tdf4j.generator;
 
-public enum Imports {
-    PARSER("org.tdf4j.parser.*"),
-    LEXER("org.tdf4j.lexer.*"),
-    MODULE("org.tdf4j.core.module.*"),
-    MODEL("org.tdf4j.core.model.*"),
-    MODEL_AST("org.tdf4j.core.model.ast.*"),
-    UTILS("org.tdf4j.core.utils.*"),
-    JAVA_UTIL("java.util.*"),
-    JAVA_UTIL_FUNCTION("java.util.function.*"),
-    CURSOR_MOVEMENT("static org.tdf4j.core.model.ast.ASTCursor.Movement.*");
+package org.tdf4j.generator.templates.renderer;
 
-    private final String value;
+import org.apache.commons.text.StringEscapeUtils;
+import org.stringtemplate.v4.AttributeRenderer;
 
-    Imports(final String value) {
-        this.value = value;
+import java.util.Locale;
+import java.util.regex.Pattern;
+
+public class PatternRenderer implements AttributeRenderer {
+
+    @Override
+    public String toString(final Object o, final String formatString, final Locale locale) {
+        final Pattern pattern = (Pattern) o;
+        return StringEscapeUtils.escapeJava(pattern.pattern());
     }
 
-    public String getValue() {
-        return value;
-    }
 }

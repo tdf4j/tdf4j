@@ -15,11 +15,15 @@
  */
 package org.tdf4j.generator;
 
+import org.tdf4j.core.model.Letter;
 import org.tdf4j.core.model.ebnf.*;
-import org.tdf4j.generator.templates.ElementRenderer;
+import org.tdf4j.generator.templates.renderer.ElementRenderer;
 import org.tdf4j.generator.templates.adaptor.*;
 import org.stringtemplate.v4.STGroup;
 import org.stringtemplate.v4.STGroupFile;
+import org.tdf4j.generator.templates.renderer.PatternRenderer;
+
+import java.util.regex.Pattern;
 
 public enum Template {
     JAVA(new STGroupFile("templates/java_1.3.stg"));
@@ -38,7 +42,9 @@ public enum Template {
         stGroup.registerModelAdaptor(InlineAction.class, new InlineActionAdaptor());
         stGroup.registerModelAdaptor(Or.class, new OrAdaptor());
         stGroup.registerModelAdaptor(Alternative.class, new AlternativeAdaptor());
+        stGroup.registerModelAdaptor(Letter.class, new LetterAdaptor());
         stGroup.registerRenderer(Element.class, new ElementRenderer());
+        stGroup.registerRenderer(Pattern.class, new PatternRenderer());
     }
 
     public STGroup template() {

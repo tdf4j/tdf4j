@@ -15,6 +15,7 @@
  */
 package org.tdf4j.generator.templates;
 
+import org.tdf4j.core.model.Alphabet;
 import org.tdf4j.core.model.Environment;
 import org.tdf4j.generator.Template;
 import org.tdf4j.core.model.Grammar;
@@ -35,6 +36,8 @@ public abstract class ParserTemplate implements Buildable {
     public abstract Environment getEnvironment();
 
     public abstract Grammar getGrammar();
+
+    public abstract Alphabet getAlphabet();
 
     public abstract String getInterface();
 

@@ -22,7 +22,12 @@ package <parserTemplate.package>;
 public class <parserTemplate.className><if(parserTemplate.extension)> extends <parserTemplate.extension><endif> implements <parserTemplate.interface> {
     private final MetaInf meta;
     private final Predictor predictor;
-    private final Lexer lexer;
+    private final Lexer lexer = Lexer.get(new LexerAbstractModule() {
+        @Override
+        public void configure() {
+            <parserTemplate.alphabet.letters: {letter| tokenize("<letter.tag.value>").pattern("<letter.pattern>").priority(<letter.priority>).hidden(<letter.hidden>);}; separator="\n">
+        }
+    });
 
     <parserTemplate.environment.dependencies: {dependency| private final <dependency.clazz.simpleName> <dependency.name>;}; separator="\n">
 
@@ -31,11 +36,9 @@ public class <parserTemplate.className><if(parserTemplate.extension)> extends <p
 
     public <parserTemplate.className>(
         final MetaInf meta,
-        final Lexer lexer,
         final Predictor predictor<parserTemplate.environment.dependencies: {dependency|,<\n><\t><\t>final <dependency.clazz.simpleName> <dependency.name>}>
     ) {
         this.meta = meta;
-        this.lexer = lexer;
         this.predictor = predictor;
         <parserTemplate.environment.dependencies: {dependency| this.<dependency.name> = <dependency.name>;}; separator="\n">
     }
@@ -103,7 +106,7 @@ public class <parserTemplate.className><if(parserTemplate.extension)> extends <p
     private class Alt {
         final String[] elements;
         final int index;
-        public Alt(final int index, final String... elements) {
+        Alt(final int index, final String... elements) {
             this.elements = elements;
             this.index = index;
         }
