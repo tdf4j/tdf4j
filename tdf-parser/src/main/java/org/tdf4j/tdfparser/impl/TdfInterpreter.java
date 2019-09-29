@@ -16,13 +16,11 @@
 
 package org.tdf4j.tdfparser.impl;
 
-import org.tdf4j.lexer.Lexer;
 import org.tdf4j.core.model.Grammar;
 import org.tdf4j.core.model.ast.AST;
 import org.tdf4j.core.module.LexerAbstractModule;
 import org.tdf4j.core.module.ParserAbstractModule;
 import org.tdf4j.tdfparser.Interpreter;
-import org.tdf4j.tdfparser.TdfLexerModule;
 import org.tdf4j.tdfparser.TdfParser;
 import org.tdf4j.tdfparser.TdfParserModule;
 import org.tdf4j.core.utils.FirstSetCollector;
@@ -36,7 +34,7 @@ public class TdfInterpreter implements Interpreter {
 
     public TdfInterpreter() {
         final Grammar grammar = new TdfParserModule().build().getGrammar();
-        this.parser = new TdfParserImpl(null, Lexer.get(new TdfLexerModule()), new Predictor(
+        this.parser = new TdfParserImpl(null, new Predictor(
                 new FirstSetCollector().collect(grammar.getProductions()),
                 new FollowSetCollector().collect(grammar.getProductions())
         ));

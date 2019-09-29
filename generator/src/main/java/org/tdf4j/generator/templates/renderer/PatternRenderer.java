@@ -13,15 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.tdf4j.core.module;
 
-import org.tdf4j.core.model.Letter;
-import org.tdf4j.core.model.ebnf.Terminal;
+package org.tdf4j.generator.templates.renderer;
 
-public interface LexerBindMethods {
+import org.apache.commons.text.StringEscapeUtils;
+import org.stringtemplate.v4.AttributeRenderer;
 
-    Letter.Builder tokenize(final String tag);
+import java.util.Locale;
+import java.util.regex.Pattern;
 
-    Letter.Builder tokenize(final Terminal tag);
+public class PatternRenderer implements AttributeRenderer {
+
+    @Override
+    public String toString(final Object o, final String formatString, final Locale locale) {
+        final Pattern pattern = (Pattern) o;
+        return StringEscapeUtils.escapeJava(pattern.pattern());
+    }
 
 }

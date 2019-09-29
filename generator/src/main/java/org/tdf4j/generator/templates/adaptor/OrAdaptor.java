@@ -23,7 +23,8 @@ import org.stringtemplate.v4.ModelAdaptor;
 import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.misc.STNoSuchPropertyException;
 import org.tdf4j.core.model.ebnf.Or;
-import org.tdf4j.core.utils.Elements;
+
+import static org.tdf4j.core.model.ebnf.Elements.*;
 
 public class OrAdaptor implements ModelAdaptor {
 
@@ -32,7 +33,7 @@ public class OrAdaptor implements ModelAdaptor {
         final Or or = (Or) o;
         switch (propertyName) {
             case "alternatives" : return or.getAlternatives();
-            case "start" : return Elements.getStartElements(or);
+            case "start" : return getStartElements(or);
             default : throw new STNoSuchPropertyException(null, or, propertyName);
         }
     }

@@ -18,17 +18,18 @@ package org.tdf4j.core.module;
 import org.tdf4j.core.model.Alphabet;
 import org.tdf4j.core.model.ImmutableLetter;
 import org.tdf4j.core.model.Letter;
+import org.tdf4j.core.model.ebnf.Terminal;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class LetterBindStrategy implements BindStrategy<String, Letter.Builder, Alphabet> {
-    private final Map<String, Letter.Builder> builders = new HashMap<>();
+public class LetterBindStrategy implements BindStrategy<Terminal, Letter.Builder, Alphabet> {
+    private final Map<Terminal, Letter.Builder> builders = new LinkedHashMap<>();
 
     @Override
-    public Letter.Builder bind(final String key) {
+    public Letter.Builder bind(final Terminal key) {
         //noinspection ConstantConditions
-        if(key == null || key.trim().equals("")) {
+        if(key == null || key.getValue().trim().equals("")) {
             throw new RuntimeException("Tag can't be null or blank");
         }
         if(builders.containsKey(key)) {

@@ -48,7 +48,7 @@ public class MetaInformationTest extends ParserTest {
             }
         });
         final String[] imports = parser.meta().getImports();
-        assertEquals(9, imports.length);
+        assertEquals(12, imports.length);
         for (int i = 0; i < Imports.values().length; i++) {
             assertEquals(Imports.values()[i].getValue(), imports[i]);
         }

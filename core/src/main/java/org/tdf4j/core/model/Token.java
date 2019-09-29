@@ -18,6 +18,8 @@ package org.tdf4j.core.model;
 import org.tdf4j.core.model.ebnf.Terminal;
 import org.immutables.value.Value;
 
+import static org.tdf4j.core.model.ebnf.EBNFBuilder.*;
+
 @Value.Immutable
 public interface Token {
     Terminal getTag();
@@ -36,7 +38,7 @@ public interface Token {
 
     class Builder extends ImmutableToken.Builder {
         public Builder setTag(final String tag) {
-            return super.setTag(new Terminal.Builder().setValue(tag).build());
+            return super.setTag(terminal(tag));
         }
     }
 }

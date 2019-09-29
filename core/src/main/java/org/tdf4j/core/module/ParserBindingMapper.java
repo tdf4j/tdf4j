@@ -51,47 +51,47 @@ public abstract class ParserBindingMapper implements ParserBindMethods {
 
     @Override
     public Optional optional(final Element... elements) {
-        return new Optional.Builder().setElements(elements).build();
+        return EBNFBuilder.optional(elements);
     }
 
     @Override
     public Group group(final Element ... elements) {
-        return new Group.Builder().setElements(elements).build();
+        return EBNFBuilder.group(elements);
     }
 
     @Override
     public Repeat repeat(final Element ... elements) {
-        return new Repeat.Builder().setElements(elements).build();
+        return EBNFBuilder.repeat(elements);
     }
 
     @Override
     public Repetition repetition(final Element element, final int times) {
-        return new Repetition.Builder().setElement(element).setTimes(times).build();
+        return EBNFBuilder.repetition(element, times);
     }
 
     @Override
     public Or or(final Element ... alternatives) {
-        return new Or.Builder().addAlternatives(alternatives).build();
+        return EBNFBuilder.or(alternatives);
     }
 
     @Override
     public Terminal t(final String tag) {
-        return new Terminal.Builder().setValue(tag).build();
+        return EBNFBuilder.terminal(tag);
     }
 
     @Override
     public Terminal t(final String tag, @SyntaxHighlight.TokenAction final String tokenAction) {
-        return new Terminal.Builder().setValue(tag).setTokenAction(tokenAction).build();
+        return EBNFBuilder.terminal(tag, tokenAction);
     }
 
     @Override
     public NonTerminal nt(final String identifier) {
-        return new NonTerminal.Builder().setValue(identifier).build();
+        return EBNFBuilder.nonTerminal(identifier);
     }
 
     @Override
     public NonTerminal nt(final String identifier, @SyntaxHighlight.NodeAction final String nodeAction) {
-        return new NonTerminal.Builder().setValue(identifier).setNodeAction(nodeAction).build();
+        return EBNFBuilder.nonTerminal(identifier, nodeAction);
     }
 
     @Override
@@ -105,6 +105,6 @@ public abstract class ParserBindingMapper implements ParserBindMethods {
         if(code == null || code.trim().equalsIgnoreCase("")) {
             throw new IllegalStateException("Code can't be blank or null");
         }
-        return new InlineAction.Builder().setCode(code).build();
+        return EBNFBuilder.inlineAction(code);
     }
 }

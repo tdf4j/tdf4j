@@ -23,7 +23,8 @@ import org.stringtemplate.v4.ModelAdaptor;
 import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.misc.STNoSuchPropertyException;
 import org.tdf4j.core.model.ebnf.Alternative;
-import org.tdf4j.core.utils.Elements;
+
+import static org.tdf4j.core.model.ebnf.Elements.*;
 
 public class AlternativeAdaptor implements ModelAdaptor {
 
@@ -32,7 +33,7 @@ public class AlternativeAdaptor implements ModelAdaptor {
         final Alternative alt = (Alternative) o;
         switch (propertyName) {
             case "element" : return alt.getElement();
-            case "start" : return Elements.getStartElements(alt);
+            case "start" : return getStartElements(alt);
             case "index" : return alt.getIndex();
             default : throw new STNoSuchPropertyException(null, alt, propertyName);
         }

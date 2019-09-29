@@ -16,6 +16,7 @@
 package org.tdf4j.tdfparser.builder;
 
 import org.tdf4j.core.model.ast.ASTNode;
+import org.tdf4j.core.model.ebnf.EBNFBuilder;
 import org.tdf4j.core.model.ebnf.InlineAction;
 import org.tdf4j.tdfparser.processor.StringProcessor;
 
@@ -28,9 +29,7 @@ public class EbnfInlineActionBuilder extends  AbstractEbnfElementBuilder<InlineA
 
     @Override
     public InlineAction build(final ASTNode tree) {
-        return new InlineAction.Builder()
-                .setCode(stringProcessor.process(tree.getChildren().get(1).asLeaf().getToken().getValue()))
-                .build();
+        return EBNFBuilder.inlineAction(stringProcessor.process(tree.getChildren().get(1).asLeaf().getToken().getValue()));
     }
 
 }

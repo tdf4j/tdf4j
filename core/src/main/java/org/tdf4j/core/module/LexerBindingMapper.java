@@ -17,12 +17,20 @@ package org.tdf4j.core.module;
 
 import org.tdf4j.core.model.Alphabet;
 import org.tdf4j.core.model.Letter;
+import org.tdf4j.core.model.ebnf.Terminal;
+
+import static org.tdf4j.core.model.ebnf.EBNFBuilder.terminal;
 
 public abstract class LexerBindingMapper implements LexerBindMethods {
-    final BindStrategy<String, Letter.Builder, Alphabet> letterBindStrategy = new LetterBindStrategy();
+    final BindStrategy<Terminal, Letter.Builder, Alphabet> letterBindStrategy = new LetterBindStrategy();
 
     @Override
-    public Letter.Builder tokenize(String tag) {
+    public Letter.Builder tokenize(final String tag) {
+        return letterBindStrategy.bind(terminal(tag));
+    }
+
+    @Override
+    public Letter.Builder tokenize(final Terminal tag) {
         return letterBindStrategy.bind(tag);
     }
 }

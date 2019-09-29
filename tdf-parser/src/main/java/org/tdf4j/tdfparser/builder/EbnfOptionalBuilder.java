@@ -16,6 +16,7 @@
 package org.tdf4j.tdfparser.builder;
 
 import org.tdf4j.core.model.ast.ASTNode;
+import org.tdf4j.core.model.ebnf.EBNFBuilder;
 import org.tdf4j.core.model.ebnf.Element;
 import org.tdf4j.core.model.ebnf.Optional;
 
@@ -28,9 +29,7 @@ public class EbnfOptionalBuilder extends AbstractEbnfElementBuilder<Optional> {
 
     @Override
     public Optional build(final ASTNode tree) {
-        return new Optional.Builder()
-                .setElements(getInnerElements(tree).stream().map(this::callBuilder).toArray(Element[]::new))
-                .build();
+        return EBNFBuilder.optional(getInnerElements(tree).stream().map(this::callBuilder).toArray(Element[]::new));
     }
 
 }
