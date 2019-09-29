@@ -11,7 +11,7 @@
 
   <name>Generator</name>
   <description>Lexer and parser generator</description>
-  <url>https://github.com/therealmonE/tdf4j/tree/master/generator</url>
+  <url>https://github.com/tdf4j/tdf4j/tree/master/generator</url>
 
   <dependencies>
     <dependency>

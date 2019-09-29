@@ -8,7 +8,7 @@
 
     <name>tdf4j</name>
     <description>Java translator description framework</description>
-    <url>https://github.com/therealmonE/SPOTranslator</url>
+    <url>https://github.com/tdf4j/tdf4j</url>
 
     <properties>
         <tdf.version>1.0.1-SNAPSHOT</tdf.version>
@@ -19,10 +19,21 @@
             <id>therealmone</id>
             <name>Roman Fatnev</name>
             <email>r.fatnev@gmail.com</email>
-            <organization />
-            <organizationUrl />
+            <organization>tdf4j</organization>
+            <organizationUrl>https://github.com/tdf4j</organizationUrl>
             <roles>
                 <role>Project-Administrator</role>
+                <role>Developer</role>
+            </roles>
+            <timezone>+3</timezone>
+        </developer>
+        <developer>
+            <id>AnaK89</id>
+            <name>Anna Kuklina</name>
+            <email>kuklina_as@mail.ru </email>
+            <organization>tdf4j</organization>
+            <organizationUrl>https://github.com/tdf4j</organizationUrl>
+            <roles>
                 <role>Developer</role>
             </roles>
             <timezone>+3</timezone>
@@ -30,9 +41,9 @@
     </developers>
 
     <scm>
-        <url>https://github.com/therealmonE/tdf4j</url>
-        <connection>scm:git:git//github.com/therealmonE/tdf4j.git</connection>
-        <developerConnection>scm:git:git@github.com:therealmonE/tdf4j.git</developerConnection>
+        <url>https://github.com/tdf4j/tdf4j</url>
+        <connection>scm:git:git//github.com/tdf4j/tdf4j.git</connection>
+        <developerConnection>scm:git:git@github.com:tdf4j/tdf4j.git</developerConnection>
       <tag>HEAD</tag>
   </scm>
 

@@ -11,8 +11,8 @@
     <packaging>jar</packaging>
 
     <name>Parser</name>
-    <description>Syntax analyzer API</description>
-    <url>https://github.com/therealmonE/tdf4j/tree/master/parser</url>
+    <description>Tdf4j syntax analyzer</description>
+    <url>https://github.com/tdf4j/tdf4j/tree/master/parser</url>
 
     <dependencies>
         <dependency>
