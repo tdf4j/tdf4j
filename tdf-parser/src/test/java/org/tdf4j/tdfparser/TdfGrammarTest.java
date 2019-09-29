@@ -36,7 +36,7 @@ public class TdfGrammarTest extends FullGrammarTest {
                 .setLexerModule(interpreter.getLexerModule())
                 .setInterface(TdfParser.class)
                 .build()
-        ).generate();
+        ).generate().compile();
         System.out.println(tempParser.parse(load("FullGrammarTest.tdf")));
         System.out.println(tempParser.getLexerModule().build().getAlphabet());
         System.out.println(tempParser.getParserModule().build().getGrammar());
@@ -47,6 +47,6 @@ public class TdfGrammarTest extends FullGrammarTest {
                 .setParserModule(tempParser.getParserModule())
                 .setLexerModule(tempParser.getLexerModule())
                 .build()
-        ).generate();
+        ).generate().compile();
     }
 }

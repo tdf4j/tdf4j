@@ -22,7 +22,7 @@ import java.util.List;
 
 public class FollowSetCollector {
 
-    public Follow collect(final List<Production> productions) {
+    public static Follow collect(final List<Production> productions) {
         return new Follow.Builder().build();
     }
 }

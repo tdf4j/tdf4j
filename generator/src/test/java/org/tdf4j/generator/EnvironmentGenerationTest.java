@@ -30,7 +30,7 @@ public class EnvironmentGenerationTest extends ParserTest {
 
     @Test
     public void packages() {
-        final Parser parser = generate(new ParserAbstractModule() {
+        final Parser parser = generateParser(new ParserAbstractModule() {
             @Override
             public void configure() {
                 environment()
@@ -51,7 +51,7 @@ public class EnvironmentGenerationTest extends ParserTest {
 
     @Test
     public void dependencies() {
-        final Parser parser = generate(new ParserAbstractModule() {
+        final Parser parser = generateParser(new ParserAbstractModule() {
             @Override
             public void configure() {
                 environment()
@@ -72,7 +72,7 @@ public class EnvironmentGenerationTest extends ParserTest {
 
     @Test(expected = ReflectException.class)
     public void unknown_classes() {
-        generate(new ParserAbstractModule() {
+        generateParser(new ParserAbstractModule() {
             @Override
             public void configure() {
                 environment()
@@ -91,7 +91,7 @@ public class EnvironmentGenerationTest extends ParserTest {
 
     @Test
     public void specified_package() {
-        final Parser parser = generate(new ParserAbstractModule() {
+        final Parser parser = generateParser(new ParserAbstractModule() {
             @Override
             public void configure() {
                 environment()

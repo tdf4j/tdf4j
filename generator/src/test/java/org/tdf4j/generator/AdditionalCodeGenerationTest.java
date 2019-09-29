@@ -29,7 +29,7 @@ public class AdditionalCodeGenerationTest extends ParserTest {
 
     @Test
     public void with_inline_actions() {
-        final Parser parser = generate(new ParserAbstractModule() {
+        final Parser parser = generateParser(new ParserAbstractModule() {
             @Override
             public void configure() {
                 environment()
@@ -53,7 +53,7 @@ public class AdditionalCodeGenerationTest extends ParserTest {
     @Test
     public void with_dependencies() {
         final List<String> test = new ArrayList<>();
-        final Parser parser = generate(new ParserAbstractModule() {
+        final Parser parser = generateParser(new ParserAbstractModule() {
             @Override
             public void configure() {
                 environment()

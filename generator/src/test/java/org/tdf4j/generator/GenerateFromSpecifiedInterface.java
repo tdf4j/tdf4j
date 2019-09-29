@@ -29,7 +29,7 @@ public class GenerateFromSpecifiedInterface extends ParserTest {
 
     @Test
     public void normal() {
-        final TestInterface parser = generate(new ParserAbstractModule() {
+        final TestInterface parser = generateParser(new ParserAbstractModule() {
             @Override
             public void configure() {
                 environment().setCode(

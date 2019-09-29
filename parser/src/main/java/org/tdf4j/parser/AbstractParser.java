@@ -32,20 +32,13 @@ import static org.tdf4j.core.model.ebnf.EBNFBuilder.nonTerminal;
 @SuppressWarnings("all")
 public abstract class AbstractParser implements Parser {
 
-    protected final MetaInf metaInf;
     protected final Predictor predictor;
 
     protected BufferedStream<Token> stream;
     protected AST ast;
 
-    public AbstractParser(final MetaInf metaInf, final Predictor predictor) {
-        this.metaInf = metaInf;
+    public AbstractParser(final Predictor predictor) {
         this.predictor = predictor;
-    }
-
-    @Override
-    public MetaInf meta() {
-        return metaInf;
     }
 
     protected CallableNonTerminal callableNonTerminal(final String nonTerminal, final Callback callback) {

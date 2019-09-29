@@ -39,7 +39,7 @@ public class NodeActionTest extends TdfParserTest {
                 .setParserModule(interpreter.getParserModule())
                 .setLexerModule(interpreter.getLexerModule())
                 .build()
-        ).generate();
+        ).generate().compile();
         assertNotNull(parser.parse("ABC"));
         assertEquals(2, nodes.size());
         assertEquals("a", nodes.get(0));

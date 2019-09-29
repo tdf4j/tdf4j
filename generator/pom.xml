@@ -30,11 +30,6 @@
       <artifactId>stringtemplate</artifactId>
       <version>4.0.2</version>
     </dependency>
-    <dependency>
-      <groupId>org.jooq</groupId>
-      <artifactId>joor</artifactId>
-      <version>0.9.10</version>
-    </dependency>
     <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-text -->
     <dependency>
       <groupId>org.apache.commons</groupId>

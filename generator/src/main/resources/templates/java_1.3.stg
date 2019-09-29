@@ -37,10 +37,9 @@ public class <parserTemplate.className> extends AbstractParser implements <parse
     <parserTemplate.environment.dependencies: {dependency| private final <dependency.clazz.simpleName> <dependency.name>;}; separator="\n">
 
     public <parserTemplate.className>(
-        final MetaInf meta,
-        final Predictor predictor<parserTemplate.environment.dependencies: {dependency|,<\n><\t><\t>final <dependency.clazz.simpleName> <dependency.name>}>
+        final Grammar grammar<parserTemplate.environment.dependencies: {dependency|,<\n><\t><\t>final <dependency.clazz.simpleName> <dependency.name>}>
     ) {
-        super(meta, predictor);
+        super(new Predictor(grammar.getFirstSet(), grammar.getFollowSet()));
         <parserTemplate.environment.dependencies: {dependency| this.<dependency.name> = <dependency.name>;}; separator="\n">
     }
 

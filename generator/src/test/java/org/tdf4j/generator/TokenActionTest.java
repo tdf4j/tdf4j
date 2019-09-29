@@ -30,7 +30,7 @@ public class TokenActionTest extends ParserTest {
     @Test
     public void normal() {
         final List<String> tokens = new ArrayList<>();
-        final Parser parser = generate(new ParserAbstractModule() {
+        final Parser parser = generateParser(new ParserAbstractModule() {
             @Override
             protected void configure() {
                 environment()
@@ -54,7 +54,7 @@ public class TokenActionTest extends ParserTest {
     @Test
     public void nullable() {
         final List<String> tokens = new ArrayList<>();
-        final Parser parser = generate(new ParserAbstractModule() {
+        final Parser parser = generateParser(new ParserAbstractModule() {
             @Override
             protected void configure() {
                 environment()

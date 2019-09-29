@@ -29,7 +29,7 @@ public class RepetitionParsingTest extends ParserTest {
      */
     @Test
     public void nested() {
-        final Parser parser = generate(new ParserAbstractModule() {
+        final Parser parser = generateParser(new ParserAbstractModule() {
             @Override
             public void configure() {
                 prod("prod1")
@@ -56,7 +56,7 @@ public class RepetitionParsingTest extends ParserTest {
      */
     @Test
     public void with_repeat() {
-        final Parser parser = generate(new ParserAbstractModule() {
+        final Parser parser = generateParser(new ParserAbstractModule() {
             @Override
             public void configure() {
                 prod("prod1")
@@ -87,7 +87,7 @@ public class RepetitionParsingTest extends ParserTest {
      */
     @Test
     public void with_group() {
-        final Parser parser = generate(new ParserAbstractModule() {
+        final Parser parser = generateParser(new ParserAbstractModule() {
             @Override
             public void configure() {
                 prod("prod1")
@@ -116,7 +116,7 @@ public class RepetitionParsingTest extends ParserTest {
      */
     @Test
     public void with_optional() {
-        final Parser parser = generate(new ParserAbstractModule() {
+        final Parser parser = generateParser(new ParserAbstractModule() {
             @Override
             public void configure() {
                 prod("prod1")
@@ -149,7 +149,7 @@ public class RepetitionParsingTest extends ParserTest {
      */
     @Test
     public void with_or() {
-        final Parser parser = generate(new ParserAbstractModule() {
+        final Parser parser = generateParser(new ParserAbstractModule() {
             @Override
             public void configure() {
                 prod("prod1")

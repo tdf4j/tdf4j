@@ -23,9 +23,6 @@ import org.tdf4j.core.module.ParserAbstractModule;
 import org.tdf4j.tdfparser.Interpreter;
 import org.tdf4j.tdfparser.TdfParser;
 import org.tdf4j.tdfparser.TdfParserModule;
-import org.tdf4j.core.utils.FirstSetCollector;
-import org.tdf4j.core.utils.FollowSetCollector;
-import org.tdf4j.core.utils.Predictor;
 
 import javax.annotation.Nullable;
 
@@ -34,10 +31,7 @@ public class TdfInterpreter implements Interpreter {
 
     public TdfInterpreter() {
         final Grammar grammar = new TdfParserModule().build().getGrammar();
-        this.parser = new TdfParserImpl(null, new Predictor(
-                new FirstSetCollector().collect(grammar.getProductions()),
-                new FollowSetCollector().collect(grammar.getProductions())
-        ));
+        this.parser = new TdfParserImpl(grammar);
     }
 
     @Nullable

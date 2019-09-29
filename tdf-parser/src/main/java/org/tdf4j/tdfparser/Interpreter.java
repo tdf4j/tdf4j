@@ -16,20 +16,4 @@
 
 package org.tdf4j.tdfparser;
 
-import org.tdf4j.core.model.ast.AST;
-import org.tdf4j.core.module.LexerAbstractModule;
-import org.tdf4j.core.module.ParserAbstractModule;
-
-import javax.annotation.Nullable;
-
-public interface Interpreter {
-
-    @Nullable
-    LexerAbstractModule getLexerModule();
-
-    @Nullable
-    ParserAbstractModule getParserModule();
-
-    AST parse(final CharSequence input);
-
-}
+public interface Interpreter extends TdfParser {}

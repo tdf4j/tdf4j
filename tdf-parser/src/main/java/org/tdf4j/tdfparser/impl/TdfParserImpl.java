@@ -1,16 +1,15 @@
 package org.tdf4j.tdfparser.impl;
 
+import org.tdf4j.core.model.Grammar;
 import org.tdf4j.parser.*;
 import org.tdf4j.lexer.*;
-import org.tdf4j.core.module.*;
-import org.tdf4j.core.model.*;
 import org.tdf4j.core.model.ast.*;
 import org.tdf4j.core.utils.*;
 import java.util.*;
-import java.util.function.*;
+
 import org.tdf4j.core.model.ebnf.*;
 import static org.tdf4j.core.model.ebnf.EBNFBuilder.*;
-import static org.tdf4j.core.model.ast.ASTCursor.Movement.*;
+
 import org.tdf4j.tdfparser.TdfParser;
 import org.tdf4j.core.module.LexerAbstractModule;
 import org.tdf4j.core.module.ParserAbstractModule;
@@ -139,10 +138,9 @@ public class TdfParserImpl extends AbstractParser implements TdfParser {
 
 
     public TdfParserImpl(
-        final MetaInf meta,
-        final Predictor predictor
+        final Grammar grammar
     ) {
-        super(meta, predictor);
+        super(new Predictor(grammar.getFirstSet(), grammar.getFollowSet()));
     }
 
     private final Processor<String> stringProcessor = new StringProcessor();

@@ -29,7 +29,7 @@ public class TerminalParsingTest extends ParserTest {
     @Test
     public void sequence() {
         {
-            final Parser parser = generate(new ParserAbstractModule() {
+            final Parser parser = generateParser(new ParserAbstractModule() {
                 @Override
                 public void configure() {
                     prod("prod1").is(t("A"), t("B"), t("C"));
@@ -40,7 +40,7 @@ public class TerminalParsingTest extends ParserTest {
         }
 
         {
-            final Parser parser = generate(new ParserAbstractModule() {
+            final Parser parser = generateParser(new ParserAbstractModule() {
                 @Override
                 public void configure() {
                     prod("prod1").then(nt("prod2"));
@@ -59,7 +59,7 @@ public class TerminalParsingTest extends ParserTest {
      */
     @Test
     public void with_or() {
-        final Parser parser = generate(new ParserAbstractModule() {
+        final Parser parser = generateParser(new ParserAbstractModule() {
             @Override
             public void configure() {
                 prod("prod1").is(or(t("A"), t("B")), t("C"));
@@ -76,7 +76,7 @@ public class TerminalParsingTest extends ParserTest {
      */
     @Test
     public void with_optional() {
-        final Parser parser = generate(new ParserAbstractModule() {
+        final Parser parser = generateParser(new ParserAbstractModule() {
             @Override
             public void configure() {
                 prod("prod1").is(optional(t("A")), t("B"), optional(t("C")));
@@ -96,7 +96,7 @@ public class TerminalParsingTest extends ParserTest {
      */
     @Test
     public void with_repeat() {
-        final Parser parser = generate(new ParserAbstractModule() {
+        final Parser parser = generateParser(new ParserAbstractModule() {
             @Override
             public void configure() {
                 prod("prod1")
@@ -118,7 +118,7 @@ public class TerminalParsingTest extends ParserTest {
      */
     @Test
     public void with_group() {
-        final Parser parser = generate(new ParserAbstractModule() {
+        final Parser parser = generateParser(new ParserAbstractModule() {
             @Override
             public void configure() {
                 prod("prod1").is(group(t("A"), t("B")), t("C"));
