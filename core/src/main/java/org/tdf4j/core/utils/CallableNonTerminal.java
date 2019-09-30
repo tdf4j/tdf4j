@@ -13,15 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.tdf4j.core.module;
 
-import org.tdf4j.core.model.Letter;
-import org.tdf4j.core.model.ebnf.Terminal;
+package org.tdf4j.core.utils;
 
-public interface LexerBindMethods {
+import org.tdf4j.core.model.ebnf.NonTerminal;
 
-    Letter.Builder tokenize(final String tag);
+public class CallableNonTerminal extends NonTerminal implements Callback {
 
-    Letter.Builder tokenize(final Terminal tag);
+    private final NonTerminal nonTerminal;
+    private final Callback callback;
+
+    public CallableNonTerminal(final NonTerminal nonTerminal, final Callback callback) {
+        this.nonTerminal = nonTerminal;
+        this.callback = callback;
+    }
+
+    @Override
+    public String getValue() {
+        return nonTerminal.getValue();
+    }
+
+    @Override
+    public void call() {
+        callback.call();
+    }
 
 }

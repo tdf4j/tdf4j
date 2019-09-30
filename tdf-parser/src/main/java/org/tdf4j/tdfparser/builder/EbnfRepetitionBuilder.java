@@ -16,6 +16,7 @@
 package org.tdf4j.tdfparser.builder;
 
 import org.tdf4j.core.model.ast.ASTNode;
+import org.tdf4j.core.model.ebnf.EBNFBuilder;
 import org.tdf4j.core.model.ebnf.Repetition;
 
 public class EbnfRepetitionBuilder extends AbstractEbnfElementBuilder<Repetition> {
@@ -26,10 +27,9 @@ public class EbnfRepetitionBuilder extends AbstractEbnfElementBuilder<Repetition
 
     @Override
     public Repetition build(final ASTNode tree) {
-        return new Repetition.Builder()
-                .setTimes(Integer.parseInt(tree.getChildren().get(0).asLeaf().getToken().getValue()))
-                .setElement(callBuilder(tree.getChildren().get(2).asNode()))
-                .build();
+        return EBNFBuilder.repetition(
+                callBuilder(tree.getChildren().get(2).asNode()),
+                Integer.parseInt(tree.getChildren().get(0).asLeaf().getToken().getValue()));
     }
 
 }

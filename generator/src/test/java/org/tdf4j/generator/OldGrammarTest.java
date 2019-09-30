@@ -71,7 +71,7 @@ public class OldGrammarTest extends ParserTest {
         };
     }
 
-    private final Parser parser = generate(new ParserAbstractModule() {
+    private final Parser parser = generateParser(new ParserAbstractModule() {
         @Override
         public void configure() {
             prod("lang")

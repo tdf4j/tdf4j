@@ -18,9 +18,11 @@ package org.tdf4j.core.model;
 import org.tdf4j.core.model.ebnf.Element;
 import org.tdf4j.core.model.ebnf.NonTerminal;
 import org.immutables.value.Value;
-import org.tdf4j.core.utils.Elements;
 
 import java.util.List;
+
+import static org.tdf4j.core.model.ebnf.EBNFBuilder.*;
+import static org.tdf4j.core.model.ebnf.Elements.*;
 
 @Value.Immutable
 public abstract class Production {
@@ -39,13 +41,12 @@ public abstract class Production {
         }
 
         public Builder identifier(final String identifier) {
-            return super.setIdentifier(new NonTerminal.Builder().setValue(identifier).build());
+            return super.setIdentifier(nonTerminal(identifier));
         }
     }
 
     @Override
     public String toString() {
-        return getIdentifier() + " := " +
-                Elements.convertToString(getElements().toArray(new Element[]{}));
+        return getIdentifier() + " := " + convertToString(getElements().toArray(new Element[]{}));
     }
 }

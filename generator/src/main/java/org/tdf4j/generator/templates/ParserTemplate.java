@@ -15,13 +15,12 @@
  */
 package org.tdf4j.generator.templates;
 
+import org.tdf4j.core.model.Alphabet;
 import org.tdf4j.core.model.Environment;
 import org.tdf4j.generator.Template;
 import org.tdf4j.core.model.Grammar;
 import org.immutables.value.Value;
 import org.stringtemplate.v4.ST;
-
-import javax.annotation.Nullable;
 
 @Value.Immutable
 public abstract class ParserTemplate implements Buildable {
@@ -36,10 +35,9 @@ public abstract class ParserTemplate implements Buildable {
 
     public abstract Grammar getGrammar();
 
-    public abstract String getInterface();
+    public abstract Alphabet getAlphabet();
 
-    @Nullable
-    public abstract String getExtension();
+    public abstract String getInterface();
 
     @Override
     public String build() {

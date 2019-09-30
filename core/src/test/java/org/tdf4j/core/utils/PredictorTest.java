@@ -21,11 +21,11 @@ import org.tdf4j.core.model.First;
 import org.tdf4j.core.model.ebnf.NonTerminal;
 import org.tdf4j.core.model.ebnf.Terminal;
 import org.junit.Test;
-import org.tdf4j.core.utils.Predictor;
 
 import java.util.*;
 
 import static org.junit.Assert.*;
+import static org.tdf4j.core.model.ebnf.EBNFBuilder.*;
 
 public class PredictorTest {
 
@@ -68,9 +68,9 @@ public class PredictorTest {
             predictor.predict(token("tag2", "taп2"));
             predictor.predict(token("tag3", "tag3"));
             final Map<Terminal, List<String>> cache = predictor.cache;
-            final Terminal tag1 = new Terminal.Builder().setValue("tag1").build();
-            final Terminal tag2 = new Terminal.Builder().setValue("tag2").build();
-            final Terminal tag3 = new Terminal.Builder().setValue("tag3").build();
+            final Terminal tag1 = terminal("tag1");
+            final Terminal tag2 = terminal("tag2");
+            final Terminal tag3 = terminal("tag3");
             assertEquals(3, cache.size());
             assertTrue(cache.containsKey(tag1));
             assertTrue(cache.containsKey(tag2));
@@ -89,18 +89,18 @@ public class PredictorTest {
     }
 
     private NonTerminal nt(final String ident) {
-        return new NonTerminal.Builder().setValue(ident).build();
+        return nonTerminal(ident);
     }
 
     private Set<Terminal> tags(final String ... tags) {
         return new HashSet<>() {{
             for (final String tag : tags) {
-                add(new Terminal.Builder().setValue(tag).build());
+                add(terminal(tag));
             }
         }};
     }
 
     private Token token(final String tag, final String value) {
-        return new Token.Builder().setTag(new Terminal.Builder().setValue(tag).build()).setValue(value).build();
+        return new Token.Builder().setTag(terminal(tag)).setValue(value).build();
     }
 }

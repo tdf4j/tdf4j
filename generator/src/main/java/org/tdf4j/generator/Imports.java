@@ -18,11 +18,14 @@ package org.tdf4j.generator;
 public enum Imports {
     PARSER("org.tdf4j.parser.*"),
     LEXER("org.tdf4j.lexer.*"),
+    MODULE("org.tdf4j.core.module.*"),
     MODEL("org.tdf4j.core.model.*"),
     MODEL_AST("org.tdf4j.core.model.ast.*"),
     UTILS("org.tdf4j.core.utils.*"),
     JAVA_UTIL("java.util.*"),
     JAVA_UTIL_FUNCTION("java.util.function.*"),
+    EBNF("org.tdf4j.core.model.ebnf.*"),
+    EBNFBuilder("static org.tdf4j.core.model.ebnf.EBNFBuilder.*"),
     CURSOR_MOVEMENT("static org.tdf4j.core.model.ast.ASTCursor.Movement.*");
 
     private final String value;

@@ -78,7 +78,7 @@ public class LexerAbstractModuleTest {
         new LexerAbstractModule() {
             @Override
             public void configure() {
-                tokenize(null).pattern("pattern");
+                tokenize((Terminal) null).pattern("pattern");
             }
         }.build();
     }

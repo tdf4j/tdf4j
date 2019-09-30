@@ -11,14 +11,19 @@
     <packaging>jar</packaging>
 
     <name>Parser</name>
-    <description>Syntax analyzer API</description>
-    <url>https://github.com/therealmonE/tdf4j/tree/master/parser</url>
+    <description>Tdf4j syntax analyzer</description>
+    <url>https://github.com/tdf4j/tdf4j/tree/master/parser</url>
 
     <dependencies>
         <dependency>
             <groupId>org.tdf4j</groupId>
             <artifactId>core</artifactId>
             <version>${tdf.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jooq</groupId>
+            <artifactId>joor</artifactId>
+            <version>0.9.10</version>
         </dependency>
     </dependencies>
 

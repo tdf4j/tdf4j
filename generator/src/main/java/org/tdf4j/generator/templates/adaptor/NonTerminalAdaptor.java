@@ -20,7 +20,8 @@ import org.stringtemplate.v4.Interpreter;
 import org.stringtemplate.v4.ModelAdaptor;
 import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.misc.STNoSuchPropertyException;
-import org.tdf4j.core.utils.Elements;
+
+import static org.tdf4j.core.model.ebnf.Elements.*;
 
 public class NonTerminalAdaptor implements ModelAdaptor {
 
@@ -30,7 +31,7 @@ public class NonTerminalAdaptor implements ModelAdaptor {
         switch (propertyName) {
             case "value" : return nonTerminal.getValue();
             case "nodeAction" : return nonTerminal.getNodeAction();
-            case "start" : return Elements.getStartElements(nonTerminal);
+            case "start" : return getStartElements(nonTerminal);
             default : throw new STNoSuchPropertyException(null, nonTerminal, propertyName);
         }
     }

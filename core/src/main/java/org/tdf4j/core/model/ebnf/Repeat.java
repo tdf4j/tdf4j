@@ -16,7 +16,8 @@
 package org.tdf4j.core.model.ebnf;
 
 import org.immutables.value.Value;
-import org.tdf4j.core.utils.Elements;
+
+import static org.tdf4j.core.model.ebnf.Elements.*;
 
 @Value.Immutable
 public abstract class Repeat implements Element {
@@ -32,6 +33,6 @@ public abstract class Repeat implements Element {
 
     @Override
     public String toString() {
-        return "{" + Elements.convertToString(getElements()) + "}";
+        return "{" + convertToString(getElements()) + "}";
     }
 }

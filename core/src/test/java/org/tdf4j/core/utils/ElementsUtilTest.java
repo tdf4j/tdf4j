@@ -18,23 +18,24 @@ package org.tdf4j.core.utils;
 
 import org.tdf4j.core.model.ebnf.Element;
 import org.tdf4j.core.model.ebnf.Group;
-import org.tdf4j.core.model.ebnf.Terminal;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
+import static org.tdf4j.core.model.ebnf.EBNFBuilder.*;
+import static org.tdf4j.core.model.ebnf.Elements.*;
 
 public class ElementsUtilTest {
 
     @Test
     public void to_string_group() {
-        assertEquals("(A,B,C)", Elements.convertToString(
+        assertEquals("(A,B,C)", convertToString(
                 new Group() {
                     @Override
                     public Element[] getElements() {
                         return new Element[] {
-                                new Terminal.Builder().setValue("A").build(),
-                                new Terminal.Builder().setValue("B").build(),
-                                new Terminal.Builder().setValue("C").build()
+                                terminal("A"),
+                                terminal("B"),
+                                terminal("C")
                         };
                     }
                 }
@@ -43,15 +44,15 @@ public class ElementsUtilTest {
 
     @Test
     public void to_string_empty_group() {
-        assertEquals("", Elements.convertToString());
+        assertEquals("", convertToString());
     }
 
     @Test
     public void to_string_with_separator() {
-        assertEquals("A|||B|||C", Elements.convertToString( "|||",
-                new Terminal.Builder().setValue("A").build(),
-                new Terminal.Builder().setValue("B").build(),
-                new Terminal.Builder().setValue("C").build()
+        assertEquals("A|||B|||C", convertToString( "|||",
+                terminal("A"),
+                terminal("B"),
+                terminal("C")
         ));
     }
 }

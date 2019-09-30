@@ -13,26 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.tdf4j.generator.templates.adaptor;
 
-import org.tdf4j.core.model.ebnf.Terminal;
 import org.stringtemplate.v4.Interpreter;
 import org.stringtemplate.v4.ModelAdaptor;
 import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.misc.STNoSuchPropertyException;
+import org.tdf4j.core.model.Letter;
 
-import static org.tdf4j.core.model.ebnf.Elements.*;
-
-public class TerminalAdaptor implements ModelAdaptor {
+public class LetterAdaptor implements ModelAdaptor {
 
     @Override
     public Object getProperty(final Interpreter interp, final ST self, final Object o, final Object property, final String propertyName) throws STNoSuchPropertyException {
-        final Terminal terminal = (Terminal) o;
+        final Letter letter = (Letter) o;
         switch (propertyName) {
-            case "value" : return terminal.getValue();
-            case "tokenAction" : return terminal.getTokenAction();
-            case "start" : return getStartElements(terminal);
-            default : throw new STNoSuchPropertyException(null, terminal, propertyName);
+            case "tag" : return letter.getTag();
+            case "pattern" : return letter.getPattern();
+            case "priority" : return letter.priority();
+            case "hidden" : return letter.hidden();
+            default : throw new STNoSuchPropertyException(null, letter, propertyName);
         }
     }
 

@@ -21,8 +21,6 @@ import org.tdf4j.core.module.ParserAbstractModule;
 import org.tdf4j.parser.Parser;
 import org.immutables.value.Value;
 
-import javax.annotation.Nullable;
-
 @Value.Immutable
 public interface Options {
 
@@ -37,12 +35,6 @@ public interface Options {
     @Value.Default
     default Class<? extends Parser> getInterface() {
         return Parser.class;
-    }
-
-    @Nullable
-    @Value.Default
-    default Class getExtension() {
-        return null;
     }
 
     class Builder extends ImmutableOptions.Builder {

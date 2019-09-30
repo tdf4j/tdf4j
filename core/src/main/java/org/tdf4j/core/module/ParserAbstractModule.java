@@ -27,8 +27,6 @@ import javax.annotation.Nonnull;
 import java.util.List;
 
 public abstract class ParserAbstractModule extends ParserBindingMapper implements Module {
-    private final FirstSetCollector firstSetCollector = new FirstSetCollector();
-    private final FollowSetCollector followSetCollector = new FollowSetCollector();
     private boolean built;
     private Grammar grammar;
     private Environment environment;
@@ -41,8 +39,8 @@ public abstract class ParserAbstractModule extends ParserBindingMapper implement
             this.grammar = new Grammar.Builder()
                     .addAllProductions(productions)
                     .setAxiom(initProduction)
-                    .setFirstSet(firstSetCollector.collect(productions))
-                    .setFollowSet(followSetCollector.collect(productions))
+                    .setFirstSet(FirstSetCollector.collect(productions))
+                    .setFollowSet(FollowSetCollector.collect(productions))
                     .build();
             built = true;
         }

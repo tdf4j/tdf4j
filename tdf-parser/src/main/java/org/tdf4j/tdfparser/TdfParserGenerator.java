@@ -17,6 +17,7 @@ package org.tdf4j.tdfparser;
 
 import org.tdf4j.generator.Options;
 import org.tdf4j.generator.impl.ParserGenerator;
+import org.tdf4j.parser.ParserMetaInformation;
 
 class TdfParserGenerator {
 
@@ -24,7 +25,7 @@ class TdfParserGenerator {
         final String dir = args[0];
         final String pack = args[1];
         final String name = args[2];
-        final TdfParser tdfParser = (TdfParser) new ParserGenerator(new Options.Builder()
+        final ParserMetaInformation tdfParser = new ParserGenerator(new Options.Builder()
                 .setInterface(TdfParser.class)
                 .setParserModule(new TdfParserModule())
                 .setLexerModule(new TdfLexerModule())
@@ -32,7 +33,7 @@ class TdfParserGenerator {
                 .setPackage(pack)
                 .build()
         ).generate();
-        TdfParserUtils.createClass(dir, name, tdfParser.meta().getSourceCode());
+        TdfParserUtils.createClass(dir, name, tdfParser.getSourceCode());
     }
 
 }

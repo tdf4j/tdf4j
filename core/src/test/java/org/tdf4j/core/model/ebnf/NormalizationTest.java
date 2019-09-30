@@ -19,36 +19,29 @@ package org.tdf4j.core.model.ebnf;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
+import static org.tdf4j.core.model.ebnf.EBNFBuilder.*;
 
 public class NormalizationTest {
 
     @Test
-    public void terminal() {
-        final Terminal terminal = new Terminal.Builder()
-                .setValue("this_is_1_terminal")
-                .setTokenAction("token.action")
-                .build();
+    public void terminal_normalization() {
+        final Terminal terminal = terminal("this_is_1_terminal", "token.action");
         assertNotEquals("this_is_1_terminal", terminal.getValue());
         assertEquals("THIS_IS_1_TERMINAL", terminal.getValue());
         assertEquals("token.action", terminal.getTokenAction());
     }
 
     @Test
-    public void non_terminal() {
-        final NonTerminal nonTerminal = new NonTerminal.Builder()
-                .setValue("1_NON_TERMINAL")
-                .setNodeAction("node.action")
-                .build();
+    public void non_terminal_normalization() {
+        final NonTerminal nonTerminal = nonTerminal("1_NON_TERMINAL", "node.action");
         assertNotEquals("1_NON_TERMINAL", nonTerminal.getValue());
         assertEquals("1_non_terminal", nonTerminal.getValue());
         assertEquals("node.action", nonTerminal.getNodeAction());
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void one_of() {
-        new Or.Builder().addAlternatives(
-                new Terminal.Builder().setValue("A").build()
-        ).build();
+    public void or_normalization() {
+        or(terminal("A"));
     }
 
 }

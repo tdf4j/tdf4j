@@ -23,6 +23,8 @@ import org.tdf4j.core.model.ebnf.Terminal;
 
 import java.util.regex.Pattern;
 
+import static org.tdf4j.core.model.ebnf.EBNFBuilder.*;
+
 @Value.Immutable
 public abstract class Letter {
 
@@ -52,7 +54,12 @@ public abstract class Letter {
         }
 
         public Letter.Builder tag(final String tag) {
-            super.setTag(new Terminal.Builder().setValue(tag).build());
+            super.setTag(terminal(tag));
+            return this;
+        }
+
+        public Letter.Builder tag(final Terminal tag) {
+            super.setTag(tag);
             return this;
         }
 

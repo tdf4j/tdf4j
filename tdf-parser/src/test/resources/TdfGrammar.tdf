@@ -145,6 +145,12 @@ lexis
     OP_ASSIGN
         "="
 
+    OP_SUM
+        "\+"
+
+    LAMBDA
+        "->"
+
     WS
         "\s|\n|\r"
         [priority: 1000, hidden: true]

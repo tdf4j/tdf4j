@@ -13,24 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.tdf4j.parser;
 
-import org.immutables.value.Value;
+package org.tdf4j.core.utils;
 
-@Value.Immutable
-public interface MetaInf {
-    String getPackage();
-
-    String[] getImports();
-
-    String[] getEnvironmentImports();
-
-    String[] getDependencies();
-
-    String getClassName();
-
-    String getSourceCode();
-
-    class Builder extends ImmutableMetaInf.Builder {
+public class Alt {
+    public final String[] elements;
+    public final int index;
+    
+    public Alt(final int index, final String... elements) {
+        this.elements = elements;
+        this.index = index;
     }
+    
 }

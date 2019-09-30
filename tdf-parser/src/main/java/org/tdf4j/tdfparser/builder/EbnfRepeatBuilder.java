@@ -16,6 +16,7 @@
 package org.tdf4j.tdfparser.builder;
 
 import org.tdf4j.core.model.ast.ASTNode;
+import org.tdf4j.core.model.ebnf.EBNFBuilder;
 import org.tdf4j.core.model.ebnf.Element;
 import org.tdf4j.core.model.ebnf.Repeat;
 
@@ -27,8 +28,6 @@ public class EbnfRepeatBuilder extends AbstractEbnfElementBuilder<Repeat> {
 
     @Override
     public Repeat build(final ASTNode tree) {
-        return new Repeat.Builder()
-                .setElements(getInnerElements(tree).stream().map(this::callBuilder).toArray(Element[]::new))
-                .build();
+        return EBNFBuilder.repeat(getInnerElements(tree).stream().map(this::callBuilder).toArray(Element[]::new));
     }
 }

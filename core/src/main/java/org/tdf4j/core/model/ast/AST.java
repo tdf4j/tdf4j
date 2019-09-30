@@ -16,6 +16,7 @@
 package org.tdf4j.core.model.ast;
 
 import org.tdf4j.core.model.Token;
+import org.tdf4j.core.model.ebnf.NonTerminal;
 
 import javax.annotation.Nullable;
 import java.util.function.Consumer;
@@ -46,6 +47,10 @@ public interface AST {
 
     static AST create(final String rootTag) {
         return create(ModifiableASTRoot.create().setTag(rootTag));
+    }
+
+    static AST create(final NonTerminal root) {
+        return create(ModifiableASTRoot.create().setTag(root.getValue()));
     }
 
     static AST create(final ASTRoot root) {

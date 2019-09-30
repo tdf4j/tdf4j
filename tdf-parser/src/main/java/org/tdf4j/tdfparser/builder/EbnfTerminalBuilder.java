@@ -16,6 +16,7 @@
 package org.tdf4j.tdfparser.builder;
 
 import org.tdf4j.core.model.ast.ASTNode;
+import org.tdf4j.core.model.ebnf.EBNFBuilder;
 import org.tdf4j.core.model.ebnf.Terminal;
 import org.tdf4j.tdfparser.processor.StringProcessor;
 
@@ -28,12 +29,11 @@ public class EbnfTerminalBuilder extends AbstractEbnfElementBuilder<Terminal> {
 
     @Override
     public Terminal build(final ASTNode tree) {
-        return new Terminal.Builder()
-                .setValue(tree.getChildren().get(0).asLeaf().getToken().getValue())
-                .setTokenAction(tree.getChildren().size() > 1
+        return EBNFBuilder.terminal(
+                tree.getChildren().get(0).asLeaf().getToken().getValue(),
+                tree.getChildren().size() > 1
                         ? stringProcessor.process(tree.getChildren().get(2).asLeaf().getToken().getValue())
-                        : null
-                ).build();
+                        : null);
     }
 
 }

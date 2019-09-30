@@ -11,8 +11,8 @@
     <packaging>jar</packaging>
 
     <name>Lexer</name>
-    <description>Lexical analyzer API</description>
-    <url>https://github.com/therealmonE/tdf4j/tree/master/lexer</url>
+    <description>Tdf4j lexical analyzer</description>
+    <url>https://github.com/tdf4j/tdf4j/tree/master/lexer</url>
 
     <dependencies>
         <dependency>

@@ -38,7 +38,7 @@ public class TokenActionTest extends TdfParserTest {
                 .setParserModule(interpreter.getParserModule())
                 .setLexerModule(interpreter.getLexerModule())
                 .build()
-        ).generate();
+        ).generate().compile();
         assertNotNull(parser.parse("ABC"));
         assertEquals(2, tokens.size());
         assertEquals("A", tokens.get(0));

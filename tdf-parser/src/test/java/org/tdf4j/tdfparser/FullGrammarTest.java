@@ -42,7 +42,7 @@ public class FullGrammarTest extends TdfParserTest {
                 .setParserModule(interpreter.getParserModule())
                 .setLexerModule(interpreter.getLexerModule())
                 .build()
-        ).generate();
+        ).generate().compile();
     }
 
     @Test

@@ -27,7 +27,7 @@ import java.util.*;
 
 public class FirstSetCollector {
 
-    public First collect(final List<Production> productions) {
+    public static First collect(final List<Production> productions) {
         final Context context = new Context(productions);
         for(final Production production : productions) {
             firstOf(context, production);
@@ -35,7 +35,7 @@ public class FirstSetCollector {
         return new First.Builder().setSet(context.getSet()).build();
     }
 
-    private List<Terminal> firstOf(final Context context, @Nullable final Production production) {
+    private static List<Terminal> firstOf(final Context context, @Nullable final Production production) {
         if(production == null) {
             return Collections.emptyList();
         }
@@ -50,7 +50,7 @@ public class FirstSetCollector {
         return new ArrayList<>(context.getSet().get(production.getIdentifier()));
     }
 
-    private List<Terminal> firstOf(final Context context, final NonTerminal currentNT, @Nullable final Element element) {
+    private static List<Terminal> firstOf(final Context context, final NonTerminal currentNT, @Nullable final Element element) {
         if(element == null || element.kind() == null) {
             return Collections.emptyList();
         }
@@ -108,7 +108,7 @@ public class FirstSetCollector {
     }
 
     @Nullable
-    Element firstElement(final List<Element> elements) {
+    static Element firstElement(final List<Element> elements) {
         for(final Element element : elements) {
             if(element == null || element.isInlineAction()) {
                 continue;

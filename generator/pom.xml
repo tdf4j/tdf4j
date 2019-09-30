@@ -11,7 +11,7 @@
 
   <name>Generator</name>
   <description>Lexer and parser generator</description>
-  <url>https://github.com/therealmonE/tdf4j/tree/master/generator</url>
+  <url>https://github.com/tdf4j/tdf4j/tree/master/generator</url>
 
   <dependencies>
     <dependency>
@@ -30,10 +30,11 @@
       <artifactId>stringtemplate</artifactId>
       <version>4.0.2</version>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-text -->
     <dependency>
-      <groupId>org.jooq</groupId>
-      <artifactId>joor</artifactId>
-      <version>0.9.10</version>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-text</artifactId>
+      <version>1.8</version>
     </dependency>
   </dependencies>
 

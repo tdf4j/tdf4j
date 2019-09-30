@@ -20,6 +20,7 @@ import org.tdf4j.generator.impl.ParserGenerator;
 import org.tdf4j.core.module.LexerAbstractModule;
 import org.tdf4j.core.module.ParserAbstractModule;
 import org.tdf4j.parser.Parser;
+import org.tdf4j.parser.ParserMetaInformation;
 import org.tdf4j.parser.UnexpectedTokenException;
 import org.tdf4j.core.model.ast.AST;
 import org.junit.BeforeClass;
@@ -48,27 +49,24 @@ public class ParserTest {
         };
     }
 
-    static Parser generate(final ParserAbstractModule module) {
-        final long current = System.currentTimeMillis();
-        final Parser parser = new ParserGenerator(new Options.Builder()
-                .setPackage("org.tdf4j.generator")
-                .setClassName("ParserImpl_" + UUID.randomUUID().toString().replaceAll("-", ""))
-                .setParserModule(module)
-                .setLexerModule(lexerModule)
-                .build()
-        ).generate();
-        System.out.println(parser.meta().getSourceCode());
-        System.out.println(module.getGrammar().toString());
-        System.out.println(module.getGrammar().getFirstSet().toString());
-        System.out.println(module.getGrammar().getFollowSet().toString());
-        System.out.println("Compilation time: " + (System.currentTimeMillis() - current));
-        return parser;
+    static Parser generateParser(final ParserAbstractModule module) {
+        return generateParser(module, Parser.class);
     }
 
-    static <T extends Parser> T generate(final ParserAbstractModule module, final Class<T> interfaceToImplement) {
+    static <T> T generateParser(final ParserAbstractModule module, final Class<? extends Parser> interfaceToImplement) {
         final long current = System.currentTimeMillis();
-        @SuppressWarnings("unchecked")
-        final T parser = (T) new ParserGenerator(new Options.Builder()
+        final Parser parser = generate(module, interfaceToImplement).compile();
+        System.out.println("Compilation time: " + (System.currentTimeMillis() - current));
+        //noinspection unchecked
+        return (T) parser;
+    }
+
+    static ParserMetaInformation generate(final ParserAbstractModule module) {
+        return generate(module, Parser.class);
+    }
+
+    static ParserMetaInformation generate(final ParserAbstractModule module, final Class<? extends Parser> interfaceToImplement) {
+        final ParserMetaInformation parser = new ParserGenerator(new Options.Builder()
                 .setPackage("org.tdf4j.generator")
                 .setClassName("ParserImpl_" + UUID.randomUUID().toString().replaceAll("-", ""))
                 .setParserModule(module)
@@ -76,23 +74,22 @@ public class ParserTest {
                 .setInterface(interfaceToImplement)
                 .build()
         ).generate();
-        System.out.println(parser.meta().getSourceCode());
+        System.out.println(parser.getSourceCode());
         System.out.println(module.getGrammar().toString());
         System.out.println(module.getGrammar().getFirstSet().toString());
         System.out.println(module.getGrammar().getFollowSet().toString());
-        System.out.println("Compilation time: " + (System.currentTimeMillis() - current));
         return parser;
     }
 
     static Parser generate(final Options options) {
         final long current = System.currentTimeMillis();
-        final Parser parser = new ParserGenerator(options).generate();
-        System.out.println(parser.meta().getSourceCode());
+        final ParserMetaInformation parser = new ParserGenerator(options).generate();
+        System.out.println(parser.getSourceCode());
         System.out.println(options.getParserModule().getGrammar().toString());
         System.out.println(options.getParserModule().getGrammar().getFirstSet().toString());
         System.out.println(options.getParserModule().getGrammar().getFollowSet().toString());
         System.out.println("Compilation time: " + (System.currentTimeMillis() - current));
-        return parser;
+        return parser.compile();
     }
 
     static AST parse(final Parser parser, final String input) {

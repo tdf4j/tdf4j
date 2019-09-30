@@ -27,7 +27,7 @@ public class UnexpectedTokensTest extends ParserTest {
 
     @Test
     public void terminals() {
-        final Parser parser = generate(new ParserAbstractModule() {
+        final Parser parser = generateParser(new ParserAbstractModule() {
             @Override
             protected void configure() {
                 prod("prod1").is(t("A"), t("B"), t("C"));
@@ -43,7 +43,7 @@ public class UnexpectedTokensTest extends ParserTest {
 
     @Test
     public void or() {
-        final Parser parser = generate(new ParserAbstractModule() {
+        final Parser parser = generateParser(new ParserAbstractModule() {
             @Override
             protected void configure() {
                 prod("prod1").is(or(t("A"), t("B")));
@@ -59,7 +59,7 @@ public class UnexpectedTokensTest extends ParserTest {
 
     @Test
     public void or_of_non_terminals() {
-        final Parser parser = generate(new ParserAbstractModule() {
+        final Parser parser = generateParser(new ParserAbstractModule() {
             @Override
             protected void configure() {
                 prod("prod1").is(or(nt("a"), nt("b")));

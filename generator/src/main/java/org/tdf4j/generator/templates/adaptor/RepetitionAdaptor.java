@@ -20,7 +20,8 @@ import org.stringtemplate.v4.Interpreter;
 import org.stringtemplate.v4.ModelAdaptor;
 import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.misc.STNoSuchPropertyException;
-import org.tdf4j.core.utils.Elements;
+
+import static org.tdf4j.core.model.ebnf.Elements.*;
 
 public class RepetitionAdaptor implements ModelAdaptor {
 
@@ -31,7 +32,7 @@ public class RepetitionAdaptor implements ModelAdaptor {
             case "hash" : return repetition.hashCode();
             case "times" : return repetition.getTimes();
             case "element" : return repetition.getElement();
-            case "start" : return Elements.getStartElements(repetition);
+            case "start" : return getStartElements(repetition);
             default : throw new STNoSuchPropertyException(null, repetition, propertyName);
         }
     }

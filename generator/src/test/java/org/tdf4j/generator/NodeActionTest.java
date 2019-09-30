@@ -31,7 +31,7 @@ public class NodeActionTest extends ParserTest {
     @Test
     public void normal() {
         final List<String> nodes = new ArrayList<>();
-        final Parser parser = generate(new ParserAbstractModule() {
+        final Parser parser = generateParser(new ParserAbstractModule() {
             @Override
             protected void configure() {
                 environment()
@@ -58,7 +58,7 @@ public class NodeActionTest extends ParserTest {
     @Test
     public void nullable() {
         final List<String> nodes = new ArrayList<>();
-        final Parser parser = generate(new ParserAbstractModule() {
+        final Parser parser = generateParser(new ParserAbstractModule() {
             @Override
             protected void configure() {
                 environment()

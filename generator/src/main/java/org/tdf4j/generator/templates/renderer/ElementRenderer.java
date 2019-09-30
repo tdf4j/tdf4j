@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.tdf4j.generator.templates;
+package org.tdf4j.generator.templates.renderer;
 
 import org.tdf4j.generator.Template;
 import org.tdf4j.core.model.ebnf.Element;
@@ -44,7 +44,7 @@ public class ElementRenderer implements AttributeRenderer {
                 return template.getInstanceOf("repetition").add("repetition", element).render();
 
             case TERMINAL:
-                return template.getInstanceOf("terminal_tag").add("terminal_tag", element).render();
+                return template.getInstanceOf("terminal").add("terminal", element).render();
 
             case INLINE_ACTION:
                 return template.getInstanceOf("inline_action").add("inline_action", element).render();

@@ -21,6 +21,4 @@ public interface Parser {
 
     AST parse(final CharSequence input);
 
-    MetaInf meta();
-
 }

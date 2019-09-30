@@ -30,7 +30,7 @@ public class InlineActionGenerationTest extends ParserTest {
 
     @Test
     public void normal() {
-        final Parser parser = generate(new ParserAbstractModule() {
+        final Parser parser = generateParser(new ParserAbstractModule() {
             @Override
             public void configure() {
                 prod("prod1")
@@ -48,7 +48,7 @@ public class InlineActionGenerationTest extends ParserTest {
     @Test
     public void with_dependencies() {
         final List<String> test = new ArrayList<>();
-        final Parser parser = generate(new ParserAbstractModule() {
+        final Parser parser = generateParser(new ParserAbstractModule() {
             @Override
             public void configure() {
                 environment()
@@ -79,7 +79,7 @@ public class InlineActionGenerationTest extends ParserTest {
     @Test
     public void in_middle() {
         final List<String> test = new ArrayList<>();
-        final Parser parser = generate(new ParserAbstractModule() {
+        final Parser parser = generateParser(new ParserAbstractModule() {
             @Override
             public void configure() {
                 environment()
@@ -112,7 +112,7 @@ public class InlineActionGenerationTest extends ParserTest {
     @Test
     public void at_the_beginning() {
         final List<String> test = new ArrayList<>();
-        final Parser parser = generate(new ParserAbstractModule() {
+        final Parser parser = generateParser(new ParserAbstractModule() {
             @Override
             public void configure() {
                 environment()
