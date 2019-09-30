@@ -5,7 +5,7 @@ import org.tdf4j.core.module.LexerAbstractModule;
 import org.tdf4j.core.module.ParserAbstractModule;
 import org.tdf4j.generator.Options;
 import org.tdf4j.generator.impl.ParserGenerator;
-import org.tdf4j.parser.Parser;
+import org.tdf4j.parser.ParserMetaInformation;
 import org.tdf4j.tdfparser.*;
 
 import org.tdf4j.tdfparser.impl.TdfInterpreter;
@@ -33,14 +33,14 @@ public class GeneratorFromTdf {
     }
 
     private static void generateParser(final Args args, final LexerAbstractModule lexerModule, final ParserAbstractModule parserModule) {
-        final Parser parser = new ParserGenerator(new Options.Builder()
+        final ParserMetaInformation parser = new ParserGenerator(new Options.Builder()
                 .setParserModule(parserModule)
                 .setLexerModule(lexerModule)
                 .setClassName(args.name)
                 .setPackage(args.pack)
                 .build()
         ).generate();
-        TdfParserUtils.createClass(args.dir, args.name, parser.meta().getSourceCode());
+        TdfParserUtils.createClass(args.dir, args.name, parser.getSourceCode());
     }
 
     private static String loadGrammar(final String fileName) throws IOException {
