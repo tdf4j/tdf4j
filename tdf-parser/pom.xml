@@ -3,7 +3,7 @@
   <parent>
     <groupId>io.github.tdf4j</groupId>
     <artifactId>tdf4j</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.0.1</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
@@ -17,7 +17,7 @@
     <dependency>
       <groupId>io.github.tdf4j</groupId>
       <artifactId>generator</artifactId>
-      <version>1.0.1-SNAPSHOT</version>
+      <version>1.0.1</version>
     </dependency>
   </dependencies>
 

@@ -4,7 +4,7 @@
     <parent>
         <groupId>io.github.tdf4j</groupId>
         <artifactId>tdf4j</artifactId>
-        <version>1.0.1-SNAPSHOT</version>
+        <version>1.0.1</version>
     </parent>
 
     <artifactId>parser</artifactId>
@@ -18,7 +18,7 @@
         <dependency>
             <groupId>io.github.tdf4j</groupId>
             <artifactId>core</artifactId>
-            <version>1.0.1-SNAPSHOT</version>
+            <version>1.0.1</version>
         </dependency>
         <dependency>
             <groupId>org.jooq</groupId>
