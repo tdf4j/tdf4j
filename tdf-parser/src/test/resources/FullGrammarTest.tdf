@@ -56,8 +56,8 @@ lexis
     WS        "\s|\n|\r"                                  [priority: 3, hidden: true]
 
 env
-    import "org.tdf4j.core.model.Token"
-    import "org.tdf4j.core.module.LexerAbstractModule"
+    import "io.github.tdf4j.core.model.Token"
+    import "io.github.tdf4j.core.module.LexerAbstractModule"
 
     code "
         public String test() {

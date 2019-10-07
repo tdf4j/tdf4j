@@ -165,10 +165,10 @@ lexis
 
 env
 
-    import "org.tdf4j.core.module.LexerAbstractModule"
-    import "org.tdf4j.core.module.ParserAbstractModule"
-    import "org.tdf4j.tdfparser.constructor.*"
-    import "org.tdf4j.tdfparser.processor.*"
+    import "io.github.tdf4j.core.module.LexerAbstractModule"
+    import "io.github.tdf4j.core.module.ParserAbstractModule"
+    import "io.github.tdf4j.tdfparser.constructor.*"
+    import "io.github.tdf4j.tdfparser.processor.*"
 
     code "
         private final Processor<String> stringProcessor = new StringProcessor();
