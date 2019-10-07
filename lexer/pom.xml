@@ -18,7 +18,7 @@
         <dependency>
             <groupId>org.tdf4j</groupId>
             <artifactId>core</artifactId>
-            <version>${tdf.version}</version>
+            <version>1.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
 

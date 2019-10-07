@@ -10,10 +10,6 @@
     <description>Java translator description framework</description>
     <url>https://github.com/tdf4j/tdf4j</url>
 
-    <properties>
-        <tdf.version>1.0.1-SNAPSHOT</tdf.version>
-    </properties>
-
     <developers>
         <developer>
             <id>therealmone</id>
