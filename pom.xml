@@ -195,6 +195,16 @@
                             </execution>
                         </executions>
                         <configuration>
+                            <tags>
+                                <tag>
+                                    <name>ParametersAreNonnullByDefault</name>
+                                    <placement>X</placement>
+                                </tag>
+                                <tag>
+                                    <name>Tdf4jStyle</name>
+                                    <placement>X</placement>
+                                </tag>
+                            </tags>
                             <encoding>UTF-8</encoding>
                         </configuration>
                     </plugin>
