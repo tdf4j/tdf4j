@@ -29,7 +29,7 @@ public class RepetitionAdaptor implements ModelAdaptor {
     public Object getProperty(final Interpreter interp, final ST self, final Object o, final Object property, final String propertyName) throws STNoSuchPropertyException {
         final Repetition repetition = (Repetition) o;
         switch(propertyName) {
-            case "hash" : return repetition.hashCode();
+            case "hash" : return Math.abs(repetition.hashCode());
             case "times" : return repetition.getTimes();
             case "element" : return repetition.getElement();
             case "start" : return getStartElements(repetition);

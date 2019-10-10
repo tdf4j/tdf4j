@@ -16,6 +16,7 @@
 
 package io.github.tdf4j.generator;
 
+import io.github.tdf4j.core.model.ebnf.Terminal;
 import io.github.tdf4j.core.module.ParserAbstractModule;
 import io.github.tdf4j.parser.Parser;
 import org.junit.Test;
@@ -187,5 +188,31 @@ public class RepetitionParsingTest extends ParserTest {
         assertParserFails(parser, "CB", unexpectedEOF("B"));
         assertParserFails(parser, "CBBB", unexpectedEOF("B"));
         assertParserFails(parser, "", unexpectedEOF("A", "B", "C"));
+    }
+
+    /**
+     * prod := 3*A
+     */
+    @Test
+    public void negative_hash_code() {
+        final Parser parser = generateParser(new ParserAbstractModule() {
+            final Terminal terminalA = new Terminal() {
+                @Override
+                public String getValue() {
+                    return "A";
+                }
+
+                @Override
+                public int hashCode(){
+                    return -11111111;
+                }
+            };
+            @Override
+            public void configure() {
+                prod("prod").is(repetition(terminalA, 3));
+            }
+        });
+        assertNotNull(parse(parser, "AAA"));
+        assertParserFails(parser, "AAB", unexpectedToken(TestLetter.B, 1, 2, "A"));
     }
 }
